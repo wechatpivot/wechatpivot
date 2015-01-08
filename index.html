@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WeiXin API Debug</title>
+
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <style>
+    .nav-tabs {
+      margin-bottom: 20px;
+    }
+    .required {
+      border-right: solid 4px #F2DEDE;
+    }
+    footer {
+      background-color: #666;
+      margin-top: 60px;
+      padding: 40px 0;
+      color: #ccc;
+    }
+    footer a {
+      color: #ccc;
+    }
+    footer a:hover {
+      color: #fff;
+    }
+  </style>
+
+  <link rel="stylesheet" href="./css/default.min.css">
+
+  <script src="./js/highlight.min.js"></script>
+  <script src="./js/react.js"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">WeiXin API Debug</a>
+      </div>
+
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Link</a></li>
+          <li><a href="#">Link</a></li>
+          <li class="active"><a>消息接口调试</a></li>
+          <li><a href="#">Link</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li role="presentation" class="active"><a>文本消息</a></li>
+      <li role="presentation"><a>图片消息</a></li>
+      <li role="presentation"><a>语音消息</a></li>
+    </ul>
+
+    <div class="row">
+      <div class="col-md-6">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <h4 class="col-md-12"><code>粉丝</code>向<code>公众号</code>发送一条<code>消息</code></h4>
+          </div>
+          <div class="form-group">
+            <div class="col-md-11 required" id="url">
+              <!-- <input type="text" class="form-control" placeholder="URL: 开发者填写URL，调试时将把消息推送到该URL上"> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-11 required">
+              <input type="text" class="form-control" placeholder="ToUserName: 开发者微信号">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-11 required">
+              <input type="text" class="form-control" placeholder="FromUserName: 发送方帐号（一个OpenID） 校验通过">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-11 required">
+              <input type="text" class="form-control" placeholder="CreateTime: 消息创建时间（整型）">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-11 required">
+              <input type="text" class="form-control" placeholder="MsgType: 消息类型（文本消息为 text）">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-11 required">
+              <input type="text" class="form-control" placeholder="Content: 消息类型（文本消息内容）">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-11 required">
+              <input type="text" class="form-control" placeholder="MsgId: 消息类型（消息id，64位整型）">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-6 col-md-3">
+              <button type="submit" class="btn btn-lg btn-default">Validate</button>
+            </div>
+            <div class="col-md-3">
+              <button type="submit" class="btn btn-lg btn-primary">Send</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+<pre><code class="css hljs">
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  body:first-of-type pre::after {
+    content: 'highlight: ' attr(class);
+  }
+  body {
+    background: linear-gradient(45deg, blue, red);
+  }
+}
+
+@import url('print.css');
+@page:right {
+ margin: 1cm 2cm 1.3cm 4cm;
+}
+
+@font-face {
+  font-family: Chunkfive; src: url('Chunkfive.otf');
+}
+
+div.text,
+#content,
+li[lang=ru] {
+  font: Tahoma, Chunkfive, sans-serif;
+  background: url('hatch.png') /* wtf? */;  color: #F0F0F0 !important;
+  width: 100%;
+}
+
+</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="container-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h4>参考资料</h4>
+          <ul>
+            <li><a href="http://mp.weixin.qq.com/debug/" target="_blank">微信公众平台接口调试工具</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="./js/index.js"></script>
+
+</body>
+</html>

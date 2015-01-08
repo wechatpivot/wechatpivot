@@ -1,0 +1,48 @@
+{
+  "name": "weixin-api-debug",
+  "version": "0.1.0",
+  "description": "weixin-api-debug ================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shuaishuai/weixin-api-debug.git"
+  },
+  "keywords": [
+    "weixin",
+    "api",
+    "debug"
+  ],
+  "author": "shuaizhexu@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shuaishuai/weixin-api-debug/issues"
+  },
+  "homepage": "https://github.com/shuaishuai/weixin-api-debug",
+  "browserify-shim": {
+    "lodash": "global:_",
+    "react": "global:React"
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "browserify-shim"
+    ]
+  },
+  "devDependencies": {
+    "browserify": "^8.0.3",
+    "browserify-shim": "^3.8.2",
+    "gulp": "^3.8.10",
+    "gulp-jshint": "^1.9.0",
+    "gulp-rename": "^1.2.0",
+    "reactify": "^0.17.1",
+    "vinyl-transform": "^1.0.0"
+  },
+  "dependencies": {
+    "highlight.js": "^8.4.0",
+    "lodash": "^2.4.1",
+    "react": "^0.12.2"
+  }
+}
