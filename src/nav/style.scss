@@ -1,0 +1,36 @@
+.Nav {
+  .dropdown-toggle {
+    cursor: pointer;
+  }
+
+  .dropdown-menu {
+    top: 0;
+
+    & > li > a {
+      padding: 10px 20px;
+    }
+  }
+}
+
+.Nav-subnavs {
+  .navbar-default & > li > a {
+    background-color: #f8f8f8;
+    // ** ellipsis
+    max-width: 100px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    &:hover {
+      max-width: none;
+    }
+  }
+
+  .navbar-default & > .active > a,
+  .navbar-default & > .active > a:focus,
+  .navbar-default & > .active > a:hover {
+    padding-bottom: 14px;
+    border-bottom: 1px solid #999;
+    background-color: #f8f8f8;
+  }
+}

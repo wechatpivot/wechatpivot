@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WeChat API Debug</title>
+
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/zenburn.css">
+  <style>
+    pre {
+      background-color: transparent;
+      border: none;
+    }
+
+    [v-cloak] {
+      display: none;
+    }
+
+    .xml-builder .control-label {
+      text-align: right;
+      font-size: 12px;
+    }
+
+    .control-label.required {
+      border-right: solid 4px #F2DEDE;
+    }
+
+    .form-control-feedback {
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    footer {
+      background-color: #666;
+      margin-top: 60px;
+      padding: 40px 0;
+      color: #ccc;
+    }
+
+    footer a {
+      color: #ccc;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-default Nav js-nav" v-cloak>
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="dropdown active" :class="{open: open}">
+            <a class="dropdown-toggle" @click.stop="open = true">{{ currentNav.text }} <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li v-for="n in navs" :class="{active: n.id === currentNav.id}">
+                <a href="#/{{ n.id }}" @click.stop="changeNav(n.id)">{{ n.text }}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav Nav-subnavs">
+          <li v-for="s in subnavs" :class="{active: s.id === currentSubnavId, disabled: !s.id}">
+            <a href="#/{{ s.id }}" @click.stop="changeSubNav(s.id)" v-if="s.text">{{ s.text }}</a>
+            <a href="{{ s.id }}" target="_blank" v-if="!s.text">
+              <i class="glyphicon glyphicon-question-sign"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container Notification js-notification" v-cloak>
+    <div :class="{ alert: true, 'alert-danger': n.type === 'error', 'alert-success': n.type === 'success' }" v-for="n in notifications">
+      {{ n.message }}
+      <button type="button" class="close" @click="dismiss(n.id)">&times;</button>
+    </div>
+  </div>
+
+  <div class="Setup js-setup">
+    <img class="Setup-logo" src="./img/iconx128.png" @click="open">
+    <div class="modal fade Setup-modal" :class="{active: active, in: active}">
+      <div class="modal-backdrop fade Setup-backdrop" :class="{active: active, in: active}" @click="close"></div>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" @click="close">&times;</button>
+            <h4 class="modal-title">
+              配置您的微信账号
+              <a href="http://mp.weixin.qq.com/wiki/17/2d4265491f12608cd170a95559800f2d.html" target="_blank" title="开发者提交服务器信息后，微信服务器将发送 GET 请求到填写的服务器地址 URL 上，从而验证开发者服务器地址的有效性">
+                <i class="glyphicon glyphicon-question-sign"></i>
+              </a>
+            </h4>
+          </div>
+          <div class="modal-body">
+            <account :close="close" :active="active"></account>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container Panel js-panel" v-cloak>
+    <component :is="manager"></component>
+  </div>
+
+  <footer class="container-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h4>参考资料</h4>
+          <ul>
+            <li><a href="http://mp.weixin.qq.com/debug/" target="_blank">微信公众平台接口调试工具</a></li>
+            <li><a href="https://github.com/node-webot/wechat-api" target="_blank">node-webot/wechat-api</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

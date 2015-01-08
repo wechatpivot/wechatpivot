@@ -1,0 +1,49 @@
+.Setup {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+}
+
+.Setup-logo {
+  width: 64px;
+  height: 64px;
+}
+
+.Setup-backdrop {
+  &.active {
+    bottom: 0;
+  }
+}
+
+.Setup-modal {
+  &.active {
+    display: block;
+  }
+
+  .nav-tabs {
+    margin-bottom: 20px;
+
+    & > li > a {
+      cursor: pointer;
+
+      & > i {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  form {
+    hr {
+      margin-top: 0;
+      margin-bottom: 0;
+      border-top: dashed 1px #ddd;
+    }
+
+    .bg-success,
+    .bg-warning {
+      padding: 8px 15px;
+      margin-bottom: 10px;
+    }
+  }
+}
