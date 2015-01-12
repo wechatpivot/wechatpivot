@@ -23,7 +23,8 @@
   "homepage": "https://github.com/shuaishuai/weixin-api-debug",
   "browserify-shim": {
     "lodash": "global:_",
-    "react": "global:React"
+    "react": "global:React",
+    "vue": "global:Vue"
   },
   "browserify": {
     "transform": [
@@ -43,6 +44,7 @@
   "dependencies": {
     "highlight.js": "^8.4.0",
     "lodash": "^2.4.1",
-    "react": "^0.12.2"
+    "react": "^0.12.2",
+    "vue": "^0.11.4"
   }
 }
