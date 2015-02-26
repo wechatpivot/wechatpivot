@@ -6,5 +6,9 @@
     },
     "manifest_version": 2,
     "name": "WeiXin API Debug",
-    "version": "0.0.1"
+    "version": "0.0.1",
+    "permissions": [
+        "http://*/*",
+        "https://*/*"
+    ]
 }

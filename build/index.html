@@ -45,15 +45,14 @@
     </div>
   </nav>
 
-  <div class="container" id="app">
+  <div class="container" ng-controller="boardCtrl">
     <div class="row">
       <div class="col-md-8">
         <form class="form-horizontal">
           <div class="form-group">
             <label class="control-label col-md-3">服务器接口 url</label>
             <div class="col-md-9">
-              <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" v-model="url">
-                  {{ url }}
+              <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" ng-model="data.url">
             </div>
           </div>
         </form>
@@ -61,13 +60,13 @@
     </div>
 
     <ul class="nav nav-tabs">
-      <li><a>文本消息</a></li>
+      <li class="active"><a>文本消息</a></li>
       <li><a>图片消息</a></li>
       <li><a>语音消息</a></li>
       <li><a>视频消息</a></li>
       <li><a>地理位置消息</a></li>
       <li><a>链接消息</a></li>
-      <li class="active"><a>事件消息</a></li>
+      <li><a>事件消息</a></li>
     </ul>
 
     <div class="row">
@@ -75,12 +74,12 @@
         <form class="form-horizontal">
           <div class="form-group">
             <div class="col-md-11 required">
-              <input type="text" class="form-control" placeholder="ToUserName: 开发者微信号" v-model="to_user_name">
+              <input type="text" class="form-control" placeholder="ToUserName: 开发者的微信号" ng-model="data.to_user_name">
             </div>
           </div>
           <div class="form-group">
             <div class="col-md-11 required">
-              <input type="text" class="form-control" placeholder="FromUserName: 发送方帐号（一个OpenID） 校验通过">
+              <input type="text" class="form-control" placeholder="FromUserName: 粉丝的 OpenID">
             </div>
           </div>
           <div class="form-group">
@@ -104,13 +103,10 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-md-offset-6 col-md-3">
-              <button type="submit" class="btn btn-lg btn-default">Validate</button>
+            <div class="col-md-11 text-right">
+              <button type="button" class="btn btn-default" ng-click="validate()">Validate</button>
             </div>
-            <div class="col-md-3">
-              <button type="submit" class="btn btn-lg btn-primary">Send</button>
-            </div>
-          </div>
+           </div>
         </form>
       </div>
 
@@ -120,7 +116,9 @@
 <pre><code>
 &lt;ToUserName&gt;&lt;![CDATA[to_user_name]]&gt;&lt;/ToUserName&gt;
 </code></pre>
-
+          </div>
+          <div class="panel-footer text-right">
+            <button type="button" class="btn btn-primary" ng-click="send()">Send</button>
           </div>
         </div>
       </div>
@@ -139,6 +137,9 @@
       </div>
     </div>
   </footer>
+
+  <script src="./js/angular.min.js" ng-csp></script>
+  <script src="./js/weixin-api-debug.js"></script>
 
 </body>
 </html>

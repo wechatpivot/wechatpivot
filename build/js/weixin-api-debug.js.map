@@ -1,0 +1,19 @@
+{
+  "version": 3,
+  "sources": [
+    "node_modules/browserify/node_modules/browser-pack/_prelude.js",
+    "src/index.js",
+    "src/bootstrap/app.js",
+    "src/controllers/board.js"
+  ],
+  "names": [],
+  "mappings": "AAAA;;ACAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;;;;;ACdA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;;;;ACPA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA",
+  "file": "generated.js",
+  "sourceRoot": "",
+  "sourcesContent": [
+    "(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require==\"function\"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error(\"Cannot find module '\"+o+\"'\");throw f.code=\"MODULE_NOT_FOUND\",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require==\"function\"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})",
+    "var angular = (typeof window !== \"undefined\" ? window.angular : typeof global !== \"undefined\" ? global.angular : null);\n\n// just require the controllers you want\n// controllers will require their own dependencies\nvar board_controller = require('./controllers/board');\n// var guest_controller = require('./controllers/guest');\n// var connection_controller = require('./controllers/connection');\n// var qrcode_controller = require('./controllers/qrcode');\n// var anim_controller = require('./controllers/anim');\n\n\nangular.element(document).ready(function () {\n  angular.bootstrap(document, ['weixin-api-debug']);\n});\n",
+    "var angular = (typeof window !== \"undefined\" ? window.angular : typeof global !== \"undefined\" ? global.angular : null);\n// var services = require('./services');\n\nvar app = angular.module('weixin-api-debug', []);\n\n\nmodule.exports = app;\n",
+    "var app = require('../bootstrap/app');\n\n\n\nvar xml = \"<xml>\\n  <ToUserName><![CDATA[toUser]]></ToUserName>\\n  <FromUserName><![CDATA[fromUser]]></FromUserName>\\n  <CreateTime>1348831860</CreateTime>\\n  <MsgType><![CDATA[text]]></MsgType>\\n  <Content><![CDATA[this is a test]]></Content>\\n  <MsgId>1234567890123456</MsgId>\\n</xml>\\n\";\n\napp.controller('boardCtrl', function ($scope, $rootScope, $http) {\n  $scope.data = {};\n  if (localStorage.data) {\n    $scope.data = JSON.parse(localStorage.data);\n  }\n\n  $scope.validate = function () {\n    console.log($scope.data);\n\n    localStorage.data = JSON.stringify($scope.data);\n  };\n\n  $scope.send = function () {\n    xml.replace('{to_user_name}', $scope.data.to_user_name);\n\n    console.log(xml);\n\n    $http({\n        url: $scope.data.url,\n        method: 'POST',\n        data: xml,\n        headers: {\n          'Content-type': 'text/xml'\n        }\n      })\n      .success(function (result) {\n        console.log(result);\n      })\n      .error(function () {\n        console.log(arguments);\n      });\n\n    localStorage.data = JSON.stringify($scope.data);\n  };\n});\n\nmodule.exports = {};\n"
+  ]
+}
