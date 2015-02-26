@@ -1,7 +1,7 @@
 var angular = require('angular');
-// var services = require('./services');
 
-var app = angular.module('weixin-api-debug', []);
+
+var app = angular.module('weixin-api-debug', ['ngRoute']);
 
 
 module.exports = app;

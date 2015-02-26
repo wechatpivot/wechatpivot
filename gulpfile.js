@@ -7,7 +7,8 @@ var browserify = require('browserify');
 
 gulp.task('csscopy', function () {
   return gulp.src([
-      'node_modules/bootstrap/dist/css/bootstrap.min.css'
+      'node_modules/bootstrap/dist/css/bootstrap.min.css',
+      'node_modules/highlight.js/styles/zenburn.css',
     ])
     .pipe(gulp.dest('build/css'));
 });
@@ -25,7 +26,10 @@ gulp.task('jscopy', function () {
   return gulp.src([
       'node_modules/angular/angular.min.js',
       'node_modules/angular/angular.min.js.map',
-      'node_modules/angular/angular.js'
+      'node_modules/angular/angular.js',
+      'node_modules/angular-route/angular-route.min.js',
+      'node_modules/angular-route/angular-route.min.js.map',
+      'node_modules/angular-route/angular-route.js'
     ])
     .pipe(gulp.dest('build/js'));
 });

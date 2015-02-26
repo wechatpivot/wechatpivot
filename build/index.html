@@ -5,12 +5,23 @@
   <title>WeiXin API Debug</title>
 
   <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/zenburn.css">
+  <style>
+    pre {
+      background-color: transparent;
+      border: none;
+    }
+  </style>
   <style>
     .nav-tabs {
       margin-bottom: 20px;
     }
     .required {
       border-right: solid 4px #F2DEDE;
+    }
+    .form-control-feedback {
+      cursor: pointer;
+      pointer-events: auto;
     }
     footer {
       background-color: #666;
@@ -45,85 +56,7 @@
     </div>
   </nav>
 
-  <div class="container" ng-controller="boardCtrl">
-    <div class="row">
-      <div class="col-md-8">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label class="control-label col-md-3">服务器接口 url</label>
-            <div class="col-md-9">
-              <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" ng-model="data.url">
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <ul class="nav nav-tabs">
-      <li class="active"><a>文本消息</a></li>
-      <li><a>图片消息</a></li>
-      <li><a>语音消息</a></li>
-      <li><a>视频消息</a></li>
-      <li><a>地理位置消息</a></li>
-      <li><a>链接消息</a></li>
-      <li><a>事件消息</a></li>
-    </ul>
-
-    <div class="row">
-      <div class="col-md-4">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <div class="col-md-11 required">
-              <input type="text" class="form-control" placeholder="ToUserName: 开发者的微信号" ng-model="data.to_user_name">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md-11 required">
-              <input type="text" class="form-control" placeholder="FromUserName: 粉丝的 OpenID">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md-11 required">
-              <input type="text" class="form-control" placeholder="CreateTime: 消息创建时间（整型）">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md-11 required">
-              <input type="text" class="form-control" placeholder="MsgType: 消息类型（文本消息为 text）">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md-11 required">
-              <input type="text" class="form-control" placeholder="Content: 消息类型（文本消息内容）">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md-11 required">
-              <input type="text" class="form-control" placeholder="MsgId: 消息类型（消息id，64位整型）">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md-11 text-right">
-              <button type="button" class="btn btn-default" ng-click="validate()">Validate</button>
-            </div>
-           </div>
-        </form>
-      </div>
-
-      <div class="col-md-8">
-        <div class="panel panel-default">
-          <div class="panel-body">
-<pre><code>
-&lt;ToUserName&gt;&lt;![CDATA[to_user_name]]&gt;&lt;/ToUserName&gt;
-</code></pre>
-          </div>
-          <div class="panel-footer text-right">
-            <button type="button" class="btn btn-primary" ng-click="send()">Send</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="container" ng-view></div>
 
   <footer class="container-fluid">
     <div class="container">
@@ -139,6 +72,7 @@
   </footer>
 
   <script src="./js/angular.min.js" ng-csp></script>
+  <script src="./js/angular-route.min.js"></script>
   <script src="./js/weixin-api-debug.js"></script>
 
 </body>
