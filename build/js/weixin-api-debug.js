@@ -5,6 +5,7 @@ var angular = (typeof window !== "undefined" ? window.angular : typeof global !=
 // just require the controllers you want
 // controllers will require their own dependencies
 var message_text = require('./controllers/message_text');
+var message_event = require('./controllers/message_event');
 var routes = require('./bootstrap/routes');
 
 
@@ -14,7 +15,7 @@ angular.element(document).ready(function () {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./bootstrap/routes":123,"./controllers/message_text":126}],2:[function(require,module,exports){
+},{"./bootstrap/routes":123,"./controllers/message_event":126,"./controllers/message_text":127}],2:[function(require,module,exports){
 /*
 Syntax highlighting with language autodetection.
 https://highlightjs.org/
@@ -18171,6 +18172,11 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'MessageTextCtrl',
       controllerAs: 'ctrl'
     })
+    .when('/message/event', {
+      templateUrl: 'views/message/event.html',
+      controller: 'MessageEventCtrl',
+      controllerAs: 'ctrl'
+    })
     .otherwise({
       redirectTo: '/message/text'
     });
@@ -18268,7 +18274,7 @@ module.exports = {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"../directives/include_replace":127,"highlight.js":3,"lodash":116,"superagent":117}],125:[function(require,module,exports){
+},{"../directives/include_replace":128,"highlight.js":3,"lodash":116,"superagent":117}],125:[function(require,module,exports){
 var uuid = require('uuid');
 
 
@@ -18302,6 +18308,36 @@ var common = require('./_common');
 var generators = require('./_generators');
 
 
+var tpl = "<xml>\n  <ToUserName><![CDATA[{to_user_name}]]></ToUserName>\n  <FromUserName><![CDATA[{from_user_name}]]></FromUserName>\n  <CreateTime>{create_time}</CreateTime>\n  <MsgType><![CDATA[event]]></MsgType>\n  <Event><![CDATA[{event}]]></Event>\n  <EventKey><![CDATA[100000]]></EventKey>\n  <Ticket><![CDATA[gQGg8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xLzJraFBrUmJtSHk5bTNsdHVTMlRhAAIECMq9VAMEAAAAAA==]]></Ticket>\n</xml>\n";
+
+
+var MessageEventCtrl = function ($scope) {
+  var vm = this;
+
+  this.id = 'message-event';
+  this.tpl = tpl;
+
+  this.url = this.load_url();
+  this.model = this.load_model({ msg_type: 'event' });
+};
+
+MessageEventCtrl.$inject = ['$scope'];
+
+_.extend(MessageEventCtrl.prototype, common);
+_.extend(MessageEventCtrl.prototype, generators);
+
+app.controller('MessageEventCtrl', MessageEventCtrl);
+
+
+module.exports = {};
+
+},{"../bootstrap/app":122,"./_common":124,"./_generators":125,"lodash":116}],127:[function(require,module,exports){
+var _ = require('lodash');
+var app = require('../bootstrap/app');
+var common = require('./_common');
+var generators = require('./_generators');
+
+
 var tpl = "<xml>\n  <ToUserName><![CDATA[{to_user_name}]]></ToUserName>\n  <FromUserName><![CDATA[{from_user_name}]]></FromUserName>\n  <CreateTime>{create_time}</CreateTime>\n  <MsgType><![CDATA[text]]></MsgType>\n  <Content><![CDATA[{content}]]></Content>\n  <MsgId>{msg_id}</MsgId>\n</xml>\n";
 
 
@@ -18325,7 +18361,7 @@ app.controller('MessageTextCtrl', MessageTextCtrl);
 
 module.exports = {};
 
-},{"../bootstrap/app":122,"./_common":124,"./_generators":125,"lodash":116}],127:[function(require,module,exports){
+},{"../bootstrap/app":122,"./_common":124,"./_generators":125,"lodash":116}],128:[function(require,module,exports){
 var app = require('../bootstrap/app');
 
 

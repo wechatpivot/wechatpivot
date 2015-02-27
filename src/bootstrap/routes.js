@@ -7,6 +7,11 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'MessageTextCtrl',
       controllerAs: 'ctrl'
     })
+    .when('/message/event', {
+      templateUrl: 'views/message/event.html',
+      controller: 'MessageEventCtrl',
+      controllerAs: 'ctrl'
+    })
     .otherwise({
       redirectTo: '/message/text'
     });
