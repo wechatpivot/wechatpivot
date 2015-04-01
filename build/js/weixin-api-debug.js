@@ -7,6 +7,7 @@ var angular = (typeof window !== "undefined" ? window.angular : typeof global !=
 /* jshint ignore:start */
 var message_text = require('./controllers/message_text');
 var message_event_scan_subscribe = require('./controllers/message_event_scan_subscribe');
+var message_event_scan = require('./controllers/message_event_scan');
 var routes = require('./bootstrap/routes');
 /* jshint ignore:end */
 
@@ -16,7 +17,7 @@ angular.element(document).ready(function () {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./bootstrap/routes":123,"./controllers/message_event_scan_subscribe":126,"./controllers/message_text":127}],2:[function(require,module,exports){
+},{"./bootstrap/routes":123,"./controllers/message_event_scan":126,"./controllers/message_event_scan_subscribe":127,"./controllers/message_text":128}],2:[function(require,module,exports){
 /*
 Syntax highlighting with language autodetection.
 https://highlightjs.org/
@@ -23196,6 +23197,11 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'MessageEventScanSubscribeCtrl',
       controllerAs: 'ctrl'
     })
+    .when('/message/event/scan', {
+      templateUrl: 'views/message/event/scan.html',
+      controller: 'MessageEventScanCtrl',
+      controllerAs: 'ctrl'
+    })
     .otherwise({
       redirectTo: '/message/text'
     });
@@ -23289,7 +23295,7 @@ module.exports = {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"../directives/include_replace":128,"highlight.js":3,"lodash":116,"superagent":117}],125:[function(require,module,exports){
+},{"../directives/include_replace":129,"highlight.js":3,"lodash":116,"superagent":117}],125:[function(require,module,exports){
 var uuid = require('uuid');
 
 
@@ -23323,6 +23329,39 @@ var common = require('./_common');
 var generators = require('./_generators');
 
 
+var tpl = "<xml>\n  <ToUserName><![CDATA[{to_user_name}]]></ToUserName>\n  <FromUserName><![CDATA[{from_user_name}]]></FromUserName>\n  <CreateTime>{create_time}</CreateTime>\n  <MsgType><![CDATA[{msg_type}]]></MsgType>\n  <Event><![CDATA[{event}]]></Event>\n  <EventKey><![CDATA[{scene_id}]]></EventKey>\n  <Ticket><![CDATA[{ticket}]]></Ticket>\n</xml>\n";
+
+
+var MessageEventScanCtrl = function () {
+  this.id = 'message-event-scan';
+  this.tpl = tpl;
+
+  this.prefill = {
+    msg_type: 'event',
+    event: 'SCAN',
+  };
+
+  this.url = this.load_url();
+  this.model = this.load_model(this.prefill);
+};
+
+MessageEventScanCtrl.$inject = ['$scope'];
+
+_.extend(MessageEventScanCtrl.prototype, common);
+_.extend(MessageEventScanCtrl.prototype, generators);
+
+app.controller('MessageEventScanCtrl', MessageEventScanCtrl);
+
+
+module.exports = {};
+
+},{"../bootstrap/app":122,"./_common":124,"./_generators":125,"lodash":116}],127:[function(require,module,exports){
+var _ = require('lodash');
+var app = require('../bootstrap/app');
+var common = require('./_common');
+var generators = require('./_generators');
+
+
 var tpl = "<xml>\n  <ToUserName><![CDATA[{to_user_name}]]></ToUserName>\n  <FromUserName><![CDATA[{from_user_name}]]></FromUserName>\n  <CreateTime>{create_time}</CreateTime>\n  <MsgType><![CDATA[{msg_type}]]></MsgType>\n  <Event><![CDATA[{event}]]></Event>\n  <EventKey><![CDATA[qrscene_{scene_id}]]></EventKey>\n  <Ticket><![CDATA[{ticket}]]></Ticket>\n</xml>\n";
 
 
@@ -23349,7 +23388,7 @@ app.controller('MessageEventScanSubscribeCtrl', MessageEventScanSubscribeCtrl);
 
 module.exports = {};
 
-},{"../bootstrap/app":122,"./_common":124,"./_generators":125,"lodash":116}],127:[function(require,module,exports){
+},{"../bootstrap/app":122,"./_common":124,"./_generators":125,"lodash":116}],128:[function(require,module,exports){
 var _ = require('lodash');
 var app = require('../bootstrap/app');
 var common = require('./_common');
@@ -23377,7 +23416,7 @@ app.controller('MessageTextCtrl', MessageTextCtrl);
 
 module.exports = {};
 
-},{"../bootstrap/app":122,"./_common":124,"./_generators":125,"lodash":116}],128:[function(require,module,exports){
+},{"../bootstrap/app":122,"./_common":124,"./_generators":125,"lodash":116}],129:[function(require,module,exports){
 var app = require('../bootstrap/app');
 
 

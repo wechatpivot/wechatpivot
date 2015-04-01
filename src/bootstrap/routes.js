@@ -12,6 +12,11 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'MessageEventScanSubscribeCtrl',
       controllerAs: 'ctrl'
     })
+    .when('/message/event/scan', {
+      templateUrl: 'views/message/event/scan.html',
+      controller: 'MessageEventScanCtrl',
+      controllerAs: 'ctrl'
+    })
     .otherwise({
       redirectTo: '/message/text'
     });
