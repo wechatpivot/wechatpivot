@@ -4,10 +4,11 @@ var angular = (typeof window !== "undefined" ? window.angular : typeof global !=
 
 // just require the controllers you want
 // controllers will require their own dependencies
+/* jshint ignore:start */
 var message_text = require('./controllers/message_text');
 var message_event_scan_subscribe = require('./controllers/message_event_scan_subscribe');
 var routes = require('./bootstrap/routes');
-
+/* jshint ignore:end */
 
 angular.element(document).ready(function () {
   angular.bootstrap(document, ['weixin-api-debug']);
@@ -23206,15 +23207,9 @@ var _ = require('lodash');
 var angular = (typeof window !== "undefined" ? window.angular : typeof global !== "undefined" ? global.angular : null);
 var hljs = require('highlight.js');
 var request = require('superagent');
+/* jshint ignore:start */
 var include_replace_directive = require('../directives/include_replace');
-
-
-var LOREM_IPSUM = [
-  '我能吞下玻璃而不伤身体',
-  '学選上件飯要提会線本公唐。施朝保由殺来社機三成事催覧成社周描万。',
-  '以績幕族施僚社政制度則欧。敦全済改員著文知待長底際問。失願選体索止西形乱成物明殺禁入財。低天駅支界韓線銅失仕点秘審職掲揺止確世文。',
-  '望構質決芸転力来息位責囲野吸稿。学長母行山計好課東経多島。新増農覧等属食間買前聞諾初覚指報経。芳即吉天能続紙作民散政広創趣申界食。朝加仏球曜束楽法組楽商罪分色治。法泳目季生整内文供毎判松私無見削都覧優江。項論十地転子闘毎食紙止相。',
-];
+/* jshint ignore:end */
 
 
 function _highlight(xml) {
@@ -23238,6 +23233,7 @@ module.exports = {
 
   load_model: function (options) {
     var model = {};
+
     if (localStorage[this.id]) {
       model = JSON.parse(localStorage[this.id]);
     }
@@ -23263,6 +23259,7 @@ module.exports = {
     // ** _.template uses eval, which is not allowed in a chrome extension
     var xml = this.tpl;
     var placeholder;
+
     for (var k in this.model) {
       placeholder = '{' + k + '}';
       xml = xml.replace(placeholder, this.model[k]);
@@ -23329,9 +23326,7 @@ var generators = require('./_generators');
 var tpl = "<xml>\n  <ToUserName><![CDATA[{to_user_name}]]></ToUserName>\n  <FromUserName><![CDATA[{from_user_name}]]></FromUserName>\n  <CreateTime>{create_time}</CreateTime>\n  <MsgType><![CDATA[{msg_type}]]></MsgType>\n  <Event><![CDATA[{event}]]></Event>\n  <EventKey><![CDATA[qrscene_{scene_id}]]></EventKey>\n  <Ticket><![CDATA[{ticket}]]></Ticket>\n</xml>\n";
 
 
-var MessageEventScanSubscribeCtrl = function ($scope) {
-  var vm = this;
-
+var MessageEventScanSubscribeCtrl = function () {
   this.id = 'message-event-scan-subscribe';
   this.tpl = tpl;
 
@@ -23364,14 +23359,12 @@ var generators = require('./_generators');
 var tpl = "<xml>\n  <ToUserName><![CDATA[{to_user_name}]]></ToUserName>\n  <FromUserName><![CDATA[{from_user_name}]]></FromUserName>\n  <CreateTime>{create_time}</CreateTime>\n  <MsgType><![CDATA[text]]></MsgType>\n  <Content><![CDATA[{content}]]></Content>\n  <MsgId>{msg_id}</MsgId>\n</xml>\n";
 
 
-var MessageTextCtrl = function ($scope) {
-  var vm = this;
-
+var MessageTextCtrl = function () {
   this.id = 'message-text';
   this.tpl = tpl;
 
   this.url = this.load_url();
-  this.model = this.load_model({ msg_type: 'text' });
+  this.model = this.load_model({msg_type: 'text'});
 };
 
 MessageTextCtrl.$inject = ['$scope'];

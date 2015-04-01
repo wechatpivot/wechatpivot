@@ -7,9 +7,7 @@ var fs = require('fs');
 var tpl = fs.readFileSync(__dirname + '/../xmls/message_event_scan_subscribe.xml', 'utf8');
 
 
-var MessageEventScanSubscribeCtrl = function ($scope) {
-  var vm = this;
-
+var MessageEventScanSubscribeCtrl = function () {
   this.id = 'message-event-scan-subscribe';
   this.tpl = tpl;
 

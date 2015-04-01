@@ -4,7 +4,8 @@
   "description": "weixin-api-debug",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "jscs": "jscs ./src/*.js ./src/**/*.js --color",
+    "jshint": "jshint ./src/*.js ./src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -36,7 +37,9 @@
     "browserify-shim": "^3.8.2",
     "exorcist": "^0.1.6",
     "gulp": "^3.8.10",
-    "gulp-jshint": "^1.9.0",
+    "gulp-shell": "^0.4.0",
+    "jscs": "^1.12.0",
+    "jshint": "^2.6.3",
     "vinyl-source-stream": "^1.0.0"
   },
   "dependencies": {
@@ -45,7 +48,6 @@
     "bootstrap": "^3.3.2",
     "highlight.js": "^8.4.0",
     "lodash": "^3.6.0",
-    "q": "^1.2.0",
     "superagent": "^0.21.0",
     "uuid": "^2.0.1"
   }

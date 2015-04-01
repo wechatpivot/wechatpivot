@@ -1,0 +1,60 @@
+{
+    // ECMAScript 5.
+    // "es5"           : true,   // Allow ECMAScript 5 syntax.
+    // ** ES5 option is now set per default
+    "strict"        : false,  // Require `use strict` pragma in every file.
+    "globalstrict"  : false,  // Allow global "use strict" (also enables 'strict').
+
+    // The Good Parts.
+    // "asi"           : true,  // true: Tolerate Automatic Semicolon Insertion (no semicolons).
+    // ** always semicolons
+    "bitwise"       : true,   // true: Prohibit bitwise operators (&, |, ^, etc.).
+    "boss"          : false,  // true: Tolerate assignments inside if, for & while. Usually conditions & loops are for comparison, not assignments.
+    "curly"         : true,   // true: Require {} for every new block or scope.
+    "eqeqeq"        : true,   // true: Require triple equals i.e. `===`.
+    "eqnull"        : false,  // true: Tolerate use of `== null`.
+    "evil"          : false,  // true: Tolerate use of `eval`.
+    "expr"          : false,  // true: Tolerate `ExpressionStatement` as Programs.
+    "forin"         : false,  // false: Tolerate `for in` loops without `hasOwnPrototype`.
+    "latedef"       : true,   // true: Prohipit variable use before definition.
+    "loopfunc"      : false,  // true: Allow functions to be defined within loops.
+    "noarg"         : true,   // true: Prohibit use of `arguments.caller` and `arguments.callee`.
+    "scripturl"     : true,   // true: Tolerate script-targeted URLs.
+    "shadow"        : false,  // ** not sure what it does
+    "supernew"      : false,  // true: Tolerate `new function () { ... };` and `new Object;`.
+    "undef"         : true,   // true: Require all non-global variables be declared before they are used.
+
+    // hbrls
+    "freeze"        : true,     // true: prohibits overwriting prototypes of native objects such as Array, Date etc.
+    "funcscope"     : false,    // true: Tolerate defining variables inside control statements
+    "nonbsp"        : true,     // true: Prohibit "non-breaking whitespace" characters.
+    "nonew"         : false,    // true: Prohibit use of constructors for side-effects (without assignment)
+    "notypeof"      : false,    // true: Tolerate invalid typeof operator values
+    // "singleGroups"  : true,     // true: Warning: Unnecessary grouping operator. e.g. delete(obj.attr);
+    // ** the .jsx uses `return (<div />)` a lot
+    "unused"        : true,     // true: Require all defined variables be used
+    "esnext"        : false,    // true: Allow ES.next (ES6) syntax (ex: `const`)
+    "lastsemic"     : false,    // true: Tolerate omitting a semicolon for the last statement of a 1-line block
+    "moz"           : false,    // true: Allow Mozilla specific syntax (extends and overrides esnext features)
+    "noyield"       : false,    // true: Tolerate generator functions with no yield statement in them.
+    "plusplus"      : true,     // true: Prohibit use of `++` & `--`
+    "proto"         : false,    // true: Tolerate using the `__proto__` property
+    "withstmt"      : false,
+
+    "debug"         : false,    // true: Allow debugger statements e.g. browser breakpoints.
+    "devel"         : true,     // true: Allow developments statements e.g. `console.log();`.
+    "browser"       : true,     // Standard browser globals e.g. `window`, `document`.
+    "browserify"    : true,     // Browserify
+    "jasmine"       : true,     // Jasmine
+    "mocha"         : true,     // Mocha
+
+    "maxcomplexity" : false,    // {int} Max cyclomatic complexity per function
+    "maxdepth"      : false,    // {int} Max depth of nested blocks (within functions)
+    "maxparams"     : false,    // {int} Max number of formal params allowed per function
+    "maxstatements" : false,    // {int} Max number statements per function
+
+    "globals"       : {         // additional predefined global variables,
+        "jest": false,
+        "expect": true  // ** FIXME:
+    }
+}

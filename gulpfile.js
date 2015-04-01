@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var jshint = require('gulp-jshint');
+var shell = require('gulp-shell');
 var source = require('vinyl-source-stream');
 var exorcist = require('exorcist');
 var browserify = require('browserify');
@@ -14,12 +14,9 @@ gulp.task('csscopy', function () {
 });
 
 
-gulp.task('lint', function () {
-  return gulp.src('src/**/*.jsx')
-    .pipe(jshint())
-      .pipe(jshint.reporter('default'))
-      .pipe(jshint.reporter('fail'));
-});
+gulp.task('jscs', shell.task(['npm run jscs -s'], { quiet: true, errorMessage: '\n<%= error.stdout %>' }));
+
+gulp.task('jshint', ['jscs'], shell.task(['npm run jshint -s'], { quiet: true, errorMessage: '\n<%= error.stdout %>' }));
 
 
 gulp.task('jscopy', function () {
@@ -35,7 +32,7 @@ gulp.task('jscopy', function () {
 });
 
 
-gulp.task('js', ['lint'], function () {
+gulp.task('js', ['jscs', 'jshint'], function () {
   var b = browserify({
     entries: ['./src/index.js'],
     debug: true

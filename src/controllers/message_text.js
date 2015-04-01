@@ -7,14 +7,12 @@ var fs = require('fs');
 var tpl = fs.readFileSync(__dirname + '/../xmls/message_text.xml', 'utf8');
 
 
-var MessageTextCtrl = function ($scope) {
-  var vm = this;
-
+var MessageTextCtrl = function () {
   this.id = 'message-text';
   this.tpl = tpl;
 
   this.url = this.load_url();
-  this.model = this.load_model({ msg_type: 'text' });
+  this.model = this.load_model({msg_type: 'text'});
 };
 
 MessageTextCtrl.$inject = ['$scope'];
