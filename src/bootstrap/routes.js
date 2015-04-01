@@ -7,9 +7,9 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'MessageTextCtrl',
       controllerAs: 'ctrl'
     })
-    .when('/message/event', {
-      templateUrl: 'views/message/event.html',
-      controller: 'MessageEventCtrl',
+    .when('/message/event/scan_subscribe', {
+      templateUrl: 'views/message/event/scan_subscribe.html',
+      controller: 'MessageEventScanSubscribeCtrl',
       controllerAs: 'ctrl'
     })
     .otherwise({

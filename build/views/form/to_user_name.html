@@ -1,6 +1,9 @@
 <div class="form-group has-feedback">
-  <div class="col-md-11 required">
-    <input type="text" class="form-control" placeholder="ToUserName: 开发者的微信号" ng-model="ctrl.model.to_user_name">
+  <label class="col-md-4 control-label required">
+    ToUserName
+  </label>
+  <div class="col-md-8">
+    <input type="text" class="form-control" placeholder="开发者的微信号" ng-model="ctrl.model.to_user_name">
     <i class="glyphicon glyphicon-refresh form-control-feedback" ng-click="ctrl.gen_uuid('to_user_name')"></i>
   </div>
 </div>

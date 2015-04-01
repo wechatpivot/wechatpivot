@@ -48,7 +48,7 @@ module.exports = {
   },
 
   reset: function () {
-    this.model = {};
+    this.model = _.extend({}, this.prefill);
 
     this.save_model();
   },

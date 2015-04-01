@@ -1,0 +1,9 @@
+<xml>
+  <ToUserName><![CDATA[{to_user_name}]]></ToUserName>
+  <FromUserName><![CDATA[{from_user_name}]]></FromUserName>
+  <CreateTime>{create_time}</CreateTime>
+  <MsgType><![CDATA[{msg_type}]]></MsgType>
+  <Event><![CDATA[{event}]]></Event>
+  <EventKey><![CDATA[qrscene_{scene_id}]]></EventKey>
+  <Ticket><![CDATA[{ticket}]]></Ticket>
+</xml>

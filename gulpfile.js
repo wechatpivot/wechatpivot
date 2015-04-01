@@ -14,7 +14,7 @@ gulp.task('csscopy', function () {
 });
 
 
-gulp.task('jshint', function () {
+gulp.task('lint', function () {
   return gulp.src('src/**/*.jsx')
     .pipe(jshint())
       .pipe(jshint.reporter('default'))
@@ -35,7 +35,7 @@ gulp.task('jscopy', function () {
 });
 
 
-gulp.task('js', ['jshint'], function () {
+gulp.task('js', ['lint'], function () {
   var b = browserify({
     entries: ['./src/index.js'],
     debug: true
@@ -48,4 +48,4 @@ gulp.task('js', ['jshint'], function () {
 });
 
 
-gulp.task('build', ['jscopy']);
+gulp.task('build', ['lint']);

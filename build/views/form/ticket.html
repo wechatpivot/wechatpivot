@@ -1,0 +1,9 @@
+<div class="form-group has-feedback">
+  <label class="col-md-4 control-label required">
+    Ticket
+  </label>
+  <div class="col-md-8">
+    <input type="text" class="form-control" placeholder="二维码的 ticket" ng-model="ctrl.model.ticket">
+    <i class="glyphicon glyphicon-refresh form-control-feedback" ng-click="ctrl.gen_uuid('ticket')"></i>
+  </div>
+</div>

@@ -1,6 +1,9 @@
 <div class="form-group has-feedback">
-  <div class="col-md-11 required">
-    <input type="text" class="form-control" placeholder="CreateTime: 消息创建时间（整型，无 ms）" ng-model="ctrl.model.create_time">
+  <label class="col-md-4 control-label required">
+    CreateTime
+  </label>
+  <div class="col-md-8">
+    <input type="text" class="form-control" placeholder="消息创建时间（整型，无 ms）" ng-model="ctrl.model.create_time">
     <i class="glyphicon glyphicon-refresh form-control-feedback" ng-click="ctrl.gen_timestamp('create_time')"></i>
   </div>
 </div>

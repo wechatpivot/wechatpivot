@@ -3,7 +3,7 @@ var angular = require('angular');
 // just require the controllers you want
 // controllers will require their own dependencies
 var message_text = require('./controllers/message_text');
-var message_event = require('./controllers/message_event');
+var message_event_scan_subscribe = require('./controllers/message_event_scan_subscribe');
 var routes = require('./bootstrap/routes');
 
 
