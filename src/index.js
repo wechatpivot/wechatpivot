@@ -6,6 +6,7 @@ var angular = require('angular');
 var message_text = require('./controllers/message_text');
 var message_event_scan_subscribe = require('./controllers/message_event_scan_subscribe');
 var message_event_scan = require('./controllers/message_event_scan');
+var setup_register = require('./controllers/setup_register');
 var routes = require('./bootstrap/routes');
 /* jshint ignore:end */
 

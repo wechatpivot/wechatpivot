@@ -2,6 +2,11 @@ var app = require('./app');
 
 app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider
+    .when('/setup/register', {
+      templateUrl: 'views/setup/register.html',
+      controller: 'SetupRegisterCtrl',
+      controllerAs: 'ctrl'
+    })
     .when('/message/text', {
       templateUrl: 'views/message/text.html',
       controller: 'MessageTextCtrl',

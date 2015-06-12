@@ -1,0 +1,55 @@
+<div class="row" ng-include="'views/_url.html'"></div>
+
+<div class="alert alert-warning">
+  <p>
+    <em>* 开发者提交服务器信息后，微信服务器将发送 GET 请求到填写的服务器地址 URL 上，从而验证开发者服务器地址的有效性</em>
+    <a href="http://mp.weixin.qq.com/wiki/17/2d4265491f12608cd170a95559800f2d.html" target="_blank" title="第二步：验证服务器地址的有效性">
+      <i class="glyphicon glyphicon-question-sign"></i>
+    </a>
+  </p>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <form class="form-horizontal">
+      <div class="form-group has-feedback">
+        <label class="col-md-4 control-label required">
+          Token
+        </label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" placeholder="Token" ng-model="ctrl.model.token">
+        </div>
+      </div>
+      <div class="form-group has-feedback">
+        <label class="col-md-4 control-label required">
+          Timestamp
+        </label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" placeholder="时间戳" ng-model="ctrl.model.timestamp">
+          <i class="glyphicon glyphicon-refresh form-control-feedback" ng-click="ctrl.gen_timestamp('timestamp')"></i>
+        </div>
+      </div>
+      <div class="form-group has-feedback">
+        <label class="col-md-4 control-label required">
+          Nonce
+        </label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" placeholder="随机数" ng-model="ctrl.model.nonce">
+          <i class="glyphicon glyphicon-refresh form-control-feedback" ng-click="ctrl.gen_timestamp('nonce')"></i>
+        </div>
+      </div>
+      <div class="form-group has-feedback">
+        <label class="col-md-4 control-label required">
+          Echostr
+        </label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" placeholder="随机字符串" ng-model="ctrl.model.echostr">
+          <i class="glyphicon glyphicon-refresh form-control-feedback" ng-click="ctrl.gen_uuid('echostr')"></i>
+        </div>
+      </div>
+      <div include-replace="views/form/_buttons.html"></div>
+    </form>
+  </div>
+
+  <div class="col-md-8" ng-include="'views/_panel.html'"></div>
+</div>
