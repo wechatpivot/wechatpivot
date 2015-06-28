@@ -45,4 +45,6 @@ gulp.task('js', ['jscs', 'jshint'], function () {
 });
 
 
-gulp.task('build', ['lint']);
+gulp.task('default', ['js']);
+
+gulp.task('build', ['csscopy', 'jscopy', 'js']);

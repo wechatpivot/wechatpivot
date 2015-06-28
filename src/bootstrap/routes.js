@@ -23,6 +23,6 @@ app.config(['$routeProvider', function ($routeProvider) {
       controllerAs: 'ctrl'
     })
     .otherwise({
-      redirectTo: '/message/text'
+      redirectTo: '/setup/register'
     });
 }]);
