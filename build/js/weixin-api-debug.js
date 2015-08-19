@@ -2,15 +2,16 @@
 (function (global){
 var angular = (typeof window !== "undefined" ? window.angular : typeof global !== "undefined" ? global.angular : null);
 
+
 // just require the controllers you want
 // controllers will require their own dependencies
-/* jshint ignore:start */
-var message_text = require('./controllers/message_text');
-var message_event_scan_subscribe = require('./controllers/message_event_scan_subscribe');
-var message_event_scan = require('./controllers/message_event_scan');
-var setup_register = require('./controllers/setup_register');
-var routes = require('./bootstrap/routes');
-/* jshint ignore:end */
+require('./controllers/message_text');
+require('./controllers/message_event_scan_subscribe');
+require('./controllers/message_event_scan');
+require('./controllers/tools_oauth2');
+require('./controllers/setup_register');
+require('./bootstrap/routes');
+
 
 angular.element(document).ready(function () {
   angular.bootstrap(document, ['weixin-api-debug']);
@@ -18,7 +19,7 @@ angular.element(document).ready(function () {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./bootstrap/routes":291,"./controllers/message_event_scan":294,"./controllers/message_event_scan_subscribe":295,"./controllers/message_text":296,"./controllers/setup_register":297}],2:[function(require,module,exports){
+},{"./bootstrap/routes":291,"./controllers/message_event_scan":294,"./controllers/message_event_scan_subscribe":295,"./controllers/message_text":296,"./controllers/setup_register":297,"./controllers/tools_oauth2":298}],2:[function(require,module,exports){
 // http://wiki.commonjs.org/wiki/Unit_Testing/1.0
 //
 // THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
@@ -42631,6 +42632,11 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'MessageEventScanCtrl',
       controllerAs: 'ctrl'
     })
+    .when('/tools/oauth2', {
+      templateUrl: 'views/tools/oauth2.html',
+      controller: 'ToolsOAuth2Ctrl',
+      controllerAs: 'ctrl'
+    })
     .otherwise({
       redirectTo: '/setup/register'
     });
@@ -42724,7 +42730,7 @@ module.exports = {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"../directives/include_replace":298,"highlight.js":171,"lodash":284,"superagent":285}],293:[function(require,module,exports){
+},{"../directives/include_replace":299,"highlight.js":171,"lodash":284,"superagent":285}],293:[function(require,module,exports){
 var uuid = require('uuid');
 
 
@@ -42900,6 +42906,53 @@ app.controller('SetupRegisterCtrl', SetupRegisterCtrl);
 module.exports = {};
 
 },{"../bootstrap/app":290,"./_common":292,"./_generators":293,"crypto":11,"lodash":284,"superagent":285}],298:[function(require,module,exports){
+var _ = require('lodash');
+var app = require('../bootstrap/app');
+var common = require('./_common');
+var generators = require('./_generators');
+
+
+var ToolsOAuth2Ctrl = function () {
+  this.id = 'tools-oauth2';
+  this.tpl = [
+    'https://open.weixin.qq.com/connect/oauth2/authorize',
+    '?appid={appid}',
+    '&redirect_uri={redirect_uri}',
+    '&response_type={response_type}',
+    '&scope={scope}',
+    '&state={state}',
+    '#wechat_redirect',
+  ].join('');
+
+  this.prefill = {
+    response_type: 'code',
+    scope: 'snsapi_base',
+  };
+
+  this.url = this.load_url();
+  this.model = this.load_model(this.prefill);
+};
+
+ToolsOAuth2Ctrl.$inject = ['$scope'];
+_.extend(ToolsOAuth2Ctrl.prototype, common);
+_.extend(ToolsOAuth2Ctrl.prototype, generators);
+
+
+ToolsOAuth2Ctrl.prototype._validate = ToolsOAuth2Ctrl.prototype.validate;
+ToolsOAuth2Ctrl.prototype.validate = function () {
+  this.model.redirect_uri = encodeURIComponent(this.model.raw_url);
+  this._validate();
+};
+
+ToolsOAuth2Ctrl.prototype.send = function () {};
+
+
+app.controller('ToolsOAuth2Ctrl', ToolsOAuth2Ctrl);
+
+
+module.exports = {};
+
+},{"../bootstrap/app":290,"./_common":292,"./_generators":293,"lodash":284}],299:[function(require,module,exports){
 var app = require('../bootstrap/app');
 
 

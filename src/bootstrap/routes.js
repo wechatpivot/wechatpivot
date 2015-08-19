@@ -22,6 +22,11 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'MessageEventScanCtrl',
       controllerAs: 'ctrl'
     })
+    .when('/tools/oauth2', {
+      templateUrl: 'views/tools/oauth2.html',
+      controller: 'ToolsOAuth2Ctrl',
+      controllerAs: 'ctrl'
+    })
     .otherwise({
       redirectTo: '/setup/register'
     });
