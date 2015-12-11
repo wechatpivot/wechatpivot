@@ -1,8 +1,0 @@
-<xml>
-  <!-- This will be a GET request. Not xml POST. -->
-  <Token>{token}</Token>
-  <Timestamp>{timestamp}</Timestamp>
-  <Nonce>{nonce}</Nonce>
-  <Echostr>{echostr}</Echostr>
-  <Signature>{signature}</Signature>
-</xml>

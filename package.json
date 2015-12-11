@@ -3,10 +3,7 @@
   "version": "0.1.0",
   "description": "weixin-api-debug",
   "main": "index.js",
-  "scripts": {
-    "jscs": "jscs ./src/*.js ./src/**/*.js --color",
-    "jshint": "jshint ./src/*.js ./src/**/*.js"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/hbrls/weixin-api-debug.git"
@@ -22,33 +19,23 @@
     "url": "https://github.com/hbrls/weixin-api-debug/issues"
   },
   "homepage": "https://github.com/hbrls/weixin-api-debug",
-  "browserify-shim": {
-    "angular": "global:angular"
-  },
-  "browserify": {
-    "transform": [
-      "brfs",
-      "browserify-shim"
-    ]
-  },
   "devDependencies": {
-    "brfs": "^1.4.0",
-    "browserify": "^8.0.3",
-    "browserify-shim": "^3.8.2",
-    "exorcist": "^0.1.6",
+    "babel-core": "^5.8.34",
+    "babel-loader": "^5.4.0",
+    "css-loader": "^0.23.0",
     "gulp": "^3.9.0",
-    "gulp-shell": "^0.4.0",
-    "jscs": "^1.12.0",
-    "jshint": "^2.6.3",
-    "vinyl-source-stream": "^1.0.0"
+    "gulp-shell": "^0.5.1",
+    "node-sass": "^3.4.2",
+    "postcss-loader": "^0.8.0",
+    "sass-loader": "^3.1.2",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.9"
   },
   "dependencies": {
-    "angular": "^1.3.14",
-    "angular-route": "^1.3.14",
-    "bootstrap": "^3.3.2",
-    "highlight.js": "^8.4.0",
-    "lodash": "^3.6.0",
+    "bootstrap": "^3.3.6",
+    "highlight.js": "^8.9.1",
     "superagent": "^0.21.0",
-    "uuid": "^2.0.1"
+    "uuid": "^2.0.1",
+    "vue": "^1.0.11-csp"
   }
 }

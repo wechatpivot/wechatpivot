@@ -1,0 +1,11 @@
+.Setup-backdrop {
+  &.active {
+    bottom: 0;
+  }
+}
+
+.Setup-modal {
+  &.active {
+    display: block;
+  }
+}
