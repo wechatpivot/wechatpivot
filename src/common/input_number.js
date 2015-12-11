@@ -3,7 +3,7 @@ const InputNumber = {
 
   data: function () {
     return {
-      className: 'col-sm-9',
+      className: 'col-sm-8',
     }
   },
 

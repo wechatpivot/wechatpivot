@@ -3,7 +3,7 @@ const InputTimestamp = {
 
   data: function () {
     return {
-      className: 'col-sm-9',
+      className: 'col-sm-8',
     }
   },
 
@@ -16,7 +16,7 @@ const InputTimestamp = {
 
   methods: {
     gen: function () {
-      this.value = Date.now();
+      this.value = Math.floor(Date.now() / 1000);
     }
   },
 

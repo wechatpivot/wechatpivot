@@ -1,9 +1,6 @@
-import Vue from 'vue';
 import superagent from 'superagent';
-import InputNumber from '../common/input_number';
-import InputString from '../common/input_string';
-import InputTimestamp from '../common/input_timestamp';
 import {generate_signature} from '../utils/signature';
+import {actions} from '../stores';
 import './style';
 
 
@@ -27,14 +24,8 @@ function _setSetup(url, token) {
 }
 
 
-new Vue({
+const Setup = {
   el: '.js-setup',
-
-  components: {
-    'input-number': InputNumber,
-    'input-string': InputString,
-    'input-timestamp': InputTimestamp,
-  },
 
   data: {
     isActive: false,
@@ -95,5 +86,10 @@ new Vue({
     const {url, token} = _getSetup();
     this.url = url;
     this.token = token;
+
+    actions.init(this.url, this.token);
   },
-});
+};
+
+
+export default Setup;

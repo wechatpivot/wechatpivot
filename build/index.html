@@ -13,9 +13,54 @@
     }
   </style>
   <style>
-    .nav-tabs {
-      margin-bottom: 20px;
+    [v-cloak] {
+      display: none;
     }
+
+    .Nav {
+      margin-bottom: 0;
+      border-bottom: none;
+      min-height: 40px;
+    }
+
+    .Nav .navbar-brand {
+      height: 40px;
+      padding: 10px 15px;
+      line-height: 20px;
+    }
+
+    .Nav .navbar-nav > li > a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .Subnav {
+      min-height: 30px;
+      border-bottom: none;
+    }
+
+    .Subnav .navbar-brand {
+      visibility: hidden;
+      height: 30px;
+      padding: 5px 15px;
+      line-height: 20px;
+    }
+
+    .Subnav .navbar-nav > li > a {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      cursor: pointer;
+      background-color: #f8f8f8;
+    }
+
+    .Subnav .navbar-nav > .active > a,
+    .Subnav .navbar-nav > .active > a:focus,
+    .Subnav .navbar-nav > .active > a:hover {
+      box-shadow: #ccc 0 2px 0;
+      background-color: #f8f8f8;
+    }
+
     .xml-builder .control-label {
       text-align: right;
       font-size: 12px;
@@ -43,18 +88,20 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default Nav">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">WeiXin API Debug</a>
       </div>
 
       <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#/message/text">接收普通消息</a></li>
+        <ul class="nav navbar-nav js-nav" v-cloak>
+          <li v-for="n in navs" :class="{active: n.active}"><a>{{ n.text }}</a></li>
           <li><a href="#/message/event/scan_subscribe">接收事件推送</a></li>
           <li><a href="#/tools/oauth2">小工具</a></li>
-          <li class="Setup js-setup">
+        </ul>
+        <ul class="nav navbar-nav pull-right Setup js-setup" v-cloak>
+          <li>
             <a @click="isActive = true"><i class="glyphicon glyphicon-cog"></i></a>
             <div class="modal fade Setup-modal" tabindex="-1" :class="{active: isActive, in: isActive}">
               <div class="modal-backdrop fade Setup-backdrop" :class="{active: isActive, in: isActive}" @click="close"></div>
@@ -75,27 +122,27 @@
                     </div>
                     <form class="form-horizontal">
                       <div class="form-group">
-                        <label class="col-sm-3 control-label required">服务器接口 url</label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-4 control-label required">服务器接口 url</label>
+                        <div class="col-sm-8">
                           <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" v-model="url">
                         </div>
                       </div>
                       <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label required">Token</label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-4 control-label required">Token</label>
+                        <div class="col-sm-8">
                           <input type="text" class="form-control" placeholder="Token" v-model="token">
                         </div>
                       </div>
                       <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label required">Timestamp</label>
+                        <label class="col-sm-4 control-label required">Timestamp</label>
                         <input-timestamp placeholder="时间戳" :value.sync="timestamp"></input-timestamp>
                       </div>
                       <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label required">Nonce</label>
+                        <label class="col-sm-4 control-label required">Nonce</label>
                         <input-number placeholder="随机数" :value.sync="nonce"></input-number>
                       </div>
                       <div class="form-group has-feedback">
-                        <label class="col-sm-3 control-label required">Echostr</label>
+                        <label class="col-sm-4 control-label required">Echostr</label>
                         <input-string placeholder="随机字符串" :value.sync="echo_str"></input-string>
                       </div>
                     </form>
@@ -114,7 +161,59 @@
     </div>
   </nav>
 
-  <div class="container" ng-view></div>
+  <nav class="navbar navbar-default Subnav js-subnav">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">WeiXin API Debug</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a>文本消息</a></li>
+          <li class="disabled"><a>图片消息</a></li>
+          <li class="disabled"><a>语音消息</a></li>
+          <li class="disabled"><a>视频消息</a></li>
+          <li class="disabled"><a>小视频消息</a></li>
+          <li class="disabled"><a>地理位置消息</a></li>
+          <li class="disabled"><a>链接消息</a></li>
+          <li><a href="http://mp.weixin.qq.com/wiki/10/79502792eef98d6e0c6e1739da387346.html" target="_blank"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container Panel js-panel" v-cloak>
+    <div class="row">
+      <div class="col-md-4">
+        <form class="form-horizontal">
+          <to-user-name :value.sync="to_user_name"></to-user-name>
+          <from-user-name :value.sync="from_user_name"></from-user-name>
+          <create-time :value.sync="create_time"></create-time>
+          <content :value.sync="content"></content>
+          <msg-id :value.sync="msg_id"></msg-id>
+          <div class="form-group">
+            <div class="col-md-12 text-right">
+              <a class="btn btn-link" @click="reset">Reset</a>
+              <button type="button" class="btn btn-default" @click="validate">Validate</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <code class="hidden" v-el:code-plain>{{ xml }}</code>
+            <pre><code v-el:code-pretty class="xml"></code></pre>
+            <textarea v-if="msgError">{{ msgError }}</textarea>
+            <textarea v-if="msgSuccess">{{ msgSuccess }}</textarea>
+          </div>
+          <div class="panel-footer text-right">
+            <button type="button" class="btn btn-primary" @click="send">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer class="container-fluid">
     <div class="container">
