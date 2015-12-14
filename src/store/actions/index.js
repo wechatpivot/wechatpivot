@@ -1,17 +1,27 @@
 import superagent from 'superagent';
+import localforage from 'localforage';
 import * as types from '../mutations/types';
-import * as cache from './cache';
 import {generate_signature} from '../../utils/signature';
 
 
+const CACHE_KEY_SETUP = 'setup-v1';
+
+
 export const init = function ({dispatch}) {
-  let {url, token} = cache.getSetup();
-  dispatch(types.INIT, url, token);
+  localforage.getItem(CACHE_KEY_SETUP, function (err, value) {
+    if (!value) {
+      value = {};
+    }
+
+    let {url, token} = value;
+    dispatch(types.INIT, url, token);
+  });
 };
 
 export const updateSetup = function ({dispatch}, url, token) {
-  cache.setSetup(url, token);
-  dispatch(types.INIT, url, token);
+  localforage.setItem(CACHE_KEY_SETUP, {url, token}, function (err) {
+    dispatch(types.INIT, url, token);
+  });
 };
 
 export const send =function ({state, dispatch}, xml) {

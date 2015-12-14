@@ -12,14 +12,11 @@ const Setup = {
     isValidating: false,
     msgError: null,
     msgSuccess: null,
+    url: null,
+    token: null,
     timestamp: null,
     nonce: null,
     echo_str: null,
-  },
-
-  computed: {
-    url: () => state.url,
-    token: () => state.token,
   },
 
   methods: {
@@ -66,7 +63,9 @@ const Setup = {
   },
 
   ready: function () {
-    actions.init(this.url, this.token);
+    actions.init();
+    this.url = state.url;
+    this.token = state.token;
   },
 };
 

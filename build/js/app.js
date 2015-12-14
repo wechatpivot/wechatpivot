@@ -75,15 +75,15 @@
 	
 	var _nav2 = _interopRequireDefault(_nav);
 	
-	var _setup = __webpack_require__(/*! ./setup */ 39);
+	var _setup = __webpack_require__(/*! ./setup */ 41);
 	
 	var _setup2 = _interopRequireDefault(_setup);
 	
-	var _navSubnav = __webpack_require__(/*! ./nav/subnav */ 44);
+	var _navSubnav = __webpack_require__(/*! ./nav/subnav */ 46);
 	
 	var _navSubnav2 = _interopRequireDefault(_navSubnav);
 	
-	var _panel = __webpack_require__(/*! ./panel */ 45);
+	var _panel = __webpack_require__(/*! ./panel */ 47);
 	
 	var _panel2 = _interopRequireDefault(_panel);
 	
@@ -14510,7 +14510,7 @@
 	
 	var actions = _interopRequireWildcard(_actions);
 	
-	var _mutations = __webpack_require__(/*! ./mutations */ 38);
+	var _mutations = __webpack_require__(/*! ./mutations */ 40);
 	
 	var _mutations2 = _interopRequireDefault(_mutations);
 	
@@ -16430,33 +16430,41 @@
 	
 	var _superagent2 = _interopRequireDefault(_superagent);
 	
-	var _mutationsTypes = __webpack_require__(/*! ../mutations/types */ 190);
+	var _localforage = __webpack_require__(/*! localforage */ 14);
+	
+	var _localforage2 = _interopRequireDefault(_localforage);
+	
+	var _mutationsTypes = __webpack_require__(/*! ../mutations/types */ 15);
 	
 	var types = _interopRequireWildcard(_mutationsTypes);
 	
-	var _cache = __webpack_require__(/*! ./cache */ 14);
+	var _utilsSignature = __webpack_require__(/*! ../../utils/signature */ 17);
 	
-	var cache = _interopRequireWildcard(_cache);
-	
-	var _utilsSignature = __webpack_require__(/*! ../../utils/signature */ 15);
+	var CACHE_KEY_SETUP = 'setup-v1';
 	
 	var init = function init(_ref) {
 	  var dispatch = _ref.dispatch;
 	
-	  var _cache$getSetup = cache.getSetup();
+	  _localforage2['default'].getItem(CACHE_KEY_SETUP, function (err, value) {
+	    if (!value) {
+	      value = {};
+	    }
 	
-	  var url = _cache$getSetup.url;
-	  var token = _cache$getSetup.token;
+	    var _value = value;
+	    var url = _value.url;
+	    var token = _value.token;
 	
-	  dispatch(types.INIT, url, token);
+	    dispatch(types.INIT, url, token);
+	  });
 	};
 	
 	exports.init = init;
 	var updateSetup = function updateSetup(_ref2, url, token) {
 	  var dispatch = _ref2.dispatch;
 	
-	  cache.setSetup(url, token);
-	  dispatch(types.INIT, url, token);
+	  _localforage2['default'].setItem(CACHE_KEY_SETUP, { url: url, token: token }, function (err) {
+	    dispatch(types.INIT, url, token);
+	  });
 	};
 	
 	exports.updateSetup = updateSetup;
@@ -16484,9 +16492,2802 @@
 
 /***/ },
 /* 14 */
-/*!************************************!*\
-  !*** ./src/store/actions/cache.js ***!
-  \************************************/
+/*!*******************************************!*\
+  !*** ./~/localforage/dist/localforage.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var require;/* WEBPACK VAR INJECTION */(function(global, process) {/*!
+	    localForage -- Offline Storage, Improved
+	    Version 1.3.1
+	    https://mozilla.github.io/localForage
+	    (c) 2013-2015 Mozilla, Apache License 2.0
+	*/
+	(function() {
+	var define, requireModule, require, requirejs;
+	
+	(function() {
+	  var registry = {}, seen = {};
+	
+	  define = function(name, deps, callback) {
+	    registry[name] = { deps: deps, callback: callback };
+	  };
+	
+	  requirejs = require = requireModule = function(name) {
+	  requirejs._eak_seen = registry;
+	
+	    if (seen[name]) { return seen[name]; }
+	    seen[name] = {};
+	
+	    if (!registry[name]) {
+	      throw new Error("Could not find module " + name);
+	    }
+	
+	    var mod = registry[name],
+	        deps = mod.deps,
+	        callback = mod.callback,
+	        reified = [],
+	        exports;
+	
+	    for (var i=0, l=deps.length; i<l; i++) {
+	      if (deps[i] === 'exports') {
+	        reified.push(exports = {});
+	      } else {
+	        reified.push(requireModule(resolve(deps[i])));
+	      }
+	    }
+	
+	    var value = callback.apply(this, reified);
+	    return seen[name] = exports || value;
+	
+	    function resolve(child) {
+	      if (child.charAt(0) !== '.') { return child; }
+	      var parts = child.split("/");
+	      var parentBase = name.split("/").slice(0, -1);
+	
+	      for (var i=0, l=parts.length; i<l; i++) {
+	        var part = parts[i];
+	
+	        if (part === '..') { parentBase.pop(); }
+	        else if (part === '.') { continue; }
+	        else { parentBase.push(part); }
+	      }
+	
+	      return parentBase.join("/");
+	    }
+	  };
+	})();
+	
+	define("promise/all", 
+	  ["./utils","exports"],
+	  function(__dependency1__, __exports__) {
+	    "use strict";
+	    /* global toString */
+	
+	    var isArray = __dependency1__.isArray;
+	    var isFunction = __dependency1__.isFunction;
+	
+	    /**
+	      Returns a promise that is fulfilled when all the given promises have been
+	      fulfilled, or rejected if any of them become rejected. The return promise
+	      is fulfilled with an array that gives all the values in the order they were
+	      passed in the `promises` array argument.
+	
+	      Example:
+	
+	      ```javascript
+	      var promise1 = RSVP.resolve(1);
+	      var promise2 = RSVP.resolve(2);
+	      var promise3 = RSVP.resolve(3);
+	      var promises = [ promise1, promise2, promise3 ];
+	
+	      RSVP.all(promises).then(function(array){
+	        // The array here would be [ 1, 2, 3 ];
+	      });
+	      ```
+	
+	      If any of the `promises` given to `RSVP.all` are rejected, the first promise
+	      that is rejected will be given as an argument to the returned promises's
+	      rejection handler. For example:
+	
+	      Example:
+	
+	      ```javascript
+	      var promise1 = RSVP.resolve(1);
+	      var promise2 = RSVP.reject(new Error("2"));
+	      var promise3 = RSVP.reject(new Error("3"));
+	      var promises = [ promise1, promise2, promise3 ];
+	
+	      RSVP.all(promises).then(function(array){
+	        // Code here never runs because there are rejected promises!
+	      }, function(error) {
+	        // error.message === "2"
+	      });
+	      ```
+	
+	      @method all
+	      @for RSVP
+	      @param {Array} promises
+	      @param {String} label
+	      @return {Promise} promise that is fulfilled when all `promises` have been
+	      fulfilled, or rejected if any of them become rejected.
+	    */
+	    function all(promises) {
+	      /*jshint validthis:true */
+	      var Promise = this;
+	
+	      if (!isArray(promises)) {
+	        throw new TypeError('You must pass an array to all.');
+	      }
+	
+	      return new Promise(function(resolve, reject) {
+	        var results = [], remaining = promises.length,
+	        promise;
+	
+	        if (remaining === 0) {
+	          resolve([]);
+	        }
+	
+	        function resolver(index) {
+	          return function(value) {
+	            resolveAll(index, value);
+	          };
+	        }
+	
+	        function resolveAll(index, value) {
+	          results[index] = value;
+	          if (--remaining === 0) {
+	            resolve(results);
+	          }
+	        }
+	
+	        for (var i = 0; i < promises.length; i++) {
+	          promise = promises[i];
+	
+	          if (promise && isFunction(promise.then)) {
+	            promise.then(resolver(i), reject);
+	          } else {
+	            resolveAll(i, promise);
+	          }
+	        }
+	      });
+	    }
+	
+	    __exports__.all = all;
+	  });
+	define("promise/asap", 
+	  ["exports"],
+	  function(__exports__) {
+	    "use strict";
+	    var browserGlobal = (typeof window !== 'undefined') ? window : {};
+	    var BrowserMutationObserver = browserGlobal.MutationObserver || browserGlobal.WebKitMutationObserver;
+	    var local = (typeof global !== 'undefined') ? global : (this === undefined? window:this);
+	
+	    // node
+	    function useNextTick() {
+	      return function() {
+	        process.nextTick(flush);
+	      };
+	    }
+	
+	    function useMutationObserver() {
+	      var iterations = 0;
+	      var observer = new BrowserMutationObserver(flush);
+	      var node = document.createTextNode('');
+	      observer.observe(node, { characterData: true });
+	
+	      return function() {
+	        node.data = (iterations = ++iterations % 2);
+	      };
+	    }
+	
+	    function useSetTimeout() {
+	      return function() {
+	        local.setTimeout(flush, 1);
+	      };
+	    }
+	
+	    var queue = [];
+	    function flush() {
+	      for (var i = 0; i < queue.length; i++) {
+	        var tuple = queue[i];
+	        var callback = tuple[0], arg = tuple[1];
+	        callback(arg);
+	      }
+	      queue = [];
+	    }
+	
+	    var scheduleFlush;
+	
+	    // Decide what async method to use to triggering processing of queued callbacks:
+	    if (typeof process !== 'undefined' && {}.toString.call(process) === '[object process]') {
+	      scheduleFlush = useNextTick();
+	    } else if (BrowserMutationObserver) {
+	      scheduleFlush = useMutationObserver();
+	    } else {
+	      scheduleFlush = useSetTimeout();
+	    }
+	
+	    function asap(callback, arg) {
+	      var length = queue.push([callback, arg]);
+	      if (length === 1) {
+	        // If length is 1, that means that we need to schedule an async flush.
+	        // If additional callbacks are queued before the queue is flushed, they
+	        // will be processed by this flush that we are scheduling.
+	        scheduleFlush();
+	      }
+	    }
+	
+	    __exports__.asap = asap;
+	  });
+	define("promise/config", 
+	  ["exports"],
+	  function(__exports__) {
+	    "use strict";
+	    var config = {
+	      instrument: false
+	    };
+	
+	    function configure(name, value) {
+	      if (arguments.length === 2) {
+	        config[name] = value;
+	      } else {
+	        return config[name];
+	      }
+	    }
+	
+	    __exports__.config = config;
+	    __exports__.configure = configure;
+	  });
+	define("promise/polyfill", 
+	  ["./promise","./utils","exports"],
+	  function(__dependency1__, __dependency2__, __exports__) {
+	    "use strict";
+	    /*global self*/
+	    var RSVPPromise = __dependency1__.Promise;
+	    var isFunction = __dependency2__.isFunction;
+	
+	    function polyfill() {
+	      var local;
+	
+	      if (typeof global !== 'undefined') {
+	        local = global;
+	      } else if (typeof window !== 'undefined' && window.document) {
+	        local = window;
+	      } else {
+	        local = self;
+	      }
+	
+	      var es6PromiseSupport = 
+	        "Promise" in local &&
+	        // Some of these methods are missing from
+	        // Firefox/Chrome experimental implementations
+	        "resolve" in local.Promise &&
+	        "reject" in local.Promise &&
+	        "all" in local.Promise &&
+	        "race" in local.Promise &&
+	        // Older version of the spec had a resolver object
+	        // as the arg rather than a function
+	        (function() {
+	          var resolve;
+	          new local.Promise(function(r) { resolve = r; });
+	          return isFunction(resolve);
+	        }());
+	
+	      if (!es6PromiseSupport) {
+	        local.Promise = RSVPPromise;
+	      }
+	    }
+	
+	    __exports__.polyfill = polyfill;
+	  });
+	define("promise/promise", 
+	  ["./config","./utils","./all","./race","./resolve","./reject","./asap","exports"],
+	  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
+	    "use strict";
+	    var config = __dependency1__.config;
+	    var configure = __dependency1__.configure;
+	    var objectOrFunction = __dependency2__.objectOrFunction;
+	    var isFunction = __dependency2__.isFunction;
+	    var now = __dependency2__.now;
+	    var all = __dependency3__.all;
+	    var race = __dependency4__.race;
+	    var staticResolve = __dependency5__.resolve;
+	    var staticReject = __dependency6__.reject;
+	    var asap = __dependency7__.asap;
+	
+	    var counter = 0;
+	
+	    config.async = asap; // default async is asap;
+	
+	    function Promise(resolver) {
+	      if (!isFunction(resolver)) {
+	        throw new TypeError('You must pass a resolver function as the first argument to the promise constructor');
+	      }
+	
+	      if (!(this instanceof Promise)) {
+	        throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");
+	      }
+	
+	      this._subscribers = [];
+	
+	      invokeResolver(resolver, this);
+	    }
+	
+	    function invokeResolver(resolver, promise) {
+	      function resolvePromise(value) {
+	        resolve(promise, value);
+	      }
+	
+	      function rejectPromise(reason) {
+	        reject(promise, reason);
+	      }
+	
+	      try {
+	        resolver(resolvePromise, rejectPromise);
+	      } catch(e) {
+	        rejectPromise(e);
+	      }
+	    }
+	
+	    function invokeCallback(settled, promise, callback, detail) {
+	      var hasCallback = isFunction(callback),
+	          value, error, succeeded, failed;
+	
+	      if (hasCallback) {
+	        try {
+	          value = callback(detail);
+	          succeeded = true;
+	        } catch(e) {
+	          failed = true;
+	          error = e;
+	        }
+	      } else {
+	        value = detail;
+	        succeeded = true;
+	      }
+	
+	      if (handleThenable(promise, value)) {
+	        return;
+	      } else if (hasCallback && succeeded) {
+	        resolve(promise, value);
+	      } else if (failed) {
+	        reject(promise, error);
+	      } else if (settled === FULFILLED) {
+	        resolve(promise, value);
+	      } else if (settled === REJECTED) {
+	        reject(promise, value);
+	      }
+	    }
+	
+	    var PENDING   = void 0;
+	    var SEALED    = 0;
+	    var FULFILLED = 1;
+	    var REJECTED  = 2;
+	
+	    function subscribe(parent, child, onFulfillment, onRejection) {
+	      var subscribers = parent._subscribers;
+	      var length = subscribers.length;
+	
+	      subscribers[length] = child;
+	      subscribers[length + FULFILLED] = onFulfillment;
+	      subscribers[length + REJECTED]  = onRejection;
+	    }
+	
+	    function publish(promise, settled) {
+	      var child, callback, subscribers = promise._subscribers, detail = promise._detail;
+	
+	      for (var i = 0; i < subscribers.length; i += 3) {
+	        child = subscribers[i];
+	        callback = subscribers[i + settled];
+	
+	        invokeCallback(settled, child, callback, detail);
+	      }
+	
+	      promise._subscribers = null;
+	    }
+	
+	    Promise.prototype = {
+	      constructor: Promise,
+	
+	      _state: undefined,
+	      _detail: undefined,
+	      _subscribers: undefined,
+	
+	      then: function(onFulfillment, onRejection) {
+	        var promise = this;
+	
+	        var thenPromise = new this.constructor(function() {});
+	
+	        if (this._state) {
+	          var callbacks = arguments;
+	          config.async(function invokePromiseCallback() {
+	            invokeCallback(promise._state, thenPromise, callbacks[promise._state - 1], promise._detail);
+	          });
+	        } else {
+	          subscribe(this, thenPromise, onFulfillment, onRejection);
+	        }
+	
+	        return thenPromise;
+	      },
+	
+	      'catch': function(onRejection) {
+	        return this.then(null, onRejection);
+	      }
+	    };
+	
+	    Promise.all = all;
+	    Promise.race = race;
+	    Promise.resolve = staticResolve;
+	    Promise.reject = staticReject;
+	
+	    function handleThenable(promise, value) {
+	      var then = null,
+	      resolved;
+	
+	      try {
+	        if (promise === value) {
+	          throw new TypeError("A promises callback cannot return that same promise.");
+	        }
+	
+	        if (objectOrFunction(value)) {
+	          then = value.then;
+	
+	          if (isFunction(then)) {
+	            then.call(value, function(val) {
+	              if (resolved) { return true; }
+	              resolved = true;
+	
+	              if (value !== val) {
+	                resolve(promise, val);
+	              } else {
+	                fulfill(promise, val);
+	              }
+	            }, function(val) {
+	              if (resolved) { return true; }
+	              resolved = true;
+	
+	              reject(promise, val);
+	            });
+	
+	            return true;
+	          }
+	        }
+	      } catch (error) {
+	        if (resolved) { return true; }
+	        reject(promise, error);
+	        return true;
+	      }
+	
+	      return false;
+	    }
+	
+	    function resolve(promise, value) {
+	      if (promise === value) {
+	        fulfill(promise, value);
+	      } else if (!handleThenable(promise, value)) {
+	        fulfill(promise, value);
+	      }
+	    }
+	
+	    function fulfill(promise, value) {
+	      if (promise._state !== PENDING) { return; }
+	      promise._state = SEALED;
+	      promise._detail = value;
+	
+	      config.async(publishFulfillment, promise);
+	    }
+	
+	    function reject(promise, reason) {
+	      if (promise._state !== PENDING) { return; }
+	      promise._state = SEALED;
+	      promise._detail = reason;
+	
+	      config.async(publishRejection, promise);
+	    }
+	
+	    function publishFulfillment(promise) {
+	      publish(promise, promise._state = FULFILLED);
+	    }
+	
+	    function publishRejection(promise) {
+	      publish(promise, promise._state = REJECTED);
+	    }
+	
+	    __exports__.Promise = Promise;
+	  });
+	define("promise/race", 
+	  ["./utils","exports"],
+	  function(__dependency1__, __exports__) {
+	    "use strict";
+	    /* global toString */
+	    var isArray = __dependency1__.isArray;
+	
+	    /**
+	      `RSVP.race` allows you to watch a series of promises and act as soon as the
+	      first promise given to the `promises` argument fulfills or rejects.
+	
+	      Example:
+	
+	      ```javascript
+	      var promise1 = new RSVP.Promise(function(resolve, reject){
+	        setTimeout(function(){
+	          resolve("promise 1");
+	        }, 200);
+	      });
+	
+	      var promise2 = new RSVP.Promise(function(resolve, reject){
+	        setTimeout(function(){
+	          resolve("promise 2");
+	        }, 100);
+	      });
+	
+	      RSVP.race([promise1, promise2]).then(function(result){
+	        // result === "promise 2" because it was resolved before promise1
+	        // was resolved.
+	      });
+	      ```
+	
+	      `RSVP.race` is deterministic in that only the state of the first completed
+	      promise matters. For example, even if other promises given to the `promises`
+	      array argument are resolved, but the first completed promise has become
+	      rejected before the other promises became fulfilled, the returned promise
+	      will become rejected:
+	
+	      ```javascript
+	      var promise1 = new RSVP.Promise(function(resolve, reject){
+	        setTimeout(function(){
+	          resolve("promise 1");
+	        }, 200);
+	      });
+	
+	      var promise2 = new RSVP.Promise(function(resolve, reject){
+	        setTimeout(function(){
+	          reject(new Error("promise 2"));
+	        }, 100);
+	      });
+	
+	      RSVP.race([promise1, promise2]).then(function(result){
+	        // Code here never runs because there are rejected promises!
+	      }, function(reason){
+	        // reason.message === "promise2" because promise 2 became rejected before
+	        // promise 1 became fulfilled
+	      });
+	      ```
+	
+	      @method race
+	      @for RSVP
+	      @param {Array} promises array of promises to observe
+	      @param {String} label optional string for describing the promise returned.
+	      Useful for tooling.
+	      @return {Promise} a promise that becomes fulfilled with the value the first
+	      completed promises is resolved with if the first completed promise was
+	      fulfilled, or rejected with the reason that the first completed promise
+	      was rejected with.
+	    */
+	    function race(promises) {
+	      /*jshint validthis:true */
+	      var Promise = this;
+	
+	      if (!isArray(promises)) {
+	        throw new TypeError('You must pass an array to race.');
+	      }
+	      return new Promise(function(resolve, reject) {
+	        var results = [], promise;
+	
+	        for (var i = 0; i < promises.length; i++) {
+	          promise = promises[i];
+	
+	          if (promise && typeof promise.then === 'function') {
+	            promise.then(resolve, reject);
+	          } else {
+	            resolve(promise);
+	          }
+	        }
+	      });
+	    }
+	
+	    __exports__.race = race;
+	  });
+	define("promise/reject", 
+	  ["exports"],
+	  function(__exports__) {
+	    "use strict";
+	    /**
+	      `RSVP.reject` returns a promise that will become rejected with the passed
+	      `reason`. `RSVP.reject` is essentially shorthand for the following:
+	
+	      ```javascript
+	      var promise = new RSVP.Promise(function(resolve, reject){
+	        reject(new Error('WHOOPS'));
+	      });
+	
+	      promise.then(function(value){
+	        // Code here doesn't run because the promise is rejected!
+	      }, function(reason){
+	        // reason.message === 'WHOOPS'
+	      });
+	      ```
+	
+	      Instead of writing the above, your code now simply becomes the following:
+	
+	      ```javascript
+	      var promise = RSVP.reject(new Error('WHOOPS'));
+	
+	      promise.then(function(value){
+	        // Code here doesn't run because the promise is rejected!
+	      }, function(reason){
+	        // reason.message === 'WHOOPS'
+	      });
+	      ```
+	
+	      @method reject
+	      @for RSVP
+	      @param {Any} reason value that the returned promise will be rejected with.
+	      @param {String} label optional string for identifying the returned promise.
+	      Useful for tooling.
+	      @return {Promise} a promise that will become rejected with the given
+	      `reason`.
+	    */
+	    function reject(reason) {
+	      /*jshint validthis:true */
+	      var Promise = this;
+	
+	      return new Promise(function (resolve, reject) {
+	        reject(reason);
+	      });
+	    }
+	
+	    __exports__.reject = reject;
+	  });
+	define("promise/resolve", 
+	  ["exports"],
+	  function(__exports__) {
+	    "use strict";
+	    function resolve(value) {
+	      /*jshint validthis:true */
+	      if (value && typeof value === 'object' && value.constructor === this) {
+	        return value;
+	      }
+	
+	      var Promise = this;
+	
+	      return new Promise(function(resolve) {
+	        resolve(value);
+	      });
+	    }
+	
+	    __exports__.resolve = resolve;
+	  });
+	define("promise/utils", 
+	  ["exports"],
+	  function(__exports__) {
+	    "use strict";
+	    function objectOrFunction(x) {
+	      return isFunction(x) || (typeof x === "object" && x !== null);
+	    }
+	
+	    function isFunction(x) {
+	      return typeof x === "function";
+	    }
+	
+	    function isArray(x) {
+	      return Object.prototype.toString.call(x) === "[object Array]";
+	    }
+	
+	    // Date.now is not available in browsers < IE9
+	    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now#Compatibility
+	    var now = Date.now || function() { return new Date().getTime(); };
+	
+	
+	    __exports__.objectOrFunction = objectOrFunction;
+	    __exports__.isFunction = isFunction;
+	    __exports__.isArray = isArray;
+	    __exports__.now = now;
+	  });
+	requireModule('promise/polyfill').polyfill();
+	}());(function webpackUniversalModuleDefinition(root, factory) {
+		if(true)
+			module.exports = factory();
+		else if(typeof define === 'function' && define.amd)
+			define([], factory);
+		else if(typeof exports === 'object')
+			exports["localforage"] = factory();
+		else
+			root["localforage"] = factory();
+	})(this, function() {
+	return /******/ (function(modules) { // webpackBootstrap
+	/******/ 	// The module cache
+	/******/ 	var installedModules = {};
+	
+	/******/ 	// The require function
+	/******/ 	function __webpack_require__(moduleId) {
+	
+	/******/ 		// Check if module is in cache
+	/******/ 		if(installedModules[moduleId])
+	/******/ 			return installedModules[moduleId].exports;
+	
+	/******/ 		// Create a new module (and put it into the cache)
+	/******/ 		var module = installedModules[moduleId] = {
+	/******/ 			exports: {},
+	/******/ 			id: moduleId,
+	/******/ 			loaded: false
+	/******/ 		};
+	
+	/******/ 		// Execute the module function
+	/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+	
+	/******/ 		// Flag the module as loaded
+	/******/ 		module.loaded = true;
+	
+	/******/ 		// Return the exports of the module
+	/******/ 		return module.exports;
+	/******/ 	}
+	
+	
+	/******/ 	// expose the modules object (__webpack_modules__)
+	/******/ 	__webpack_require__.m = modules;
+	
+	/******/ 	// expose the module cache
+	/******/ 	__webpack_require__.c = installedModules;
+	
+	/******/ 	// __webpack_public_path__
+	/******/ 	__webpack_require__.p = "";
+	
+	/******/ 	// Load entry module and return exports
+	/******/ 	return __webpack_require__(0);
+	/******/ })
+	/************************************************************************/
+	/******/ ([
+	/* 0 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		'use strict';
+	
+		exports.__esModule = true;
+	
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+		(function () {
+		    'use strict';
+	
+		    // Custom drivers are stored here when `defineDriver()` is called.
+		    // They are shared across all instances of localForage.
+		    var CustomDrivers = {};
+	
+		    var DriverType = {
+		        INDEXEDDB: 'asyncStorage',
+		        LOCALSTORAGE: 'localStorageWrapper',
+		        WEBSQL: 'webSQLStorage'
+		    };
+	
+		    var DefaultDriverOrder = [DriverType.INDEXEDDB, DriverType.WEBSQL, DriverType.LOCALSTORAGE];
+	
+		    var LibraryMethods = ['clear', 'getItem', 'iterate', 'key', 'keys', 'length', 'removeItem', 'setItem'];
+	
+		    var DefaultConfig = {
+		        description: '',
+		        driver: DefaultDriverOrder.slice(),
+		        name: 'localforage',
+		        // Default DB size is _JUST UNDER_ 5MB, as it's the highest size
+		        // we can use without a prompt.
+		        size: 4980736,
+		        storeName: 'keyvaluepairs',
+		        version: 1.0
+		    };
+	
+		    // Check to see if IndexedDB is available and if it is the latest
+		    // implementation; it's our preferred backend library. We use "_spec_test"
+		    // as the name of the database because it's not the one we'll operate on,
+		    // but it's useful to make sure its using the right spec.
+		    // See: https://github.com/mozilla/localForage/issues/128
+		    var driverSupport = (function (self) {
+		        // Initialize IndexedDB; fall back to vendor-prefixed versions
+		        // if needed.
+		        var indexedDB = indexedDB || self.indexedDB || self.webkitIndexedDB || self.mozIndexedDB || self.OIndexedDB || self.msIndexedDB;
+	
+		        var result = {};
+	
+		        result[DriverType.WEBSQL] = !!self.openDatabase;
+		        result[DriverType.INDEXEDDB] = !!(function () {
+		            // We mimic PouchDB here; just UA test for Safari (which, as of
+		            // iOS 8/Yosemite, doesn't properly support IndexedDB).
+		            // IndexedDB support is broken and different from Blink's.
+		            // This is faster than the test case (and it's sync), so we just
+		            // do this. *SIGH*
+		            // http://bl.ocks.org/nolanlawson/raw/c83e9039edf2278047e9/
+		            //
+		            // We test for openDatabase because IE Mobile identifies itself
+		            // as Safari. Oh the lulz...
+		            if (typeof self.openDatabase !== 'undefined' && self.navigator && self.navigator.userAgent && /Safari/.test(self.navigator.userAgent) && !/Chrome/.test(self.navigator.userAgent)) {
+		                return false;
+		            }
+		            try {
+		                return indexedDB && typeof indexedDB.open === 'function' &&
+		                // Some Samsung/HTC Android 4.0-4.3 devices
+		                // have older IndexedDB specs; if this isn't available
+		                // their IndexedDB is too old for us to use.
+		                // (Replaces the onupgradeneeded test.)
+		                typeof self.IDBKeyRange !== 'undefined';
+		            } catch (e) {
+		                return false;
+		            }
+		        })();
+	
+		        result[DriverType.LOCALSTORAGE] = !!(function () {
+		            try {
+		                return self.localStorage && 'setItem' in self.localStorage && self.localStorage.setItem;
+		            } catch (e) {
+		                return false;
+		            }
+		        })();
+	
+		        return result;
+		    })(this);
+	
+		    var isArray = Array.isArray || function (arg) {
+		        return Object.prototype.toString.call(arg) === '[object Array]';
+		    };
+	
+		    function callWhenReady(localForageInstance, libraryMethod) {
+		        localForageInstance[libraryMethod] = function () {
+		            var _args = arguments;
+		            return localForageInstance.ready().then(function () {
+		                return localForageInstance[libraryMethod].apply(localForageInstance, _args);
+		            });
+		        };
+		    }
+	
+		    function extend() {
+		        for (var i = 1; i < arguments.length; i++) {
+		            var arg = arguments[i];
+	
+		            if (arg) {
+		                for (var key in arg) {
+		                    if (arg.hasOwnProperty(key)) {
+		                        if (isArray(arg[key])) {
+		                            arguments[0][key] = arg[key].slice();
+		                        } else {
+		                            arguments[0][key] = arg[key];
+		                        }
+		                    }
+		                }
+		            }
+		        }
+	
+		        return arguments[0];
+		    }
+	
+		    function isLibraryDriver(driverName) {
+		        for (var driver in DriverType) {
+		            if (DriverType.hasOwnProperty(driver) && DriverType[driver] === driverName) {
+		                return true;
+		            }
+		        }
+	
+		        return false;
+		    }
+	
+		    var LocalForage = (function () {
+		        function LocalForage(options) {
+		            _classCallCheck(this, LocalForage);
+	
+		            this.INDEXEDDB = DriverType.INDEXEDDB;
+		            this.LOCALSTORAGE = DriverType.LOCALSTORAGE;
+		            this.WEBSQL = DriverType.WEBSQL;
+	
+		            this._defaultConfig = extend({}, DefaultConfig);
+		            this._config = extend({}, this._defaultConfig, options);
+		            this._driverSet = null;
+		            this._initDriver = null;
+		            this._ready = false;
+		            this._dbInfo = null;
+	
+		            this._wrapLibraryMethodsWithReady();
+		            this.setDriver(this._config.driver);
+		        }
+	
+		        // The actual localForage object that we expose as a module or via a
+		        // global. It's extended by pulling in one of our other libraries.
+	
+		        // Set any config values for localForage; can be called anytime before
+		        // the first API call (e.g. `getItem`, `setItem`).
+		        // We loop through options so we don't overwrite existing config
+		        // values.
+	
+		        LocalForage.prototype.config = function config(options) {
+		            // If the options argument is an object, we use it to set values.
+		            // Otherwise, we return either a specified config value or all
+		            // config values.
+		            if (typeof options === 'object') {
+		                // If localforage is ready and fully initialized, we can't set
+		                // any new configuration values. Instead, we return an error.
+		                if (this._ready) {
+		                    return new Error("Can't call config() after localforage " + 'has been used.');
+		                }
+	
+		                for (var i in options) {
+		                    if (i === 'storeName') {
+		                        options[i] = options[i].replace(/\W/g, '_');
+		                    }
+	
+		                    this._config[i] = options[i];
+		                }
+	
+		                // after all config options are set and
+		                // the driver option is used, try setting it
+		                if ('driver' in options && options.driver) {
+		                    this.setDriver(this._config.driver);
+		                }
+	
+		                return true;
+		            } else if (typeof options === 'string') {
+		                return this._config[options];
+		            } else {
+		                return this._config;
+		            }
+		        };
+	
+		        // Used to define a custom driver, shared across all instances of
+		        // localForage.
+	
+		        LocalForage.prototype.defineDriver = function defineDriver(driverObject, callback, errorCallback) {
+		            var promise = new Promise(function (resolve, reject) {
+		                try {
+		                    var driverName = driverObject._driver;
+		                    var complianceError = new Error('Custom driver not compliant; see ' + 'https://mozilla.github.io/localForage/#definedriver');
+		                    var namingError = new Error('Custom driver name already in use: ' + driverObject._driver);
+	
+		                    // A driver name should be defined and not overlap with the
+		                    // library-defined, default drivers.
+		                    if (!driverObject._driver) {
+		                        reject(complianceError);
+		                        return;
+		                    }
+		                    if (isLibraryDriver(driverObject._driver)) {
+		                        reject(namingError);
+		                        return;
+		                    }
+	
+		                    var customDriverMethods = LibraryMethods.concat('_initStorage');
+		                    for (var i = 0; i < customDriverMethods.length; i++) {
+		                        var customDriverMethod = customDriverMethods[i];
+		                        if (!customDriverMethod || !driverObject[customDriverMethod] || typeof driverObject[customDriverMethod] !== 'function') {
+		                            reject(complianceError);
+		                            return;
+		                        }
+		                    }
+	
+		                    var supportPromise = Promise.resolve(true);
+		                    if ('_support' in driverObject) {
+		                        if (driverObject._support && typeof driverObject._support === 'function') {
+		                            supportPromise = driverObject._support();
+		                        } else {
+		                            supportPromise = Promise.resolve(!!driverObject._support);
+		                        }
+		                    }
+	
+		                    supportPromise.then(function (supportResult) {
+		                        driverSupport[driverName] = supportResult;
+		                        CustomDrivers[driverName] = driverObject;
+		                        resolve();
+		                    }, reject);
+		                } catch (e) {
+		                    reject(e);
+		                }
+		            });
+	
+		            promise.then(callback, errorCallback);
+		            return promise;
+		        };
+	
+		        LocalForage.prototype.driver = function driver() {
+		            return this._driver || null;
+		        };
+	
+		        LocalForage.prototype.getDriver = function getDriver(driverName, callback, errorCallback) {
+		            var self = this;
+		            var getDriverPromise = (function () {
+		                if (isLibraryDriver(driverName)) {
+		                    switch (driverName) {
+		                        case self.INDEXEDDB:
+		                            return new Promise(function (resolve, reject) {
+		                                resolve(__webpack_require__(1));
+		                            });
+		                        case self.LOCALSTORAGE:
+		                            return new Promise(function (resolve, reject) {
+		                                resolve(__webpack_require__(2));
+		                            });
+		                        case self.WEBSQL:
+		                            return new Promise(function (resolve, reject) {
+		                                resolve(__webpack_require__(4));
+		                            });
+		                    }
+		                } else if (CustomDrivers[driverName]) {
+		                    return Promise.resolve(CustomDrivers[driverName]);
+		                }
+	
+		                return Promise.reject(new Error('Driver not found.'));
+		            })();
+	
+		            getDriverPromise.then(callback, errorCallback);
+		            return getDriverPromise;
+		        };
+	
+		        LocalForage.prototype.getSerializer = function getSerializer(callback) {
+		            var serializerPromise = new Promise(function (resolve, reject) {
+		                resolve(__webpack_require__(3));
+		            });
+		            if (callback && typeof callback === 'function') {
+		                serializerPromise.then(function (result) {
+		                    callback(result);
+		                });
+		            }
+		            return serializerPromise;
+		        };
+	
+		        LocalForage.prototype.ready = function ready(callback) {
+		            var self = this;
+	
+		            var promise = self._driverSet.then(function () {
+		                if (self._ready === null) {
+		                    self._ready = self._initDriver();
+		                }
+	
+		                return self._ready;
+		            });
+	
+		            promise.then(callback, callback);
+		            return promise;
+		        };
+	
+		        LocalForage.prototype.setDriver = function setDriver(drivers, callback, errorCallback) {
+		            var self = this;
+	
+		            if (!isArray(drivers)) {
+		                drivers = [drivers];
+		            }
+	
+		            var supportedDrivers = this._getSupportedDrivers(drivers);
+	
+		            function setDriverToConfig() {
+		                self._config.driver = self.driver();
+		            }
+	
+		            function initDriver(supportedDrivers) {
+		                return function () {
+		                    var currentDriverIndex = 0;
+	
+		                    function driverPromiseLoop() {
+		                        while (currentDriverIndex < supportedDrivers.length) {
+		                            var driverName = supportedDrivers[currentDriverIndex];
+		                            currentDriverIndex++;
+	
+		                            self._dbInfo = null;
+		                            self._ready = null;
+	
+		                            return self.getDriver(driverName).then(function (driver) {
+		                                self._extend(driver);
+		                                setDriverToConfig();
+	
+		                                self._ready = self._initStorage(self._config);
+		                                return self._ready;
+		                            })['catch'](driverPromiseLoop);
+		                        }
+	
+		                        setDriverToConfig();
+		                        var error = new Error('No available storage method found.');
+		                        self._driverSet = Promise.reject(error);
+		                        return self._driverSet;
+		                    }
+	
+		                    return driverPromiseLoop();
+		                };
+		            }
+	
+		            // There might be a driver initialization in progress
+		            // so wait for it to finish in order to avoid a possible
+		            // race condition to set _dbInfo
+		            var oldDriverSetDone = this._driverSet !== null ? this._driverSet['catch'](function () {
+		                return Promise.resolve();
+		            }) : Promise.resolve();
+	
+		            this._driverSet = oldDriverSetDone.then(function () {
+		                var driverName = supportedDrivers[0];
+		                self._dbInfo = null;
+		                self._ready = null;
+	
+		                return self.getDriver(driverName).then(function (driver) {
+		                    self._driver = driver._driver;
+		                    setDriverToConfig();
+		                    self._wrapLibraryMethodsWithReady();
+		                    self._initDriver = initDriver(supportedDrivers);
+		                });
+		            })['catch'](function () {
+		                setDriverToConfig();
+		                var error = new Error('No available storage method found.');
+		                self._driverSet = Promise.reject(error);
+		                return self._driverSet;
+		            });
+	
+		            this._driverSet.then(callback, errorCallback);
+		            return this._driverSet;
+		        };
+	
+		        LocalForage.prototype.supports = function supports(driverName) {
+		            return !!driverSupport[driverName];
+		        };
+	
+		        LocalForage.prototype._extend = function _extend(libraryMethodsAndProperties) {
+		            extend(this, libraryMethodsAndProperties);
+		        };
+	
+		        LocalForage.prototype._getSupportedDrivers = function _getSupportedDrivers(drivers) {
+		            var supportedDrivers = [];
+		            for (var i = 0, len = drivers.length; i < len; i++) {
+		                var driverName = drivers[i];
+		                if (this.supports(driverName)) {
+		                    supportedDrivers.push(driverName);
+		                }
+		            }
+		            return supportedDrivers;
+		        };
+	
+		        LocalForage.prototype._wrapLibraryMethodsWithReady = function _wrapLibraryMethodsWithReady() {
+		            // Add a stub for each driver API method that delays the call to the
+		            // corresponding driver method until localForage is ready. These stubs
+		            // will be replaced by the driver methods as soon as the driver is
+		            // loaded, so there is no performance impact.
+		            for (var i = 0; i < LibraryMethods.length; i++) {
+		                callWhenReady(this, LibraryMethods[i]);
+		            }
+		        };
+	
+		        LocalForage.prototype.createInstance = function createInstance(options) {
+		            return new LocalForage(options);
+		        };
+	
+		        return LocalForage;
+		    })();
+	
+		    var localForage = new LocalForage();
+	
+		    exports['default'] = localForage;
+		}).call(typeof window !== 'undefined' ? window : self);
+		module.exports = exports['default'];
+	
+	/***/ },
+	/* 1 */
+	/***/ function(module, exports) {
+	
+		// Some code originally from async_storage.js in
+		// [Gaia](https://github.com/mozilla-b2g/gaia).
+		'use strict';
+	
+		exports.__esModule = true;
+		(function () {
+		    'use strict';
+	
+		    var globalObject = this;
+		    // Initialize IndexedDB; fall back to vendor-prefixed versions if needed.
+		    var indexedDB = indexedDB || this.indexedDB || this.webkitIndexedDB || this.mozIndexedDB || this.OIndexedDB || this.msIndexedDB;
+	
+		    // If IndexedDB isn't available, we get outta here!
+		    if (!indexedDB) {
+		        return;
+		    }
+	
+		    var DETECT_BLOB_SUPPORT_STORE = 'local-forage-detect-blob-support';
+		    var supportsBlobs;
+		    var dbContexts;
+	
+		    // Abstracts constructing a Blob object, so it also works in older
+		    // browsers that don't support the native Blob constructor. (i.e.
+		    // old QtWebKit versions, at least).
+		    function _createBlob(parts, properties) {
+		        parts = parts || [];
+		        properties = properties || {};
+		        try {
+		            return new Blob(parts, properties);
+		        } catch (e) {
+		            if (e.name !== 'TypeError') {
+		                throw e;
+		            }
+		            var BlobBuilder = globalObject.BlobBuilder || globalObject.MSBlobBuilder || globalObject.MozBlobBuilder || globalObject.WebKitBlobBuilder;
+		            var builder = new BlobBuilder();
+		            for (var i = 0; i < parts.length; i += 1) {
+		                builder.append(parts[i]);
+		            }
+		            return builder.getBlob(properties.type);
+		        }
+		    }
+	
+		    // Transform a binary string to an array buffer, because otherwise
+		    // weird stuff happens when you try to work with the binary string directly.
+		    // It is known.
+		    // From http://stackoverflow.com/questions/14967647/ (continues on next line)
+		    // encode-decode-image-with-base64-breaks-image (2013-04-21)
+		    function _binStringToArrayBuffer(bin) {
+		        var length = bin.length;
+		        var buf = new ArrayBuffer(length);
+		        var arr = new Uint8Array(buf);
+		        for (var i = 0; i < length; i++) {
+		            arr[i] = bin.charCodeAt(i);
+		        }
+		        return buf;
+		    }
+	
+		    // Fetch a blob using ajax. This reveals bugs in Chrome < 43.
+		    // For details on all this junk:
+		    // https://github.com/nolanlawson/state-of-binary-data-in-the-browser#readme
+		    function _blobAjax(url) {
+		        return new Promise(function (resolve, reject) {
+		            var xhr = new XMLHttpRequest();
+		            xhr.open('GET', url);
+		            xhr.withCredentials = true;
+		            xhr.responseType = 'arraybuffer';
+	
+		            xhr.onreadystatechange = function () {
+		                if (xhr.readyState !== 4) {
+		                    return;
+		                }
+		                if (xhr.status === 200) {
+		                    return resolve({
+		                        response: xhr.response,
+		                        type: xhr.getResponseHeader('Content-Type')
+		                    });
+		                }
+		                reject({ status: xhr.status, response: xhr.response });
+		            };
+		            xhr.send();
+		        });
+		    }
+	
+		    //
+		    // Detect blob support. Chrome didn't support it until version 38.
+		    // In version 37 they had a broken version where PNGs (and possibly
+		    // other binary types) aren't stored correctly, because when you fetch
+		    // them, the content type is always null.
+		    //
+		    // Furthermore, they have some outstanding bugs where blobs occasionally
+		    // are read by FileReader as null, or by ajax as 404s.
+		    //
+		    // Sadly we use the 404 bug to detect the FileReader bug, so if they
+		    // get fixed independently and released in different versions of Chrome,
+		    // then the bug could come back. So it's worthwhile to watch these issues:
+		    // 404 bug: https://code.google.com/p/chromium/issues/detail?id=447916
+		    // FileReader bug: https://code.google.com/p/chromium/issues/detail?id=447836
+		    //
+		    function _checkBlobSupportWithoutCaching(idb) {
+		        return new Promise(function (resolve, reject) {
+		            var blob = _createBlob([''], { type: 'image/png' });
+		            var txn = idb.transaction([DETECT_BLOB_SUPPORT_STORE], 'readwrite');
+		            txn.objectStore(DETECT_BLOB_SUPPORT_STORE).put(blob, 'key');
+		            txn.oncomplete = function () {
+		                // have to do it in a separate transaction, else the correct
+		                // content type is always returned
+		                var blobTxn = idb.transaction([DETECT_BLOB_SUPPORT_STORE], 'readwrite');
+		                var getBlobReq = blobTxn.objectStore(DETECT_BLOB_SUPPORT_STORE).get('key');
+		                getBlobReq.onerror = reject;
+		                getBlobReq.onsuccess = function (e) {
+	
+		                    var storedBlob = e.target.result;
+		                    var url = URL.createObjectURL(storedBlob);
+	
+		                    _blobAjax(url).then(function (res) {
+		                        resolve(!!(res && res.type === 'image/png'));
+		                    }, function () {
+		                        resolve(false);
+		                    }).then(function () {
+		                        URL.revokeObjectURL(url);
+		                    });
+		                };
+		            };
+		        })['catch'](function () {
+		            return false; // error, so assume unsupported
+		        });
+		    }
+	
+		    function _checkBlobSupport(idb) {
+		        if (typeof supportsBlobs === 'boolean') {
+		            return Promise.resolve(supportsBlobs);
+		        }
+		        return _checkBlobSupportWithoutCaching(idb).then(function (value) {
+		            supportsBlobs = value;
+		            return supportsBlobs;
+		        });
+		    }
+	
+		    // encode a blob for indexeddb engines that don't support blobs
+		    function _encodeBlob(blob) {
+		        return new Promise(function (resolve, reject) {
+		            var reader = new FileReader();
+		            reader.onerror = reject;
+		            reader.onloadend = function (e) {
+		                var base64 = btoa(e.target.result || '');
+		                resolve({
+		                    __local_forage_encoded_blob: true,
+		                    data: base64,
+		                    type: blob.type
+		                });
+		            };
+		            reader.readAsBinaryString(blob);
+		        });
+		    }
+	
+		    // decode an encoded blob
+		    function _decodeBlob(encodedBlob) {
+		        var arrayBuff = _binStringToArrayBuffer(atob(encodedBlob.data));
+		        return _createBlob([arrayBuff], { type: encodedBlob.type });
+		    }
+	
+		    // is this one of our fancy encoded blobs?
+		    function _isEncodedBlob(value) {
+		        return value && value.__local_forage_encoded_blob;
+		    }
+	
+		    // Open the IndexedDB database (automatically creates one if one didn't
+		    // previously exist), using any options set in the config.
+		    function _initStorage(options) {
+		        var self = this;
+		        var dbInfo = {
+		            db: null
+		        };
+	
+		        if (options) {
+		            for (var i in options) {
+		                dbInfo[i] = options[i];
+		            }
+		        }
+	
+		        // Initialize a singleton container for all running localForages.
+		        if (!dbContexts) {
+		            dbContexts = {};
+		        }
+	
+		        // Get the current context of the database;
+		        var dbContext = dbContexts[dbInfo.name];
+	
+		        // ...or create a new context.
+		        if (!dbContext) {
+		            dbContext = {
+		                // Running localForages sharing a database.
+		                forages: [],
+		                // Shared database.
+		                db: null
+		            };
+		            // Register the new context in the global container.
+		            dbContexts[dbInfo.name] = dbContext;
+		        }
+	
+		        // Register itself as a running localForage in the current context.
+		        dbContext.forages.push(this);
+	
+		        // Create an array of readiness of the related localForages.
+		        var readyPromises = [];
+	
+		        function ignoreErrors() {
+		            // Don't handle errors here,
+		            // just makes sure related localForages aren't pending.
+		            return Promise.resolve();
+		        }
+	
+		        for (var j = 0; j < dbContext.forages.length; j++) {
+		            var forage = dbContext.forages[j];
+		            if (forage !== this) {
+		                // Don't wait for itself...
+		                readyPromises.push(forage.ready()['catch'](ignoreErrors));
+		            }
+		        }
+	
+		        // Take a snapshot of the related localForages.
+		        var forages = dbContext.forages.slice(0);
+	
+		        // Initialize the connection process only when
+		        // all the related localForages aren't pending.
+		        return Promise.all(readyPromises).then(function () {
+		            dbInfo.db = dbContext.db;
+		            // Get the connection or open a new one without upgrade.
+		            return _getOriginalConnection(dbInfo);
+		        }).then(function (db) {
+		            dbInfo.db = db;
+		            if (_isUpgradeNeeded(dbInfo, self._defaultConfig.version)) {
+		                // Reopen the database for upgrading.
+		                return _getUpgradedConnection(dbInfo);
+		            }
+		            return db;
+		        }).then(function (db) {
+		            dbInfo.db = dbContext.db = db;
+		            self._dbInfo = dbInfo;
+		            // Share the final connection amongst related localForages.
+		            for (var k = 0; k < forages.length; k++) {
+		                var forage = forages[k];
+		                if (forage !== self) {
+		                    // Self is already up-to-date.
+		                    forage._dbInfo.db = dbInfo.db;
+		                    forage._dbInfo.version = dbInfo.version;
+		                }
+		            }
+		        });
+		    }
+	
+		    function _getOriginalConnection(dbInfo) {
+		        return _getConnection(dbInfo, false);
+		    }
+	
+		    function _getUpgradedConnection(dbInfo) {
+		        return _getConnection(dbInfo, true);
+		    }
+	
+		    function _getConnection(dbInfo, upgradeNeeded) {
+		        return new Promise(function (resolve, reject) {
+		            if (dbInfo.db) {
+		                if (upgradeNeeded) {
+		                    dbInfo.db.close();
+		                } else {
+		                    return resolve(dbInfo.db);
+		                }
+		            }
+	
+		            var dbArgs = [dbInfo.name];
+	
+		            if (upgradeNeeded) {
+		                dbArgs.push(dbInfo.version);
+		            }
+	
+		            var openreq = indexedDB.open.apply(indexedDB, dbArgs);
+	
+		            if (upgradeNeeded) {
+		                openreq.onupgradeneeded = function (e) {
+		                    var db = openreq.result;
+		                    try {
+		                        db.createObjectStore(dbInfo.storeName);
+		                        if (e.oldVersion <= 1) {
+		                            // Added when support for blob shims was added
+		                            db.createObjectStore(DETECT_BLOB_SUPPORT_STORE);
+		                        }
+		                    } catch (ex) {
+		                        if (ex.name === 'ConstraintError') {
+		                            globalObject.console.warn('The database "' + dbInfo.name + '"' + ' has been upgraded from version ' + e.oldVersion + ' to version ' + e.newVersion + ', but the storage "' + dbInfo.storeName + '" already exists.');
+		                        } else {
+		                            throw ex;
+		                        }
+		                    }
+		                };
+		            }
+	
+		            openreq.onerror = function () {
+		                reject(openreq.error);
+		            };
+	
+		            openreq.onsuccess = function () {
+		                resolve(openreq.result);
+		            };
+		        });
+		    }
+	
+		    function _isUpgradeNeeded(dbInfo, defaultVersion) {
+		        if (!dbInfo.db) {
+		            return true;
+		        }
+	
+		        var isNewStore = !dbInfo.db.objectStoreNames.contains(dbInfo.storeName);
+		        var isDowngrade = dbInfo.version < dbInfo.db.version;
+		        var isUpgrade = dbInfo.version > dbInfo.db.version;
+	
+		        if (isDowngrade) {
+		            // If the version is not the default one
+		            // then warn for impossible downgrade.
+		            if (dbInfo.version !== defaultVersion) {
+		                globalObject.console.warn('The database "' + dbInfo.name + '"' + ' can\'t be downgraded from version ' + dbInfo.db.version + ' to version ' + dbInfo.version + '.');
+		            }
+		            // Align the versions to prevent errors.
+		            dbInfo.version = dbInfo.db.version;
+		        }
+	
+		        if (isUpgrade || isNewStore) {
+		            // If the store is new then increment the version (if needed).
+		            // This will trigger an "upgradeneeded" event which is required
+		            // for creating a store.
+		            if (isNewStore) {
+		                var incVersion = dbInfo.db.version + 1;
+		                if (incVersion > dbInfo.version) {
+		                    dbInfo.version = incVersion;
+		                }
+		            }
+	
+		            return true;
+		        }
+	
+		        return false;
+		    }
+	
+		    function getItem(key, callback) {
+		        var self = this;
+	
+		        // Cast the key to a string, as that's all we can set as a key.
+		        if (typeof key !== 'string') {
+		            globalObject.console.warn(key + ' used as a key, but it is not a string.');
+		            key = String(key);
+		        }
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                var store = dbInfo.db.transaction(dbInfo.storeName, 'readonly').objectStore(dbInfo.storeName);
+		                var req = store.get(key);
+	
+		                req.onsuccess = function () {
+		                    var value = req.result;
+		                    if (value === undefined) {
+		                        value = null;
+		                    }
+		                    if (_isEncodedBlob(value)) {
+		                        value = _decodeBlob(value);
+		                    }
+		                    resolve(value);
+		                };
+	
+		                req.onerror = function () {
+		                    reject(req.error);
+		                };
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    // Iterate over all items stored in database.
+		    function iterate(iterator, callback) {
+		        var self = this;
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                var store = dbInfo.db.transaction(dbInfo.storeName, 'readonly').objectStore(dbInfo.storeName);
+	
+		                var req = store.openCursor();
+		                var iterationNumber = 1;
+	
+		                req.onsuccess = function () {
+		                    var cursor = req.result;
+	
+		                    if (cursor) {
+		                        var value = cursor.value;
+		                        if (_isEncodedBlob(value)) {
+		                            value = _decodeBlob(value);
+		                        }
+		                        var result = iterator(value, cursor.key, iterationNumber++);
+	
+		                        if (result !== void 0) {
+		                            resolve(result);
+		                        } else {
+		                            cursor['continue']();
+		                        }
+		                    } else {
+		                        resolve();
+		                    }
+		                };
+	
+		                req.onerror = function () {
+		                    reject(req.error);
+		                };
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+	
+		        return promise;
+		    }
+	
+		    function setItem(key, value, callback) {
+		        var self = this;
+	
+		        // Cast the key to a string, as that's all we can set as a key.
+		        if (typeof key !== 'string') {
+		            globalObject.console.warn(key + ' used as a key, but it is not a string.');
+		            key = String(key);
+		        }
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            var dbInfo;
+		            self.ready().then(function () {
+		                dbInfo = self._dbInfo;
+		                if (value instanceof Blob) {
+		                    return _checkBlobSupport(dbInfo.db).then(function (blobSupport) {
+		                        if (blobSupport) {
+		                            return value;
+		                        }
+		                        return _encodeBlob(value);
+		                    });
+		                }
+		                return value;
+		            }).then(function (value) {
+		                var transaction = dbInfo.db.transaction(dbInfo.storeName, 'readwrite');
+		                var store = transaction.objectStore(dbInfo.storeName);
+	
+		                // The reason we don't _save_ null is because IE 10 does
+		                // not support saving the `null` type in IndexedDB. How
+		                // ironic, given the bug below!
+		                // See: https://github.com/mozilla/localForage/issues/161
+		                if (value === null) {
+		                    value = undefined;
+		                }
+	
+		                var req = store.put(value, key);
+		                transaction.oncomplete = function () {
+		                    // Cast to undefined so the value passed to
+		                    // callback/promise is the same as what one would get out
+		                    // of `getItem()` later. This leads to some weirdness
+		                    // (setItem('foo', undefined) will return `null`), but
+		                    // it's not my fault localStorage is our baseline and that
+		                    // it's weird.
+		                    if (value === undefined) {
+		                        value = null;
+		                    }
+	
+		                    resolve(value);
+		                };
+		                transaction.onabort = transaction.onerror = function () {
+		                    var err = req.error ? req.error : req.transaction.error;
+		                    reject(err);
+		                };
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function removeItem(key, callback) {
+		        var self = this;
+	
+		        // Cast the key to a string, as that's all we can set as a key.
+		        if (typeof key !== 'string') {
+		            globalObject.console.warn(key + ' used as a key, but it is not a string.');
+		            key = String(key);
+		        }
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                var transaction = dbInfo.db.transaction(dbInfo.storeName, 'readwrite');
+		                var store = transaction.objectStore(dbInfo.storeName);
+	
+		                // We use a Grunt task to make this safe for IE and some
+		                // versions of Android (including those used by Cordova).
+		                // Normally IE won't like `.delete()` and will insist on
+		                // using `['delete']()`, but we have a build step that
+		                // fixes this for us now.
+		                var req = store['delete'](key);
+		                transaction.oncomplete = function () {
+		                    resolve();
+		                };
+	
+		                transaction.onerror = function () {
+		                    reject(req.error);
+		                };
+	
+		                // The request will be also be aborted if we've exceeded our storage
+		                // space.
+		                transaction.onabort = function () {
+		                    var err = req.error ? req.error : req.transaction.error;
+		                    reject(err);
+		                };
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function clear(callback) {
+		        var self = this;
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                var transaction = dbInfo.db.transaction(dbInfo.storeName, 'readwrite');
+		                var store = transaction.objectStore(dbInfo.storeName);
+		                var req = store.clear();
+	
+		                transaction.oncomplete = function () {
+		                    resolve();
+		                };
+	
+		                transaction.onabort = transaction.onerror = function () {
+		                    var err = req.error ? req.error : req.transaction.error;
+		                    reject(err);
+		                };
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function length(callback) {
+		        var self = this;
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                var store = dbInfo.db.transaction(dbInfo.storeName, 'readonly').objectStore(dbInfo.storeName);
+		                var req = store.count();
+	
+		                req.onsuccess = function () {
+		                    resolve(req.result);
+		                };
+	
+		                req.onerror = function () {
+		                    reject(req.error);
+		                };
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function key(n, callback) {
+		        var self = this;
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            if (n < 0) {
+		                resolve(null);
+	
+		                return;
+		            }
+	
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                var store = dbInfo.db.transaction(dbInfo.storeName, 'readonly').objectStore(dbInfo.storeName);
+	
+		                var advanced = false;
+		                var req = store.openCursor();
+		                req.onsuccess = function () {
+		                    var cursor = req.result;
+		                    if (!cursor) {
+		                        // this means there weren't enough keys
+		                        resolve(null);
+	
+		                        return;
+		                    }
+	
+		                    if (n === 0) {
+		                        // We have the first key, return it if that's what they
+		                        // wanted.
+		                        resolve(cursor.key);
+		                    } else {
+		                        if (!advanced) {
+		                            // Otherwise, ask the cursor to skip ahead n
+		                            // records.
+		                            advanced = true;
+		                            cursor.advance(n);
+		                        } else {
+		                            // When we get here, we've got the nth key.
+		                            resolve(cursor.key);
+		                        }
+		                    }
+		                };
+	
+		                req.onerror = function () {
+		                    reject(req.error);
+		                };
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function keys(callback) {
+		        var self = this;
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                var store = dbInfo.db.transaction(dbInfo.storeName, 'readonly').objectStore(dbInfo.storeName);
+	
+		                var req = store.openCursor();
+		                var keys = [];
+	
+		                req.onsuccess = function () {
+		                    var cursor = req.result;
+	
+		                    if (!cursor) {
+		                        resolve(keys);
+		                        return;
+		                    }
+	
+		                    keys.push(cursor.key);
+		                    cursor['continue']();
+		                };
+	
+		                req.onerror = function () {
+		                    reject(req.error);
+		                };
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function executeCallback(promise, callback) {
+		        if (callback) {
+		            promise.then(function (result) {
+		                callback(null, result);
+		            }, function (error) {
+		                callback(error);
+		            });
+		        }
+		    }
+	
+		    var asyncStorage = {
+		        _driver: 'asyncStorage',
+		        _initStorage: _initStorage,
+		        iterate: iterate,
+		        getItem: getItem,
+		        setItem: setItem,
+		        removeItem: removeItem,
+		        clear: clear,
+		        length: length,
+		        key: key,
+		        keys: keys
+		    };
+	
+		    exports['default'] = asyncStorage;
+		}).call(typeof window !== 'undefined' ? window : self);
+		module.exports = exports['default'];
+	
+	/***/ },
+	/* 2 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		// If IndexedDB isn't available, we'll fall back to localStorage.
+		// Note that this will have considerable performance and storage
+		// side-effects (all data will be serialized on save and only data that
+		// can be converted to a string via `JSON.stringify()` will be saved).
+		'use strict';
+	
+		exports.__esModule = true;
+		(function () {
+		    'use strict';
+	
+		    var globalObject = this;
+		    var localStorage = null;
+	
+		    // If the app is running inside a Google Chrome packaged webapp, or some
+		    // other context where localStorage isn't available, we don't use
+		    // localStorage. This feature detection is preferred over the old
+		    // `if (window.chrome && window.chrome.runtime)` code.
+		    // See: https://github.com/mozilla/localForage/issues/68
+		    try {
+		        // If localStorage isn't available, we get outta here!
+		        // This should be inside a try catch
+		        if (!this.localStorage || !('setItem' in this.localStorage)) {
+		            return;
+		        }
+		        // Initialize localStorage and create a variable to use throughout
+		        // the code.
+		        localStorage = this.localStorage;
+		    } catch (e) {
+		        return;
+		    }
+	
+		    // Config the localStorage backend, using options set in the config.
+		    function _initStorage(options) {
+		        var self = this;
+		        var dbInfo = {};
+		        if (options) {
+		            for (var i in options) {
+		                dbInfo[i] = options[i];
+		            }
+		        }
+	
+		        dbInfo.keyPrefix = dbInfo.name + '/';
+	
+		        if (dbInfo.storeName !== self._defaultConfig.storeName) {
+		            dbInfo.keyPrefix += dbInfo.storeName + '/';
+		        }
+	
+		        self._dbInfo = dbInfo;
+	
+		        return new Promise(function (resolve, reject) {
+		            resolve(__webpack_require__(3));
+		        }).then(function (lib) {
+		            dbInfo.serializer = lib;
+		            return Promise.resolve();
+		        });
+		    }
+	
+		    // Remove all keys from the datastore, effectively destroying all data in
+		    // the app's key/value store!
+		    function clear(callback) {
+		        var self = this;
+		        var promise = self.ready().then(function () {
+		            var keyPrefix = self._dbInfo.keyPrefix;
+	
+		            for (var i = localStorage.length - 1; i >= 0; i--) {
+		                var key = localStorage.key(i);
+	
+		                if (key.indexOf(keyPrefix) === 0) {
+		                    localStorage.removeItem(key);
+		                }
+		            }
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    // Retrieve an item from the store. Unlike the original async_storage
+		    // library in Gaia, we don't modify return values at all. If a key's value
+		    // is `undefined`, we pass that value to the callback function.
+		    function getItem(key, callback) {
+		        var self = this;
+	
+		        // Cast the key to a string, as that's all we can set as a key.
+		        if (typeof key !== 'string') {
+		            globalObject.console.warn(key + ' used as a key, but it is not a string.');
+		            key = String(key);
+		        }
+	
+		        var promise = self.ready().then(function () {
+		            var dbInfo = self._dbInfo;
+		            var result = localStorage.getItem(dbInfo.keyPrefix + key);
+	
+		            // If a result was found, parse it from the serialized
+		            // string into a JS object. If result isn't truthy, the key
+		            // is likely undefined and we'll pass it straight to the
+		            // callback.
+		            if (result) {
+		                result = dbInfo.serializer.deserialize(result);
+		            }
+	
+		            return result;
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    // Iterate over all items in the store.
+		    function iterate(iterator, callback) {
+		        var self = this;
+	
+		        var promise = self.ready().then(function () {
+		            var dbInfo = self._dbInfo;
+		            var keyPrefix = dbInfo.keyPrefix;
+		            var keyPrefixLength = keyPrefix.length;
+		            var length = localStorage.length;
+	
+		            // We use a dedicated iterator instead of the `i` variable below
+		            // so other keys we fetch in localStorage aren't counted in
+		            // the `iterationNumber` argument passed to the `iterate()`
+		            // callback.
+		            //
+		            // See: github.com/mozilla/localForage/pull/435#discussion_r38061530
+		            var iterationNumber = 1;
+	
+		            for (var i = 0; i < length; i++) {
+		                var key = localStorage.key(i);
+		                if (key.indexOf(keyPrefix) !== 0) {
+		                    continue;
+		                }
+		                var value = localStorage.getItem(key);
+	
+		                // If a result was found, parse it from the serialized
+		                // string into a JS object. If result isn't truthy, the
+		                // key is likely undefined and we'll pass it straight
+		                // to the iterator.
+		                if (value) {
+		                    value = dbInfo.serializer.deserialize(value);
+		                }
+	
+		                value = iterator(value, key.substring(keyPrefixLength), iterationNumber++);
+	
+		                if (value !== void 0) {
+		                    return value;
+		                }
+		            }
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    // Same as localStorage's key() method, except takes a callback.
+		    function key(n, callback) {
+		        var self = this;
+		        var promise = self.ready().then(function () {
+		            var dbInfo = self._dbInfo;
+		            var result;
+		            try {
+		                result = localStorage.key(n);
+		            } catch (error) {
+		                result = null;
+		            }
+	
+		            // Remove the prefix from the key, if a key is found.
+		            if (result) {
+		                result = result.substring(dbInfo.keyPrefix.length);
+		            }
+	
+		            return result;
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function keys(callback) {
+		        var self = this;
+		        var promise = self.ready().then(function () {
+		            var dbInfo = self._dbInfo;
+		            var length = localStorage.length;
+		            var keys = [];
+	
+		            for (var i = 0; i < length; i++) {
+		                if (localStorage.key(i).indexOf(dbInfo.keyPrefix) === 0) {
+		                    keys.push(localStorage.key(i).substring(dbInfo.keyPrefix.length));
+		                }
+		            }
+	
+		            return keys;
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    // Supply the number of keys in the datastore to the callback function.
+		    function length(callback) {
+		        var self = this;
+		        var promise = self.keys().then(function (keys) {
+		            return keys.length;
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    // Remove an item from the store, nice and simple.
+		    function removeItem(key, callback) {
+		        var self = this;
+	
+		        // Cast the key to a string, as that's all we can set as a key.
+		        if (typeof key !== 'string') {
+		            globalObject.console.warn(key + ' used as a key, but it is not a string.');
+		            key = String(key);
+		        }
+	
+		        var promise = self.ready().then(function () {
+		            var dbInfo = self._dbInfo;
+		            localStorage.removeItem(dbInfo.keyPrefix + key);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    // Set a key's value and run an optional callback once the value is set.
+		    // Unlike Gaia's implementation, the callback function is passed the value,
+		    // in case you want to operate on that value only after you're sure it
+		    // saved, or something like that.
+		    function setItem(key, value, callback) {
+		        var self = this;
+	
+		        // Cast the key to a string, as that's all we can set as a key.
+		        if (typeof key !== 'string') {
+		            globalObject.console.warn(key + ' used as a key, but it is not a string.');
+		            key = String(key);
+		        }
+	
+		        var promise = self.ready().then(function () {
+		            // Convert undefined values to null.
+		            // https://github.com/mozilla/localForage/pull/42
+		            if (value === undefined) {
+		                value = null;
+		            }
+	
+		            // Save the original value to pass to the callback.
+		            var originalValue = value;
+	
+		            return new Promise(function (resolve, reject) {
+		                var dbInfo = self._dbInfo;
+		                dbInfo.serializer.serialize(value, function (value, error) {
+		                    if (error) {
+		                        reject(error);
+		                    } else {
+		                        try {
+		                            localStorage.setItem(dbInfo.keyPrefix + key, value);
+		                            resolve(originalValue);
+		                        } catch (e) {
+		                            // localStorage capacity exceeded.
+		                            // TODO: Make this a specific error/event.
+		                            if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+		                                reject(e);
+		                            }
+		                            reject(e);
+		                        }
+		                    }
+		                });
+		            });
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function executeCallback(promise, callback) {
+		        if (callback) {
+		            promise.then(function (result) {
+		                callback(null, result);
+		            }, function (error) {
+		                callback(error);
+		            });
+		        }
+		    }
+	
+		    var localStorageWrapper = {
+		        _driver: 'localStorageWrapper',
+		        _initStorage: _initStorage,
+		        // Default API, from Gaia/localStorage.
+		        iterate: iterate,
+		        getItem: getItem,
+		        setItem: setItem,
+		        removeItem: removeItem,
+		        clear: clear,
+		        length: length,
+		        key: key,
+		        keys: keys
+		    };
+	
+		    exports['default'] = localStorageWrapper;
+		}).call(typeof window !== 'undefined' ? window : self);
+		module.exports = exports['default'];
+	
+	/***/ },
+	/* 3 */
+	/***/ function(module, exports) {
+	
+		'use strict';
+	
+		exports.__esModule = true;
+		(function () {
+		    'use strict';
+	
+		    // Sadly, the best way to save binary data in WebSQL/localStorage is serializing
+		    // it to Base64, so this is how we store it to prevent very strange errors with less
+		    // verbose ways of binary <-> string data storage.
+		    var BASE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+	
+		    var BLOB_TYPE_PREFIX = '~~local_forage_type~';
+		    var BLOB_TYPE_PREFIX_REGEX = /^~~local_forage_type~([^~]+)~/;
+	
+		    var SERIALIZED_MARKER = '__lfsc__:';
+		    var SERIALIZED_MARKER_LENGTH = SERIALIZED_MARKER.length;
+	
+		    // OMG the serializations!
+		    var TYPE_ARRAYBUFFER = 'arbf';
+		    var TYPE_BLOB = 'blob';
+		    var TYPE_INT8ARRAY = 'si08';
+		    var TYPE_UINT8ARRAY = 'ui08';
+		    var TYPE_UINT8CLAMPEDARRAY = 'uic8';
+		    var TYPE_INT16ARRAY = 'si16';
+		    var TYPE_INT32ARRAY = 'si32';
+		    var TYPE_UINT16ARRAY = 'ur16';
+		    var TYPE_UINT32ARRAY = 'ui32';
+		    var TYPE_FLOAT32ARRAY = 'fl32';
+		    var TYPE_FLOAT64ARRAY = 'fl64';
+		    var TYPE_SERIALIZED_MARKER_LENGTH = SERIALIZED_MARKER_LENGTH + TYPE_ARRAYBUFFER.length;
+	
+		    // Get out of our habit of using `window` inline, at least.
+		    var globalObject = this;
+	
+		    // Abstracts constructing a Blob object, so it also works in older
+		    // browsers that don't support the native Blob constructor. (i.e.
+		    // old QtWebKit versions, at least).
+		    function _createBlob(parts, properties) {
+		        parts = parts || [];
+		        properties = properties || {};
+	
+		        try {
+		            return new Blob(parts, properties);
+		        } catch (err) {
+		            if (err.name !== 'TypeError') {
+		                throw err;
+		            }
+	
+		            var BlobBuilder = globalObject.BlobBuilder || globalObject.MSBlobBuilder || globalObject.MozBlobBuilder || globalObject.WebKitBlobBuilder;
+	
+		            var builder = new BlobBuilder();
+		            for (var i = 0; i < parts.length; i += 1) {
+		                builder.append(parts[i]);
+		            }
+	
+		            return builder.getBlob(properties.type);
+		        }
+		    }
+	
+		    // Serialize a value, afterwards executing a callback (which usually
+		    // instructs the `setItem()` callback/promise to be executed). This is how
+		    // we store binary data with localStorage.
+		    function serialize(value, callback) {
+		        var valueString = '';
+		        if (value) {
+		            valueString = value.toString();
+		        }
+	
+		        // Cannot use `value instanceof ArrayBuffer` or such here, as these
+		        // checks fail when running the tests using casper.js...
+		        //
+		        // TODO: See why those tests fail and use a better solution.
+		        if (value && (value.toString() === '[object ArrayBuffer]' || value.buffer && value.buffer.toString() === '[object ArrayBuffer]')) {
+		            // Convert binary arrays to a string and prefix the string with
+		            // a special marker.
+		            var buffer;
+		            var marker = SERIALIZED_MARKER;
+	
+		            if (value instanceof ArrayBuffer) {
+		                buffer = value;
+		                marker += TYPE_ARRAYBUFFER;
+		            } else {
+		                buffer = value.buffer;
+	
+		                if (valueString === '[object Int8Array]') {
+		                    marker += TYPE_INT8ARRAY;
+		                } else if (valueString === '[object Uint8Array]') {
+		                    marker += TYPE_UINT8ARRAY;
+		                } else if (valueString === '[object Uint8ClampedArray]') {
+		                    marker += TYPE_UINT8CLAMPEDARRAY;
+		                } else if (valueString === '[object Int16Array]') {
+		                    marker += TYPE_INT16ARRAY;
+		                } else if (valueString === '[object Uint16Array]') {
+		                    marker += TYPE_UINT16ARRAY;
+		                } else if (valueString === '[object Int32Array]') {
+		                    marker += TYPE_INT32ARRAY;
+		                } else if (valueString === '[object Uint32Array]') {
+		                    marker += TYPE_UINT32ARRAY;
+		                } else if (valueString === '[object Float32Array]') {
+		                    marker += TYPE_FLOAT32ARRAY;
+		                } else if (valueString === '[object Float64Array]') {
+		                    marker += TYPE_FLOAT64ARRAY;
+		                } else {
+		                    callback(new Error('Failed to get type for BinaryArray'));
+		                }
+		            }
+	
+		            callback(marker + bufferToString(buffer));
+		        } else if (valueString === '[object Blob]') {
+		            // Conver the blob to a binaryArray and then to a string.
+		            var fileReader = new FileReader();
+	
+		            fileReader.onload = function () {
+		                // Backwards-compatible prefix for the blob type.
+		                var str = BLOB_TYPE_PREFIX + value.type + '~' + bufferToString(this.result);
+	
+		                callback(SERIALIZED_MARKER + TYPE_BLOB + str);
+		            };
+	
+		            fileReader.readAsArrayBuffer(value);
+		        } else {
+		            try {
+		                callback(JSON.stringify(value));
+		            } catch (e) {
+		                console.error("Couldn't convert value into a JSON string: ", value);
+	
+		                callback(null, e);
+		            }
+		        }
+		    }
+	
+		    // Deserialize data we've inserted into a value column/field. We place
+		    // special markers into our strings to mark them as encoded; this isn't
+		    // as nice as a meta field, but it's the only sane thing we can do whilst
+		    // keeping localStorage support intact.
+		    //
+		    // Oftentimes this will just deserialize JSON content, but if we have a
+		    // special marker (SERIALIZED_MARKER, defined above), we will extract
+		    // some kind of arraybuffer/binary data/typed array out of the string.
+		    function deserialize(value) {
+		        // If we haven't marked this string as being specially serialized (i.e.
+		        // something other than serialized JSON), we can just return it and be
+		        // done with it.
+		        if (value.substring(0, SERIALIZED_MARKER_LENGTH) !== SERIALIZED_MARKER) {
+		            return JSON.parse(value);
+		        }
+	
+		        // The following code deals with deserializing some kind of Blob or
+		        // TypedArray. First we separate out the type of data we're dealing
+		        // with from the data itself.
+		        var serializedString = value.substring(TYPE_SERIALIZED_MARKER_LENGTH);
+		        var type = value.substring(SERIALIZED_MARKER_LENGTH, TYPE_SERIALIZED_MARKER_LENGTH);
+	
+		        var blobType;
+		        // Backwards-compatible blob type serialization strategy.
+		        // DBs created with older versions of localForage will simply not have the blob type.
+		        if (type === TYPE_BLOB && BLOB_TYPE_PREFIX_REGEX.test(serializedString)) {
+		            var matcher = serializedString.match(BLOB_TYPE_PREFIX_REGEX);
+		            blobType = matcher[1];
+		            serializedString = serializedString.substring(matcher[0].length);
+		        }
+		        var buffer = stringToBuffer(serializedString);
+	
+		        // Return the right type based on the code/type set during
+		        // serialization.
+		        switch (type) {
+		            case TYPE_ARRAYBUFFER:
+		                return buffer;
+		            case TYPE_BLOB:
+		                return _createBlob([buffer], { type: blobType });
+		            case TYPE_INT8ARRAY:
+		                return new Int8Array(buffer);
+		            case TYPE_UINT8ARRAY:
+		                return new Uint8Array(buffer);
+		            case TYPE_UINT8CLAMPEDARRAY:
+		                return new Uint8ClampedArray(buffer);
+		            case TYPE_INT16ARRAY:
+		                return new Int16Array(buffer);
+		            case TYPE_UINT16ARRAY:
+		                return new Uint16Array(buffer);
+		            case TYPE_INT32ARRAY:
+		                return new Int32Array(buffer);
+		            case TYPE_UINT32ARRAY:
+		                return new Uint32Array(buffer);
+		            case TYPE_FLOAT32ARRAY:
+		                return new Float32Array(buffer);
+		            case TYPE_FLOAT64ARRAY:
+		                return new Float64Array(buffer);
+		            default:
+		                throw new Error('Unkown type: ' + type);
+		        }
+		    }
+	
+		    function stringToBuffer(serializedString) {
+		        // Fill the string into a ArrayBuffer.
+		        var bufferLength = serializedString.length * 0.75;
+		        var len = serializedString.length;
+		        var i;
+		        var p = 0;
+		        var encoded1, encoded2, encoded3, encoded4;
+	
+		        if (serializedString[serializedString.length - 1] === '=') {
+		            bufferLength--;
+		            if (serializedString[serializedString.length - 2] === '=') {
+		                bufferLength--;
+		            }
+		        }
+	
+		        var buffer = new ArrayBuffer(bufferLength);
+		        var bytes = new Uint8Array(buffer);
+	
+		        for (i = 0; i < len; i += 4) {
+		            encoded1 = BASE_CHARS.indexOf(serializedString[i]);
+		            encoded2 = BASE_CHARS.indexOf(serializedString[i + 1]);
+		            encoded3 = BASE_CHARS.indexOf(serializedString[i + 2]);
+		            encoded4 = BASE_CHARS.indexOf(serializedString[i + 3]);
+	
+		            /*jslint bitwise: true */
+		            bytes[p++] = encoded1 << 2 | encoded2 >> 4;
+		            bytes[p++] = (encoded2 & 15) << 4 | encoded3 >> 2;
+		            bytes[p++] = (encoded3 & 3) << 6 | encoded4 & 63;
+		        }
+		        return buffer;
+		    }
+	
+		    // Converts a buffer to a string to store, serialized, in the backend
+		    // storage library.
+		    function bufferToString(buffer) {
+		        // base64-arraybuffer
+		        var bytes = new Uint8Array(buffer);
+		        var base64String = '';
+		        var i;
+	
+		        for (i = 0; i < bytes.length; i += 3) {
+		            /*jslint bitwise: true */
+		            base64String += BASE_CHARS[bytes[i] >> 2];
+		            base64String += BASE_CHARS[(bytes[i] & 3) << 4 | bytes[i + 1] >> 4];
+		            base64String += BASE_CHARS[(bytes[i + 1] & 15) << 2 | bytes[i + 2] >> 6];
+		            base64String += BASE_CHARS[bytes[i + 2] & 63];
+		        }
+	
+		        if (bytes.length % 3 === 2) {
+		            base64String = base64String.substring(0, base64String.length - 1) + '=';
+		        } else if (bytes.length % 3 === 1) {
+		            base64String = base64String.substring(0, base64String.length - 2) + '==';
+		        }
+	
+		        return base64String;
+		    }
+	
+		    var localforageSerializer = {
+		        serialize: serialize,
+		        deserialize: deserialize,
+		        stringToBuffer: stringToBuffer,
+		        bufferToString: bufferToString
+		    };
+	
+		    exports['default'] = localforageSerializer;
+		}).call(typeof window !== 'undefined' ? window : self);
+		module.exports = exports['default'];
+	
+	/***/ },
+	/* 4 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		/*
+		 * Includes code from:
+		 *
+		 * base64-arraybuffer
+		 * https://github.com/niklasvh/base64-arraybuffer
+		 *
+		 * Copyright (c) 2012 Niklas von Hertzen
+		 * Licensed under the MIT license.
+		 */
+		'use strict';
+	
+		exports.__esModule = true;
+		(function () {
+		    'use strict';
+	
+		    var globalObject = this;
+		    var openDatabase = this.openDatabase;
+	
+		    // If WebSQL methods aren't available, we can stop now.
+		    if (!openDatabase) {
+		        return;
+		    }
+	
+		    // Open the WebSQL database (automatically creates one if one didn't
+		    // previously exist), using any options set in the config.
+		    function _initStorage(options) {
+		        var self = this;
+		        var dbInfo = {
+		            db: null
+		        };
+	
+		        if (options) {
+		            for (var i in options) {
+		                dbInfo[i] = typeof options[i] !== 'string' ? options[i].toString() : options[i];
+		            }
+		        }
+	
+		        var dbInfoPromise = new Promise(function (resolve, reject) {
+		            // Open the database; the openDatabase API will automatically
+		            // create it for us if it doesn't exist.
+		            try {
+		                dbInfo.db = openDatabase(dbInfo.name, String(dbInfo.version), dbInfo.description, dbInfo.size);
+		            } catch (e) {
+		                return self.setDriver(self.LOCALSTORAGE).then(function () {
+		                    return self._initStorage(options);
+		                }).then(resolve)['catch'](reject);
+		            }
+	
+		            // Create our key/value table if it doesn't exist.
+		            dbInfo.db.transaction(function (t) {
+		                t.executeSql('CREATE TABLE IF NOT EXISTS ' + dbInfo.storeName + ' (id INTEGER PRIMARY KEY, key unique, value)', [], function () {
+		                    self._dbInfo = dbInfo;
+		                    resolve();
+		                }, function (t, error) {
+		                    reject(error);
+		                });
+		            });
+		        });
+	
+		        return new Promise(function (resolve, reject) {
+		            resolve(__webpack_require__(3));
+		        }).then(function (lib) {
+		            dbInfo.serializer = lib;
+		            return dbInfoPromise;
+		        });
+		    }
+	
+		    function getItem(key, callback) {
+		        var self = this;
+	
+		        // Cast the key to a string, as that's all we can set as a key.
+		        if (typeof key !== 'string') {
+		            globalObject.console.warn(key + ' used as a key, but it is not a string.');
+		            key = String(key);
+		        }
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                dbInfo.db.transaction(function (t) {
+		                    t.executeSql('SELECT * FROM ' + dbInfo.storeName + ' WHERE key = ? LIMIT 1', [key], function (t, results) {
+		                        var result = results.rows.length ? results.rows.item(0).value : null;
+	
+		                        // Check to see if this is serialized content we need to
+		                        // unpack.
+		                        if (result) {
+		                            result = dbInfo.serializer.deserialize(result);
+		                        }
+	
+		                        resolve(result);
+		                    }, function (t, error) {
+	
+		                        reject(error);
+		                    });
+		                });
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function iterate(iterator, callback) {
+		        var self = this;
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+	
+		                dbInfo.db.transaction(function (t) {
+		                    t.executeSql('SELECT * FROM ' + dbInfo.storeName, [], function (t, results) {
+		                        var rows = results.rows;
+		                        var length = rows.length;
+	
+		                        for (var i = 0; i < length; i++) {
+		                            var item = rows.item(i);
+		                            var result = item.value;
+	
+		                            // Check to see if this is serialized content
+		                            // we need to unpack.
+		                            if (result) {
+		                                result = dbInfo.serializer.deserialize(result);
+		                            }
+	
+		                            result = iterator(result, item.key, i + 1);
+	
+		                            // void(0) prevents problems with redefinition
+		                            // of `undefined`.
+		                            if (result !== void 0) {
+		                                resolve(result);
+		                                return;
+		                            }
+		                        }
+	
+		                        resolve();
+		                    }, function (t, error) {
+		                        reject(error);
+		                    });
+		                });
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function setItem(key, value, callback) {
+		        var self = this;
+	
+		        // Cast the key to a string, as that's all we can set as a key.
+		        if (typeof key !== 'string') {
+		            globalObject.console.warn(key + ' used as a key, but it is not a string.');
+		            key = String(key);
+		        }
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                // The localStorage API doesn't return undefined values in an
+		                // "expected" way, so undefined is always cast to null in all
+		                // drivers. See: https://github.com/mozilla/localForage/pull/42
+		                if (value === undefined) {
+		                    value = null;
+		                }
+	
+		                // Save the original value to pass to the callback.
+		                var originalValue = value;
+	
+		                var dbInfo = self._dbInfo;
+		                dbInfo.serializer.serialize(value, function (value, error) {
+		                    if (error) {
+		                        reject(error);
+		                    } else {
+		                        dbInfo.db.transaction(function (t) {
+		                            t.executeSql('INSERT OR REPLACE INTO ' + dbInfo.storeName + ' (key, value) VALUES (?, ?)', [key, value], function () {
+		                                resolve(originalValue);
+		                            }, function (t, error) {
+		                                reject(error);
+		                            });
+		                        }, function (sqlError) {
+		                            // The transaction failed; check
+		                            // to see if it's a quota error.
+		                            if (sqlError.code === sqlError.QUOTA_ERR) {
+		                                // We reject the callback outright for now, but
+		                                // it's worth trying to re-run the transaction.
+		                                // Even if the user accepts the prompt to use
+		                                // more storage on Safari, this error will
+		                                // be called.
+		                                //
+		                                // TODO: Try to re-run the transaction.
+		                                reject(sqlError);
+		                            }
+		                        });
+		                    }
+		                });
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function removeItem(key, callback) {
+		        var self = this;
+	
+		        // Cast the key to a string, as that's all we can set as a key.
+		        if (typeof key !== 'string') {
+		            globalObject.console.warn(key + ' used as a key, but it is not a string.');
+		            key = String(key);
+		        }
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                dbInfo.db.transaction(function (t) {
+		                    t.executeSql('DELETE FROM ' + dbInfo.storeName + ' WHERE key = ?', [key], function () {
+		                        resolve();
+		                    }, function (t, error) {
+	
+		                        reject(error);
+		                    });
+		                });
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    // Deletes every item in the table.
+		    // TODO: Find out if this resets the AUTO_INCREMENT number.
+		    function clear(callback) {
+		        var self = this;
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                dbInfo.db.transaction(function (t) {
+		                    t.executeSql('DELETE FROM ' + dbInfo.storeName, [], function () {
+		                        resolve();
+		                    }, function (t, error) {
+		                        reject(error);
+		                    });
+		                });
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    // Does a simple `COUNT(key)` to get the number of items stored in
+		    // localForage.
+		    function length(callback) {
+		        var self = this;
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                dbInfo.db.transaction(function (t) {
+		                    // Ahhh, SQL makes this one soooooo easy.
+		                    t.executeSql('SELECT COUNT(key) as c FROM ' + dbInfo.storeName, [], function (t, results) {
+		                        var result = results.rows.item(0).c;
+	
+		                        resolve(result);
+		                    }, function (t, error) {
+	
+		                        reject(error);
+		                    });
+		                });
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    // Return the key located at key index X; essentially gets the key from a
+		    // `WHERE id = ?`. This is the most efficient way I can think to implement
+		    // this rarely-used (in my experience) part of the API, but it can seem
+		    // inconsistent, because we do `INSERT OR REPLACE INTO` on `setItem()`, so
+		    // the ID of each key will change every time it's updated. Perhaps a stored
+		    // procedure for the `setItem()` SQL would solve this problem?
+		    // TODO: Don't change ID on `setItem()`.
+		    function key(n, callback) {
+		        var self = this;
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                dbInfo.db.transaction(function (t) {
+		                    t.executeSql('SELECT key FROM ' + dbInfo.storeName + ' WHERE id = ? LIMIT 1', [n + 1], function (t, results) {
+		                        var result = results.rows.length ? results.rows.item(0).key : null;
+		                        resolve(result);
+		                    }, function (t, error) {
+		                        reject(error);
+		                    });
+		                });
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function keys(callback) {
+		        var self = this;
+	
+		        var promise = new Promise(function (resolve, reject) {
+		            self.ready().then(function () {
+		                var dbInfo = self._dbInfo;
+		                dbInfo.db.transaction(function (t) {
+		                    t.executeSql('SELECT key FROM ' + dbInfo.storeName, [], function (t, results) {
+		                        var keys = [];
+	
+		                        for (var i = 0; i < results.rows.length; i++) {
+		                            keys.push(results.rows.item(i).key);
+		                        }
+	
+		                        resolve(keys);
+		                    }, function (t, error) {
+	
+		                        reject(error);
+		                    });
+		                });
+		            })['catch'](reject);
+		        });
+	
+		        executeCallback(promise, callback);
+		        return promise;
+		    }
+	
+		    function executeCallback(promise, callback) {
+		        if (callback) {
+		            promise.then(function (result) {
+		                callback(null, result);
+		            }, function (error) {
+		                callback(error);
+		            });
+		        }
+		    }
+	
+		    var webSQLStorage = {
+		        _driver: 'webSQLStorage',
+		        _initStorage: _initStorage,
+		        iterate: iterate,
+		        getItem: getItem,
+		        setItem: setItem,
+		        removeItem: removeItem,
+		        clear: clear,
+		        length: length,
+		        key: key,
+		        keys: keys
+		    };
+	
+		    exports['default'] = webSQLStorage;
+		}).call(typeof window !== 'undefined' ? window : self);
+		module.exports = exports['default'];
+	
+	/***/ }
+	/******/ ])
+	});
+	;
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./~/process/browser.js */ 2)))
+
+/***/ },
+/* 15 */
+/*!**************************************!*\
+  !*** ./src/store/mutations/types.js ***!
+  \**************************************/
 /***/ function(module, exports) {
 
 	'use strict';
@@ -16494,27 +19295,12 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	var CACHE_KEY = 'setup-v1';
-	
-	var getSetup = function getSetup() {
-	  if (CACHE_KEY in localStorage) {
-	    return JSON.parse(localStorage[CACHE_KEY] || '{}');
-	  } else {
-	    return {};
-	  }
-	};
-	
-	exports.getSetup = getSetup;
-	var setSetup = function setSetup(url, token) {
-	  localStorage[CACHE_KEY] = JSON.stringify({
-	    url: url,
-	    token: token
-	  });
-	};
-	exports.setSetup = setSetup;
+	var INIT = 'INIT';
+	exports.INIT = INIT;
 
 /***/ },
-/* 15 */
+/* 16 */,
+/* 17 */
 /*!********************************!*\
   !*** ./src/utils/signature.js ***!
   \********************************/
@@ -16529,7 +19315,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _crypto = __webpack_require__(/*! crypto */ 16);
+	var _crypto = __webpack_require__(/*! crypto */ 18);
 	
 	var _crypto2 = _interopRequireDefault(_crypto);
 	
@@ -16539,13 +19325,13 @@
 	}
 
 /***/ },
-/* 16 */
+/* 18 */
 /*!**************************************!*\
   !*** ./~/crypto-browserify/index.js ***!
   \**************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var rng = __webpack_require__(/*! ./rng */ 21)
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var rng = __webpack_require__(/*! ./rng */ 23)
 	
 	function error () {
 	  var m = [].slice.call(arguments).join(' ')
@@ -16556,9 +19342,9 @@
 	    ].join('\n'))
 	}
 	
-	exports.createHash = __webpack_require__(/*! ./create-hash */ 23)
+	exports.createHash = __webpack_require__(/*! ./create-hash */ 25)
 	
-	exports.createHmac = __webpack_require__(/*! ./create-hmac */ 35)
+	exports.createHmac = __webpack_require__(/*! ./create-hmac */ 37)
 	
 	exports.randomBytes = function(size, callback) {
 	  if (callback && callback.call) {
@@ -16579,7 +19365,7 @@
 	  return ['sha1', 'sha256', 'sha512', 'md5', 'rmd160']
 	}
 	
-	var p = __webpack_require__(/*! ./pbkdf2 */ 36)(exports)
+	var p = __webpack_require__(/*! ./pbkdf2 */ 38)(exports)
 	exports.pbkdf2 = p.pbkdf2
 	exports.pbkdf2Sync = p.pbkdf2Sync
 	
@@ -16599,10 +19385,10 @@
 	  }
 	})
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 17).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 19).Buffer))
 
 /***/ },
-/* 17 */
+/* 19 */
 /*!***************************!*\
   !*** ./~/buffer/index.js ***!
   \***************************/
@@ -16616,9 +19402,9 @@
 	 */
 	/* eslint-disable no-proto */
 	
-	var base64 = __webpack_require__(/*! base64-js */ 18)
-	var ieee754 = __webpack_require__(/*! ieee754 */ 19)
-	var isArray = __webpack_require__(/*! isarray */ 20)
+	var base64 = __webpack_require__(/*! base64-js */ 20)
+	var ieee754 = __webpack_require__(/*! ieee754 */ 21)
+	var isArray = __webpack_require__(/*! isarray */ 22)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -18153,10 +20939,10 @@
 	  return i
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 17).Buffer, (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 19).Buffer, (function() { return this; }())))
 
 /***/ },
-/* 18 */
+/* 20 */
 /*!********************************!*\
   !*** ./~/base64-js/lib/b64.js ***!
   \********************************/
@@ -18289,7 +21075,7 @@
 
 
 /***/ },
-/* 19 */
+/* 21 */
 /*!****************************!*\
   !*** ./~/ieee754/index.js ***!
   \****************************/
@@ -18382,7 +21168,7 @@
 
 
 /***/ },
-/* 20 */
+/* 22 */
 /*!****************************!*\
   !*** ./~/isarray/index.js ***!
   \****************************/
@@ -18394,7 +21180,7 @@
 
 
 /***/ },
-/* 21 */
+/* 23 */
 /*!************************************!*\
   !*** ./~/crypto-browserify/rng.js ***!
   \************************************/
@@ -18403,7 +21189,7 @@
 	/* WEBPACK VAR INJECTION */(function(global, Buffer) {(function() {
 	  var g = ('undefined' === typeof window ? global : window) || {}
 	  _crypto = (
-	    g.crypto || g.msCrypto || __webpack_require__(/*! crypto */ 22)
+	    g.crypto || g.msCrypto || __webpack_require__(/*! crypto */ 24)
 	  )
 	  module.exports = function(size) {
 	    // Modern Browsers
@@ -18427,10 +21213,10 @@
 	  }
 	}())
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./~/buffer/index.js */ 17).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./~/buffer/index.js */ 19).Buffer))
 
 /***/ },
-/* 22 */
+/* 24 */
 /*!************************!*\
   !*** crypto (ignored) ***!
   \************************/
@@ -18439,16 +21225,16 @@
 	/* (ignored) */
 
 /***/ },
-/* 23 */
+/* 25 */
 /*!********************************************!*\
   !*** ./~/crypto-browserify/create-hash.js ***!
   \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(/*! sha.js */ 24)
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(/*! sha.js */ 26)
 	
-	var md5 = toConstructor(__webpack_require__(/*! ./md5 */ 32))
-	var rmd160 = toConstructor(__webpack_require__(/*! ripemd160 */ 34))
+	var md5 = toConstructor(__webpack_require__(/*! ./md5 */ 34))
+	var rmd160 = toConstructor(__webpack_require__(/*! ripemd160 */ 36))
 	
 	function toConstructor (fn) {
 	  return function () {
@@ -18476,10 +21262,10 @@
 	  return createHash(alg)
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 17).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 19).Buffer))
 
 /***/ },
-/* 24 */
+/* 26 */
 /*!***************************!*\
   !*** ./~/sha.js/index.js ***!
   \***************************/
@@ -18491,16 +21277,16 @@
 	  return new Alg()
 	}
 	
-	var Buffer = __webpack_require__(/*! buffer */ 17).Buffer
-	var Hash   = __webpack_require__(/*! ./hash */ 25)(Buffer)
+	var Buffer = __webpack_require__(/*! buffer */ 19).Buffer
+	var Hash   = __webpack_require__(/*! ./hash */ 27)(Buffer)
 	
-	exports.sha1 = __webpack_require__(/*! ./sha1 */ 26)(Buffer, Hash)
-	exports.sha256 = __webpack_require__(/*! ./sha256 */ 30)(Buffer, Hash)
-	exports.sha512 = __webpack_require__(/*! ./sha512 */ 31)(Buffer, Hash)
+	exports.sha1 = __webpack_require__(/*! ./sha1 */ 28)(Buffer, Hash)
+	exports.sha256 = __webpack_require__(/*! ./sha256 */ 32)(Buffer, Hash)
+	exports.sha512 = __webpack_require__(/*! ./sha512 */ 33)(Buffer, Hash)
 
 
 /***/ },
-/* 25 */
+/* 27 */
 /*!**************************!*\
   !*** ./~/sha.js/hash.js ***!
   \**************************/
@@ -18586,7 +21372,7 @@
 
 
 /***/ },
-/* 26 */
+/* 28 */
 /*!**************************!*\
   !*** ./~/sha.js/sha1.js ***!
   \**************************/
@@ -18601,7 +21387,7 @@
 	 * See http://pajhome.org.uk/crypt/md5 for details.
 	 */
 	
-	var inherits = __webpack_require__(/*! util */ 27).inherits
+	var inherits = __webpack_require__(/*! util */ 29).inherits
 	
 	module.exports = function (Buffer, Hash) {
 	
@@ -18733,7 +21519,7 @@
 
 
 /***/ },
-/* 27 */
+/* 29 */
 /*!************************!*\
   !*** ./~/util/util.js ***!
   \************************/
@@ -19264,7 +22050,7 @@
 	}
 	exports.isPrimitive = isPrimitive;
 	
-	exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ 28);
+	exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ 30);
 	
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -19308,7 +22094,7 @@
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(/*! inherits */ 29);
+	exports.inherits = __webpack_require__(/*! inherits */ 31);
 	
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -19329,7 +22115,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./~/process/browser.js */ 2)))
 
 /***/ },
-/* 28 */
+/* 30 */
 /*!*******************************************!*\
   !*** ./~/util/support/isBufferBrowser.js ***!
   \*******************************************/
@@ -19343,7 +22129,7 @@
 	}
 
 /***/ },
-/* 29 */
+/* 31 */
 /*!****************************************!*\
   !*** ./~/inherits/inherits_browser.js ***!
   \****************************************/
@@ -19375,7 +22161,7 @@
 
 
 /***/ },
-/* 30 */
+/* 32 */
 /*!****************************!*\
   !*** ./~/sha.js/sha256.js ***!
   \****************************/
@@ -19390,7 +22176,7 @@
 	 *
 	 */
 	
-	var inherits = __webpack_require__(/*! util */ 27).inherits
+	var inherits = __webpack_require__(/*! util */ 29).inherits
 	
 	module.exports = function (Buffer, Hash) {
 	
@@ -19531,13 +22317,13 @@
 
 
 /***/ },
-/* 31 */
+/* 33 */
 /*!****************************!*\
   !*** ./~/sha.js/sha512.js ***!
   \****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var inherits = __webpack_require__(/*! util */ 27).inherits
+	var inherits = __webpack_require__(/*! util */ 29).inherits
 	
 	module.exports = function (Buffer, Hash) {
 	  var K = [
@@ -19784,7 +22570,7 @@
 
 
 /***/ },
-/* 32 */
+/* 34 */
 /*!************************************!*\
   !*** ./~/crypto-browserify/md5.js ***!
   \************************************/
@@ -19799,7 +22585,7 @@
 	 * See http://pajhome.org.uk/crypt/md5 for more info.
 	 */
 	
-	var helpers = __webpack_require__(/*! ./helpers */ 33);
+	var helpers = __webpack_require__(/*! ./helpers */ 35);
 	
 	/*
 	 * Calculate the MD5 of an array of little-endian words, and a bit length
@@ -19948,7 +22734,7 @@
 
 
 /***/ },
-/* 33 */
+/* 35 */
 /*!****************************************!*\
   !*** ./~/crypto-browserify/helpers.js ***!
   \****************************************/
@@ -19989,10 +22775,10 @@
 	
 	module.exports = { hash: hash };
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 17).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 19).Buffer))
 
 /***/ },
-/* 34 */
+/* 36 */
 /*!**************************************!*\
   !*** ./~/ripemd160/lib/ripemd160.js ***!
   \**************************************/
@@ -20204,16 +22990,16 @@
 	
 	
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 17).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 19).Buffer))
 
 /***/ },
-/* 35 */
+/* 37 */
 /*!********************************************!*\
   !*** ./~/crypto-browserify/create-hmac.js ***!
   \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(/*! ./create-hash */ 23)
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(/*! ./create-hash */ 25)
 	
 	var zeroBuffer = new Buffer(128)
 	zeroBuffer.fill(0)
@@ -20257,16 +23043,16 @@
 	}
 	
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 17).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 19).Buffer))
 
 /***/ },
-/* 36 */
+/* 38 */
 /*!***************************************!*\
   !*** ./~/crypto-browserify/pbkdf2.js ***!
   \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var pbkdf2Export = __webpack_require__(/*! pbkdf2-compat/pbkdf2 */ 37)
+	var pbkdf2Export = __webpack_require__(/*! pbkdf2-compat/pbkdf2 */ 39)
 	
 	module.exports = function (crypto, exports) {
 	  exports = exports || {}
@@ -20281,7 +23067,7 @@
 
 
 /***/ },
-/* 37 */
+/* 39 */
 /*!***********************************!*\
   !*** ./~/pbkdf2-compat/pbkdf2.js ***!
   \***********************************/
@@ -20372,10 +23158,10 @@
 	  }
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 17).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 19).Buffer))
 
 /***/ },
-/* 38 */
+/* 40 */
 /*!**************************************!*\
   !*** ./src/store/mutations/index.js ***!
   \**************************************/
@@ -20391,7 +23177,7 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var _types = __webpack_require__(/*! ./types */ 190);
+	var _types = __webpack_require__(/*! ./types */ 15);
 	
 	var types = _interopRequireWildcard(_types);
 	
@@ -20402,7 +23188,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 39 */
+/* 41 */
 /*!****************************!*\
   !*** ./src/setup/index.js ***!
   \****************************/
@@ -20420,11 +23206,11 @@
 	
 	var _superagent2 = _interopRequireDefault(_superagent);
 	
-	var _utilsSignature = __webpack_require__(/*! ../utils/signature */ 15);
+	var _utilsSignature = __webpack_require__(/*! ../utils/signature */ 17);
 	
 	var _store = __webpack_require__(/*! ../store */ 8);
 	
-	__webpack_require__(/*! ./style */ 40);
+	__webpack_require__(/*! ./style */ 42);
 	
 	var Setup = {
 	  el: '.js-setup',
@@ -20434,18 +23220,11 @@
 	    isValidating: false,
 	    msgError: null,
 	    msgSuccess: null,
+	    url: null,
+	    token: null,
 	    timestamp: null,
 	    nonce: null,
 	    echo_str: null
-	  },
-	
-	  computed: {
-	    url: function url() {
-	      return _store.state.url;
-	    },
-	    token: function token() {
-	      return _store.state.token;
-	    }
 	  },
 	
 	  methods: {
@@ -20489,7 +23268,9 @@
 	  },
 	
 	  ready: function ready() {
-	    _store.actions.init(this.url, this.token);
+	    _store.actions.init();
+	    this.url = _store.state.url;
+	    this.token = _store.state.token;
 	  }
 	};
 	
@@ -20497,7 +23278,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 40 */
+/* 42 */
 /*!******************************!*\
   !*** ./src/setup/style.scss ***!
   \******************************/
@@ -20506,10 +23287,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./../../~/postcss-loader!./../../~/sass-loader!./style.scss */ 41);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./../../~/postcss-loader!./../../~/sass-loader!./style.scss */ 43);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 43)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 45)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -20526,13 +23307,13 @@
 	}
 
 /***/ },
-/* 41 */
+/* 43 */
 /*!********************************************************************************!*\
   !*** ./~/css-loader!./~/postcss-loader!./~/sass-loader!./src/setup/style.scss ***!
   \********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 42)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 44)();
 	// imports
 	
 	
@@ -20543,7 +23324,7 @@
 
 
 /***/ },
-/* 42 */
+/* 44 */
 /*!**************************************!*\
   !*** ./~/css-loader/lib/css-base.js ***!
   \**************************************/
@@ -20602,7 +23383,7 @@
 
 
 /***/ },
-/* 43 */
+/* 45 */
 /*!*************************************!*\
   !*** ./~/style-loader/addStyles.js ***!
   \*************************************/
@@ -20859,7 +23640,7 @@
 
 
 /***/ },
-/* 44 */
+/* 46 */
 /*!***************************!*\
   !*** ./src/nav/subnav.js ***!
   \***************************/
@@ -20890,7 +23671,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 45 */
+/* 47 */
 /*!****************************!*\
   !*** ./src/panel/index.js ***!
   \****************************/
@@ -20904,7 +23685,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _highlightJs = __webpack_require__(/*! highlight.js */ 46);
+	var _highlightJs = __webpack_require__(/*! highlight.js */ 48);
 	
 	var _highlightJs2 = _interopRequireDefault(_highlightJs);
 	
@@ -20912,23 +23693,23 @@
 	
 	var _superagent2 = _interopRequireDefault(_superagent);
 	
-	var _to_user_name = __webpack_require__(/*! ./to_user_name */ 185);
+	var _to_user_name = __webpack_require__(/*! ./to_user_name */ 187);
 	
 	var _to_user_name2 = _interopRequireDefault(_to_user_name);
 	
-	var _from_user_name = __webpack_require__(/*! ./from_user_name */ 186);
+	var _from_user_name = __webpack_require__(/*! ./from_user_name */ 188);
 	
 	var _from_user_name2 = _interopRequireDefault(_from_user_name);
 	
-	var _create_time = __webpack_require__(/*! ./create_time */ 187);
+	var _create_time = __webpack_require__(/*! ./create_time */ 189);
 	
 	var _create_time2 = _interopRequireDefault(_create_time);
 	
-	var _content = __webpack_require__(/*! ./content */ 188);
+	var _content = __webpack_require__(/*! ./content */ 190);
 	
 	var _content2 = _interopRequireDefault(_content);
 	
-	var _msg_id = __webpack_require__(/*! ./msg_id */ 189);
+	var _msg_id = __webpack_require__(/*! ./msg_id */ 191);
 	
 	var _msg_id2 = _interopRequireDefault(_msg_id);
 	
@@ -20988,156 +23769,156 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 46 */
+/* 48 */
 /*!*************************************!*\
   !*** ./~/highlight.js/lib/index.js ***!
   \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var hljs = __webpack_require__(/*! ./highlight */ 47);
+	var hljs = __webpack_require__(/*! ./highlight */ 49);
 	
-	hljs.registerLanguage('1c', __webpack_require__(/*! ./languages/1c */ 48));
-	hljs.registerLanguage('accesslog', __webpack_require__(/*! ./languages/accesslog */ 49));
-	hljs.registerLanguage('actionscript', __webpack_require__(/*! ./languages/actionscript */ 50));
-	hljs.registerLanguage('apache', __webpack_require__(/*! ./languages/apache */ 51));
-	hljs.registerLanguage('applescript', __webpack_require__(/*! ./languages/applescript */ 52));
-	hljs.registerLanguage('armasm', __webpack_require__(/*! ./languages/armasm */ 53));
-	hljs.registerLanguage('xml', __webpack_require__(/*! ./languages/xml */ 54));
-	hljs.registerLanguage('asciidoc', __webpack_require__(/*! ./languages/asciidoc */ 55));
-	hljs.registerLanguage('aspectj', __webpack_require__(/*! ./languages/aspectj */ 56));
-	hljs.registerLanguage('autohotkey', __webpack_require__(/*! ./languages/autohotkey */ 57));
-	hljs.registerLanguage('autoit', __webpack_require__(/*! ./languages/autoit */ 58));
-	hljs.registerLanguage('avrasm', __webpack_require__(/*! ./languages/avrasm */ 59));
-	hljs.registerLanguage('axapta', __webpack_require__(/*! ./languages/axapta */ 60));
-	hljs.registerLanguage('bash', __webpack_require__(/*! ./languages/bash */ 61));
-	hljs.registerLanguage('brainfuck', __webpack_require__(/*! ./languages/brainfuck */ 62));
-	hljs.registerLanguage('cal', __webpack_require__(/*! ./languages/cal */ 63));
-	hljs.registerLanguage('capnproto', __webpack_require__(/*! ./languages/capnproto */ 64));
-	hljs.registerLanguage('ceylon', __webpack_require__(/*! ./languages/ceylon */ 65));
-	hljs.registerLanguage('clojure', __webpack_require__(/*! ./languages/clojure */ 66));
-	hljs.registerLanguage('clojure-repl', __webpack_require__(/*! ./languages/clojure-repl */ 67));
-	hljs.registerLanguage('cmake', __webpack_require__(/*! ./languages/cmake */ 68));
-	hljs.registerLanguage('coffeescript', __webpack_require__(/*! ./languages/coffeescript */ 69));
-	hljs.registerLanguage('cpp', __webpack_require__(/*! ./languages/cpp */ 70));
-	hljs.registerLanguage('crmsh', __webpack_require__(/*! ./languages/crmsh */ 71));
-	hljs.registerLanguage('crystal', __webpack_require__(/*! ./languages/crystal */ 72));
-	hljs.registerLanguage('cs', __webpack_require__(/*! ./languages/cs */ 73));
-	hljs.registerLanguage('css', __webpack_require__(/*! ./languages/css */ 74));
-	hljs.registerLanguage('d', __webpack_require__(/*! ./languages/d */ 75));
-	hljs.registerLanguage('markdown', __webpack_require__(/*! ./languages/markdown */ 76));
-	hljs.registerLanguage('dart', __webpack_require__(/*! ./languages/dart */ 77));
-	hljs.registerLanguage('delphi', __webpack_require__(/*! ./languages/delphi */ 78));
-	hljs.registerLanguage('diff', __webpack_require__(/*! ./languages/diff */ 79));
-	hljs.registerLanguage('django', __webpack_require__(/*! ./languages/django */ 80));
-	hljs.registerLanguage('dns', __webpack_require__(/*! ./languages/dns */ 81));
-	hljs.registerLanguage('dockerfile', __webpack_require__(/*! ./languages/dockerfile */ 82));
-	hljs.registerLanguage('dos', __webpack_require__(/*! ./languages/dos */ 83));
-	hljs.registerLanguage('dust', __webpack_require__(/*! ./languages/dust */ 84));
-	hljs.registerLanguage('elixir', __webpack_require__(/*! ./languages/elixir */ 85));
-	hljs.registerLanguage('elm', __webpack_require__(/*! ./languages/elm */ 86));
-	hljs.registerLanguage('ruby', __webpack_require__(/*! ./languages/ruby */ 87));
-	hljs.registerLanguage('erb', __webpack_require__(/*! ./languages/erb */ 88));
-	hljs.registerLanguage('erlang-repl', __webpack_require__(/*! ./languages/erlang-repl */ 89));
-	hljs.registerLanguage('erlang', __webpack_require__(/*! ./languages/erlang */ 90));
-	hljs.registerLanguage('fix', __webpack_require__(/*! ./languages/fix */ 91));
-	hljs.registerLanguage('fortran', __webpack_require__(/*! ./languages/fortran */ 92));
-	hljs.registerLanguage('fsharp', __webpack_require__(/*! ./languages/fsharp */ 93));
-	hljs.registerLanguage('gams', __webpack_require__(/*! ./languages/gams */ 94));
-	hljs.registerLanguage('gcode', __webpack_require__(/*! ./languages/gcode */ 95));
-	hljs.registerLanguage('gherkin', __webpack_require__(/*! ./languages/gherkin */ 96));
-	hljs.registerLanguage('glsl', __webpack_require__(/*! ./languages/glsl */ 97));
-	hljs.registerLanguage('go', __webpack_require__(/*! ./languages/go */ 98));
-	hljs.registerLanguage('golo', __webpack_require__(/*! ./languages/golo */ 99));
-	hljs.registerLanguage('gradle', __webpack_require__(/*! ./languages/gradle */ 100));
-	hljs.registerLanguage('groovy', __webpack_require__(/*! ./languages/groovy */ 101));
-	hljs.registerLanguage('haml', __webpack_require__(/*! ./languages/haml */ 102));
-	hljs.registerLanguage('handlebars', __webpack_require__(/*! ./languages/handlebars */ 103));
-	hljs.registerLanguage('haskell', __webpack_require__(/*! ./languages/haskell */ 104));
-	hljs.registerLanguage('haxe', __webpack_require__(/*! ./languages/haxe */ 105));
-	hljs.registerLanguage('http', __webpack_require__(/*! ./languages/http */ 106));
-	hljs.registerLanguage('inform7', __webpack_require__(/*! ./languages/inform7 */ 107));
-	hljs.registerLanguage('ini', __webpack_require__(/*! ./languages/ini */ 108));
-	hljs.registerLanguage('irpf90', __webpack_require__(/*! ./languages/irpf90 */ 109));
-	hljs.registerLanguage('java', __webpack_require__(/*! ./languages/java */ 110));
-	hljs.registerLanguage('javascript', __webpack_require__(/*! ./languages/javascript */ 111));
-	hljs.registerLanguage('json', __webpack_require__(/*! ./languages/json */ 112));
-	hljs.registerLanguage('julia', __webpack_require__(/*! ./languages/julia */ 113));
-	hljs.registerLanguage('kotlin', __webpack_require__(/*! ./languages/kotlin */ 114));
-	hljs.registerLanguage('lasso', __webpack_require__(/*! ./languages/lasso */ 115));
-	hljs.registerLanguage('less', __webpack_require__(/*! ./languages/less */ 116));
-	hljs.registerLanguage('lisp', __webpack_require__(/*! ./languages/lisp */ 117));
-	hljs.registerLanguage('livecodeserver', __webpack_require__(/*! ./languages/livecodeserver */ 118));
-	hljs.registerLanguage('livescript', __webpack_require__(/*! ./languages/livescript */ 119));
-	hljs.registerLanguage('lua', __webpack_require__(/*! ./languages/lua */ 120));
-	hljs.registerLanguage('makefile', __webpack_require__(/*! ./languages/makefile */ 121));
-	hljs.registerLanguage('mathematica', __webpack_require__(/*! ./languages/mathematica */ 122));
-	hljs.registerLanguage('matlab', __webpack_require__(/*! ./languages/matlab */ 123));
-	hljs.registerLanguage('mel', __webpack_require__(/*! ./languages/mel */ 124));
-	hljs.registerLanguage('mercury', __webpack_require__(/*! ./languages/mercury */ 125));
-	hljs.registerLanguage('mizar', __webpack_require__(/*! ./languages/mizar */ 126));
-	hljs.registerLanguage('perl', __webpack_require__(/*! ./languages/perl */ 127));
-	hljs.registerLanguage('mojolicious', __webpack_require__(/*! ./languages/mojolicious */ 128));
-	hljs.registerLanguage('monkey', __webpack_require__(/*! ./languages/monkey */ 129));
-	hljs.registerLanguage('nginx', __webpack_require__(/*! ./languages/nginx */ 130));
-	hljs.registerLanguage('nimrod', __webpack_require__(/*! ./languages/nimrod */ 131));
-	hljs.registerLanguage('nix', __webpack_require__(/*! ./languages/nix */ 132));
-	hljs.registerLanguage('nsis', __webpack_require__(/*! ./languages/nsis */ 133));
-	hljs.registerLanguage('objectivec', __webpack_require__(/*! ./languages/objectivec */ 134));
-	hljs.registerLanguage('ocaml', __webpack_require__(/*! ./languages/ocaml */ 135));
-	hljs.registerLanguage('openscad', __webpack_require__(/*! ./languages/openscad */ 136));
-	hljs.registerLanguage('oxygene', __webpack_require__(/*! ./languages/oxygene */ 137));
-	hljs.registerLanguage('parser3', __webpack_require__(/*! ./languages/parser3 */ 138));
-	hljs.registerLanguage('pf', __webpack_require__(/*! ./languages/pf */ 139));
-	hljs.registerLanguage('php', __webpack_require__(/*! ./languages/php */ 140));
-	hljs.registerLanguage('powershell', __webpack_require__(/*! ./languages/powershell */ 141));
-	hljs.registerLanguage('processing', __webpack_require__(/*! ./languages/processing */ 142));
-	hljs.registerLanguage('profile', __webpack_require__(/*! ./languages/profile */ 143));
-	hljs.registerLanguage('prolog', __webpack_require__(/*! ./languages/prolog */ 144));
-	hljs.registerLanguage('protobuf', __webpack_require__(/*! ./languages/protobuf */ 145));
-	hljs.registerLanguage('puppet', __webpack_require__(/*! ./languages/puppet */ 146));
-	hljs.registerLanguage('python', __webpack_require__(/*! ./languages/python */ 147));
-	hljs.registerLanguage('q', __webpack_require__(/*! ./languages/q */ 148));
-	hljs.registerLanguage('r', __webpack_require__(/*! ./languages/r */ 149));
-	hljs.registerLanguage('rib', __webpack_require__(/*! ./languages/rib */ 150));
-	hljs.registerLanguage('roboconf', __webpack_require__(/*! ./languages/roboconf */ 151));
-	hljs.registerLanguage('rsl', __webpack_require__(/*! ./languages/rsl */ 152));
-	hljs.registerLanguage('ruleslanguage', __webpack_require__(/*! ./languages/ruleslanguage */ 153));
-	hljs.registerLanguage('rust', __webpack_require__(/*! ./languages/rust */ 154));
-	hljs.registerLanguage('scala', __webpack_require__(/*! ./languages/scala */ 155));
-	hljs.registerLanguage('scheme', __webpack_require__(/*! ./languages/scheme */ 156));
-	hljs.registerLanguage('scilab', __webpack_require__(/*! ./languages/scilab */ 157));
-	hljs.registerLanguage('scss', __webpack_require__(/*! ./languages/scss */ 158));
-	hljs.registerLanguage('smali', __webpack_require__(/*! ./languages/smali */ 159));
-	hljs.registerLanguage('smalltalk', __webpack_require__(/*! ./languages/smalltalk */ 160));
-	hljs.registerLanguage('sml', __webpack_require__(/*! ./languages/sml */ 161));
-	hljs.registerLanguage('sqf', __webpack_require__(/*! ./languages/sqf */ 162));
-	hljs.registerLanguage('sql', __webpack_require__(/*! ./languages/sql */ 163));
-	hljs.registerLanguage('stata', __webpack_require__(/*! ./languages/stata */ 164));
-	hljs.registerLanguage('step21', __webpack_require__(/*! ./languages/step21 */ 165));
-	hljs.registerLanguage('stylus', __webpack_require__(/*! ./languages/stylus */ 166));
-	hljs.registerLanguage('swift', __webpack_require__(/*! ./languages/swift */ 167));
-	hljs.registerLanguage('tcl', __webpack_require__(/*! ./languages/tcl */ 168));
-	hljs.registerLanguage('tex', __webpack_require__(/*! ./languages/tex */ 169));
-	hljs.registerLanguage('thrift', __webpack_require__(/*! ./languages/thrift */ 170));
-	hljs.registerLanguage('tp', __webpack_require__(/*! ./languages/tp */ 171));
-	hljs.registerLanguage('twig', __webpack_require__(/*! ./languages/twig */ 172));
-	hljs.registerLanguage('typescript', __webpack_require__(/*! ./languages/typescript */ 173));
-	hljs.registerLanguage('vala', __webpack_require__(/*! ./languages/vala */ 174));
-	hljs.registerLanguage('vbnet', __webpack_require__(/*! ./languages/vbnet */ 175));
-	hljs.registerLanguage('vbscript', __webpack_require__(/*! ./languages/vbscript */ 176));
-	hljs.registerLanguage('vbscript-html', __webpack_require__(/*! ./languages/vbscript-html */ 177));
-	hljs.registerLanguage('verilog', __webpack_require__(/*! ./languages/verilog */ 178));
-	hljs.registerLanguage('vhdl', __webpack_require__(/*! ./languages/vhdl */ 179));
-	hljs.registerLanguage('vim', __webpack_require__(/*! ./languages/vim */ 180));
-	hljs.registerLanguage('x86asm', __webpack_require__(/*! ./languages/x86asm */ 181));
-	hljs.registerLanguage('xl', __webpack_require__(/*! ./languages/xl */ 182));
-	hljs.registerLanguage('xquery', __webpack_require__(/*! ./languages/xquery */ 183));
-	hljs.registerLanguage('zephir', __webpack_require__(/*! ./languages/zephir */ 184));
+	hljs.registerLanguage('1c', __webpack_require__(/*! ./languages/1c */ 50));
+	hljs.registerLanguage('accesslog', __webpack_require__(/*! ./languages/accesslog */ 51));
+	hljs.registerLanguage('actionscript', __webpack_require__(/*! ./languages/actionscript */ 52));
+	hljs.registerLanguage('apache', __webpack_require__(/*! ./languages/apache */ 53));
+	hljs.registerLanguage('applescript', __webpack_require__(/*! ./languages/applescript */ 54));
+	hljs.registerLanguage('armasm', __webpack_require__(/*! ./languages/armasm */ 55));
+	hljs.registerLanguage('xml', __webpack_require__(/*! ./languages/xml */ 56));
+	hljs.registerLanguage('asciidoc', __webpack_require__(/*! ./languages/asciidoc */ 57));
+	hljs.registerLanguage('aspectj', __webpack_require__(/*! ./languages/aspectj */ 58));
+	hljs.registerLanguage('autohotkey', __webpack_require__(/*! ./languages/autohotkey */ 59));
+	hljs.registerLanguage('autoit', __webpack_require__(/*! ./languages/autoit */ 60));
+	hljs.registerLanguage('avrasm', __webpack_require__(/*! ./languages/avrasm */ 61));
+	hljs.registerLanguage('axapta', __webpack_require__(/*! ./languages/axapta */ 62));
+	hljs.registerLanguage('bash', __webpack_require__(/*! ./languages/bash */ 63));
+	hljs.registerLanguage('brainfuck', __webpack_require__(/*! ./languages/brainfuck */ 64));
+	hljs.registerLanguage('cal', __webpack_require__(/*! ./languages/cal */ 65));
+	hljs.registerLanguage('capnproto', __webpack_require__(/*! ./languages/capnproto */ 66));
+	hljs.registerLanguage('ceylon', __webpack_require__(/*! ./languages/ceylon */ 67));
+	hljs.registerLanguage('clojure', __webpack_require__(/*! ./languages/clojure */ 68));
+	hljs.registerLanguage('clojure-repl', __webpack_require__(/*! ./languages/clojure-repl */ 69));
+	hljs.registerLanguage('cmake', __webpack_require__(/*! ./languages/cmake */ 70));
+	hljs.registerLanguage('coffeescript', __webpack_require__(/*! ./languages/coffeescript */ 71));
+	hljs.registerLanguage('cpp', __webpack_require__(/*! ./languages/cpp */ 72));
+	hljs.registerLanguage('crmsh', __webpack_require__(/*! ./languages/crmsh */ 73));
+	hljs.registerLanguage('crystal', __webpack_require__(/*! ./languages/crystal */ 74));
+	hljs.registerLanguage('cs', __webpack_require__(/*! ./languages/cs */ 75));
+	hljs.registerLanguage('css', __webpack_require__(/*! ./languages/css */ 76));
+	hljs.registerLanguage('d', __webpack_require__(/*! ./languages/d */ 77));
+	hljs.registerLanguage('markdown', __webpack_require__(/*! ./languages/markdown */ 78));
+	hljs.registerLanguage('dart', __webpack_require__(/*! ./languages/dart */ 79));
+	hljs.registerLanguage('delphi', __webpack_require__(/*! ./languages/delphi */ 80));
+	hljs.registerLanguage('diff', __webpack_require__(/*! ./languages/diff */ 81));
+	hljs.registerLanguage('django', __webpack_require__(/*! ./languages/django */ 82));
+	hljs.registerLanguage('dns', __webpack_require__(/*! ./languages/dns */ 83));
+	hljs.registerLanguage('dockerfile', __webpack_require__(/*! ./languages/dockerfile */ 84));
+	hljs.registerLanguage('dos', __webpack_require__(/*! ./languages/dos */ 85));
+	hljs.registerLanguage('dust', __webpack_require__(/*! ./languages/dust */ 86));
+	hljs.registerLanguage('elixir', __webpack_require__(/*! ./languages/elixir */ 87));
+	hljs.registerLanguage('elm', __webpack_require__(/*! ./languages/elm */ 88));
+	hljs.registerLanguage('ruby', __webpack_require__(/*! ./languages/ruby */ 89));
+	hljs.registerLanguage('erb', __webpack_require__(/*! ./languages/erb */ 90));
+	hljs.registerLanguage('erlang-repl', __webpack_require__(/*! ./languages/erlang-repl */ 91));
+	hljs.registerLanguage('erlang', __webpack_require__(/*! ./languages/erlang */ 92));
+	hljs.registerLanguage('fix', __webpack_require__(/*! ./languages/fix */ 93));
+	hljs.registerLanguage('fortran', __webpack_require__(/*! ./languages/fortran */ 94));
+	hljs.registerLanguage('fsharp', __webpack_require__(/*! ./languages/fsharp */ 95));
+	hljs.registerLanguage('gams', __webpack_require__(/*! ./languages/gams */ 96));
+	hljs.registerLanguage('gcode', __webpack_require__(/*! ./languages/gcode */ 97));
+	hljs.registerLanguage('gherkin', __webpack_require__(/*! ./languages/gherkin */ 98));
+	hljs.registerLanguage('glsl', __webpack_require__(/*! ./languages/glsl */ 99));
+	hljs.registerLanguage('go', __webpack_require__(/*! ./languages/go */ 100));
+	hljs.registerLanguage('golo', __webpack_require__(/*! ./languages/golo */ 101));
+	hljs.registerLanguage('gradle', __webpack_require__(/*! ./languages/gradle */ 102));
+	hljs.registerLanguage('groovy', __webpack_require__(/*! ./languages/groovy */ 103));
+	hljs.registerLanguage('haml', __webpack_require__(/*! ./languages/haml */ 104));
+	hljs.registerLanguage('handlebars', __webpack_require__(/*! ./languages/handlebars */ 105));
+	hljs.registerLanguage('haskell', __webpack_require__(/*! ./languages/haskell */ 106));
+	hljs.registerLanguage('haxe', __webpack_require__(/*! ./languages/haxe */ 107));
+	hljs.registerLanguage('http', __webpack_require__(/*! ./languages/http */ 108));
+	hljs.registerLanguage('inform7', __webpack_require__(/*! ./languages/inform7 */ 109));
+	hljs.registerLanguage('ini', __webpack_require__(/*! ./languages/ini */ 110));
+	hljs.registerLanguage('irpf90', __webpack_require__(/*! ./languages/irpf90 */ 111));
+	hljs.registerLanguage('java', __webpack_require__(/*! ./languages/java */ 112));
+	hljs.registerLanguage('javascript', __webpack_require__(/*! ./languages/javascript */ 113));
+	hljs.registerLanguage('json', __webpack_require__(/*! ./languages/json */ 114));
+	hljs.registerLanguage('julia', __webpack_require__(/*! ./languages/julia */ 115));
+	hljs.registerLanguage('kotlin', __webpack_require__(/*! ./languages/kotlin */ 116));
+	hljs.registerLanguage('lasso', __webpack_require__(/*! ./languages/lasso */ 117));
+	hljs.registerLanguage('less', __webpack_require__(/*! ./languages/less */ 118));
+	hljs.registerLanguage('lisp', __webpack_require__(/*! ./languages/lisp */ 119));
+	hljs.registerLanguage('livecodeserver', __webpack_require__(/*! ./languages/livecodeserver */ 120));
+	hljs.registerLanguage('livescript', __webpack_require__(/*! ./languages/livescript */ 121));
+	hljs.registerLanguage('lua', __webpack_require__(/*! ./languages/lua */ 122));
+	hljs.registerLanguage('makefile', __webpack_require__(/*! ./languages/makefile */ 123));
+	hljs.registerLanguage('mathematica', __webpack_require__(/*! ./languages/mathematica */ 124));
+	hljs.registerLanguage('matlab', __webpack_require__(/*! ./languages/matlab */ 125));
+	hljs.registerLanguage('mel', __webpack_require__(/*! ./languages/mel */ 126));
+	hljs.registerLanguage('mercury', __webpack_require__(/*! ./languages/mercury */ 127));
+	hljs.registerLanguage('mizar', __webpack_require__(/*! ./languages/mizar */ 128));
+	hljs.registerLanguage('perl', __webpack_require__(/*! ./languages/perl */ 129));
+	hljs.registerLanguage('mojolicious', __webpack_require__(/*! ./languages/mojolicious */ 130));
+	hljs.registerLanguage('monkey', __webpack_require__(/*! ./languages/monkey */ 131));
+	hljs.registerLanguage('nginx', __webpack_require__(/*! ./languages/nginx */ 132));
+	hljs.registerLanguage('nimrod', __webpack_require__(/*! ./languages/nimrod */ 133));
+	hljs.registerLanguage('nix', __webpack_require__(/*! ./languages/nix */ 134));
+	hljs.registerLanguage('nsis', __webpack_require__(/*! ./languages/nsis */ 135));
+	hljs.registerLanguage('objectivec', __webpack_require__(/*! ./languages/objectivec */ 136));
+	hljs.registerLanguage('ocaml', __webpack_require__(/*! ./languages/ocaml */ 137));
+	hljs.registerLanguage('openscad', __webpack_require__(/*! ./languages/openscad */ 138));
+	hljs.registerLanguage('oxygene', __webpack_require__(/*! ./languages/oxygene */ 139));
+	hljs.registerLanguage('parser3', __webpack_require__(/*! ./languages/parser3 */ 140));
+	hljs.registerLanguage('pf', __webpack_require__(/*! ./languages/pf */ 141));
+	hljs.registerLanguage('php', __webpack_require__(/*! ./languages/php */ 142));
+	hljs.registerLanguage('powershell', __webpack_require__(/*! ./languages/powershell */ 143));
+	hljs.registerLanguage('processing', __webpack_require__(/*! ./languages/processing */ 144));
+	hljs.registerLanguage('profile', __webpack_require__(/*! ./languages/profile */ 145));
+	hljs.registerLanguage('prolog', __webpack_require__(/*! ./languages/prolog */ 146));
+	hljs.registerLanguage('protobuf', __webpack_require__(/*! ./languages/protobuf */ 147));
+	hljs.registerLanguage('puppet', __webpack_require__(/*! ./languages/puppet */ 148));
+	hljs.registerLanguage('python', __webpack_require__(/*! ./languages/python */ 149));
+	hljs.registerLanguage('q', __webpack_require__(/*! ./languages/q */ 150));
+	hljs.registerLanguage('r', __webpack_require__(/*! ./languages/r */ 151));
+	hljs.registerLanguage('rib', __webpack_require__(/*! ./languages/rib */ 152));
+	hljs.registerLanguage('roboconf', __webpack_require__(/*! ./languages/roboconf */ 153));
+	hljs.registerLanguage('rsl', __webpack_require__(/*! ./languages/rsl */ 154));
+	hljs.registerLanguage('ruleslanguage', __webpack_require__(/*! ./languages/ruleslanguage */ 155));
+	hljs.registerLanguage('rust', __webpack_require__(/*! ./languages/rust */ 156));
+	hljs.registerLanguage('scala', __webpack_require__(/*! ./languages/scala */ 157));
+	hljs.registerLanguage('scheme', __webpack_require__(/*! ./languages/scheme */ 158));
+	hljs.registerLanguage('scilab', __webpack_require__(/*! ./languages/scilab */ 159));
+	hljs.registerLanguage('scss', __webpack_require__(/*! ./languages/scss */ 160));
+	hljs.registerLanguage('smali', __webpack_require__(/*! ./languages/smali */ 161));
+	hljs.registerLanguage('smalltalk', __webpack_require__(/*! ./languages/smalltalk */ 162));
+	hljs.registerLanguage('sml', __webpack_require__(/*! ./languages/sml */ 163));
+	hljs.registerLanguage('sqf', __webpack_require__(/*! ./languages/sqf */ 164));
+	hljs.registerLanguage('sql', __webpack_require__(/*! ./languages/sql */ 165));
+	hljs.registerLanguage('stata', __webpack_require__(/*! ./languages/stata */ 166));
+	hljs.registerLanguage('step21', __webpack_require__(/*! ./languages/step21 */ 167));
+	hljs.registerLanguage('stylus', __webpack_require__(/*! ./languages/stylus */ 168));
+	hljs.registerLanguage('swift', __webpack_require__(/*! ./languages/swift */ 169));
+	hljs.registerLanguage('tcl', __webpack_require__(/*! ./languages/tcl */ 170));
+	hljs.registerLanguage('tex', __webpack_require__(/*! ./languages/tex */ 171));
+	hljs.registerLanguage('thrift', __webpack_require__(/*! ./languages/thrift */ 172));
+	hljs.registerLanguage('tp', __webpack_require__(/*! ./languages/tp */ 173));
+	hljs.registerLanguage('twig', __webpack_require__(/*! ./languages/twig */ 174));
+	hljs.registerLanguage('typescript', __webpack_require__(/*! ./languages/typescript */ 175));
+	hljs.registerLanguage('vala', __webpack_require__(/*! ./languages/vala */ 176));
+	hljs.registerLanguage('vbnet', __webpack_require__(/*! ./languages/vbnet */ 177));
+	hljs.registerLanguage('vbscript', __webpack_require__(/*! ./languages/vbscript */ 178));
+	hljs.registerLanguage('vbscript-html', __webpack_require__(/*! ./languages/vbscript-html */ 179));
+	hljs.registerLanguage('verilog', __webpack_require__(/*! ./languages/verilog */ 180));
+	hljs.registerLanguage('vhdl', __webpack_require__(/*! ./languages/vhdl */ 181));
+	hljs.registerLanguage('vim', __webpack_require__(/*! ./languages/vim */ 182));
+	hljs.registerLanguage('x86asm', __webpack_require__(/*! ./languages/x86asm */ 183));
+	hljs.registerLanguage('xl', __webpack_require__(/*! ./languages/xl */ 184));
+	hljs.registerLanguage('xquery', __webpack_require__(/*! ./languages/xquery */ 185));
+	hljs.registerLanguage('zephir', __webpack_require__(/*! ./languages/zephir */ 186));
 	
 	module.exports = hljs;
 
 /***/ },
-/* 47 */
+/* 49 */
 /*!*****************************************!*\
   !*** ./~/highlight.js/lib/highlight.js ***!
   \*****************************************/
@@ -21917,7 +24698,7 @@
 
 
 /***/ },
-/* 48 */
+/* 50 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/1c.js ***!
   \********************************************/
@@ -22010,7 +24791,7 @@
 	};
 
 /***/ },
-/* 49 */
+/* 51 */
 /*!***************************************************!*\
   !*** ./~/highlight.js/lib/languages/accesslog.js ***!
   \***************************************************/
@@ -22055,7 +24836,7 @@
 	};
 
 /***/ },
-/* 50 */
+/* 52 */
 /*!******************************************************!*\
   !*** ./~/highlight.js/lib/languages/actionscript.js ***!
   \******************************************************/
@@ -22137,7 +24918,7 @@
 	};
 
 /***/ },
-/* 51 */
+/* 53 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/apache.js ***!
   \************************************************/
@@ -22190,7 +24971,7 @@
 	};
 
 /***/ },
-/* 52 */
+/* 54 */
 /*!*****************************************************!*\
   !*** ./~/highlight.js/lib/languages/applescript.js ***!
   \*****************************************************/
@@ -22294,7 +25075,7 @@
 	};
 
 /***/ },
-/* 53 */
+/* 55 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/armasm.js ***!
   \************************************************/
@@ -22393,7 +25174,7 @@
 	};
 
 /***/ },
-/* 54 */
+/* 56 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/xml.js ***!
   \*********************************************/
@@ -22503,7 +25284,7 @@
 	};
 
 /***/ },
-/* 55 */
+/* 57 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/asciidoc.js ***!
   \**************************************************/
@@ -22702,7 +25483,7 @@
 	};
 
 /***/ },
-/* 56 */
+/* 58 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/aspectj.js ***!
   \*************************************************/
@@ -22847,7 +25628,7 @@
 	};
 
 /***/ },
-/* 57 */
+/* 59 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/autohotkey.js ***!
   \****************************************************/
@@ -22916,7 +25697,7 @@
 	};
 
 /***/ },
-/* 58 */
+/* 60 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/autoit.js ***!
   \************************************************/
@@ -24678,7 +27459,7 @@
 	};
 
 /***/ },
-/* 59 */
+/* 61 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/avrasm.js ***!
   \************************************************/
@@ -24747,7 +27528,7 @@
 	};
 
 /***/ },
-/* 60 */
+/* 62 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/axapta.js ***!
   \************************************************/
@@ -24785,7 +27566,7 @@
 	};
 
 /***/ },
-/* 61 */
+/* 63 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/bash.js ***!
   \**********************************************/
@@ -24868,7 +27649,7 @@
 	};
 
 /***/ },
-/* 62 */
+/* 64 */
 /*!***************************************************!*\
   !*** ./~/highlight.js/lib/languages/brainfuck.js ***!
   \***************************************************/
@@ -24912,7 +27693,7 @@
 	};
 
 /***/ },
-/* 63 */
+/* 65 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/cal.js ***!
   \*********************************************/
@@ -24999,7 +27780,7 @@
 	};
 
 /***/ },
-/* 64 */
+/* 66 */
 /*!***************************************************!*\
   !*** ./~/highlight.js/lib/languages/capnproto.js ***!
   \***************************************************/
@@ -25055,7 +27836,7 @@
 	};
 
 /***/ },
-/* 65 */
+/* 67 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/ceylon.js ***!
   \************************************************/
@@ -25130,7 +27911,7 @@
 	};
 
 /***/ },
-/* 66 */
+/* 68 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/clojure.js ***!
   \*************************************************/
@@ -25234,7 +28015,7 @@
 	};
 
 /***/ },
-/* 67 */
+/* 69 */
 /*!******************************************************!*\
   !*** ./~/highlight.js/lib/languages/clojure-repl.js ***!
   \******************************************************/
@@ -25256,7 +28037,7 @@
 	};
 
 /***/ },
-/* 68 */
+/* 70 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/cmake.js ***!
   \***********************************************/
@@ -25302,7 +28083,7 @@
 	};
 
 /***/ },
-/* 69 */
+/* 71 */
 /*!******************************************************!*\
   !*** ./~/highlight.js/lib/languages/coffeescript.js ***!
   \******************************************************/
@@ -25450,7 +28231,7 @@
 	};
 
 /***/ },
-/* 70 */
+/* 72 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/cpp.js ***!
   \*********************************************/
@@ -25598,7 +28379,7 @@
 	};
 
 /***/ },
-/* 71 */
+/* 73 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/crmsh.js ***!
   \***********************************************/
@@ -25703,7 +28484,7 @@
 	};
 
 /***/ },
-/* 72 */
+/* 74 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/crystal.js ***!
   \*************************************************/
@@ -25902,7 +28683,7 @@
 	};
 
 /***/ },
-/* 73 */
+/* 75 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/cs.js ***!
   \********************************************/
@@ -26028,7 +28809,7 @@
 	};
 
 /***/ },
-/* 74 */
+/* 76 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/css.js ***!
   \*********************************************/
@@ -26137,7 +28918,7 @@
 	};
 
 /***/ },
-/* 75 */
+/* 77 */
 /*!*******************************************!*\
   !*** ./~/highlight.js/lib/languages/d.js ***!
   \*******************************************/
@@ -26402,7 +29183,7 @@
 	};
 
 /***/ },
-/* 76 */
+/* 78 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/markdown.js ***!
   \**************************************************/
@@ -26511,7 +29292,7 @@
 	};
 
 /***/ },
-/* 77 */
+/* 79 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/dart.js ***!
   \**********************************************/
@@ -26619,7 +29400,7 @@
 	};
 
 /***/ },
-/* 78 */
+/* 80 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/delphi.js ***!
   \************************************************/
@@ -26693,7 +29474,7 @@
 	};
 
 /***/ },
-/* 79 */
+/* 81 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/diff.js ***!
   \**********************************************/
@@ -26740,7 +29521,7 @@
 	};
 
 /***/ },
-/* 80 */
+/* 82 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/django.js ***!
   \************************************************/
@@ -26797,7 +29578,7 @@
 	};
 
 /***/ },
-/* 81 */
+/* 83 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/dns.js ***!
   \*********************************************/
@@ -26832,7 +29613,7 @@
 	};
 
 /***/ },
-/* 82 */
+/* 84 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/dockerfile.js ***!
   \****************************************************/
@@ -26874,7 +29655,7 @@
 	};
 
 /***/ },
-/* 83 */
+/* 85 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/dos.js ***!
   \*********************************************/
@@ -26930,7 +29711,7 @@
 	};
 
 /***/ },
-/* 84 */
+/* 86 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/dust.js ***!
   \**********************************************/
@@ -26972,7 +29753,7 @@
 	};
 
 /***/ },
-/* 85 */
+/* 87 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/elixir.js ***!
   \************************************************/
@@ -27081,7 +29862,7 @@
 	};
 
 /***/ },
-/* 86 */
+/* 88 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/elm.js ***!
   \*********************************************/
@@ -27174,7 +29955,7 @@
 	};
 
 /***/ },
-/* 87 */
+/* 89 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/ruby.js ***!
   \**********************************************/
@@ -27351,7 +30132,7 @@
 	};
 
 /***/ },
-/* 88 */
+/* 90 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/erb.js ***!
   \*********************************************/
@@ -27373,7 +30154,7 @@
 	};
 
 /***/ },
-/* 89 */
+/* 91 */
 /*!*****************************************************!*\
   !*** ./~/highlight.js/lib/languages/erlang-repl.js ***!
   \*****************************************************/
@@ -27428,7 +30209,7 @@
 	};
 
 /***/ },
-/* 90 */
+/* 92 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/erlang.js ***!
   \************************************************/
@@ -27587,7 +30368,7 @@
 	};
 
 /***/ },
-/* 91 */
+/* 93 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/fix.js ***!
   \*********************************************/
@@ -27623,7 +30404,7 @@
 	};
 
 /***/ },
-/* 92 */
+/* 94 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/fortran.js ***!
   \*************************************************/
@@ -27701,7 +30482,7 @@
 	};
 
 /***/ },
-/* 93 */
+/* 95 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/fsharp.js ***!
   \************************************************/
@@ -27767,7 +30548,7 @@
 	};
 
 /***/ },
-/* 94 */
+/* 96 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/gams.js ***!
   \**********************************************/
@@ -27811,7 +30592,7 @@
 	};
 
 /***/ },
-/* 95 */
+/* 97 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/gcode.js ***!
   \***********************************************/
@@ -27891,7 +30672,7 @@
 	};
 
 /***/ },
-/* 96 */
+/* 98 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/gherkin.js ***!
   \*************************************************/
@@ -27931,7 +30712,7 @@
 	};
 
 /***/ },
-/* 97 */
+/* 99 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/glsl.js ***!
   \**********************************************/
@@ -28032,7 +30813,7 @@
 	};
 
 /***/ },
-/* 98 */
+/* 100 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/go.js ***!
   \********************************************/
@@ -28078,7 +30859,7 @@
 	};
 
 /***/ },
-/* 99 */
+/* 101 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/golo.js ***!
   \**********************************************/
@@ -28109,7 +30890,7 @@
 	};
 
 /***/ },
-/* 100 */
+/* 102 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/gradle.js ***!
   \************************************************/
@@ -28151,7 +30932,7 @@
 	};
 
 /***/ },
-/* 101 */
+/* 103 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/groovy.js ***!
   \************************************************/
@@ -28246,7 +31027,7 @@
 	};
 
 /***/ },
-/* 102 */
+/* 104 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/haml.js ***!
   \**********************************************/
@@ -28361,7 +31142,7 @@
 	};
 
 /***/ },
-/* 103 */
+/* 105 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/handlebars.js ***!
   \****************************************************/
@@ -28401,7 +31182,7 @@
 	};
 
 /***/ },
-/* 104 */
+/* 106 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/haskell.js ***!
   \*************************************************/
@@ -28532,7 +31313,7 @@
 	};
 
 /***/ },
-/* 105 */
+/* 107 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/haxe.js ***!
   \**********************************************/
@@ -28600,7 +31381,7 @@
 	};
 
 /***/ },
-/* 106 */
+/* 108 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/http.js ***!
   \**********************************************/
@@ -28642,7 +31423,7 @@
 	};
 
 /***/ },
-/* 107 */
+/* 109 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/inform7.js ***!
   \*************************************************/
@@ -28707,7 +31488,7 @@
 	};
 
 /***/ },
-/* 108 */
+/* 110 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/ini.js ***!
   \*********************************************/
@@ -28774,7 +31555,7 @@
 	};
 
 /***/ },
-/* 109 */
+/* 111 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/irpf90.js ***!
   \************************************************/
@@ -28857,7 +31638,7 @@
 	};
 
 /***/ },
-/* 110 */
+/* 112 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/java.js ***!
   \**********************************************/
@@ -28964,7 +31745,7 @@
 	};
 
 /***/ },
-/* 111 */
+/* 113 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/javascript.js ***!
   \****************************************************/
@@ -29083,7 +31864,7 @@
 	};
 
 /***/ },
-/* 112 */
+/* 114 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/json.js ***!
   \**********************************************/
@@ -29128,7 +31909,7 @@
 	};
 
 /***/ },
-/* 113 */
+/* 115 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/julia.js ***!
   \***********************************************/
@@ -29296,7 +32077,7 @@
 	};
 
 /***/ },
-/* 114 */
+/* 116 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/kotlin.js ***!
   \************************************************/
@@ -29404,7 +32185,7 @@
 	};
 
 /***/ },
-/* 115 */
+/* 117 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/lasso.js ***!
   \***********************************************/
@@ -29597,7 +32378,7 @@
 	};
 
 /***/ },
-/* 116 */
+/* 118 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/less.js ***!
   \**********************************************/
@@ -29741,7 +32522,7 @@
 	};
 
 /***/ },
-/* 117 */
+/* 119 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/lisp.js ***!
   \**********************************************/
@@ -29855,7 +32636,7 @@
 	};
 
 /***/ },
-/* 118 */
+/* 120 */
 /*!********************************************************!*\
   !*** ./~/highlight.js/lib/languages/livecodeserver.js ***!
   \********************************************************/
@@ -30020,7 +32801,7 @@
 	};
 
 /***/ },
-/* 119 */
+/* 121 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/livescript.js ***!
   \****************************************************/
@@ -30178,7 +32959,7 @@
 	};
 
 /***/ },
-/* 120 */
+/* 122 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/lua.js ***!
   \*********************************************/
@@ -30241,7 +33022,7 @@
 	};
 
 /***/ },
-/* 121 */
+/* 123 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/makefile.js ***!
   \**************************************************/
@@ -30294,7 +33075,7 @@
 	};
 
 /***/ },
-/* 122 */
+/* 124 */
 /*!*****************************************************!*\
   !*** ./~/highlight.js/lib/languages/mathematica.js ***!
   \*****************************************************/
@@ -30360,7 +33141,7 @@
 	};
 
 /***/ },
-/* 123 */
+/* 125 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/matlab.js ***!
   \************************************************/
@@ -30458,7 +33239,7 @@
 	};
 
 /***/ },
-/* 124 */
+/* 126 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/mel.js ***!
   \*********************************************/
@@ -30695,7 +33476,7 @@
 	};
 
 /***/ },
-/* 125 */
+/* 127 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/mercury.js ***!
   \*************************************************/
@@ -30791,7 +33572,7 @@
 	};
 
 /***/ },
-/* 126 */
+/* 128 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/mizar.js ***!
   \***********************************************/
@@ -30817,7 +33598,7 @@
 	};
 
 /***/ },
-/* 127 */
+/* 129 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/perl.js ***!
   \**********************************************/
@@ -30981,7 +33762,7 @@
 	};
 
 /***/ },
-/* 128 */
+/* 130 */
 /*!*****************************************************!*\
   !*** ./~/highlight.js/lib/languages/mojolicious.js ***!
   \*****************************************************/
@@ -31013,7 +33794,7 @@
 	};
 
 /***/ },
-/* 129 */
+/* 131 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/monkey.js ***!
   \************************************************/
@@ -31099,7 +33880,7 @@
 	};
 
 /***/ },
-/* 130 */
+/* 132 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/nginx.js ***!
   \***********************************************/
@@ -31188,7 +33969,7 @@
 	};
 
 /***/ },
-/* 131 */
+/* 133 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/nimrod.js ***!
   \************************************************/
@@ -31247,7 +34028,7 @@
 	};
 
 /***/ },
-/* 132 */
+/* 134 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/nix.js ***!
   \*********************************************/
@@ -31305,7 +34086,7 @@
 	};
 
 /***/ },
-/* 133 */
+/* 135 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/nsis.js ***!
   \**********************************************/
@@ -31400,7 +34181,7 @@
 	};
 
 /***/ },
-/* 134 */
+/* 136 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/objectivec.js ***!
   \****************************************************/
@@ -31486,7 +34267,7 @@
 	};
 
 /***/ },
-/* 135 */
+/* 137 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/ocaml.js ***!
   \***********************************************/
@@ -31564,7 +34345,7 @@
 	};
 
 /***/ },
-/* 136 */
+/* 138 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/openscad.js ***!
   \**************************************************/
@@ -31629,7 +34410,7 @@
 	};
 
 /***/ },
-/* 137 */
+/* 139 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/oxygene.js ***!
   \*************************************************/
@@ -31705,7 +34486,7 @@
 	};
 
 /***/ },
-/* 138 */
+/* 140 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/parser3.js ***!
   \*************************************************/
@@ -31760,7 +34541,7 @@
 	};
 
 /***/ },
-/* 139 */
+/* 141 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/pf.js ***!
   \********************************************/
@@ -31819,7 +34600,7 @@
 	};
 
 /***/ },
-/* 140 */
+/* 142 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/php.js ***!
   \*********************************************/
@@ -31951,7 +34732,7 @@
 	};
 
 /***/ },
-/* 141 */
+/* 143 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/powershell.js ***!
   \****************************************************/
@@ -32006,7 +34787,7 @@
 	};
 
 /***/ },
-/* 142 */
+/* 144 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/processing.js ***!
   \****************************************************/
@@ -32061,7 +34842,7 @@
 	};
 
 /***/ },
-/* 143 */
+/* 145 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/profile.js ***!
   \*************************************************/
@@ -32110,7 +34891,7 @@
 	};
 
 /***/ },
-/* 144 */
+/* 146 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/prolog.js ***!
   \************************************************/
@@ -32206,7 +34987,7 @@
 	};
 
 /***/ },
-/* 145 */
+/* 147 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/protobuf.js ***!
   \**************************************************/
@@ -32250,7 +35031,7 @@
 	};
 
 /***/ },
-/* 146 */
+/* 148 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/puppet.js ***!
   \************************************************/
@@ -32365,7 +35146,7 @@
 	};
 
 /***/ },
-/* 147 */
+/* 149 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/python.js ***!
   \************************************************/
@@ -32457,7 +35238,7 @@
 	};
 
 /***/ },
-/* 148 */
+/* 150 */
 /*!*******************************************!*\
   !*** ./~/highlight.js/lib/languages/q.js ***!
   \*******************************************/
@@ -32487,7 +35268,7 @@
 	};
 
 /***/ },
-/* 149 */
+/* 151 */
 /*!*******************************************!*\
   !*** ./~/highlight.js/lib/languages/r.js ***!
   \*******************************************/
@@ -32564,7 +35345,7 @@
 	};
 
 /***/ },
-/* 150 */
+/* 152 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/rib.js ***!
   \*********************************************/
@@ -32598,7 +35379,7 @@
 	};
 
 /***/ },
-/* 151 */
+/* 153 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/roboconf.js ***!
   \**************************************************/
@@ -32665,7 +35446,7 @@
 	};
 
 /***/ },
-/* 152 */
+/* 154 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/rsl.js ***!
   \*********************************************/
@@ -32709,7 +35490,7 @@
 	};
 
 /***/ },
-/* 153 */
+/* 155 */
 /*!*******************************************************!*\
   !*** ./~/highlight.js/lib/languages/ruleslanguage.js ***!
   \*******************************************************/
@@ -32777,7 +35558,7 @@
 	};
 
 /***/ },
-/* 154 */
+/* 156 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/rust.js ***!
   \**********************************************/
@@ -32870,7 +35651,7 @@
 	};
 
 /***/ },
-/* 155 */
+/* 157 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/scala.js ***!
   \***********************************************/
@@ -32940,7 +35721,7 @@
 	};
 
 /***/ },
-/* 156 */
+/* 158 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/scheme.js ***!
   \************************************************/
@@ -33069,7 +35850,7 @@
 	};
 
 /***/ },
-/* 157 */
+/* 159 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/scilab.js ***!
   \************************************************/
@@ -33131,7 +35912,7 @@
 	};
 
 /***/ },
-/* 158 */
+/* 160 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/scss.js ***!
   \**********************************************/
@@ -33255,7 +36036,7 @@
 	};
 
 /***/ },
-/* 159 */
+/* 161 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/smali.js ***!
   \***********************************************/
@@ -33345,7 +36126,7 @@
 	};
 
 /***/ },
-/* 160 */
+/* 162 */
 /*!***************************************************!*\
   !*** ./~/highlight.js/lib/languages/smalltalk.js ***!
   \***************************************************/
@@ -33405,7 +36186,7 @@
 	};
 
 /***/ },
-/* 161 */
+/* 163 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/sml.js ***!
   \*********************************************/
@@ -33477,7 +36258,7 @@
 	};
 
 /***/ },
-/* 162 */
+/* 164 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/sqf.js ***!
   \*********************************************/
@@ -33580,7 +36361,7 @@
 	};
 
 /***/ },
-/* 163 */
+/* 165 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/sql.js ***!
   \*********************************************/
@@ -33747,7 +36528,7 @@
 	};
 
 /***/ },
-/* 164 */
+/* 166 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/stata.js ***!
   \***********************************************/
@@ -33792,7 +36573,7 @@
 	};
 
 /***/ },
-/* 165 */
+/* 167 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/step21.js ***!
   \************************************************/
@@ -33851,7 +36632,7 @@
 	};
 
 /***/ },
-/* 166 */
+/* 168 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/stylus.js ***!
   \************************************************/
@@ -34301,7 +37082,7 @@
 	};
 
 /***/ },
-/* 167 */
+/* 169 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/swift.js ***!
   \***********************************************/
@@ -34428,7 +37209,7 @@
 	};
 
 /***/ },
-/* 168 */
+/* 170 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/tcl.js ***!
   \*********************************************/
@@ -34497,7 +37278,7 @@
 	};
 
 /***/ },
-/* 169 */
+/* 171 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/tex.js ***!
   \*********************************************/
@@ -34559,7 +37340,7 @@
 	};
 
 /***/ },
-/* 170 */
+/* 172 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/thrift.js ***!
   \************************************************/
@@ -34601,7 +37382,7 @@
 	};
 
 /***/ },
-/* 171 */
+/* 173 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/tp.js ***!
   \********************************************/
@@ -34692,7 +37473,7 @@
 	};
 
 /***/ },
-/* 172 */
+/* 174 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/twig.js ***!
   \**********************************************/
@@ -34756,7 +37537,7 @@
 	};
 
 /***/ },
-/* 173 */
+/* 175 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/typescript.js ***!
   \****************************************************/
@@ -34861,7 +37642,7 @@
 	};
 
 /***/ },
-/* 174 */
+/* 176 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/vala.js ***!
   \**********************************************/
@@ -34923,7 +37704,7 @@
 	};
 
 /***/ },
-/* 175 */
+/* 177 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/vbnet.js ***!
   \***********************************************/
@@ -34986,7 +37767,7 @@
 	};
 
 /***/ },
-/* 176 */
+/* 178 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/vbscript.js ***!
   \**************************************************/
@@ -35032,7 +37813,7 @@
 	};
 
 /***/ },
-/* 177 */
+/* 179 */
 /*!*******************************************************!*\
   !*** ./~/highlight.js/lib/languages/vbscript-html.js ***!
   \*******************************************************/
@@ -35051,7 +37832,7 @@
 	};
 
 /***/ },
-/* 178 */
+/* 180 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/verilog.js ***!
   \*************************************************/
@@ -35108,7 +37889,7 @@
 	};
 
 /***/ },
-/* 179 */
+/* 181 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/vhdl.js ***!
   \**********************************************/
@@ -35171,7 +37952,7 @@
 	};
 
 /***/ },
-/* 180 */
+/* 182 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/vim.js ***!
   \*********************************************/
@@ -35241,7 +38022,7 @@
 	};
 
 /***/ },
-/* 181 */
+/* 183 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/x86asm.js ***!
   \************************************************/
@@ -35384,7 +38165,7 @@
 	};
 
 /***/ },
-/* 182 */
+/* 184 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/xl.js ***!
   \********************************************/
@@ -35478,7 +38259,7 @@
 	};
 
 /***/ },
-/* 183 */
+/* 185 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/xquery.js ***!
   \************************************************/
@@ -35558,7 +38339,7 @@
 	};
 
 /***/ },
-/* 184 */
+/* 186 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/zephir.js ***!
   \************************************************/
@@ -35672,7 +38453,7 @@
 	};
 
 /***/ },
-/* 185 */
+/* 187 */
 /*!***********************************!*\
   !*** ./src/panel/to_user_name.js ***!
   \***********************************/
@@ -35693,7 +38474,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 186 */
+/* 188 */
 /*!*************************************!*\
   !*** ./src/panel/from_user_name.js ***!
   \*************************************/
@@ -35714,7 +38495,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 187 */
+/* 189 */
 /*!**********************************!*\
   !*** ./src/panel/create_time.js ***!
   \**********************************/
@@ -35735,7 +38516,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 188 */
+/* 190 */
 /*!******************************!*\
   !*** ./src/panel/content.js ***!
   \******************************/
@@ -35756,7 +38537,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 189 */
+/* 191 */
 /*!*****************************!*\
   !*** ./src/panel/msg_id.js ***!
   \*****************************/
@@ -35775,21 +38556,6 @@
 	
 	exports['default'] = MsgId;
 	module.exports = exports['default'];
-
-/***/ },
-/* 190 */
-/*!**************************************!*\
-  !*** ./src/store/mutations/types.js ***!
-  \**************************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	var INIT = 'INIT';
-	exports.INIT = INIT;
 
 /***/ }
 /******/ ]);
