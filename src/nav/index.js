@@ -1,4 +1,4 @@
-import {state, actions} from '../stores';
+import {state} from '../store';
 
 
 const Nav = {

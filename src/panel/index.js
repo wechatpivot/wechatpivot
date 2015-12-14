@@ -5,7 +5,7 @@ import FromUserName from './from_user_name';
 import CreateTime from './create_time';
 import Content from './content';
 import MsgId from './msg_id';
-import {state, actions} from '../stores';
+import {actions} from '../store';
 
 
 const Panel = {

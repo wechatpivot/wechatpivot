@@ -6,6 +6,7 @@ import InputText from './common/input_text';
 import InputTimestamp from './common/input_timestamp';
 import Nav from './nav';
 import Setup from './setup';
+import Subnav from './nav/subnav';
 import Panel from './panel';
 
 
@@ -17,4 +18,5 @@ Vue.component('input-timestamp', InputTimestamp);
 
 new Vue(Nav);
 new Vue(Setup);
+new Vue(Subnav);
 new Vue(Panel);

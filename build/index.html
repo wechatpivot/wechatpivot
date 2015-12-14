@@ -97,8 +97,6 @@
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav js-nav" v-cloak>
           <li v-for="n in navs" :class="{active: n.active}"><a>{{ n.text }}</a></li>
-          <li><a href="#/message/event/scan_subscribe">接收事件推送</a></li>
-          <li><a href="#/tools/oauth2">小工具</a></li>
         </ul>
         <ul class="nav navbar-nav pull-right Setup js-setup" v-cloak>
           <li>
@@ -161,21 +159,21 @@
     </div>
   </nav>
 
-  <nav class="navbar navbar-default Subnav js-subnav">
+  <nav class="navbar navbar-default Subnav js-subnav" v-cloak>
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">WeiXin API Debug</a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a>文本消息</a></li>
-          <li class="disabled"><a>图片消息</a></li>
-          <li class="disabled"><a>语音消息</a></li>
-          <li class="disabled"><a>视频消息</a></li>
-          <li class="disabled"><a>小视频消息</a></li>
-          <li class="disabled"><a>地理位置消息</a></li>
-          <li class="disabled"><a>链接消息</a></li>
-          <li><a href="http://mp.weixin.qq.com/wiki/10/79502792eef98d6e0c6e1739da387346.html" target="_blank"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+          <li v-for="n in subnavs" :class="{active: n.active, disabled: n.disabled}">
+            <a href="#{{ n.id }}" v-if="n.text !== 'help'">
+              <span >{{ n.text }}</span>
+            </a>
+            <a href="{{ n.id }}" target="_blank" v-if="n.text === 'help'">
+              <i class="glyphicon glyphicon-question-sign" v-if="n.text === 'help'"></i>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
