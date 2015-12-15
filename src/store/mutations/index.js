@@ -2,8 +2,12 @@ import * as types from './types';
 
 
 export default {
-  [types.INIT]: function (state, url, token) {
-    state.url = url;
-    state.token = token;
+  [types.INIT]: function (state, init_state) {
+    state = Object.assign(state, init_state);
+  },
+
+  [types.CHANGE_NAV]: function (state, id) {
+    state.current_nav_id = id;
+    state.current_subnav_id = id;
   },
 };

@@ -1,3 +1,15 @@
+.Setup {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+}
+
+.Setup-logo {
+  width: 64px;
+  height: 64px;
+}
+
 .Setup-backdrop {
   &.active {
     bottom: 0;

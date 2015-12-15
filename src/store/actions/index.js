@@ -9,19 +9,18 @@ const CACHE_KEY_SETUP = 'setup-v1';
 
 export const init = function ({dispatch}) {
   localforage.getItem(CACHE_KEY_SETUP, function (err, value) {
-    if (!value) {
-      value = {};
-    }
-
-    let {url, token} = value;
-    dispatch(types.INIT, url, token);
+    dispatch(types.INIT, value || {});
   });
 };
 
 export const updateSetup = function ({dispatch}, url, token) {
   localforage.setItem(CACHE_KEY_SETUP, {url, token}, function (err) {
-    dispatch(types.INIT, url, token);
+    dispatch(types.INIT, {url, token});
   });
+};
+
+export const changeNav = function ({dispatch}, id) {
+  dispatch(types.CHANGE_NAV, id);
 };
 
 export const send =function ({state, dispatch}, xml) {
