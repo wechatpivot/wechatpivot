@@ -4,6 +4,11 @@
             "local_path":"index.html"
         }
     },
+    "icons": {
+        "16": "img/iconx16.png",
+        "48": "img/iconx48.png",
+        "128": "img/iconx128.png"
+    },
     "manifest_version": 2,
     "name": "WeiXin API Debug",
     "version": "0.0.1",

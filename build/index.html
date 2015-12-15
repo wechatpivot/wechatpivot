@@ -24,8 +24,9 @@
     }
 
     .Nav .navbar-brand {
+      width: 60px;
       height: 40px;
-      padding: 10px 15px;
+      padding: 5px 15px;
       line-height: 20px;
     }
 
@@ -35,6 +36,11 @@
       cursor: pointer;
     }
 
+    .logo {
+      width: 32px;
+      height: 32px;
+    }
+
     .Subnav {
       min-height: 30px;
       border-bottom: none;
@@ -42,6 +48,7 @@
 
     .Subnav .navbar-brand {
       visibility: hidden;
+      width: 60px;
       height: 30px;
       padding: 5px 15px;
       line-height: 20px;
@@ -91,7 +98,9 @@
   <nav class="navbar navbar-default Nav">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">WeiXin API Debug</a>
+        <a class="navbar-brand" href="#">
+          <img class="logo" src="./img/iconx128.png" alt="logo">
+        </a>
       </div>
 
       <div class="collapse navbar-collapse">
@@ -162,7 +171,8 @@
   <nav class="navbar navbar-default Subnav js-subnav" v-cloak>
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">WeiXin API Debug</a>
+        <a class="navbar-brand" href="#">
+        </a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
