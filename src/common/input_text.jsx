@@ -15,12 +15,12 @@ const InputString = {
     };
   },
 
-  template: `
-  <div class="{{ className }}">
-    <textarea rows="5" class="form-control" placeholder="{{ placeholder }}" v-model="value"></textarea>
-    <i class="glyphicon glyphicon-refresh form-control-feedback" @click="gen"></i>
+  template: (/* .vue */
+  <div className="{{ className }}">
+    <textarea rows="5" className="form-control" placeholder="{{ placeholder }}" v-model="value"></textarea>
+    <i className="glyphicon glyphicon-refresh form-control-feedback" v-on:click="gen"></i>
   </div>
-  `,
+  )/* .vue */,
 
   methods: {
     gen: function () {

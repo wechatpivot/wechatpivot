@@ -14,5 +14,8 @@
 
     // TODO
     "func-names": [0],
+
+    // vue-lite-loader
+    "react/react-in-jsx-scope": [0],
   }
 }

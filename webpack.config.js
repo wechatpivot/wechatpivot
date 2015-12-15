@@ -13,17 +13,17 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.css', '.scss'],
+    extensions: ['', '.js', '.jsx', '.css', '.scss'],
   },
 
   module: {
     preLoaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'eslint' },
+      { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'eslint' },
     ],
 
     loaders: [
       { test: /\.(css|scss)$/, loader: 'style!css!postcss!sass' },
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
+      { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'babel!vue-lite' },
       // { test: /\.png$/, loader: 'url-loader?limit=10000&minetype=image/png' },
     ],
   },
