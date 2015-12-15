@@ -1,6 +1,6 @@
 import superagent from 'superagent';
-import {generate_signature} from '../utils/signature';
-import {state, actions} from '../store';
+import { generate_signature } from '../utils/signature';
+import { state, actions } from '../store';
 import './style';
 
 
@@ -46,7 +46,7 @@ const Setup = {
         })
         .end(function (err, res) {
           if (err) {
-            console.error(err)
+            console.error(err);
           } else {
             that.isValidating = false;
 

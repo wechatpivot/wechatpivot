@@ -17,9 +17,9 @@ module.exports = {
   },
 
   module: {
-    // preLoaders: [
-    //   { test: /\.js$/, exclude: /node_modules/, loader: 'eslint' },
-    // ],
+    preLoaders: [
+      { test: /\.js$/, exclude: /node_modules/, loader: 'eslint' },
+    ],
 
     loaders: [
       { test: /\.(css|scss)$/, loader: 'style!css!postcss!sass' },

@@ -4,7 +4,7 @@ const InputNumber = {
   data: function () {
     return {
       className: 'col-sm-8',
-    }
+    };
   },
 
   template: `
@@ -17,7 +17,7 @@ const InputNumber = {
   methods: {
     gen: function () {
       this.value = Math.floor(Math.random() * 10e16);
-    }
+    },
   },
 
   ready: function () {

@@ -12,7 +12,7 @@ import Setup from './setup';
 import Panel from './panel';
 
 
-document.addEventListener('click', function (e) {
+document.addEventListener('click', function () {
   dispatcher.$emit('CLICK_OUTSIDE');
 });
 

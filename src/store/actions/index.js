@@ -1,29 +1,29 @@
 import superagent from 'superagent';
 import localforage from 'localforage';
 import * as types from '../mutations/types';
-import {generate_signature} from '../../utils/signature';
+import { generate_signature } from '../../utils/signature';
 
 
 const CACHE_KEY_SETUP = 'setup-v1';
 
 
-export const init = function ({dispatch}) {
+export const init = function ({ dispatch }) {
   localforage.getItem(CACHE_KEY_SETUP, function (err, value) {
     dispatch(types.INIT, value || {});
   });
 };
 
-export const updateSetup = function ({dispatch}, url, token) {
-  localforage.setItem(CACHE_KEY_SETUP, {url, token}, function (err) {
-    dispatch(types.INIT, {url, token});
+export const updateSetup = function ({ dispatch }, url, token) {
+  localforage.setItem(CACHE_KEY_SETUP, { url, token }, function () {
+    dispatch(types.INIT, { url, token });
   });
 };
 
-export const changeNav = function ({dispatch}, id) {
+export const changeNav = function ({ dispatch }, id) {
   dispatch(types.CHANGE_NAV, id);
 };
 
-export const send =function ({state, dispatch}, xml) {
+export const send = function ({ state, dispatch }, xml) {
   const timestamp = Math.floor(Date.now() / 1000);
   const nonce = Math.random().toString(36).substring(2);
   const signature = generate_signature(state.token, timestamp, nonce);

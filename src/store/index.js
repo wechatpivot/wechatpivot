@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from './vuex';
 Vue.use(Vuex);
-import superagent from 'superagent';
 import INIT_NAV from './init_nav';
 import * as actions from './actions';
 import mutations from './mutations';

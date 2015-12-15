@@ -12,7 +12,7 @@ const InputString = {
   data: function () {
     return {
       className: 'col-sm-8',
-    }
+    };
   },
 
   template: `
@@ -24,7 +24,7 @@ const InputString = {
 
   methods: {
     gen: function () {
-      var index = Math.floor(Math.random() * LOREM_IPSUM.length);
+      let index = Math.floor(Math.random() * LOREM_IPSUM.length);
       this.value = LOREM_IPSUM[index];
     },
   },

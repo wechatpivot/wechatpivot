@@ -4,7 +4,7 @@ const InputString = {
   data: function () {
     return {
       className: 'col-sm-8',
-    }
+    };
   },
 
   template: `
@@ -17,7 +17,7 @@ const InputString = {
   methods: {
     gen: function () {
       this.value = Math.random().toString(36).substring(2);
-    }
+    },
   },
 
   ready: function () {

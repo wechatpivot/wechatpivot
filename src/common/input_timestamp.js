@@ -4,7 +4,7 @@ const InputTimestamp = {
   data: function () {
     return {
       className: 'col-sm-8',
-    }
+    };
   },
 
   template: `
@@ -17,7 +17,7 @@ const InputTimestamp = {
   methods: {
     gen: function () {
       this.value = Math.floor(Date.now() / 1000);
-    }
+    },
   },
 
   ready: function () {

@@ -3,7 +3,7 @@ import * as types from './types';
 
 export default {
   [types.INIT]: function (state, init_state) {
-    state = Object.assign(state, init_state);
+    Object.assign(state, init_state);
   },
 
   [types.CHANGE_NAV]: function (state, id) {

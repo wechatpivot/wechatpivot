@@ -1,5 +1,5 @@
 import dispatcher from '../dispatcher';
-import {state, actions} from '../store';
+import { state, actions } from '../store';
 import './style';
 
 

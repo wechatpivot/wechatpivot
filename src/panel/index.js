@@ -1,11 +1,10 @@
 import hljs from 'highlight.js';
-import superagent from 'superagent';
 import ToUserName from './to_user_name';
 import FromUserName from './from_user_name';
 import CreateTime from './create_time';
 import Content from './content';
 import MsgId from './msg_id';
-import {actions} from '../store';
+import { actions } from '../store';
 
 
 const Panel = {
