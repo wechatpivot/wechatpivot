@@ -1,7 +1,7 @@
 import superagent from 'superagent';
 import localforage from 'localforage';
 import * as types from '../mutations/types';
-import { generate_signature } from '../../utils/signature';
+import generate_query from './signature';
 
 
 const CACHE_KEY_SETUP = 'setup-v1';
@@ -23,18 +23,33 @@ export const changeNav = function ({ dispatch }, id) {
   dispatch(types.CHANGE_NAV, id);
 };
 
-export const send = function ({ state, dispatch }, xml) {
-  const timestamp = Math.floor(Date.now() / 1000);
-  const nonce = Math.random().toString(36).substring(2);
-  const signature = generate_signature(state.token, timestamp, nonce);
+export const validate = function ({ state }) {
+  const query = generate_query(state.token);
+  const echostr = Math.random().toString(36).substring(2);
+  query.echostr = echostr;
+
+  superagent
+    .get(state.url)
+    .query(query)
+    .end(function (err, res) {
+      if (err) {
+        console.error(err);
+      } else {
+        if (res.text === echostr) {
+          console.log(res.text);
+        } else {
+          console.error(res.text);
+        }
+      }
+    });
+};
+
+export const send = function ({ state }, xml) {
+  const query = generate_query(state.token);
 
   superagent
     .post(state.url)
-    .query({
-      signature: signature,
-      timestamp: timestamp,
-      nonce: nonce,
-    })
+    .query(query)
     .send(xml)
     .set('Content-type', 'text/xml')
     .end(function (err, res) {

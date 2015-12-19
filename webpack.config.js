@@ -18,7 +18,7 @@ module.exports = {
 
   module: {
     preLoaders: [
-      { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'eslint' },
+      { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'eslint!vue-lite' },
     ],
 
     loaders: [

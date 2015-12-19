@@ -8,9 +8,9 @@ const InputTimestamp = {
   },
 
   template: (/* .vue */
-  <div className="{{ className }}">
-    <input type="text" className="form-control" placeholder="{{ placeholder }}" v-model="value" />
-    <i className="glyphicon glyphicon-refresh form-control-feedback" v-on:click="gen"></i>
+  <div class="{{ className }}">
+    <input type="text" class="form-control" placeholder="{{ placeholder }}" v-model="value" />
+    <i class="glyphicon glyphicon-refresh form-control-feedback" @click="gen"></i>
   </div>
   )/* .vue */,
 

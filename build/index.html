@@ -70,59 +70,8 @@
   </nav>
 
   <div class="Setup js-setup">
-    <img class="Setup-logo" src="./img/iconx128.png" @click="isActive = true">
-    <div class="modal fade Setup-modal" tabindex="-1" :class="{active: isActive, in: isActive}">
-      <div class="modal-backdrop fade Setup-backdrop" :class="{active: isActive, in: isActive}" @click="close"></div>
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" @click="close">&times;</button>
-            <h4 class="modal-title">配置您的微信账号</h4>
-          </div>
-          <div class="modal-body">
-            <div class="alert alert-warning">
-              <p>
-                <em>* 开发者提交服务器信息后，微信服务器将发送 GET 请求到填写的服务器地址 URL 上，从而验证开发者服务器地址的有效性</em>
-                <a href="http://mp.weixin.qq.com/wiki/17/2d4265491f12608cd170a95559800f2d.html" target="_blank" title="第二步：验证服务器地址的有效性">
-                  <i class="glyphicon glyphicon-question-sign"></i>
-                </a>
-              </p>
-            </div>
-            <form class="form-horizontal">
-              <div class="form-group">
-                <label class="col-sm-4 control-label required">服务器接口 url</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" v-model="url">
-                </div>
-              </div>
-              <div class="form-group has-feedback">
-                <label class="col-sm-4 control-label required">Token</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" placeholder="Token" v-model="token">
-                </div>
-              </div>
-              <div class="form-group has-feedback">
-                <label class="col-sm-4 control-label required">Timestamp</label>
-                <input-timestamp placeholder="时间戳" :value.sync="timestamp"></input-timestamp>
-              </div>
-              <div class="form-group has-feedback">
-                <label class="col-sm-4 control-label required">Nonce</label>
-                <input-number placeholder="随机数" :value.sync="nonce"></input-number>
-              </div>
-              <div class="form-group has-feedback">
-                <label class="col-sm-4 control-label required">Echostr</label>
-                <input-string placeholder="随机字符串" :value.sync="echo_str"></input-string>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <div class="alert alert-success text-center" v-if="msgSuccess">{{ msgSuccess }}</div>
-            <div class="alert alert-danger text-center" v-if="msgError">{{ msgError }}</div>
-            <button type="button" class="btn btn-primary" :class="{disabled: isValidating}" v-if="!msgSuccess" @click="validate">{{ isValidating ? '验证中...' : '验证' }}</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <img class="Setup-logo" src="./img/iconx128.png" @click="active = true">
+    <setup-modal :active.sync="active"></setup-modal>
   </div>
 
   <div class="container Panel js-panel" v-cloak>
