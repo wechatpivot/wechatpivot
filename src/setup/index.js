@@ -1,9 +1,14 @@
-import Modal from './modal';
+import Account from './account';
+import { actions } from '../store';
 import './style';
 
 
 const Setup = {
   el: '.js-setup',
+
+  components: {
+    account: Account,
+  },
 
   data: function () {
     return {
@@ -11,8 +16,18 @@ const Setup = {
     };
   },
 
-  components: {
-    'setup-modal': Modal,
+  methods: {
+    open: function () {
+      this.active = true;
+    },
+
+    close: function () {
+      this.active = false;
+    },
+  },
+
+  ready: function () {
+    actions.loadSetup();
   },
 };
 

@@ -55,9 +55,6 @@
 	
 	var _vue2 = _interopRequireDefault(_vue);
 	
-	// import store from './store';
-	// window._store = store;
-	
 	var _dispatcher = __webpack_require__(/*! ./dispatcher */ 3);
 	
 	var _dispatcher2 = _interopRequireDefault(_dispatcher);
@@ -82,11 +79,11 @@
 	
 	var _nav2 = _interopRequireDefault(_nav);
 	
-	var _setup = __webpack_require__(/*! ./setup */ 46);
+	var _setup = __webpack_require__(/*! ./setup */ 50);
 	
 	var _setup2 = _interopRequireDefault(_setup);
 	
-	var _panel = __webpack_require__(/*! ./panel */ 50);
+	var _panel = __webpack_require__(/*! ./panel */ 55);
 	
 	var _panel2 = _interopRequireDefault(_panel);
 	
@@ -14500,7 +14497,7 @@
 	
 	var _store = __webpack_require__(/*! ../store */ 9);
 	
-	__webpack_require__(/*! ./style */ 42);
+	__webpack_require__(/*! ./style */ 46);
 	
 	var Nav = {
 	  el: '.js-nav',
@@ -14569,25 +14566,30 @@
 	
 	var _vue2 = _interopRequireDefault(_vue);
 	
-	var _vuex = __webpack_require__(/*! ./vuex */ 10);
+	var _vuex = __webpack_require__(/*! vuex */ 10);
 	
 	var _vuex2 = _interopRequireDefault(_vuex);
 	
-	var _init_nav = __webpack_require__(/*! ./init_nav */ 11);
+	var _init_nav = __webpack_require__(/*! ./init_nav */ 14);
 	
 	var _init_nav2 = _interopRequireDefault(_init_nav);
 	
-	var _actions = __webpack_require__(/*! ./actions */ 12);
+	var _actions = __webpack_require__(/*! ./actions */ 15);
 	
 	var actions = _interopRequireWildcard(_actions);
 	
-	var _mutations = __webpack_require__(/*! ./mutations */ 41);
+	var _mutations = __webpack_require__(/*! ./mutations */ 45);
 	
 	var _mutations2 = _interopRequireDefault(_mutations);
 	
 	_vue2['default'].use(_vuex2['default']);
 	
-	var state = Object.assign({}, _init_nav2['default']);
+	var state = {
+	  accounts: [],
+	  current_account_id: null
+	};
+	Object.assign(state, _init_nav2['default']);
+	window._state = state;
 	
 	var store = new _vuex2['default'].Store({
 	  state: state,
@@ -14602,586 +14604,501 @@
 
 /***/ },
 /* 10 */
-/*!***************************!*\
-  !*** ./src/store/vuex.js ***!
-  \***************************/
+/*!*****************************!*\
+  !*** ./~/vuex/lib/index.js ***!
+  \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	(function webpackUniversalModuleDefinition(root, factory) {
-		if (true) module.exports = factory();else if (typeof define === 'function' && define.amd) define([], factory);else if (typeof exports === 'object') exports["Vuex"] = factory();else root["Vuex"] = factory();
-	})(undefined, function () {
-		return (/******/(function (modules) {
-				// webpackBootstrap
-				/******/ // The module cache
-				/******/var installedModules = {};
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-				/******/ // The require function
-				/******/function __webpack_require__(moduleId) {
-	
-					/******/ // Check if module is in cache
-					/******/if (installedModules[moduleId])
-						/******/return installedModules[moduleId].exports;
-	
-					/******/ // Create a new module (and put it into the cache)
-					/******/var module = installedModules[moduleId] = {
-						/******/exports: {},
-						/******/id: moduleId,
-						/******/loaded: false
-						/******/ };
-	
-					/******/ // Execute the module function
-					/******/modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-	
-					/******/ // Flag the module as loaded
-					/******/module.loaded = true;
-	
-					/******/ // Return the exports of the module
-					/******/return module.exports;
-					/******/
-				}
-	
-				/******/ // expose the modules object (__webpack_modules__)
-				/******/__webpack_require__.m = modules;
-	
-				/******/ // expose the module cache
-				/******/__webpack_require__.c = installedModules;
-	
-				/******/ // __webpack_public_path__
-				/******/__webpack_require__.p = "";
-	
-				/******/ // Load entry module and return exports
-				/******/return __webpack_require__(0);
-				/******/
-			})(
-			/************************************************************************/
-			/******/[
-			/* 0 */
-			function (module, exports, __webpack_require__) {
-	
-				'use strict';
-	
-				module.exports = __webpack_require__(1)['default'];
-	
-				/***/
-			},
-			/* 1 */
-			function (module, exports, __webpack_require__) {
-	
-				'use strict';
-	
-				var _createClass = (function () {
-					function defineProperties(target, props) {
-						for (var i = 0; i < props.length; i++) {
-							var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-						}
-					}return function (Constructor, protoProps, staticProps) {
-						if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-					};
-				})();
-	
-				Object.defineProperty(exports, "__esModule", {
-					value: true
-				});
-				exports.createLogger = exports.Store = undefined;
-				exports.install = install;
-	
-				var _util = __webpack_require__(2);
-	
-				var _devtool = __webpack_require__(3);
-	
-				var _devtool2 = _interopRequireDefault(_devtool);
-	
-				var _logger = __webpack_require__(4);
-	
-				var _logger2 = _interopRequireDefault(_logger);
-	
-				function _interopRequireDefault(obj) {
-					return obj && obj.__esModule ? obj : { 'default': obj };
-				}
-	
-				function _classCallCheck(instance, Constructor) {
-					if (!(instance instanceof Constructor)) {
-						throw new TypeError("Cannot call a class as a function");
-					}
-				}
-	
-				var Vue = undefined;
-	
-				var Store = exports.Store = (function () {
-	
-					/**
-	     * @param {Object} options
-	     *        - {Object} state
-	     *        - {Object} actions
-	     *        - {Object} mutations
-	     *        - {Array} middlewares
-	     *        - {Boolean} strict
-	     */
-	
-					function Store() {
-						var _this = this;
-	
-						var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	
-						var _ref$state = _ref.state;
-						var state = _ref$state === undefined ? {} : _ref$state;
-						var _ref$actions = _ref.actions;
-						var actions = _ref$actions === undefined ? {} : _ref$actions;
-						var _ref$mutations = _ref.mutations;
-						var mutations = _ref$mutations === undefined ? {} : _ref$mutations;
-						var _ref$middlewares = _ref.middlewares;
-						var middlewares = _ref$middlewares === undefined ? [] : _ref$middlewares;
-						var _ref$strict = _ref.strict;
-						var strict = _ref$strict === undefined ? false : _ref$strict;
-	
-						_classCallCheck(this, Store);
-	
-						// bind dispatch to self
-						var dispatch = this.dispatch;
-						this.dispatch = function () {
-							for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-								args[_key] = arguments[_key];
-							}
-	
-							dispatch.apply(_this, args);
-						};
-						// use a Vue instance to store the state tree
-						this._vm = new Vue({
-							data: state
-						});
-						this._dispatching = false;
-						this.actions = Object.create(null);
-						this._setupActions(actions);
-						this._setupMutations(mutations);
-						this._setupMiddlewares(middlewares, state);
-						// add extra warnings in strict mode
-						if (strict) {
-							this._setupMutationCheck();
-						}
-					}
-	
-					/**
-	     * Getter for the entire state tree.
-	     * Read only.
-	     *
-	     * @return {Object}
-	     */
-	
-					_createClass(Store, [{
-						key: 'dispatch',
-	
-						/**
-	      * Dispatch an action.
-	      *
-	      * @param {String} type
-	      */
-	
-						value: function dispatch(type) {
-							for (var _len2 = arguments.length, payload = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-								payload[_key2 - 1] = arguments[_key2];
-							}
-	
-							var mutation = this._mutations[type];
-							var prevSnapshot = this._prevSnapshot;
-							var state = this.state;
-							var snapshot = undefined,
-							    clonedPayload = undefined;
-							if (mutation) {
-								this._dispatching = true;
-								// apply the mutation
-								if (Array.isArray(mutation)) {
-									mutation.forEach(function (m) {
-										return m.apply(undefined, [state].concat(payload));
-									});
-								} else {
-									mutation.apply(undefined, [state].concat(payload));
-								}
-								this._dispatching = false;
-								// invoke middlewares
-								if (this._needSnapshots) {
-									snapshot = this._prevSnapshot = (0, _util.deepClone)(state);
-									clonedPayload = (0, _util.deepClone)(payload);
-								}
-								this._middlewares.forEach(function (m) {
-									if (m.onMutation) {
-										if (m.snapshot) {
-											m.onMutation({ type: type, payload: clonedPayload }, snapshot, prevSnapshot);
-										} else {
-											m.onMutation({ type: type, payload: payload }, state);
-										}
-									}
-								});
-							} else {
-								console.warn('[vuex] Unknown mutation: ' + type);
-							}
-						}
-	
-						/**
-	      * Hot update actions and mutations.
-	      *
-	      * @param {Object} options
-	      *        - {Object} [actions]
-	      *        - {Object} [mutations]
-	      */
-	
-					}, {
-						key: 'hotUpdate',
-						value: function hotUpdate() {
-							var _ref2 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	
-							var actions = _ref2.actions;
-							var mutations = _ref2.mutations;
-	
-							if (actions) {
-								this._setupActions(actions, true);
-							}
-							if (mutations) {
-								this._setupMutations(mutations);
-							}
-						}
-	
-						/**
-	      * Setup mutation check: if the vuex instance's state is mutated
-	      * outside of a mutation handler, we throw en error. This effectively
-	      * enforces all mutations to the state to be trackable and hot-reloadble.
-	      * However, this comes at a run time cost since we are doing a deep
-	      * watch on the entire state tree, so it is only enalbed with the
-	      * strict option is set to true.
-	      */
-	
-					}, {
-						key: '_setupMutationCheck',
-						value: function _setupMutationCheck() {
-							var _this2 = this;
-	
-							// a hack to get the watcher constructor from older versions of Vue
-							// mainly because the public $watch method does not allow sync
-							// watchers.
-							var unwatch = this._vm.$watch('__vuex__', function (a) {
-								return a;
-							});
-							var Watcher = this._vm._watchers[0].constructor;
-							unwatch();
-							new Watcher(this._vm, '$data', function () {
-								if (!_this2._dispatching) {
-									throw new Error('[vuex] Do not mutate vuex store state outside mutation handlers.');
-								}
-							}, { deep: true, sync: true });
-						}
-	
-						/**
-	      * Set up the callable action functions exposed to components.
-	      * This method can be called multiple times for hot updates.
-	      * We keep the real action functions in an internal object,
-	      * and expose the public object which are just wrapper
-	      * functions that point to the real ones. This is so that
-	      * the reals ones can be hot reloaded.
-	      *
-	      * @param {Object} actions
-	      * @param {Boolean} [hot]
-	      */
-	
-					}, {
-						key: '_setupActions',
-						value: function _setupActions(actions, hot) {
-							var _this3 = this;
-	
-							this._actions = Object.create(null);
-							actions = Array.isArray(actions) ? (0, _util.mergeObjects)(actions) : actions;
-							Object.keys(actions).forEach(function (name) {
-								_this3._actions[name] = (0, _util.createAction)(actions[name], _this3);
-								if (!_this3.actions[name]) {
-									_this3.actions[name] = function () {
-										var _actions;
-	
-										return (_actions = _this3._actions)[name].apply(_actions, arguments);
-									};
-								}
-							});
-							// delete public actions that are no longer present
-							// after a hot reload
-							if (hot) {
-								Object.keys(this.actions).forEach(function (name) {
-									if (!actions[name]) {
-										delete _this3.actions[name];
-									}
-								});
-							}
-						}
-	
-						/**
-	      * Setup the mutation handlers. Effectively a event listener.
-	      * This method can be called multiple times for hot updates.
-	      *
-	      * @param {Object} mutations
-	      */
-	
-					}, {
-						key: '_setupMutations',
-						value: function _setupMutations(mutations) {
-							this._mutations = Array.isArray(mutations) ? (0, _util.mergeObjects)(mutations, true) : mutations;
-						}
-	
-						/**
-	      * Setup the middlewares. The devtools middleware is always
-	      * included, since it does nothing if no devtool is detected.
-	      *
-	      * A middleware can demand the state it receives to be
-	      * "snapshots", i.e. deep clones of the actual state tree.
-	      *
-	      * @param {Array} middlewares
-	      * @param {Object} state
-	      */
-	
-					}, {
-						key: '_setupMiddlewares',
-						value: function _setupMiddlewares(middlewares, state) {
-							this._middlewares = [_devtool2['default']].concat(middlewares);
-							this._needSnapshots = middlewares.some(function (m) {
-								return m.snapshot;
-							});
-							if (this._needSnapshots) {
-								console.log('[vuex] One or more of your middlewares are taking state snapshots ' + 'for each mutation. Make sure to use them only during development.');
-							}
-							var initialSnapshot = this._prevSnapshot = this._needSnapshots ? (0, _util.deepClone)(state) : null;
-							// call init hooks
-							this._middlewares.forEach(function (m) {
-								if (m.onInit) {
-									m.onInit(m.snapshot ? initialSnapshot : state);
-								}
-							});
-						}
-					}, {
-						key: 'state',
-						get: function get() {
-							return this._vm._data;
-						},
-						set: function set(v) {
-							throw new Error('[vuex] Vuex root state is read only.');
-						}
-					}]);
-	
-					return Store;
-				})();
-	
-				// export logger factory
-	
-				exports.createLogger = _logger2['default'];
-	
-				// export install function
-	
-				function install(_Vue) {
-					Vue = _Vue;
-				}
-	
-				// also export the default
-				exports['default'] = {
-					Store: Store,
-					createLogger: _logger2['default'],
-					install: install
-				};
-	
-				/***/
-			},
-			/* 2 */
-			function (module, exports) {
-	
-				'use strict';
-	
-				Object.defineProperty(exports, "__esModule", {
-					value: true
-				});
-				exports.createAction = createAction;
-				exports.mergeObjects = mergeObjects;
-				exports.deepClone = deepClone;
-	
-				function _typeof(obj) {
-					return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
-				}
-	
-				/**
-	    * Create a actual callable action function.
-	    *
-	    * @param {String|Function} action
-	    * @param {Vuex} store
-	    * @return {Function} [description]
-	    */
-	
-				function createAction(action, store) {
-					if (typeof action === 'string') {
-						// simple action string shorthand
-						return function () {
-							for (var _len = arguments.length, payload = Array(_len), _key = 0; _key < _len; _key++) {
-								payload[_key] = arguments[_key];
-							}
-	
-							return store.dispatch.apply(store, [action].concat(payload));
-						};
-					} else if (typeof action === 'function') {
-						// normal action
-						return function () {
-							for (var _len2 = arguments.length, payload = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-								payload[_key2] = arguments[_key2];
-							}
-	
-							return action.apply(undefined, [store].concat(payload));
-						};
-					}
-				}
-	
-				/**
-	    * Merge an array of objects into one.
-	    *
-	    * @param {Array<Object>} arr
-	    * @param {Boolean} allowDuplicate
-	    * @return {Object}
-	    */
-	
-				function mergeObjects(arr, allowDuplicate) {
-					return arr.reduce(function (prev, obj) {
-						Object.keys(obj).forEach(function (key) {
-							var existing = prev[key];
-							if (existing) {
-								// allow multiple mutation objects to contain duplicate
-								// handlers for the same mutation type
-								if (allowDuplicate) {
-									if (Array.isArray(existing)) {
-										existing.push(obj[key]);
-									} else {
-										prev[key] = [prev[key], obj[key]];
-									}
-								} else {
-									console.warn('[vuex] Duplicate action: ' + key);
-								}
-							} else {
-								prev[key] = obj[key];
-							}
-						});
-						return prev;
-					}, {});
-				}
-	
-				/**
-	    * Deep clone an object. Faster than JSON.parse(JSON.stringify()).
-	    *
-	    * @param {*} obj
-	    * @return {*}
-	    */
-	
-				function deepClone(obj) {
-					if (Array.isArray(obj)) {
-						return obj.map(deepClone);
-					} else if (obj && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
-						var cloned = {};
-						var keys = Object.keys(obj);
-						for (var i = 0, l = keys.length; i < l; i++) {
-							var key = keys[i];
-							cloned[key] = deepClone(obj[key]);
-						}
-						return cloned;
-					} else {
-						return obj;
-					}
-				}
-	
-				/***/
-			},
-			/* 3 */
-			function (module, exports) {
-	
-				"use strict";
-	
-				Object.defineProperty(exports, "__esModule", {
-					value: true
-				});
-				exports['default'] = {
-					onInit: function onInit(state) {
-						// TODO
-					},
-					onMutation: function onMutation(mutation, state) {
-						// TODO
-					}
-				};
-	
-				/***/
-			},
-			/* 4 */
-			function (module, exports) {
-	
-				'use strict';
-	
-				Object.defineProperty(exports, "__esModule", {
-					value: true
-				});
-				exports['default'] = createLogger;
-				// Credits: borrowed code from fcomb/redux-logger
-	
-				function createLogger() {
-					var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	
-					var _ref$collapsed = _ref.collapsed;
-					var collapsed = _ref$collapsed === undefined ? true : _ref$collapsed;
-					var _ref$transformer = _ref.transformer;
-					var transformer = _ref$transformer === undefined ? function (state) {
-						return state;
-					} : _ref$transformer;
-					var _ref$mutationTransfor = _ref.mutationTransformer;
-					var mutationTransformer = _ref$mutationTransfor === undefined ? function (mut) {
-						return mut;
-					} : _ref$mutationTransfor;
-	
-					return {
-						snapshot: true,
-						onMutation: function onMutation(mutation, nextState, prevState) {
-							if (typeof console === 'undefined') {
-								return;
-							}
-							var time = new Date();
-							var formattedTime = ' @ ' + pad(time.getHours(), 2) + ':' + pad(time.getMinutes(), 2) + ':' + pad(time.getSeconds(), 2) + '.' + pad(time.getMilliseconds(), 3);
-							var formattedMutation = mutationTransformer(mutation);
-							var message = 'mutation ' + mutation.type + formattedTime;
-							var startMessage = collapsed ? console.groupCollapsed : console.group;
-	
-							// render
-							try {
-								startMessage.call(console, message);
-							} catch (e) {
-								console.log(message);
-							}
-	
-							console.log('%c prev state', 'color: #9E9E9E; font-weight: bold', prevState);
-							console.log('%c mutation', 'color: #03A9F4; font-weight: bold', formattedMutation);
-							console.log('%c next state', 'color: #4CAF50; font-weight: bold', nextState);
-	
-							try {
-								console.groupEnd();
-							} catch (e) {
-								console.log('—— log end ——');
-							}
-						}
-					};
-				}
-	
-				function repeat(str, times) {
-					return new Array(times + 1).join(str);
-				}
-	
-				function pad(num, maxLength) {
-					return repeat('0', maxLength - num.toString().length) + num;
-				}
-	
-				/***/
-			}
-			/******/])
-		);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
 	});
-	;
-	/***/ /***/ /***/ /***/ /***/
+	exports.createLogger = exports.Store = undefined;
+	
+	var _util = __webpack_require__(/*! ./util */ 11);
+	
+	var _devtool = __webpack_require__(/*! ./middlewares/devtool */ 12);
+	
+	var _devtool2 = _interopRequireDefault(_devtool);
+	
+	var _logger = __webpack_require__(/*! ./middlewares/logger */ 13);
+	
+	var _logger2 = _interopRequireDefault(_logger);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Vue = undefined;
+	
+	var Store = exports.Store = (function () {
+	
+	  /**
+	   * @param {Object} options
+	   *        - {Object} state
+	   *        - {Object} actions
+	   *        - {Object} mutations
+	   *        - {Array} middlewares
+	   *        - {Boolean} strict
+	   */
+	
+	  function Store() {
+	    var _this = this;
+	
+	    var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	
+	    var _ref$state = _ref.state;
+	    var state = _ref$state === undefined ? {} : _ref$state;
+	    var _ref$actions = _ref.actions;
+	    var actions = _ref$actions === undefined ? {} : _ref$actions;
+	    var _ref$mutations = _ref.mutations;
+	    var mutations = _ref$mutations === undefined ? {} : _ref$mutations;
+	    var _ref$middlewares = _ref.middlewares;
+	    var middlewares = _ref$middlewares === undefined ? [] : _ref$middlewares;
+	    var _ref$strict = _ref.strict;
+	    var strict = _ref$strict === undefined ? false : _ref$strict;
+	
+	    _classCallCheck(this, Store);
+	
+	    // bind dispatch to self
+	    var dispatch = this.dispatch;
+	    this.dispatch = function () {
+	      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	        args[_key] = arguments[_key];
+	      }
+	
+	      dispatch.apply(_this, args);
+	    };
+	    // use a Vue instance to store the state tree
+	    this._vm = new Vue({
+	      data: state
+	    });
+	    this._dispatching = false;
+	    this.actions = Object.create(null);
+	    this._setupActions(actions);
+	    this._setupMutations(mutations);
+	    this._setupMiddlewares(middlewares, state);
+	    // add extra warnings in strict mode
+	    if (strict) {
+	      this._setupMutationCheck();
+	    }
+	  }
+	
+	  /**
+	   * Getter for the entire state tree.
+	   * Read only.
+	   *
+	   * @return {Object}
+	   */
+	
+	  _createClass(Store, [{
+	    key: 'dispatch',
+	
+	    /**
+	     * Dispatch an action.
+	     *
+	     * @param {String} type
+	     */
+	
+	    value: function dispatch(type) {
+	      for (var _len2 = arguments.length, payload = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+	        payload[_key2 - 1] = arguments[_key2];
+	      }
+	
+	      var mutation = this._mutations[type];
+	      var prevSnapshot = this._prevSnapshot;
+	      var state = this.state;
+	      var snapshot = undefined,
+	          clonedPayload = undefined;
+	      if (mutation) {
+	        this._dispatching = true;
+	        // apply the mutation
+	        if (Array.isArray(mutation)) {
+	          mutation.forEach(function (m) {
+	            return m.apply(undefined, [state].concat(payload));
+	          });
+	        } else {
+	          mutation.apply(undefined, [state].concat(payload));
+	        }
+	        this._dispatching = false;
+	        // invoke middlewares
+	        if (this._needSnapshots) {
+	          snapshot = this._prevSnapshot = (0, _util.deepClone)(state);
+	          clonedPayload = (0, _util.deepClone)(payload);
+	        }
+	        this._middlewares.forEach(function (m) {
+	          if (m.onMutation) {
+	            if (m.snapshot) {
+	              m.onMutation({ type: type, payload: clonedPayload }, snapshot, prevSnapshot);
+	            } else {
+	              m.onMutation({ type: type, payload: payload }, state);
+	            }
+	          }
+	        });
+	      } else {
+	        console.warn('[vuex] Unknown mutation: ' + type);
+	      }
+	    }
+	
+	    /**
+	     * Hot update actions and mutations.
+	     *
+	     * @param {Object} options
+	     *        - {Object} [actions]
+	     *        - {Object} [mutations]
+	     */
+	
+	  }, {
+	    key: 'hotUpdate',
+	    value: function hotUpdate() {
+	      var _ref2 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	
+	      var actions = _ref2.actions;
+	      var mutations = _ref2.mutations;
+	
+	      if (actions) {
+	        this._setupActions(actions, true);
+	      }
+	      if (mutations) {
+	        this._setupMutations(mutations);
+	      }
+	    }
+	
+	    /**
+	     * Setup mutation check: if the vuex instance's state is mutated
+	     * outside of a mutation handler, we throw en error. This effectively
+	     * enforces all mutations to the state to be trackable and hot-reloadble.
+	     * However, this comes at a run time cost since we are doing a deep
+	     * watch on the entire state tree, so it is only enalbed with the
+	     * strict option is set to true.
+	     */
+	
+	  }, {
+	    key: '_setupMutationCheck',
+	    value: function _setupMutationCheck() {
+	      var _this2 = this;
+	
+	      // a hack to get the watcher constructor from older versions of Vue
+	      // mainly because the public $watch method does not allow sync
+	      // watchers.
+	      var unwatch = this._vm.$watch('__vuex__', function (a) {
+	        return a;
+	      });
+	      var Watcher = this._vm._watchers[0].constructor;
+	      unwatch();
+	      new Watcher(this._vm, '$data', function () {
+	        if (!_this2._dispatching) {
+	          throw new Error('[vuex] Do not mutate vuex store state outside mutation handlers.');
+	        }
+	      }, { deep: true, sync: true });
+	    }
+	
+	    /**
+	     * Set up the callable action functions exposed to components.
+	     * This method can be called multiple times for hot updates.
+	     * We keep the real action functions in an internal object,
+	     * and expose the public object which are just wrapper
+	     * functions that point to the real ones. This is so that
+	     * the reals ones can be hot reloaded.
+	     *
+	     * @param {Object} actions
+	     * @param {Boolean} [hot]
+	     */
+	
+	  }, {
+	    key: '_setupActions',
+	    value: function _setupActions(actions, hot) {
+	      var _this3 = this;
+	
+	      this._actions = Object.create(null);
+	      actions = Array.isArray(actions) ? (0, _util.mergeObjects)(actions) : actions;
+	      Object.keys(actions).forEach(function (name) {
+	        _this3._actions[name] = (0, _util.createAction)(actions[name], _this3);
+	        if (!_this3.actions[name]) {
+	          _this3.actions[name] = function () {
+	            var _actions;
+	
+	            return (_actions = _this3._actions)[name].apply(_actions, arguments);
+	          };
+	        }
+	      });
+	      // delete public actions that are no longer present
+	      // after a hot reload
+	      if (hot) {
+	        Object.keys(this.actions).forEach(function (name) {
+	          if (!actions[name]) {
+	            delete _this3.actions[name];
+	          }
+	        });
+	      }
+	    }
+	
+	    /**
+	     * Setup the mutation handlers. Effectively a event listener.
+	     * This method can be called multiple times for hot updates.
+	     *
+	     * @param {Object} mutations
+	     */
+	
+	  }, {
+	    key: '_setupMutations',
+	    value: function _setupMutations(mutations) {
+	      this._mutations = Array.isArray(mutations) ? (0, _util.mergeObjects)(mutations, true) : mutations;
+	    }
+	
+	    /**
+	     * Setup the middlewares. The devtools middleware is always
+	     * included, since it does nothing if no devtool is detected.
+	     *
+	     * A middleware can demand the state it receives to be
+	     * "snapshots", i.e. deep clones of the actual state tree.
+	     *
+	     * @param {Array} middlewares
+	     * @param {Object} state
+	     */
+	
+	  }, {
+	    key: '_setupMiddlewares',
+	    value: function _setupMiddlewares(middlewares, state) {
+	      this._middlewares = [_devtool2.default].concat(middlewares);
+	      this._needSnapshots = middlewares.some(function (m) {
+	        return m.snapshot;
+	      });
+	      if (this._needSnapshots) {
+	        console.log('[vuex] One or more of your middlewares are taking state snapshots ' + 'for each mutation. Make sure to use them only during development.');
+	      }
+	      var initialSnapshot = this._prevSnapshot = this._needSnapshots ? (0, _util.deepClone)(state) : null;
+	      // call init hooks
+	      this._middlewares.forEach(function (m) {
+	        if (m.onInit) {
+	          m.onInit(m.snapshot ? initialSnapshot : state);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'state',
+	    get: function get() {
+	      return this._vm._data;
+	    },
+	    set: function set(v) {
+	      throw new Error('[vuex] Vuex root state is read only.');
+	    }
+	  }]);
+	
+	  return Store;
+	})();
+	
+	// export logger factory
+	
+	exports.createLogger = _logger2.default;
+	exports.default = {
+	  Store: Store,
+	  createLogger: _logger2.default,
+	  install: function install(_Vue) {
+	    Vue = _Vue;
+	  }
+	};
 
 /***/ },
 /* 11 */
+/*!****************************!*\
+  !*** ./~/vuex/lib/util.js ***!
+  \****************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.createAction = createAction;
+	exports.mergeObjects = mergeObjects;
+	exports.deepClone = deepClone;
+	
+	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+	
+	/**
+	 * Create a actual callable action function.
+	 *
+	 * @param {String|Function} action
+	 * @param {Vuex} store
+	 * @return {Function} [description]
+	 */
+	
+	function createAction(action, store) {
+	  if (typeof action === 'string') {
+	    // simple action string shorthand
+	    return function () {
+	      for (var _len = arguments.length, payload = Array(_len), _key = 0; _key < _len; _key++) {
+	        payload[_key] = arguments[_key];
+	      }
+	
+	      return store.dispatch.apply(store, [action].concat(payload));
+	    };
+	  } else if (typeof action === 'function') {
+	    // normal action
+	    return function () {
+	      for (var _len2 = arguments.length, payload = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	        payload[_key2] = arguments[_key2];
+	      }
+	
+	      return action.apply(undefined, [store].concat(payload));
+	    };
+	  }
+	}
+	
+	/**
+	 * Merge an array of objects into one.
+	 *
+	 * @param {Array<Object>} arr
+	 * @param {Boolean} allowDuplicate
+	 * @return {Object}
+	 */
+	
+	function mergeObjects(arr, allowDuplicate) {
+	  return arr.reduce(function (prev, obj) {
+	    Object.keys(obj).forEach(function (key) {
+	      var existing = prev[key];
+	      if (existing) {
+	        // allow multiple mutation objects to contain duplicate
+	        // handlers for the same mutation type
+	        if (allowDuplicate) {
+	          if (Array.isArray(existing)) {
+	            existing.push(obj[key]);
+	          } else {
+	            prev[key] = [prev[key], obj[key]];
+	          }
+	        } else {
+	          console.warn('[vuex] Duplicate action: ' + key);
+	        }
+	      } else {
+	        prev[key] = obj[key];
+	      }
+	    });
+	    return prev;
+	  }, {});
+	}
+	
+	/**
+	 * Deep clone an object. Faster than JSON.parse(JSON.stringify()).
+	 *
+	 * @param {*} obj
+	 * @return {*}
+	 */
+	
+	function deepClone(obj) {
+	  if (Array.isArray(obj)) {
+	    return obj.map(deepClone);
+	  } else if (obj && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
+	    var cloned = {};
+	    var keys = Object.keys(obj);
+	    for (var i = 0, l = keys.length; i < l; i++) {
+	      var key = keys[i];
+	      cloned[key] = deepClone(obj[key]);
+	    }
+	    return cloned;
+	  } else {
+	    return obj;
+	  }
+	}
+
+/***/ },
+/* 12 */
+/*!*******************************************!*\
+  !*** ./~/vuex/lib/middlewares/devtool.js ***!
+  \*******************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  onInit: function onInit(state) {
+	    // TODO
+	  },
+	  onMutation: function onMutation(mutation, state) {
+	    // TODO
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 13 */
+/*!******************************************!*\
+  !*** ./~/vuex/lib/middlewares/logger.js ***!
+  \******************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = createLogger;
+	// Credits: borrowed code from fcomb/redux-logger
+	
+	function createLogger() {
+	  var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	
+	  var _ref$collapsed = _ref.collapsed;
+	  var collapsed = _ref$collapsed === undefined ? true : _ref$collapsed;
+	  var _ref$transformer = _ref.transformer;
+	  var transformer = _ref$transformer === undefined ? function (state) {
+	    return state;
+	  } : _ref$transformer;
+	  var _ref$mutationTransfor = _ref.mutationTransformer;
+	  var mutationTransformer = _ref$mutationTransfor === undefined ? function (mut) {
+	    return mut;
+	  } : _ref$mutationTransfor;
+	
+	  return {
+	    snapshot: true,
+	    onMutation: function onMutation(mutation, nextState, prevState) {
+	      if (typeof console === 'undefined') {
+	        return;
+	      }
+	      var time = new Date();
+	      var formattedTime = ' @ ' + pad(time.getHours(), 2) + ':' + pad(time.getMinutes(), 2) + ':' + pad(time.getSeconds(), 2) + '.' + pad(time.getMilliseconds(), 3);
+	      var formattedMutation = mutationTransformer(mutation);
+	      var message = 'mutation ' + mutation.type + formattedTime;
+	      var startMessage = collapsed ? console.groupCollapsed : console.group;
+	
+	      // render
+	      try {
+	        startMessage.call(console, message);
+	      } catch (e) {
+	        console.log(message);
+	      }
+	
+	      console.log('%c prev state', 'color: #9E9E9E; font-weight: bold', prevState);
+	      console.log('%c mutation', 'color: #03A9F4; font-weight: bold', formattedMutation);
+	      console.log('%c next state', 'color: #4CAF50; font-weight: bold', nextState);
+	
+	      try {
+	        console.groupEnd();
+	      } catch (e) {
+	        console.log('—— log end ——');
+	      }
+	    }
+	  };
+	}
+	
+	function repeat(str, times) {
+	  return new Array(times + 1).join(str);
+	}
+	
+	function pad(num, maxLength) {
+	  return repeat('0', maxLength - num.toString().length) + num;
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 14 */
 /*!*******************************!*\
   !*** ./src/store/init_nav.js ***!
   \*******************************/
@@ -15225,7 +15142,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 12 */
+/* 15 */
 /*!************************************!*\
   !*** ./src/store/actions/index.js ***!
   \************************************/
@@ -15237,66 +15154,76 @@
 	  value: true
 	});
 	
+	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _superagent = __webpack_require__(/*! superagent */ 13);
+	var _superagent = __webpack_require__(/*! superagent */ 16);
 	
 	var _superagent2 = _interopRequireDefault(_superagent);
 	
-	var _localforage = __webpack_require__(/*! localforage */ 16);
+	var _dispatcher = __webpack_require__(/*! ../../dispatcher */ 3);
 	
-	var _localforage2 = _interopRequireDefault(_localforage);
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
 	
-	var _mutationsTypes = __webpack_require__(/*! ../mutations/types */ 17);
+	var _types = __webpack_require__(/*! ../types */ 19);
 	
-	var types = _interopRequireWildcard(_mutationsTypes);
-	
-	var _signature = __webpack_require__(/*! ./signature */ 18);
+	var _signature = __webpack_require__(/*! ./signature */ 20);
 	
 	var _signature2 = _interopRequireDefault(_signature);
 	
-	var CACHE_KEY_SETUP = 'setup-v1';
+	var _cache = __webpack_require__(/*! ./cache */ 43);
 	
-	var init = function init(_ref) {
+	var cache = _interopRequireWildcard(_cache);
+	
+	var loadSetup = function loadSetup(_ref) {
 	  var dispatch = _ref.dispatch;
 	
-	  _localforage2['default'].getItem(CACHE_KEY_SETUP, function (err, value) {
-	    dispatch(types.INIT, value || {});
+	  Promise.all([cache.getAccounts(), cache.getCurrentAccountId()]).then(function (_ref2) {
+	    var _ref22 = _slicedToArray(_ref2, 2);
+	
+	    var accounts = _ref22[0];
+	    var current_account_id = _ref22[1];
+	
+	    dispatch(_types.setup_types.LOAD_ACCOUNTS, accounts);
+	    dispatch(_types.setup_types.CHANGE_ACCOUNT, current_account_id);
+	  })['catch'](function (err) {
+	    console.error(err);
 	  });
 	};
 	
-	exports.init = init;
-	var updateSetup = function updateSetup(_ref2, url, token) {
-	  var dispatch = _ref2.dispatch;
-	
-	  _localforage2['default'].setItem(CACHE_KEY_SETUP, { url: url, token: token }, function () {
-	    dispatch(types.INIT, { url: url, token: token });
-	  });
-	};
-	
-	exports.updateSetup = updateSetup;
+	exports.loadSetup = loadSetup;
 	var changeNav = function changeNav(_ref3, id) {
 	  var dispatch = _ref3.dispatch;
 	
-	  dispatch(types.CHANGE_NAV, id);
+	  dispatch(_types.nav_types.CHANGE_NAV, id);
 	};
 	
 	exports.changeNav = changeNav;
-	var validate = function validate(_ref4) {
+	var validate = function validate(_ref4, id, url, token) {
 	  var state = _ref4.state;
+	  var dispatch = _ref4.dispatch;
 	
-	  var query = (0, _signature2['default'])(state.token);
+	  dispatch(_types.setup_types.ACCOUNT_EXPIRES);
+	
+	  var query = (0, _signature2['default'])(token);
 	  var echostr = Math.random().toString(36).substring(2);
 	  query.echostr = echostr;
 	
-	  _superagent2['default'].get(state.url).query(query).end(function (err, res) {
+	  _superagent2['default'].get(url).query(query).end(function (err, res) {
 	    if (err) {
 	      console.error(err);
+	      // FIXME
+	      _dispatcher2['default'].$emit('INVALID_ACCOUNT', err.message);
 	    } else {
 	      if (res.text === echostr) {
-	        console.log(res.text);
+	        Promise.all([cache.saveAccount({ id: id, url: url, token: token }), cache.saveCurrentAccountId(id)]).then(function () {
+	          loadSetup({ dispatch: dispatch });
+	        })['catch'](function (error) {
+	          console.error(error);
+	        });
 	      } else {
 	        console.error(res.text);
 	      }
@@ -15305,8 +15232,19 @@
 	};
 	
 	exports.validate = validate;
-	var send = function send(_ref5, xml) {
-	  var state = _ref5.state;
+	var removeAccount = function removeAccount(_ref5, id) {
+	  var dispatch = _ref5.dispatch;
+	
+	  cache.removeAccount(id).then(function () {
+	    dispatch(_types.setup_types.REMOVE_ACCOUNT, id);
+	  })['catch'](function (err) {
+	    console.error(err);
+	  });
+	};
+	
+	exports.removeAccount = removeAccount;
+	var send = function send(_ref6, xml) {
+	  var state = _ref6.state;
 	
 	  var query = (0, _signature2['default'])(state.token);
 	
@@ -15321,7 +15259,7 @@
 	exports.send = send;
 
 /***/ },
-/* 13 */
+/* 16 */
 /*!************************************!*\
   !*** ./~/superagent/lib/client.js ***!
   \************************************/
@@ -15331,8 +15269,8 @@
 	 * Module dependencies.
 	 */
 	
-	var Emitter = __webpack_require__(/*! emitter */ 14);
-	var reduce = __webpack_require__(/*! reduce */ 15);
+	var Emitter = __webpack_require__(/*! emitter */ 17);
+	var reduce = __webpack_require__(/*! reduce */ 18);
 	
 	/**
 	 * Root reference for iframes.
@@ -16411,7 +16349,7 @@
 
 
 /***/ },
-/* 14 */
+/* 17 */
 /*!**************************************!*\
   !*** ./~/component-emitter/index.js ***!
   \**************************************/
@@ -16584,7 +16522,7 @@
 
 
 /***/ },
-/* 15 */
+/* 18 */
 /*!*************************************!*\
   !*** ./~/reduce-component/index.js ***!
   \*************************************/
@@ -16616,7 +16554,4031 @@
 	};
 
 /***/ },
-/* 16 */
+/* 19 */
+/*!****************************!*\
+  !*** ./src/store/types.js ***!
+  \****************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	var setup_types = {
+	  LOAD_ACCOUNTS: 'LOAD_ACCOUNTS',
+	  ACCOUNT_EXPIRES: 'ACCOUNT_EXPIRES',
+	  CHANGE_ACCOUNT: 'CHANGE_ACCOUNT',
+	  REMOVE_ACCOUNT: 'REMOVE_ACCOUNT'
+	};
+	
+	exports.setup_types = setup_types;
+	var nav_types = {
+	  CHANGE_NAV: 'CHANGE_NAV'
+	};
+	exports.nav_types = nav_types;
+
+/***/ },
+/* 20 */
+/*!****************************************!*\
+  !*** ./src/store/actions/signature.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = generate_query;
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _crypto = __webpack_require__(/*! crypto */ 21);
+	
+	var _crypto2 = _interopRequireDefault(_crypto);
+	
+	function generate_query(token) {
+	  var timestamp = Math.floor(Date.now() / 1000);
+	  var nonce = Math.random().toString(36).substring(2);
+	
+	  var source = [token.toString(), timestamp.toString(), nonce.toString()].sort().join('');
+	  var signature = _crypto2['default'].createHash('sha1').update(source).digest('hex');
+	
+	  return { timestamp: timestamp, nonce: nonce, signature: signature };
+	}
+	
+	module.exports = exports['default'];
+
+/***/ },
+/* 21 */
+/*!**************************************!*\
+  !*** ./~/crypto-browserify/index.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var rng = __webpack_require__(/*! ./rng */ 26)
+	
+	function error () {
+	  var m = [].slice.call(arguments).join(' ')
+	  throw new Error([
+	    m,
+	    'we accept pull requests',
+	    'http://github.com/dominictarr/crypto-browserify'
+	    ].join('\n'))
+	}
+	
+	exports.createHash = __webpack_require__(/*! ./create-hash */ 28)
+	
+	exports.createHmac = __webpack_require__(/*! ./create-hmac */ 40)
+	
+	exports.randomBytes = function(size, callback) {
+	  if (callback && callback.call) {
+	    try {
+	      callback.call(this, undefined, new Buffer(rng(size)))
+	    } catch (err) { callback(err) }
+	  } else {
+	    return new Buffer(rng(size))
+	  }
+	}
+	
+	function each(a, f) {
+	  for(var i in a)
+	    f(a[i], i)
+	}
+	
+	exports.getHashes = function () {
+	  return ['sha1', 'sha256', 'sha512', 'md5', 'rmd160']
+	}
+	
+	var p = __webpack_require__(/*! ./pbkdf2 */ 41)(exports)
+	exports.pbkdf2 = p.pbkdf2
+	exports.pbkdf2Sync = p.pbkdf2Sync
+	
+	
+	// the least I can do is make error messages for the rest of the node.js/crypto api.
+	each(['createCredentials'
+	, 'createCipher'
+	, 'createCipheriv'
+	, 'createDecipher'
+	, 'createDecipheriv'
+	, 'createSign'
+	, 'createVerify'
+	, 'createDiffieHellman'
+	], function (name) {
+	  exports[name] = function () {
+	    error('sorry,', name, 'is not implemented yet')
+	  }
+	})
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 22).Buffer))
+
+/***/ },
+/* 22 */
+/*!***************************!*\
+  !*** ./~/buffer/index.js ***!
+  \***************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer, global) {/*!
+	 * The buffer module from node.js, for the browser.
+	 *
+	 * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+	 * @license  MIT
+	 */
+	/* eslint-disable no-proto */
+	
+	var base64 = __webpack_require__(/*! base64-js */ 23)
+	var ieee754 = __webpack_require__(/*! ieee754 */ 24)
+	var isArray = __webpack_require__(/*! isarray */ 25)
+	
+	exports.Buffer = Buffer
+	exports.SlowBuffer = SlowBuffer
+	exports.INSPECT_MAX_BYTES = 50
+	Buffer.poolSize = 8192 // not used by this implementation
+	
+	var rootParent = {}
+	
+	/**
+	 * If `Buffer.TYPED_ARRAY_SUPPORT`:
+	 *   === true    Use Uint8Array implementation (fastest)
+	 *   === false   Use Object implementation (most compatible, even IE6)
+	 *
+	 * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
+	 * Opera 11.6+, iOS 4.2+.
+	 *
+	 * Due to various browser bugs, sometimes the Object implementation will be used even
+	 * when the browser supports typed arrays.
+	 *
+	 * Note:
+	 *
+	 *   - Firefox 4-29 lacks support for adding new properties to `Uint8Array` instances,
+	 *     See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
+	 *
+	 *   - Safari 5-7 lacks support for changing the `Object.prototype.constructor` property
+	 *     on objects.
+	 *
+	 *   - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
+	 *
+	 *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
+	 *     incorrect length in some situations.
+	
+	 * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
+	 * get the Object implementation, which is slower but behaves correctly.
+	 */
+	Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
+	  ? global.TYPED_ARRAY_SUPPORT
+	  : typedArraySupport()
+	
+	function typedArraySupport () {
+	  function Bar () {}
+	  try {
+	    var arr = new Uint8Array(1)
+	    arr.foo = function () { return 42 }
+	    arr.constructor = Bar
+	    return arr.foo() === 42 && // typed array instances can be augmented
+	        arr.constructor === Bar && // constructor can be set
+	        typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
+	        arr.subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
+	  } catch (e) {
+	    return false
+	  }
+	}
+	
+	function kMaxLength () {
+	  return Buffer.TYPED_ARRAY_SUPPORT
+	    ? 0x7fffffff
+	    : 0x3fffffff
+	}
+	
+	/**
+	 * Class: Buffer
+	 * =============
+	 *
+	 * The Buffer constructor returns instances of `Uint8Array` that are augmented
+	 * with function properties for all the node `Buffer` API functions. We use
+	 * `Uint8Array` so that square bracket notation works as expected -- it returns
+	 * a single octet.
+	 *
+	 * By augmenting the instances, we can avoid modifying the `Uint8Array`
+	 * prototype.
+	 */
+	function Buffer (arg) {
+	  if (!(this instanceof Buffer)) {
+	    // Avoid going through an ArgumentsAdaptorTrampoline in the common case.
+	    if (arguments.length > 1) return new Buffer(arg, arguments[1])
+	    return new Buffer(arg)
+	  }
+	
+	  this.length = 0
+	  this.parent = undefined
+	
+	  // Common case.
+	  if (typeof arg === 'number') {
+	    return fromNumber(this, arg)
+	  }
+	
+	  // Slightly less common case.
+	  if (typeof arg === 'string') {
+	    return fromString(this, arg, arguments.length > 1 ? arguments[1] : 'utf8')
+	  }
+	
+	  // Unusual.
+	  return fromObject(this, arg)
+	}
+	
+	function fromNumber (that, length) {
+	  that = allocate(that, length < 0 ? 0 : checked(length) | 0)
+	  if (!Buffer.TYPED_ARRAY_SUPPORT) {
+	    for (var i = 0; i < length; i++) {
+	      that[i] = 0
+	    }
+	  }
+	  return that
+	}
+	
+	function fromString (that, string, encoding) {
+	  if (typeof encoding !== 'string' || encoding === '') encoding = 'utf8'
+	
+	  // Assumption: byteLength() return value is always < kMaxLength.
+	  var length = byteLength(string, encoding) | 0
+	  that = allocate(that, length)
+	
+	  that.write(string, encoding)
+	  return that
+	}
+	
+	function fromObject (that, object) {
+	  if (Buffer.isBuffer(object)) return fromBuffer(that, object)
+	
+	  if (isArray(object)) return fromArray(that, object)
+	
+	  if (object == null) {
+	    throw new TypeError('must start with number, buffer, array or string')
+	  }
+	
+	  if (typeof ArrayBuffer !== 'undefined') {
+	    if (object.buffer instanceof ArrayBuffer) {
+	      return fromTypedArray(that, object)
+	    }
+	    if (object instanceof ArrayBuffer) {
+	      return fromArrayBuffer(that, object)
+	    }
+	  }
+	
+	  if (object.length) return fromArrayLike(that, object)
+	
+	  return fromJsonObject(that, object)
+	}
+	
+	function fromBuffer (that, buffer) {
+	  var length = checked(buffer.length) | 0
+	  that = allocate(that, length)
+	  buffer.copy(that, 0, 0, length)
+	  return that
+	}
+	
+	function fromArray (that, array) {
+	  var length = checked(array.length) | 0
+	  that = allocate(that, length)
+	  for (var i = 0; i < length; i += 1) {
+	    that[i] = array[i] & 255
+	  }
+	  return that
+	}
+	
+	// Duplicate of fromArray() to keep fromArray() monomorphic.
+	function fromTypedArray (that, array) {
+	  var length = checked(array.length) | 0
+	  that = allocate(that, length)
+	  // Truncating the elements is probably not what people expect from typed
+	  // arrays with BYTES_PER_ELEMENT > 1 but it's compatible with the behavior
+	  // of the old Buffer constructor.
+	  for (var i = 0; i < length; i += 1) {
+	    that[i] = array[i] & 255
+	  }
+	  return that
+	}
+	
+	function fromArrayBuffer (that, array) {
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    // Return an augmented `Uint8Array` instance, for best performance
+	    array.byteLength
+	    that = Buffer._augment(new Uint8Array(array))
+	  } else {
+	    // Fallback: Return an object instance of the Buffer class
+	    that = fromTypedArray(that, new Uint8Array(array))
+	  }
+	  return that
+	}
+	
+	function fromArrayLike (that, array) {
+	  var length = checked(array.length) | 0
+	  that = allocate(that, length)
+	  for (var i = 0; i < length; i += 1) {
+	    that[i] = array[i] & 255
+	  }
+	  return that
+	}
+	
+	// Deserialize { type: 'Buffer', data: [1,2,3,...] } into a Buffer object.
+	// Returns a zero-length buffer for inputs that don't conform to the spec.
+	function fromJsonObject (that, object) {
+	  var array
+	  var length = 0
+	
+	  if (object.type === 'Buffer' && isArray(object.data)) {
+	    array = object.data
+	    length = checked(array.length) | 0
+	  }
+	  that = allocate(that, length)
+	
+	  for (var i = 0; i < length; i += 1) {
+	    that[i] = array[i] & 255
+	  }
+	  return that
+	}
+	
+	if (Buffer.TYPED_ARRAY_SUPPORT) {
+	  Buffer.prototype.__proto__ = Uint8Array.prototype
+	  Buffer.__proto__ = Uint8Array
+	}
+	
+	function allocate (that, length) {
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    // Return an augmented `Uint8Array` instance, for best performance
+	    that = Buffer._augment(new Uint8Array(length))
+	    that.__proto__ = Buffer.prototype
+	  } else {
+	    // Fallback: Return an object instance of the Buffer class
+	    that.length = length
+	    that._isBuffer = true
+	  }
+	
+	  var fromPool = length !== 0 && length <= Buffer.poolSize >>> 1
+	  if (fromPool) that.parent = rootParent
+	
+	  return that
+	}
+	
+	function checked (length) {
+	  // Note: cannot use `length < kMaxLength` here because that fails when
+	  // length is NaN (which is otherwise coerced to zero.)
+	  if (length >= kMaxLength()) {
+	    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
+	                         'size: 0x' + kMaxLength().toString(16) + ' bytes')
+	  }
+	  return length | 0
+	}
+	
+	function SlowBuffer (subject, encoding) {
+	  if (!(this instanceof SlowBuffer)) return new SlowBuffer(subject, encoding)
+	
+	  var buf = new Buffer(subject, encoding)
+	  delete buf.parent
+	  return buf
+	}
+	
+	Buffer.isBuffer = function isBuffer (b) {
+	  return !!(b != null && b._isBuffer)
+	}
+	
+	Buffer.compare = function compare (a, b) {
+	  if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
+	    throw new TypeError('Arguments must be Buffers')
+	  }
+	
+	  if (a === b) return 0
+	
+	  var x = a.length
+	  var y = b.length
+	
+	  var i = 0
+	  var len = Math.min(x, y)
+	  while (i < len) {
+	    if (a[i] !== b[i]) break
+	
+	    ++i
+	  }
+	
+	  if (i !== len) {
+	    x = a[i]
+	    y = b[i]
+	  }
+	
+	  if (x < y) return -1
+	  if (y < x) return 1
+	  return 0
+	}
+	
+	Buffer.isEncoding = function isEncoding (encoding) {
+	  switch (String(encoding).toLowerCase()) {
+	    case 'hex':
+	    case 'utf8':
+	    case 'utf-8':
+	    case 'ascii':
+	    case 'binary':
+	    case 'base64':
+	    case 'raw':
+	    case 'ucs2':
+	    case 'ucs-2':
+	    case 'utf16le':
+	    case 'utf-16le':
+	      return true
+	    default:
+	      return false
+	  }
+	}
+	
+	Buffer.concat = function concat (list, length) {
+	  if (!isArray(list)) throw new TypeError('list argument must be an Array of Buffers.')
+	
+	  if (list.length === 0) {
+	    return new Buffer(0)
+	  }
+	
+	  var i
+	  if (length === undefined) {
+	    length = 0
+	    for (i = 0; i < list.length; i++) {
+	      length += list[i].length
+	    }
+	  }
+	
+	  var buf = new Buffer(length)
+	  var pos = 0
+	  for (i = 0; i < list.length; i++) {
+	    var item = list[i]
+	    item.copy(buf, pos)
+	    pos += item.length
+	  }
+	  return buf
+	}
+	
+	function byteLength (string, encoding) {
+	  if (typeof string !== 'string') string = '' + string
+	
+	  var len = string.length
+	  if (len === 0) return 0
+	
+	  // Use a for loop to avoid recursion
+	  var loweredCase = false
+	  for (;;) {
+	    switch (encoding) {
+	      case 'ascii':
+	      case 'binary':
+	      // Deprecated
+	      case 'raw':
+	      case 'raws':
+	        return len
+	      case 'utf8':
+	      case 'utf-8':
+	        return utf8ToBytes(string).length
+	      case 'ucs2':
+	      case 'ucs-2':
+	      case 'utf16le':
+	      case 'utf-16le':
+	        return len * 2
+	      case 'hex':
+	        return len >>> 1
+	      case 'base64':
+	        return base64ToBytes(string).length
+	      default:
+	        if (loweredCase) return utf8ToBytes(string).length // assume utf8
+	        encoding = ('' + encoding).toLowerCase()
+	        loweredCase = true
+	    }
+	  }
+	}
+	Buffer.byteLength = byteLength
+	
+	// pre-set for values that may exist in the future
+	Buffer.prototype.length = undefined
+	Buffer.prototype.parent = undefined
+	
+	function slowToString (encoding, start, end) {
+	  var loweredCase = false
+	
+	  start = start | 0
+	  end = end === undefined || end === Infinity ? this.length : end | 0
+	
+	  if (!encoding) encoding = 'utf8'
+	  if (start < 0) start = 0
+	  if (end > this.length) end = this.length
+	  if (end <= start) return ''
+	
+	  while (true) {
+	    switch (encoding) {
+	      case 'hex':
+	        return hexSlice(this, start, end)
+	
+	      case 'utf8':
+	      case 'utf-8':
+	        return utf8Slice(this, start, end)
+	
+	      case 'ascii':
+	        return asciiSlice(this, start, end)
+	
+	      case 'binary':
+	        return binarySlice(this, start, end)
+	
+	      case 'base64':
+	        return base64Slice(this, start, end)
+	
+	      case 'ucs2':
+	      case 'ucs-2':
+	      case 'utf16le':
+	      case 'utf-16le':
+	        return utf16leSlice(this, start, end)
+	
+	      default:
+	        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+	        encoding = (encoding + '').toLowerCase()
+	        loweredCase = true
+	    }
+	  }
+	}
+	
+	Buffer.prototype.toString = function toString () {
+	  var length = this.length | 0
+	  if (length === 0) return ''
+	  if (arguments.length === 0) return utf8Slice(this, 0, length)
+	  return slowToString.apply(this, arguments)
+	}
+	
+	Buffer.prototype.equals = function equals (b) {
+	  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+	  if (this === b) return true
+	  return Buffer.compare(this, b) === 0
+	}
+	
+	Buffer.prototype.inspect = function inspect () {
+	  var str = ''
+	  var max = exports.INSPECT_MAX_BYTES
+	  if (this.length > 0) {
+	    str = this.toString('hex', 0, max).match(/.{2}/g).join(' ')
+	    if (this.length > max) str += ' ... '
+	  }
+	  return '<Buffer ' + str + '>'
+	}
+	
+	Buffer.prototype.compare = function compare (b) {
+	  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+	  if (this === b) return 0
+	  return Buffer.compare(this, b)
+	}
+	
+	Buffer.prototype.indexOf = function indexOf (val, byteOffset) {
+	  if (byteOffset > 0x7fffffff) byteOffset = 0x7fffffff
+	  else if (byteOffset < -0x80000000) byteOffset = -0x80000000
+	  byteOffset >>= 0
+	
+	  if (this.length === 0) return -1
+	  if (byteOffset >= this.length) return -1
+	
+	  // Negative offsets start from the end of the buffer
+	  if (byteOffset < 0) byteOffset = Math.max(this.length + byteOffset, 0)
+	
+	  if (typeof val === 'string') {
+	    if (val.length === 0) return -1 // special case: looking for empty string always fails
+	    return String.prototype.indexOf.call(this, val, byteOffset)
+	  }
+	  if (Buffer.isBuffer(val)) {
+	    return arrayIndexOf(this, val, byteOffset)
+	  }
+	  if (typeof val === 'number') {
+	    if (Buffer.TYPED_ARRAY_SUPPORT && Uint8Array.prototype.indexOf === 'function') {
+	      return Uint8Array.prototype.indexOf.call(this, val, byteOffset)
+	    }
+	    return arrayIndexOf(this, [ val ], byteOffset)
+	  }
+	
+	  function arrayIndexOf (arr, val, byteOffset) {
+	    var foundIndex = -1
+	    for (var i = 0; byteOffset + i < arr.length; i++) {
+	      if (arr[byteOffset + i] === val[foundIndex === -1 ? 0 : i - foundIndex]) {
+	        if (foundIndex === -1) foundIndex = i
+	        if (i - foundIndex + 1 === val.length) return byteOffset + foundIndex
+	      } else {
+	        foundIndex = -1
+	      }
+	    }
+	    return -1
+	  }
+	
+	  throw new TypeError('val must be string, number or Buffer')
+	}
+	
+	// `get` is deprecated
+	Buffer.prototype.get = function get (offset) {
+	  console.log('.get() is deprecated. Access using array indexes instead.')
+	  return this.readUInt8(offset)
+	}
+	
+	// `set` is deprecated
+	Buffer.prototype.set = function set (v, offset) {
+	  console.log('.set() is deprecated. Access using array indexes instead.')
+	  return this.writeUInt8(v, offset)
+	}
+	
+	function hexWrite (buf, string, offset, length) {
+	  offset = Number(offset) || 0
+	  var remaining = buf.length - offset
+	  if (!length) {
+	    length = remaining
+	  } else {
+	    length = Number(length)
+	    if (length > remaining) {
+	      length = remaining
+	    }
+	  }
+	
+	  // must be an even number of digits
+	  var strLen = string.length
+	  if (strLen % 2 !== 0) throw new Error('Invalid hex string')
+	
+	  if (length > strLen / 2) {
+	    length = strLen / 2
+	  }
+	  for (var i = 0; i < length; i++) {
+	    var parsed = parseInt(string.substr(i * 2, 2), 16)
+	    if (isNaN(parsed)) throw new Error('Invalid hex string')
+	    buf[offset + i] = parsed
+	  }
+	  return i
+	}
+	
+	function utf8Write (buf, string, offset, length) {
+	  return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
+	}
+	
+	function asciiWrite (buf, string, offset, length) {
+	  return blitBuffer(asciiToBytes(string), buf, offset, length)
+	}
+	
+	function binaryWrite (buf, string, offset, length) {
+	  return asciiWrite(buf, string, offset, length)
+	}
+	
+	function base64Write (buf, string, offset, length) {
+	  return blitBuffer(base64ToBytes(string), buf, offset, length)
+	}
+	
+	function ucs2Write (buf, string, offset, length) {
+	  return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
+	}
+	
+	Buffer.prototype.write = function write (string, offset, length, encoding) {
+	  // Buffer#write(string)
+	  if (offset === undefined) {
+	    encoding = 'utf8'
+	    length = this.length
+	    offset = 0
+	  // Buffer#write(string, encoding)
+	  } else if (length === undefined && typeof offset === 'string') {
+	    encoding = offset
+	    length = this.length
+	    offset = 0
+	  // Buffer#write(string, offset[, length][, encoding])
+	  } else if (isFinite(offset)) {
+	    offset = offset | 0
+	    if (isFinite(length)) {
+	      length = length | 0
+	      if (encoding === undefined) encoding = 'utf8'
+	    } else {
+	      encoding = length
+	      length = undefined
+	    }
+	  // legacy write(string, encoding, offset, length) - remove in v0.13
+	  } else {
+	    var swap = encoding
+	    encoding = offset
+	    offset = length | 0
+	    length = swap
+	  }
+	
+	  var remaining = this.length - offset
+	  if (length === undefined || length > remaining) length = remaining
+	
+	  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
+	    throw new RangeError('attempt to write outside buffer bounds')
+	  }
+	
+	  if (!encoding) encoding = 'utf8'
+	
+	  var loweredCase = false
+	  for (;;) {
+	    switch (encoding) {
+	      case 'hex':
+	        return hexWrite(this, string, offset, length)
+	
+	      case 'utf8':
+	      case 'utf-8':
+	        return utf8Write(this, string, offset, length)
+	
+	      case 'ascii':
+	        return asciiWrite(this, string, offset, length)
+	
+	      case 'binary':
+	        return binaryWrite(this, string, offset, length)
+	
+	      case 'base64':
+	        // Warning: maxLength not taken into account in base64Write
+	        return base64Write(this, string, offset, length)
+	
+	      case 'ucs2':
+	      case 'ucs-2':
+	      case 'utf16le':
+	      case 'utf-16le':
+	        return ucs2Write(this, string, offset, length)
+	
+	      default:
+	        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+	        encoding = ('' + encoding).toLowerCase()
+	        loweredCase = true
+	    }
+	  }
+	}
+	
+	Buffer.prototype.toJSON = function toJSON () {
+	  return {
+	    type: 'Buffer',
+	    data: Array.prototype.slice.call(this._arr || this, 0)
+	  }
+	}
+	
+	function base64Slice (buf, start, end) {
+	  if (start === 0 && end === buf.length) {
+	    return base64.fromByteArray(buf)
+	  } else {
+	    return base64.fromByteArray(buf.slice(start, end))
+	  }
+	}
+	
+	function utf8Slice (buf, start, end) {
+	  end = Math.min(buf.length, end)
+	  var res = []
+	
+	  var i = start
+	  while (i < end) {
+	    var firstByte = buf[i]
+	    var codePoint = null
+	    var bytesPerSequence = (firstByte > 0xEF) ? 4
+	      : (firstByte > 0xDF) ? 3
+	      : (firstByte > 0xBF) ? 2
+	      : 1
+	
+	    if (i + bytesPerSequence <= end) {
+	      var secondByte, thirdByte, fourthByte, tempCodePoint
+	
+	      switch (bytesPerSequence) {
+	        case 1:
+	          if (firstByte < 0x80) {
+	            codePoint = firstByte
+	          }
+	          break
+	        case 2:
+	          secondByte = buf[i + 1]
+	          if ((secondByte & 0xC0) === 0x80) {
+	            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
+	            if (tempCodePoint > 0x7F) {
+	              codePoint = tempCodePoint
+	            }
+	          }
+	          break
+	        case 3:
+	          secondByte = buf[i + 1]
+	          thirdByte = buf[i + 2]
+	          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+	            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
+	            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
+	              codePoint = tempCodePoint
+	            }
+	          }
+	          break
+	        case 4:
+	          secondByte = buf[i + 1]
+	          thirdByte = buf[i + 2]
+	          fourthByte = buf[i + 3]
+	          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+	            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
+	            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
+	              codePoint = tempCodePoint
+	            }
+	          }
+	      }
+	    }
+	
+	    if (codePoint === null) {
+	      // we did not generate a valid codePoint so insert a
+	      // replacement char (U+FFFD) and advance only 1 byte
+	      codePoint = 0xFFFD
+	      bytesPerSequence = 1
+	    } else if (codePoint > 0xFFFF) {
+	      // encode to utf16 (surrogate pair dance)
+	      codePoint -= 0x10000
+	      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
+	      codePoint = 0xDC00 | codePoint & 0x3FF
+	    }
+	
+	    res.push(codePoint)
+	    i += bytesPerSequence
+	  }
+	
+	  return decodeCodePointsArray(res)
+	}
+	
+	// Based on http://stackoverflow.com/a/22747272/680742, the browser with
+	// the lowest limit is Chrome, with 0x10000 args.
+	// We go 1 magnitude less, for safety
+	var MAX_ARGUMENTS_LENGTH = 0x1000
+	
+	function decodeCodePointsArray (codePoints) {
+	  var len = codePoints.length
+	  if (len <= MAX_ARGUMENTS_LENGTH) {
+	    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
+	  }
+	
+	  // Decode in chunks to avoid "call stack size exceeded".
+	  var res = ''
+	  var i = 0
+	  while (i < len) {
+	    res += String.fromCharCode.apply(
+	      String,
+	      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
+	    )
+	  }
+	  return res
+	}
+	
+	function asciiSlice (buf, start, end) {
+	  var ret = ''
+	  end = Math.min(buf.length, end)
+	
+	  for (var i = start; i < end; i++) {
+	    ret += String.fromCharCode(buf[i] & 0x7F)
+	  }
+	  return ret
+	}
+	
+	function binarySlice (buf, start, end) {
+	  var ret = ''
+	  end = Math.min(buf.length, end)
+	
+	  for (var i = start; i < end; i++) {
+	    ret += String.fromCharCode(buf[i])
+	  }
+	  return ret
+	}
+	
+	function hexSlice (buf, start, end) {
+	  var len = buf.length
+	
+	  if (!start || start < 0) start = 0
+	  if (!end || end < 0 || end > len) end = len
+	
+	  var out = ''
+	  for (var i = start; i < end; i++) {
+	    out += toHex(buf[i])
+	  }
+	  return out
+	}
+	
+	function utf16leSlice (buf, start, end) {
+	  var bytes = buf.slice(start, end)
+	  var res = ''
+	  for (var i = 0; i < bytes.length; i += 2) {
+	    res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256)
+	  }
+	  return res
+	}
+	
+	Buffer.prototype.slice = function slice (start, end) {
+	  var len = this.length
+	  start = ~~start
+	  end = end === undefined ? len : ~~end
+	
+	  if (start < 0) {
+	    start += len
+	    if (start < 0) start = 0
+	  } else if (start > len) {
+	    start = len
+	  }
+	
+	  if (end < 0) {
+	    end += len
+	    if (end < 0) end = 0
+	  } else if (end > len) {
+	    end = len
+	  }
+	
+	  if (end < start) end = start
+	
+	  var newBuf
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    newBuf = Buffer._augment(this.subarray(start, end))
+	  } else {
+	    var sliceLen = end - start
+	    newBuf = new Buffer(sliceLen, undefined)
+	    for (var i = 0; i < sliceLen; i++) {
+	      newBuf[i] = this[i + start]
+	    }
+	  }
+	
+	  if (newBuf.length) newBuf.parent = this.parent || this
+	
+	  return newBuf
+	}
+	
+	/*
+	 * Need to make sure that buffer isn't trying to write out of bounds.
+	 */
+	function checkOffset (offset, ext, length) {
+	  if ((offset % 1) !== 0 || offset < 0) throw new RangeError('offset is not uint')
+	  if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length')
+	}
+	
+	Buffer.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert) {
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) checkOffset(offset, byteLength, this.length)
+	
+	  var val = this[offset]
+	  var mul = 1
+	  var i = 0
+	  while (++i < byteLength && (mul *= 0x100)) {
+	    val += this[offset + i] * mul
+	  }
+	
+	  return val
+	}
+	
+	Buffer.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert) {
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) {
+	    checkOffset(offset, byteLength, this.length)
+	  }
+	
+	  var val = this[offset + --byteLength]
+	  var mul = 1
+	  while (byteLength > 0 && (mul *= 0x100)) {
+	    val += this[offset + --byteLength] * mul
+	  }
+	
+	  return val
+	}
+	
+	Buffer.prototype.readUInt8 = function readUInt8 (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 1, this.length)
+	  return this[offset]
+	}
+	
+	Buffer.prototype.readUInt16LE = function readUInt16LE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 2, this.length)
+	  return this[offset] | (this[offset + 1] << 8)
+	}
+	
+	Buffer.prototype.readUInt16BE = function readUInt16BE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 2, this.length)
+	  return (this[offset] << 8) | this[offset + 1]
+	}
+	
+	Buffer.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	
+	  return ((this[offset]) |
+	      (this[offset + 1] << 8) |
+	      (this[offset + 2] << 16)) +
+	      (this[offset + 3] * 0x1000000)
+	}
+	
+	Buffer.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	
+	  return (this[offset] * 0x1000000) +
+	    ((this[offset + 1] << 16) |
+	    (this[offset + 2] << 8) |
+	    this[offset + 3])
+	}
+	
+	Buffer.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) checkOffset(offset, byteLength, this.length)
+	
+	  var val = this[offset]
+	  var mul = 1
+	  var i = 0
+	  while (++i < byteLength && (mul *= 0x100)) {
+	    val += this[offset + i] * mul
+	  }
+	  mul *= 0x80
+	
+	  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+	
+	  return val
+	}
+	
+	Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) checkOffset(offset, byteLength, this.length)
+	
+	  var i = byteLength
+	  var mul = 1
+	  var val = this[offset + --i]
+	  while (i > 0 && (mul *= 0x100)) {
+	    val += this[offset + --i] * mul
+	  }
+	  mul *= 0x80
+	
+	  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+	
+	  return val
+	}
+	
+	Buffer.prototype.readInt8 = function readInt8 (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 1, this.length)
+	  if (!(this[offset] & 0x80)) return (this[offset])
+	  return ((0xff - this[offset] + 1) * -1)
+	}
+	
+	Buffer.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 2, this.length)
+	  var val = this[offset] | (this[offset + 1] << 8)
+	  return (val & 0x8000) ? val | 0xFFFF0000 : val
+	}
+	
+	Buffer.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 2, this.length)
+	  var val = this[offset + 1] | (this[offset] << 8)
+	  return (val & 0x8000) ? val | 0xFFFF0000 : val
+	}
+	
+	Buffer.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	
+	  return (this[offset]) |
+	    (this[offset + 1] << 8) |
+	    (this[offset + 2] << 16) |
+	    (this[offset + 3] << 24)
+	}
+	
+	Buffer.prototype.readInt32BE = function readInt32BE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	
+	  return (this[offset] << 24) |
+	    (this[offset + 1] << 16) |
+	    (this[offset + 2] << 8) |
+	    (this[offset + 3])
+	}
+	
+	Buffer.prototype.readFloatLE = function readFloatLE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	  return ieee754.read(this, offset, true, 23, 4)
+	}
+	
+	Buffer.prototype.readFloatBE = function readFloatBE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	  return ieee754.read(this, offset, false, 23, 4)
+	}
+	
+	Buffer.prototype.readDoubleLE = function readDoubleLE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 8, this.length)
+	  return ieee754.read(this, offset, true, 52, 8)
+	}
+	
+	Buffer.prototype.readDoubleBE = function readDoubleBE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 8, this.length)
+	  return ieee754.read(this, offset, false, 52, 8)
+	}
+	
+	function checkInt (buf, value, offset, ext, max, min) {
+	  if (!Buffer.isBuffer(buf)) throw new TypeError('buffer must be a Buffer instance')
+	  if (value > max || value < min) throw new RangeError('value is out of bounds')
+	  if (offset + ext > buf.length) throw new RangeError('index out of range')
+	}
+	
+	Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
+	
+	  var mul = 1
+	  var i = 0
+	  this[offset] = value & 0xFF
+	  while (++i < byteLength && (mul *= 0x100)) {
+	    this[offset + i] = (value / mul) & 0xFF
+	  }
+	
+	  return offset + byteLength
+	}
+	
+	Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
+	
+	  var i = byteLength - 1
+	  var mul = 1
+	  this[offset + i] = value & 0xFF
+	  while (--i >= 0 && (mul *= 0x100)) {
+	    this[offset + i] = (value / mul) & 0xFF
+	  }
+	
+	  return offset + byteLength
+	}
+	
+	Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
+	  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+	  this[offset] = (value & 0xff)
+	  return offset + 1
+	}
+	
+	function objectWriteUInt16 (buf, value, offset, littleEndian) {
+	  if (value < 0) value = 0xffff + value + 1
+	  for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; i++) {
+	    buf[offset + i] = (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
+	      (littleEndian ? i : 1 - i) * 8
+	  }
+	}
+	
+	Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value & 0xff)
+	    this[offset + 1] = (value >>> 8)
+	  } else {
+	    objectWriteUInt16(this, value, offset, true)
+	  }
+	  return offset + 2
+	}
+	
+	Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value >>> 8)
+	    this[offset + 1] = (value & 0xff)
+	  } else {
+	    objectWriteUInt16(this, value, offset, false)
+	  }
+	  return offset + 2
+	}
+	
+	function objectWriteUInt32 (buf, value, offset, littleEndian) {
+	  if (value < 0) value = 0xffffffff + value + 1
+	  for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; i++) {
+	    buf[offset + i] = (value >>> (littleEndian ? i : 3 - i) * 8) & 0xff
+	  }
+	}
+	
+	Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset + 3] = (value >>> 24)
+	    this[offset + 2] = (value >>> 16)
+	    this[offset + 1] = (value >>> 8)
+	    this[offset] = (value & 0xff)
+	  } else {
+	    objectWriteUInt32(this, value, offset, true)
+	  }
+	  return offset + 4
+	}
+	
+	Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value >>> 24)
+	    this[offset + 1] = (value >>> 16)
+	    this[offset + 2] = (value >>> 8)
+	    this[offset + 3] = (value & 0xff)
+	  } else {
+	    objectWriteUInt32(this, value, offset, false)
+	  }
+	  return offset + 4
+	}
+	
+	Buffer.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) {
+	    var limit = Math.pow(2, 8 * byteLength - 1)
+	
+	    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+	  }
+	
+	  var i = 0
+	  var mul = 1
+	  var sub = value < 0 ? 1 : 0
+	  this[offset] = value & 0xFF
+	  while (++i < byteLength && (mul *= 0x100)) {
+	    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+	  }
+	
+	  return offset + byteLength
+	}
+	
+	Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) {
+	    var limit = Math.pow(2, 8 * byteLength - 1)
+	
+	    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+	  }
+	
+	  var i = byteLength - 1
+	  var mul = 1
+	  var sub = value < 0 ? 1 : 0
+	  this[offset + i] = value & 0xFF
+	  while (--i >= 0 && (mul *= 0x100)) {
+	    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+	  }
+	
+	  return offset + byteLength
+	}
+	
+	Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
+	  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+	  if (value < 0) value = 0xff + value + 1
+	  this[offset] = (value & 0xff)
+	  return offset + 1
+	}
+	
+	Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value & 0xff)
+	    this[offset + 1] = (value >>> 8)
+	  } else {
+	    objectWriteUInt16(this, value, offset, true)
+	  }
+	  return offset + 2
+	}
+	
+	Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value >>> 8)
+	    this[offset + 1] = (value & 0xff)
+	  } else {
+	    objectWriteUInt16(this, value, offset, false)
+	  }
+	  return offset + 2
+	}
+	
+	Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value & 0xff)
+	    this[offset + 1] = (value >>> 8)
+	    this[offset + 2] = (value >>> 16)
+	    this[offset + 3] = (value >>> 24)
+	  } else {
+	    objectWriteUInt32(this, value, offset, true)
+	  }
+	  return offset + 4
+	}
+	
+	Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+	  if (value < 0) value = 0xffffffff + value + 1
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value >>> 24)
+	    this[offset + 1] = (value >>> 16)
+	    this[offset + 2] = (value >>> 8)
+	    this[offset + 3] = (value & 0xff)
+	  } else {
+	    objectWriteUInt32(this, value, offset, false)
+	  }
+	  return offset + 4
+	}
+	
+	function checkIEEE754 (buf, value, offset, ext, max, min) {
+	  if (value > max || value < min) throw new RangeError('value is out of bounds')
+	  if (offset + ext > buf.length) throw new RangeError('index out of range')
+	  if (offset < 0) throw new RangeError('index out of range')
+	}
+	
+	function writeFloat (buf, value, offset, littleEndian, noAssert) {
+	  if (!noAssert) {
+	    checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -3.4028234663852886e+38)
+	  }
+	  ieee754.write(buf, value, offset, littleEndian, 23, 4)
+	  return offset + 4
+	}
+	
+	Buffer.prototype.writeFloatLE = function writeFloatLE (value, offset, noAssert) {
+	  return writeFloat(this, value, offset, true, noAssert)
+	}
+	
+	Buffer.prototype.writeFloatBE = function writeFloatBE (value, offset, noAssert) {
+	  return writeFloat(this, value, offset, false, noAssert)
+	}
+	
+	function writeDouble (buf, value, offset, littleEndian, noAssert) {
+	  if (!noAssert) {
+	    checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -1.7976931348623157E+308)
+	  }
+	  ieee754.write(buf, value, offset, littleEndian, 52, 8)
+	  return offset + 8
+	}
+	
+	Buffer.prototype.writeDoubleLE = function writeDoubleLE (value, offset, noAssert) {
+	  return writeDouble(this, value, offset, true, noAssert)
+	}
+	
+	Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert) {
+	  return writeDouble(this, value, offset, false, noAssert)
+	}
+	
+	// copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
+	Buffer.prototype.copy = function copy (target, targetStart, start, end) {
+	  if (!start) start = 0
+	  if (!end && end !== 0) end = this.length
+	  if (targetStart >= target.length) targetStart = target.length
+	  if (!targetStart) targetStart = 0
+	  if (end > 0 && end < start) end = start
+	
+	  // Copy 0 bytes; we're done
+	  if (end === start) return 0
+	  if (target.length === 0 || this.length === 0) return 0
+	
+	  // Fatal error conditions
+	  if (targetStart < 0) {
+	    throw new RangeError('targetStart out of bounds')
+	  }
+	  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
+	  if (end < 0) throw new RangeError('sourceEnd out of bounds')
+	
+	  // Are we oob?
+	  if (end > this.length) end = this.length
+	  if (target.length - targetStart < end - start) {
+	    end = target.length - targetStart + start
+	  }
+	
+	  var len = end - start
+	  var i
+	
+	  if (this === target && start < targetStart && targetStart < end) {
+	    // descending copy from end
+	    for (i = len - 1; i >= 0; i--) {
+	      target[i + targetStart] = this[i + start]
+	    }
+	  } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
+	    // ascending copy from start
+	    for (i = 0; i < len; i++) {
+	      target[i + targetStart] = this[i + start]
+	    }
+	  } else {
+	    target._set(this.subarray(start, start + len), targetStart)
+	  }
+	
+	  return len
+	}
+	
+	// fill(value, start=0, end=buffer.length)
+	Buffer.prototype.fill = function fill (value, start, end) {
+	  if (!value) value = 0
+	  if (!start) start = 0
+	  if (!end) end = this.length
+	
+	  if (end < start) throw new RangeError('end < start')
+	
+	  // Fill 0 bytes; we're done
+	  if (end === start) return
+	  if (this.length === 0) return
+	
+	  if (start < 0 || start >= this.length) throw new RangeError('start out of bounds')
+	  if (end < 0 || end > this.length) throw new RangeError('end out of bounds')
+	
+	  var i
+	  if (typeof value === 'number') {
+	    for (i = start; i < end; i++) {
+	      this[i] = value
+	    }
+	  } else {
+	    var bytes = utf8ToBytes(value.toString())
+	    var len = bytes.length
+	    for (i = start; i < end; i++) {
+	      this[i] = bytes[i % len]
+	    }
+	  }
+	
+	  return this
+	}
+	
+	/**
+	 * Creates a new `ArrayBuffer` with the *copied* memory of the buffer instance.
+	 * Added in Node 0.12. Only available in browsers that support ArrayBuffer.
+	 */
+	Buffer.prototype.toArrayBuffer = function toArrayBuffer () {
+	  if (typeof Uint8Array !== 'undefined') {
+	    if (Buffer.TYPED_ARRAY_SUPPORT) {
+	      return (new Buffer(this)).buffer
+	    } else {
+	      var buf = new Uint8Array(this.length)
+	      for (var i = 0, len = buf.length; i < len; i += 1) {
+	        buf[i] = this[i]
+	      }
+	      return buf.buffer
+	    }
+	  } else {
+	    throw new TypeError('Buffer.toArrayBuffer not supported in this browser')
+	  }
+	}
+	
+	// HELPER FUNCTIONS
+	// ================
+	
+	var BP = Buffer.prototype
+	
+	/**
+	 * Augment a Uint8Array *instance* (not the Uint8Array class!) with Buffer methods
+	 */
+	Buffer._augment = function _augment (arr) {
+	  arr.constructor = Buffer
+	  arr._isBuffer = true
+	
+	  // save reference to original Uint8Array set method before overwriting
+	  arr._set = arr.set
+	
+	  // deprecated
+	  arr.get = BP.get
+	  arr.set = BP.set
+	
+	  arr.write = BP.write
+	  arr.toString = BP.toString
+	  arr.toLocaleString = BP.toString
+	  arr.toJSON = BP.toJSON
+	  arr.equals = BP.equals
+	  arr.compare = BP.compare
+	  arr.indexOf = BP.indexOf
+	  arr.copy = BP.copy
+	  arr.slice = BP.slice
+	  arr.readUIntLE = BP.readUIntLE
+	  arr.readUIntBE = BP.readUIntBE
+	  arr.readUInt8 = BP.readUInt8
+	  arr.readUInt16LE = BP.readUInt16LE
+	  arr.readUInt16BE = BP.readUInt16BE
+	  arr.readUInt32LE = BP.readUInt32LE
+	  arr.readUInt32BE = BP.readUInt32BE
+	  arr.readIntLE = BP.readIntLE
+	  arr.readIntBE = BP.readIntBE
+	  arr.readInt8 = BP.readInt8
+	  arr.readInt16LE = BP.readInt16LE
+	  arr.readInt16BE = BP.readInt16BE
+	  arr.readInt32LE = BP.readInt32LE
+	  arr.readInt32BE = BP.readInt32BE
+	  arr.readFloatLE = BP.readFloatLE
+	  arr.readFloatBE = BP.readFloatBE
+	  arr.readDoubleLE = BP.readDoubleLE
+	  arr.readDoubleBE = BP.readDoubleBE
+	  arr.writeUInt8 = BP.writeUInt8
+	  arr.writeUIntLE = BP.writeUIntLE
+	  arr.writeUIntBE = BP.writeUIntBE
+	  arr.writeUInt16LE = BP.writeUInt16LE
+	  arr.writeUInt16BE = BP.writeUInt16BE
+	  arr.writeUInt32LE = BP.writeUInt32LE
+	  arr.writeUInt32BE = BP.writeUInt32BE
+	  arr.writeIntLE = BP.writeIntLE
+	  arr.writeIntBE = BP.writeIntBE
+	  arr.writeInt8 = BP.writeInt8
+	  arr.writeInt16LE = BP.writeInt16LE
+	  arr.writeInt16BE = BP.writeInt16BE
+	  arr.writeInt32LE = BP.writeInt32LE
+	  arr.writeInt32BE = BP.writeInt32BE
+	  arr.writeFloatLE = BP.writeFloatLE
+	  arr.writeFloatBE = BP.writeFloatBE
+	  arr.writeDoubleLE = BP.writeDoubleLE
+	  arr.writeDoubleBE = BP.writeDoubleBE
+	  arr.fill = BP.fill
+	  arr.inspect = BP.inspect
+	  arr.toArrayBuffer = BP.toArrayBuffer
+	
+	  return arr
+	}
+	
+	var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g
+	
+	function base64clean (str) {
+	  // Node strips out invalid characters like \n and \t from the string, base64-js does not
+	  str = stringtrim(str).replace(INVALID_BASE64_RE, '')
+	  // Node converts strings with length < 2 to ''
+	  if (str.length < 2) return ''
+	  // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
+	  while (str.length % 4 !== 0) {
+	    str = str + '='
+	  }
+	  return str
+	}
+	
+	function stringtrim (str) {
+	  if (str.trim) return str.trim()
+	  return str.replace(/^\s+|\s+$/g, '')
+	}
+	
+	function toHex (n) {
+	  if (n < 16) return '0' + n.toString(16)
+	  return n.toString(16)
+	}
+	
+	function utf8ToBytes (string, units) {
+	  units = units || Infinity
+	  var codePoint
+	  var length = string.length
+	  var leadSurrogate = null
+	  var bytes = []
+	
+	  for (var i = 0; i < length; i++) {
+	    codePoint = string.charCodeAt(i)
+	
+	    // is surrogate component
+	    if (codePoint > 0xD7FF && codePoint < 0xE000) {
+	      // last char was a lead
+	      if (!leadSurrogate) {
+	        // no lead yet
+	        if (codePoint > 0xDBFF) {
+	          // unexpected trail
+	          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+	          continue
+	        } else if (i + 1 === length) {
+	          // unpaired lead
+	          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+	          continue
+	        }
+	
+	        // valid lead
+	        leadSurrogate = codePoint
+	
+	        continue
+	      }
+	
+	      // 2 leads in a row
+	      if (codePoint < 0xDC00) {
+	        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+	        leadSurrogate = codePoint
+	        continue
+	      }
+	
+	      // valid surrogate pair
+	      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
+	    } else if (leadSurrogate) {
+	      // valid bmp char, but last char was a lead
+	      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+	    }
+	
+	    leadSurrogate = null
+	
+	    // encode utf8
+	    if (codePoint < 0x80) {
+	      if ((units -= 1) < 0) break
+	      bytes.push(codePoint)
+	    } else if (codePoint < 0x800) {
+	      if ((units -= 2) < 0) break
+	      bytes.push(
+	        codePoint >> 0x6 | 0xC0,
+	        codePoint & 0x3F | 0x80
+	      )
+	    } else if (codePoint < 0x10000) {
+	      if ((units -= 3) < 0) break
+	      bytes.push(
+	        codePoint >> 0xC | 0xE0,
+	        codePoint >> 0x6 & 0x3F | 0x80,
+	        codePoint & 0x3F | 0x80
+	      )
+	    } else if (codePoint < 0x110000) {
+	      if ((units -= 4) < 0) break
+	      bytes.push(
+	        codePoint >> 0x12 | 0xF0,
+	        codePoint >> 0xC & 0x3F | 0x80,
+	        codePoint >> 0x6 & 0x3F | 0x80,
+	        codePoint & 0x3F | 0x80
+	      )
+	    } else {
+	      throw new Error('Invalid code point')
+	    }
+	  }
+	
+	  return bytes
+	}
+	
+	function asciiToBytes (str) {
+	  var byteArray = []
+	  for (var i = 0; i < str.length; i++) {
+	    // Node's code seems to be doing this and not & 0x7F..
+	    byteArray.push(str.charCodeAt(i) & 0xFF)
+	  }
+	  return byteArray
+	}
+	
+	function utf16leToBytes (str, units) {
+	  var c, hi, lo
+	  var byteArray = []
+	  for (var i = 0; i < str.length; i++) {
+	    if ((units -= 2) < 0) break
+	
+	    c = str.charCodeAt(i)
+	    hi = c >> 8
+	    lo = c % 256
+	    byteArray.push(lo)
+	    byteArray.push(hi)
+	  }
+	
+	  return byteArray
+	}
+	
+	function base64ToBytes (str) {
+	  return base64.toByteArray(base64clean(str))
+	}
+	
+	function blitBuffer (src, dst, offset, length) {
+	  for (var i = 0; i < length; i++) {
+	    if ((i + offset >= dst.length) || (i >= src.length)) break
+	    dst[i + offset] = src[i]
+	  }
+	  return i
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 22).Buffer, (function() { return this; }())))
+
+/***/ },
+/* 23 */
+/*!********************************!*\
+  !*** ./~/base64-js/lib/b64.js ***!
+  \********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+	
+	;(function (exports) {
+		'use strict';
+	
+	  var Arr = (typeof Uint8Array !== 'undefined')
+	    ? Uint8Array
+	    : Array
+	
+		var PLUS   = '+'.charCodeAt(0)
+		var SLASH  = '/'.charCodeAt(0)
+		var NUMBER = '0'.charCodeAt(0)
+		var LOWER  = 'a'.charCodeAt(0)
+		var UPPER  = 'A'.charCodeAt(0)
+		var PLUS_URL_SAFE = '-'.charCodeAt(0)
+		var SLASH_URL_SAFE = '_'.charCodeAt(0)
+	
+		function decode (elt) {
+			var code = elt.charCodeAt(0)
+			if (code === PLUS ||
+			    code === PLUS_URL_SAFE)
+				return 62 // '+'
+			if (code === SLASH ||
+			    code === SLASH_URL_SAFE)
+				return 63 // '/'
+			if (code < NUMBER)
+				return -1 //no match
+			if (code < NUMBER + 10)
+				return code - NUMBER + 26 + 26
+			if (code < UPPER + 26)
+				return code - UPPER
+			if (code < LOWER + 26)
+				return code - LOWER + 26
+		}
+	
+		function b64ToByteArray (b64) {
+			var i, j, l, tmp, placeHolders, arr
+	
+			if (b64.length % 4 > 0) {
+				throw new Error('Invalid string. Length must be a multiple of 4')
+			}
+	
+			// the number of equal signs (place holders)
+			// if there are two placeholders, than the two characters before it
+			// represent one byte
+			// if there is only one, then the three characters before it represent 2 bytes
+			// this is just a cheap hack to not do indexOf twice
+			var len = b64.length
+			placeHolders = '=' === b64.charAt(len - 2) ? 2 : '=' === b64.charAt(len - 1) ? 1 : 0
+	
+			// base64 is 4/3 + up to two characters of the original data
+			arr = new Arr(b64.length * 3 / 4 - placeHolders)
+	
+			// if there are placeholders, only get up to the last complete 4 chars
+			l = placeHolders > 0 ? b64.length - 4 : b64.length
+	
+			var L = 0
+	
+			function push (v) {
+				arr[L++] = v
+			}
+	
+			for (i = 0, j = 0; i < l; i += 4, j += 3) {
+				tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
+				push((tmp & 0xFF0000) >> 16)
+				push((tmp & 0xFF00) >> 8)
+				push(tmp & 0xFF)
+			}
+	
+			if (placeHolders === 2) {
+				tmp = (decode(b64.charAt(i)) << 2) | (decode(b64.charAt(i + 1)) >> 4)
+				push(tmp & 0xFF)
+			} else if (placeHolders === 1) {
+				tmp = (decode(b64.charAt(i)) << 10) | (decode(b64.charAt(i + 1)) << 4) | (decode(b64.charAt(i + 2)) >> 2)
+				push((tmp >> 8) & 0xFF)
+				push(tmp & 0xFF)
+			}
+	
+			return arr
+		}
+	
+		function uint8ToBase64 (uint8) {
+			var i,
+				extraBytes = uint8.length % 3, // if we have 1 byte left, pad 2 bytes
+				output = "",
+				temp, length
+	
+			function encode (num) {
+				return lookup.charAt(num)
+			}
+	
+			function tripletToBase64 (num) {
+				return encode(num >> 18 & 0x3F) + encode(num >> 12 & 0x3F) + encode(num >> 6 & 0x3F) + encode(num & 0x3F)
+			}
+	
+			// go through the array every three bytes, we'll deal with trailing stuff later
+			for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
+				temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
+				output += tripletToBase64(temp)
+			}
+	
+			// pad the end with zeros, but make sure to not forget the extra bytes
+			switch (extraBytes) {
+				case 1:
+					temp = uint8[uint8.length - 1]
+					output += encode(temp >> 2)
+					output += encode((temp << 4) & 0x3F)
+					output += '=='
+					break
+				case 2:
+					temp = (uint8[uint8.length - 2] << 8) + (uint8[uint8.length - 1])
+					output += encode(temp >> 10)
+					output += encode((temp >> 4) & 0x3F)
+					output += encode((temp << 2) & 0x3F)
+					output += '='
+					break
+			}
+	
+			return output
+		}
+	
+		exports.toByteArray = b64ToByteArray
+		exports.fromByteArray = uint8ToBase64
+	}( false ? (this.base64js = {}) : exports))
+
+
+/***/ },
+/* 24 */
+/*!****************************!*\
+  !*** ./~/ieee754/index.js ***!
+  \****************************/
+/***/ function(module, exports) {
+
+	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+	  var e, m
+	  var eLen = nBytes * 8 - mLen - 1
+	  var eMax = (1 << eLen) - 1
+	  var eBias = eMax >> 1
+	  var nBits = -7
+	  var i = isLE ? (nBytes - 1) : 0
+	  var d = isLE ? -1 : 1
+	  var s = buffer[offset + i]
+	
+	  i += d
+	
+	  e = s & ((1 << (-nBits)) - 1)
+	  s >>= (-nBits)
+	  nBits += eLen
+	  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+	
+	  m = e & ((1 << (-nBits)) - 1)
+	  e >>= (-nBits)
+	  nBits += mLen
+	  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+	
+	  if (e === 0) {
+	    e = 1 - eBias
+	  } else if (e === eMax) {
+	    return m ? NaN : ((s ? -1 : 1) * Infinity)
+	  } else {
+	    m = m + Math.pow(2, mLen)
+	    e = e - eBias
+	  }
+	  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+	}
+	
+	exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+	  var e, m, c
+	  var eLen = nBytes * 8 - mLen - 1
+	  var eMax = (1 << eLen) - 1
+	  var eBias = eMax >> 1
+	  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+	  var i = isLE ? 0 : (nBytes - 1)
+	  var d = isLE ? 1 : -1
+	  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+	
+	  value = Math.abs(value)
+	
+	  if (isNaN(value) || value === Infinity) {
+	    m = isNaN(value) ? 1 : 0
+	    e = eMax
+	  } else {
+	    e = Math.floor(Math.log(value) / Math.LN2)
+	    if (value * (c = Math.pow(2, -e)) < 1) {
+	      e--
+	      c *= 2
+	    }
+	    if (e + eBias >= 1) {
+	      value += rt / c
+	    } else {
+	      value += rt * Math.pow(2, 1 - eBias)
+	    }
+	    if (value * c >= 2) {
+	      e++
+	      c /= 2
+	    }
+	
+	    if (e + eBias >= eMax) {
+	      m = 0
+	      e = eMax
+	    } else if (e + eBias >= 1) {
+	      m = (value * c - 1) * Math.pow(2, mLen)
+	      e = e + eBias
+	    } else {
+	      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+	      e = 0
+	    }
+	  }
+	
+	  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+	
+	  e = (e << mLen) | m
+	  eLen += mLen
+	  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+	
+	  buffer[offset + i - d] |= s * 128
+	}
+
+
+/***/ },
+/* 25 */
+/*!****************************!*\
+  !*** ./~/isarray/index.js ***!
+  \****************************/
+/***/ function(module, exports) {
+
+	module.exports = Array.isArray || function (arr) {
+	  return Object.prototype.toString.call(arr) == '[object Array]';
+	};
+
+
+/***/ },
+/* 26 */
+/*!************************************!*\
+  !*** ./~/crypto-browserify/rng.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global, Buffer) {(function() {
+	  var g = ('undefined' === typeof window ? global : window) || {}
+	  _crypto = (
+	    g.crypto || g.msCrypto || __webpack_require__(/*! crypto */ 27)
+	  )
+	  module.exports = function(size) {
+	    // Modern Browsers
+	    if(_crypto.getRandomValues) {
+	      var bytes = new Buffer(size); //in browserify, this is an extended Uint8Array
+	      /* This will not work in older browsers.
+	       * See https://developer.mozilla.org/en-US/docs/Web/API/window.crypto.getRandomValues
+	       */
+	    
+	      _crypto.getRandomValues(bytes);
+	      return bytes;
+	    }
+	    else if (_crypto.randomBytes) {
+	      return _crypto.randomBytes(size)
+	    }
+	    else
+	      throw new Error(
+	        'secure random number generation not supported by this browser\n'+
+	        'use chrome, FireFox or Internet Explorer 11'
+	      )
+	  }
+	}())
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./~/buffer/index.js */ 22).Buffer))
+
+/***/ },
+/* 27 */
+/*!************************!*\
+  !*** crypto (ignored) ***!
+  \************************/
+/***/ function(module, exports) {
+
+	/* (ignored) */
+
+/***/ },
+/* 28 */
+/*!********************************************!*\
+  !*** ./~/crypto-browserify/create-hash.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(/*! sha.js */ 29)
+	
+	var md5 = toConstructor(__webpack_require__(/*! ./md5 */ 37))
+	var rmd160 = toConstructor(__webpack_require__(/*! ripemd160 */ 39))
+	
+	function toConstructor (fn) {
+	  return function () {
+	    var buffers = []
+	    var m= {
+	      update: function (data, enc) {
+	        if(!Buffer.isBuffer(data)) data = new Buffer(data, enc)
+	        buffers.push(data)
+	        return this
+	      },
+	      digest: function (enc) {
+	        var buf = Buffer.concat(buffers)
+	        var r = fn(buf)
+	        buffers = null
+	        return enc ? r.toString(enc) : r
+	      }
+	    }
+	    return m
+	  }
+	}
+	
+	module.exports = function (alg) {
+	  if('md5' === alg) return new md5()
+	  if('rmd160' === alg) return new rmd160()
+	  return createHash(alg)
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 22).Buffer))
+
+/***/ },
+/* 29 */
+/*!***************************!*\
+  !*** ./~/sha.js/index.js ***!
+  \***************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var exports = module.exports = function (alg) {
+	  var Alg = exports[alg]
+	  if(!Alg) throw new Error(alg + ' is not supported (we accept pull requests)')
+	  return new Alg()
+	}
+	
+	var Buffer = __webpack_require__(/*! buffer */ 22).Buffer
+	var Hash   = __webpack_require__(/*! ./hash */ 30)(Buffer)
+	
+	exports.sha1 = __webpack_require__(/*! ./sha1 */ 31)(Buffer, Hash)
+	exports.sha256 = __webpack_require__(/*! ./sha256 */ 35)(Buffer, Hash)
+	exports.sha512 = __webpack_require__(/*! ./sha512 */ 36)(Buffer, Hash)
+
+
+/***/ },
+/* 30 */
+/*!**************************!*\
+  !*** ./~/sha.js/hash.js ***!
+  \**************************/
+/***/ function(module, exports) {
+
+	module.exports = function (Buffer) {
+	
+	  //prototype class for hash functions
+	  function Hash (blockSize, finalSize) {
+	    this._block = new Buffer(blockSize) //new Uint32Array(blockSize/4)
+	    this._finalSize = finalSize
+	    this._blockSize = blockSize
+	    this._len = 0
+	    this._s = 0
+	  }
+	
+	  Hash.prototype.init = function () {
+	    this._s = 0
+	    this._len = 0
+	  }
+	
+	  Hash.prototype.update = function (data, enc) {
+	    if ("string" === typeof data) {
+	      enc = enc || "utf8"
+	      data = new Buffer(data, enc)
+	    }
+	
+	    var l = this._len += data.length
+	    var s = this._s = (this._s || 0)
+	    var f = 0
+	    var buffer = this._block
+	
+	    while (s < l) {
+	      var t = Math.min(data.length, f + this._blockSize - (s % this._blockSize))
+	      var ch = (t - f)
+	
+	      for (var i = 0; i < ch; i++) {
+	        buffer[(s % this._blockSize) + i] = data[i + f]
+	      }
+	
+	      s += ch
+	      f += ch
+	
+	      if ((s % this._blockSize) === 0) {
+	        this._update(buffer)
+	      }
+	    }
+	    this._s = s
+	
+	    return this
+	  }
+	
+	  Hash.prototype.digest = function (enc) {
+	    // Suppose the length of the message M, in bits, is l
+	    var l = this._len * 8
+	
+	    // Append the bit 1 to the end of the message
+	    this._block[this._len % this._blockSize] = 0x80
+	
+	    // and then k zero bits, where k is the smallest non-negative solution to the equation (l + 1 + k) === finalSize mod blockSize
+	    this._block.fill(0, this._len % this._blockSize + 1)
+	
+	    if (l % (this._blockSize * 8) >= this._finalSize * 8) {
+	      this._update(this._block)
+	      this._block.fill(0)
+	    }
+	
+	    // to this append the block which is equal to the number l written in binary
+	    // TODO: handle case where l is > Math.pow(2, 29)
+	    this._block.writeInt32BE(l, this._blockSize - 4)
+	
+	    var hash = this._update(this._block) || this._hash()
+	
+	    return enc ? hash.toString(enc) : hash
+	  }
+	
+	  Hash.prototype._update = function () {
+	    throw new Error('_update must be implemented by subclass')
+	  }
+	
+	  return Hash
+	}
+
+
+/***/ },
+/* 31 */
+/*!**************************!*\
+  !*** ./~/sha.js/sha1.js ***!
+  \**************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
+	 * in FIPS PUB 180-1
+	 * Version 2.1a Copyright Paul Johnston 2000 - 2002.
+	 * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
+	 * Distributed under the BSD License
+	 * See http://pajhome.org.uk/crypt/md5 for details.
+	 */
+	
+	var inherits = __webpack_require__(/*! util */ 32).inherits
+	
+	module.exports = function (Buffer, Hash) {
+	
+	  var A = 0|0
+	  var B = 4|0
+	  var C = 8|0
+	  var D = 12|0
+	  var E = 16|0
+	
+	  var W = new (typeof Int32Array === 'undefined' ? Array : Int32Array)(80)
+	
+	  var POOL = []
+	
+	  function Sha1 () {
+	    if(POOL.length)
+	      return POOL.pop().init()
+	
+	    if(!(this instanceof Sha1)) return new Sha1()
+	    this._w = W
+	    Hash.call(this, 16*4, 14*4)
+	
+	    this._h = null
+	    this.init()
+	  }
+	
+	  inherits(Sha1, Hash)
+	
+	  Sha1.prototype.init = function () {
+	    this._a = 0x67452301
+	    this._b = 0xefcdab89
+	    this._c = 0x98badcfe
+	    this._d = 0x10325476
+	    this._e = 0xc3d2e1f0
+	
+	    Hash.prototype.init.call(this)
+	    return this
+	  }
+	
+	  Sha1.prototype._POOL = POOL
+	  Sha1.prototype._update = function (X) {
+	
+	    var a, b, c, d, e, _a, _b, _c, _d, _e
+	
+	    a = _a = this._a
+	    b = _b = this._b
+	    c = _c = this._c
+	    d = _d = this._d
+	    e = _e = this._e
+	
+	    var w = this._w
+	
+	    for(var j = 0; j < 80; j++) {
+	      var W = w[j] = j < 16 ? X.readInt32BE(j*4)
+	        : rol(w[j - 3] ^ w[j -  8] ^ w[j - 14] ^ w[j - 16], 1)
+	
+	      var t = add(
+	        add(rol(a, 5), sha1_ft(j, b, c, d)),
+	        add(add(e, W), sha1_kt(j))
+	      )
+	
+	      e = d
+	      d = c
+	      c = rol(b, 30)
+	      b = a
+	      a = t
+	    }
+	
+	    this._a = add(a, _a)
+	    this._b = add(b, _b)
+	    this._c = add(c, _c)
+	    this._d = add(d, _d)
+	    this._e = add(e, _e)
+	  }
+	
+	  Sha1.prototype._hash = function () {
+	    if(POOL.length < 100) POOL.push(this)
+	    var H = new Buffer(20)
+	    //console.log(this._a|0, this._b|0, this._c|0, this._d|0, this._e|0)
+	    H.writeInt32BE(this._a|0, A)
+	    H.writeInt32BE(this._b|0, B)
+	    H.writeInt32BE(this._c|0, C)
+	    H.writeInt32BE(this._d|0, D)
+	    H.writeInt32BE(this._e|0, E)
+	    return H
+	  }
+	
+	  /*
+	   * Perform the appropriate triplet combination function for the current
+	   * iteration
+	   */
+	  function sha1_ft(t, b, c, d) {
+	    if(t < 20) return (b & c) | ((~b) & d);
+	    if(t < 40) return b ^ c ^ d;
+	    if(t < 60) return (b & c) | (b & d) | (c & d);
+	    return b ^ c ^ d;
+	  }
+	
+	  /*
+	   * Determine the appropriate additive constant for the current iteration
+	   */
+	  function sha1_kt(t) {
+	    return (t < 20) ?  1518500249 : (t < 40) ?  1859775393 :
+	           (t < 60) ? -1894007588 : -899497514;
+	  }
+	
+	  /*
+	   * Add integers, wrapping at 2^32. This uses 16-bit operations internally
+	   * to work around bugs in some JS interpreters.
+	   * //dominictarr: this is 10 years old, so maybe this can be dropped?)
+	   *
+	   */
+	  function add(x, y) {
+	    return (x + y ) | 0
+	  //lets see how this goes on testling.
+	  //  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+	  //  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+	  //  return (msw << 16) | (lsw & 0xFFFF);
+	  }
+	
+	  /*
+	   * Bitwise rotate a 32-bit number to the left.
+	   */
+	  function rol(num, cnt) {
+	    return (num << cnt) | (num >>> (32 - cnt));
+	  }
+	
+	  return Sha1
+	}
+
+
+/***/ },
+/* 32 */
+/*!************************!*\
+  !*** ./~/util/util.js ***!
+  \************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	var formatRegExp = /%[sdj%]/g;
+	exports.format = function(f) {
+	  if (!isString(f)) {
+	    var objects = [];
+	    for (var i = 0; i < arguments.length; i++) {
+	      objects.push(inspect(arguments[i]));
+	    }
+	    return objects.join(' ');
+	  }
+	
+	  var i = 1;
+	  var args = arguments;
+	  var len = args.length;
+	  var str = String(f).replace(formatRegExp, function(x) {
+	    if (x === '%%') return '%';
+	    if (i >= len) return x;
+	    switch (x) {
+	      case '%s': return String(args[i++]);
+	      case '%d': return Number(args[i++]);
+	      case '%j':
+	        try {
+	          return JSON.stringify(args[i++]);
+	        } catch (_) {
+	          return '[Circular]';
+	        }
+	      default:
+	        return x;
+	    }
+	  });
+	  for (var x = args[i]; i < len; x = args[++i]) {
+	    if (isNull(x) || !isObject(x)) {
+	      str += ' ' + x;
+	    } else {
+	      str += ' ' + inspect(x);
+	    }
+	  }
+	  return str;
+	};
+	
+	
+	// Mark that a method should not be used.
+	// Returns a modified function which warns once by default.
+	// If --no-deprecation is set, then it is a no-op.
+	exports.deprecate = function(fn, msg) {
+	  // Allow for deprecating things in the process of starting up.
+	  if (isUndefined(global.process)) {
+	    return function() {
+	      return exports.deprecate(fn, msg).apply(this, arguments);
+	    };
+	  }
+	
+	  if (process.noDeprecation === true) {
+	    return fn;
+	  }
+	
+	  var warned = false;
+	  function deprecated() {
+	    if (!warned) {
+	      if (process.throwDeprecation) {
+	        throw new Error(msg);
+	      } else if (process.traceDeprecation) {
+	        console.trace(msg);
+	      } else {
+	        console.error(msg);
+	      }
+	      warned = true;
+	    }
+	    return fn.apply(this, arguments);
+	  }
+	
+	  return deprecated;
+	};
+	
+	
+	var debugs = {};
+	var debugEnviron;
+	exports.debuglog = function(set) {
+	  if (isUndefined(debugEnviron))
+	    debugEnviron = process.env.NODE_DEBUG || '';
+	  set = set.toUpperCase();
+	  if (!debugs[set]) {
+	    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
+	      var pid = process.pid;
+	      debugs[set] = function() {
+	        var msg = exports.format.apply(exports, arguments);
+	        console.error('%s %d: %s', set, pid, msg);
+	      };
+	    } else {
+	      debugs[set] = function() {};
+	    }
+	  }
+	  return debugs[set];
+	};
+	
+	
+	/**
+	 * Echos the value of a value. Trys to print the value out
+	 * in the best way possible given the different types.
+	 *
+	 * @param {Object} obj The object to print out.
+	 * @param {Object} opts Optional options object that alters the output.
+	 */
+	/* legacy: obj, showHidden, depth, colors*/
+	function inspect(obj, opts) {
+	  // default options
+	  var ctx = {
+	    seen: [],
+	    stylize: stylizeNoColor
+	  };
+	  // legacy...
+	  if (arguments.length >= 3) ctx.depth = arguments[2];
+	  if (arguments.length >= 4) ctx.colors = arguments[3];
+	  if (isBoolean(opts)) {
+	    // legacy...
+	    ctx.showHidden = opts;
+	  } else if (opts) {
+	    // got an "options" object
+	    exports._extend(ctx, opts);
+	  }
+	  // set default options
+	  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+	  if (isUndefined(ctx.depth)) ctx.depth = 2;
+	  if (isUndefined(ctx.colors)) ctx.colors = false;
+	  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+	  if (ctx.colors) ctx.stylize = stylizeWithColor;
+	  return formatValue(ctx, obj, ctx.depth);
+	}
+	exports.inspect = inspect;
+	
+	
+	// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+	inspect.colors = {
+	  'bold' : [1, 22],
+	  'italic' : [3, 23],
+	  'underline' : [4, 24],
+	  'inverse' : [7, 27],
+	  'white' : [37, 39],
+	  'grey' : [90, 39],
+	  'black' : [30, 39],
+	  'blue' : [34, 39],
+	  'cyan' : [36, 39],
+	  'green' : [32, 39],
+	  'magenta' : [35, 39],
+	  'red' : [31, 39],
+	  'yellow' : [33, 39]
+	};
+	
+	// Don't use 'blue' not visible on cmd.exe
+	inspect.styles = {
+	  'special': 'cyan',
+	  'number': 'yellow',
+	  'boolean': 'yellow',
+	  'undefined': 'grey',
+	  'null': 'bold',
+	  'string': 'green',
+	  'date': 'magenta',
+	  // "name": intentionally not styling
+	  'regexp': 'red'
+	};
+	
+	
+	function stylizeWithColor(str, styleType) {
+	  var style = inspect.styles[styleType];
+	
+	  if (style) {
+	    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
+	           '\u001b[' + inspect.colors[style][1] + 'm';
+	  } else {
+	    return str;
+	  }
+	}
+	
+	
+	function stylizeNoColor(str, styleType) {
+	  return str;
+	}
+	
+	
+	function arrayToHash(array) {
+	  var hash = {};
+	
+	  array.forEach(function(val, idx) {
+	    hash[val] = true;
+	  });
+	
+	  return hash;
+	}
+	
+	
+	function formatValue(ctx, value, recurseTimes) {
+	  // Provide a hook for user-specified inspect functions.
+	  // Check that value is an object with an inspect function on it
+	  if (ctx.customInspect &&
+	      value &&
+	      isFunction(value.inspect) &&
+	      // Filter out the util module, it's inspect function is special
+	      value.inspect !== exports.inspect &&
+	      // Also filter out any prototype objects using the circular check.
+	      !(value.constructor && value.constructor.prototype === value)) {
+	    var ret = value.inspect(recurseTimes, ctx);
+	    if (!isString(ret)) {
+	      ret = formatValue(ctx, ret, recurseTimes);
+	    }
+	    return ret;
+	  }
+	
+	  // Primitive types cannot have properties
+	  var primitive = formatPrimitive(ctx, value);
+	  if (primitive) {
+	    return primitive;
+	  }
+	
+	  // Look up the keys of the object.
+	  var keys = Object.keys(value);
+	  var visibleKeys = arrayToHash(keys);
+	
+	  if (ctx.showHidden) {
+	    keys = Object.getOwnPropertyNames(value);
+	  }
+	
+	  // IE doesn't make error fields non-enumerable
+	  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+	  if (isError(value)
+	      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+	    return formatError(value);
+	  }
+	
+	  // Some type of object without properties can be shortcutted.
+	  if (keys.length === 0) {
+	    if (isFunction(value)) {
+	      var name = value.name ? ': ' + value.name : '';
+	      return ctx.stylize('[Function' + name + ']', 'special');
+	    }
+	    if (isRegExp(value)) {
+	      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+	    }
+	    if (isDate(value)) {
+	      return ctx.stylize(Date.prototype.toString.call(value), 'date');
+	    }
+	    if (isError(value)) {
+	      return formatError(value);
+	    }
+	  }
+	
+	  var base = '', array = false, braces = ['{', '}'];
+	
+	  // Make Array say that they are Array
+	  if (isArray(value)) {
+	    array = true;
+	    braces = ['[', ']'];
+	  }
+	
+	  // Make functions say that they are functions
+	  if (isFunction(value)) {
+	    var n = value.name ? ': ' + value.name : '';
+	    base = ' [Function' + n + ']';
+	  }
+	
+	  // Make RegExps say that they are RegExps
+	  if (isRegExp(value)) {
+	    base = ' ' + RegExp.prototype.toString.call(value);
+	  }
+	
+	  // Make dates with properties first say the date
+	  if (isDate(value)) {
+	    base = ' ' + Date.prototype.toUTCString.call(value);
+	  }
+	
+	  // Make error with message first say the error
+	  if (isError(value)) {
+	    base = ' ' + formatError(value);
+	  }
+	
+	  if (keys.length === 0 && (!array || value.length == 0)) {
+	    return braces[0] + base + braces[1];
+	  }
+	
+	  if (recurseTimes < 0) {
+	    if (isRegExp(value)) {
+	      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+	    } else {
+	      return ctx.stylize('[Object]', 'special');
+	    }
+	  }
+	
+	  ctx.seen.push(value);
+	
+	  var output;
+	  if (array) {
+	    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
+	  } else {
+	    output = keys.map(function(key) {
+	      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+	    });
+	  }
+	
+	  ctx.seen.pop();
+	
+	  return reduceToSingleString(output, base, braces);
+	}
+	
+	
+	function formatPrimitive(ctx, value) {
+	  if (isUndefined(value))
+	    return ctx.stylize('undefined', 'undefined');
+	  if (isString(value)) {
+	    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
+	                                             .replace(/'/g, "\\'")
+	                                             .replace(/\\"/g, '"') + '\'';
+	    return ctx.stylize(simple, 'string');
+	  }
+	  if (isNumber(value))
+	    return ctx.stylize('' + value, 'number');
+	  if (isBoolean(value))
+	    return ctx.stylize('' + value, 'boolean');
+	  // For some reason typeof null is "object", so special case here.
+	  if (isNull(value))
+	    return ctx.stylize('null', 'null');
+	}
+	
+	
+	function formatError(value) {
+	  return '[' + Error.prototype.toString.call(value) + ']';
+	}
+	
+	
+	function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
+	  var output = [];
+	  for (var i = 0, l = value.length; i < l; ++i) {
+	    if (hasOwnProperty(value, String(i))) {
+	      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+	          String(i), true));
+	    } else {
+	      output.push('');
+	    }
+	  }
+	  keys.forEach(function(key) {
+	    if (!key.match(/^\d+$/)) {
+	      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+	          key, true));
+	    }
+	  });
+	  return output;
+	}
+	
+	
+	function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+	  var name, str, desc;
+	  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
+	  if (desc.get) {
+	    if (desc.set) {
+	      str = ctx.stylize('[Getter/Setter]', 'special');
+	    } else {
+	      str = ctx.stylize('[Getter]', 'special');
+	    }
+	  } else {
+	    if (desc.set) {
+	      str = ctx.stylize('[Setter]', 'special');
+	    }
+	  }
+	  if (!hasOwnProperty(visibleKeys, key)) {
+	    name = '[' + key + ']';
+	  }
+	  if (!str) {
+	    if (ctx.seen.indexOf(desc.value) < 0) {
+	      if (isNull(recurseTimes)) {
+	        str = formatValue(ctx, desc.value, null);
+	      } else {
+	        str = formatValue(ctx, desc.value, recurseTimes - 1);
+	      }
+	      if (str.indexOf('\n') > -1) {
+	        if (array) {
+	          str = str.split('\n').map(function(line) {
+	            return '  ' + line;
+	          }).join('\n').substr(2);
+	        } else {
+	          str = '\n' + str.split('\n').map(function(line) {
+	            return '   ' + line;
+	          }).join('\n');
+	        }
+	      }
+	    } else {
+	      str = ctx.stylize('[Circular]', 'special');
+	    }
+	  }
+	  if (isUndefined(name)) {
+	    if (array && key.match(/^\d+$/)) {
+	      return str;
+	    }
+	    name = JSON.stringify('' + key);
+	    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+	      name = name.substr(1, name.length - 2);
+	      name = ctx.stylize(name, 'name');
+	    } else {
+	      name = name.replace(/'/g, "\\'")
+	                 .replace(/\\"/g, '"')
+	                 .replace(/(^"|"$)/g, "'");
+	      name = ctx.stylize(name, 'string');
+	    }
+	  }
+	
+	  return name + ': ' + str;
+	}
+	
+	
+	function reduceToSingleString(output, base, braces) {
+	  var numLinesEst = 0;
+	  var length = output.reduce(function(prev, cur) {
+	    numLinesEst++;
+	    if (cur.indexOf('\n') >= 0) numLinesEst++;
+	    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
+	  }, 0);
+	
+	  if (length > 60) {
+	    return braces[0] +
+	           (base === '' ? '' : base + '\n ') +
+	           ' ' +
+	           output.join(',\n  ') +
+	           ' ' +
+	           braces[1];
+	  }
+	
+	  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+	}
+	
+	
+	// NOTE: These type checking functions intentionally don't use `instanceof`
+	// because it is fragile and can be easily faked with `Object.create()`.
+	function isArray(ar) {
+	  return Array.isArray(ar);
+	}
+	exports.isArray = isArray;
+	
+	function isBoolean(arg) {
+	  return typeof arg === 'boolean';
+	}
+	exports.isBoolean = isBoolean;
+	
+	function isNull(arg) {
+	  return arg === null;
+	}
+	exports.isNull = isNull;
+	
+	function isNullOrUndefined(arg) {
+	  return arg == null;
+	}
+	exports.isNullOrUndefined = isNullOrUndefined;
+	
+	function isNumber(arg) {
+	  return typeof arg === 'number';
+	}
+	exports.isNumber = isNumber;
+	
+	function isString(arg) {
+	  return typeof arg === 'string';
+	}
+	exports.isString = isString;
+	
+	function isSymbol(arg) {
+	  return typeof arg === 'symbol';
+	}
+	exports.isSymbol = isSymbol;
+	
+	function isUndefined(arg) {
+	  return arg === void 0;
+	}
+	exports.isUndefined = isUndefined;
+	
+	function isRegExp(re) {
+	  return isObject(re) && objectToString(re) === '[object RegExp]';
+	}
+	exports.isRegExp = isRegExp;
+	
+	function isObject(arg) {
+	  return typeof arg === 'object' && arg !== null;
+	}
+	exports.isObject = isObject;
+	
+	function isDate(d) {
+	  return isObject(d) && objectToString(d) === '[object Date]';
+	}
+	exports.isDate = isDate;
+	
+	function isError(e) {
+	  return isObject(e) &&
+	      (objectToString(e) === '[object Error]' || e instanceof Error);
+	}
+	exports.isError = isError;
+	
+	function isFunction(arg) {
+	  return typeof arg === 'function';
+	}
+	exports.isFunction = isFunction;
+	
+	function isPrimitive(arg) {
+	  return arg === null ||
+	         typeof arg === 'boolean' ||
+	         typeof arg === 'number' ||
+	         typeof arg === 'string' ||
+	         typeof arg === 'symbol' ||  // ES6 symbol
+	         typeof arg === 'undefined';
+	}
+	exports.isPrimitive = isPrimitive;
+	
+	exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ 33);
+	
+	function objectToString(o) {
+	  return Object.prototype.toString.call(o);
+	}
+	
+	
+	function pad(n) {
+	  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+	}
+	
+	
+	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+	              'Oct', 'Nov', 'Dec'];
+	
+	// 26 Feb 16:19:34
+	function timestamp() {
+	  var d = new Date();
+	  var time = [pad(d.getHours()),
+	              pad(d.getMinutes()),
+	              pad(d.getSeconds())].join(':');
+	  return [d.getDate(), months[d.getMonth()], time].join(' ');
+	}
+	
+	
+	// log is just a thin wrapper to console.log that prepends a timestamp
+	exports.log = function() {
+	  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+	};
+	
+	
+	/**
+	 * Inherit the prototype methods from one constructor into another.
+	 *
+	 * The Function.prototype.inherits from lang.js rewritten as a standalone
+	 * function (not on Function.prototype). NOTE: If this file is to be loaded
+	 * during bootstrapping this function needs to be rewritten using some native
+	 * functions as prototype setup using normal JavaScript does not work as
+	 * expected during bootstrapping (see mirror.js in r114903).
+	 *
+	 * @param {function} ctor Constructor function which needs to inherit the
+	 *     prototype.
+	 * @param {function} superCtor Constructor function to inherit prototype from.
+	 */
+	exports.inherits = __webpack_require__(/*! inherits */ 34);
+	
+	exports._extend = function(origin, add) {
+	  // Don't do anything if add isn't an object
+	  if (!add || !isObject(add)) return origin;
+	
+	  var keys = Object.keys(add);
+	  var i = keys.length;
+	  while (i--) {
+	    origin[keys[i]] = add[keys[i]];
+	  }
+	  return origin;
+	};
+	
+	function hasOwnProperty(obj, prop) {
+	  return Object.prototype.hasOwnProperty.call(obj, prop);
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./~/process/browser.js */ 2)))
+
+/***/ },
+/* 33 */
+/*!*******************************************!*\
+  !*** ./~/util/support/isBufferBrowser.js ***!
+  \*******************************************/
+/***/ function(module, exports) {
+
+	module.exports = function isBuffer(arg) {
+	  return arg && typeof arg === 'object'
+	    && typeof arg.copy === 'function'
+	    && typeof arg.fill === 'function'
+	    && typeof arg.readUInt8 === 'function';
+	}
+
+/***/ },
+/* 34 */
+/*!****************************************!*\
+  !*** ./~/inherits/inherits_browser.js ***!
+  \****************************************/
+/***/ function(module, exports) {
+
+	if (typeof Object.create === 'function') {
+	  // implementation from standard node.js 'util' module
+	  module.exports = function inherits(ctor, superCtor) {
+	    ctor.super_ = superCtor
+	    ctor.prototype = Object.create(superCtor.prototype, {
+	      constructor: {
+	        value: ctor,
+	        enumerable: false,
+	        writable: true,
+	        configurable: true
+	      }
+	    });
+	  };
+	} else {
+	  // old school shim for old browsers
+	  module.exports = function inherits(ctor, superCtor) {
+	    ctor.super_ = superCtor
+	    var TempCtor = function () {}
+	    TempCtor.prototype = superCtor.prototype
+	    ctor.prototype = new TempCtor()
+	    ctor.prototype.constructor = ctor
+	  }
+	}
+
+
+/***/ },
+/* 35 */
+/*!****************************!*\
+  !*** ./~/sha.js/sha256.js ***!
+  \****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	/**
+	 * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
+	 * in FIPS 180-2
+	 * Version 2.2-beta Copyright Angel Marin, Paul Johnston 2000 - 2009.
+	 * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
+	 *
+	 */
+	
+	var inherits = __webpack_require__(/*! util */ 32).inherits
+	
+	module.exports = function (Buffer, Hash) {
+	
+	  var K = [
+	      0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5,
+	      0x3956C25B, 0x59F111F1, 0x923F82A4, 0xAB1C5ED5,
+	      0xD807AA98, 0x12835B01, 0x243185BE, 0x550C7DC3,
+	      0x72BE5D74, 0x80DEB1FE, 0x9BDC06A7, 0xC19BF174,
+	      0xE49B69C1, 0xEFBE4786, 0x0FC19DC6, 0x240CA1CC,
+	      0x2DE92C6F, 0x4A7484AA, 0x5CB0A9DC, 0x76F988DA,
+	      0x983E5152, 0xA831C66D, 0xB00327C8, 0xBF597FC7,
+	      0xC6E00BF3, 0xD5A79147, 0x06CA6351, 0x14292967,
+	      0x27B70A85, 0x2E1B2138, 0x4D2C6DFC, 0x53380D13,
+	      0x650A7354, 0x766A0ABB, 0x81C2C92E, 0x92722C85,
+	      0xA2BFE8A1, 0xA81A664B, 0xC24B8B70, 0xC76C51A3,
+	      0xD192E819, 0xD6990624, 0xF40E3585, 0x106AA070,
+	      0x19A4C116, 0x1E376C08, 0x2748774C, 0x34B0BCB5,
+	      0x391C0CB3, 0x4ED8AA4A, 0x5B9CCA4F, 0x682E6FF3,
+	      0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208,
+	      0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2
+	    ]
+	
+	  var W = new Array(64)
+	
+	  function Sha256() {
+	    this.init()
+	
+	    this._w = W //new Array(64)
+	
+	    Hash.call(this, 16*4, 14*4)
+	  }
+	
+	  inherits(Sha256, Hash)
+	
+	  Sha256.prototype.init = function () {
+	
+	    this._a = 0x6a09e667|0
+	    this._b = 0xbb67ae85|0
+	    this._c = 0x3c6ef372|0
+	    this._d = 0xa54ff53a|0
+	    this._e = 0x510e527f|0
+	    this._f = 0x9b05688c|0
+	    this._g = 0x1f83d9ab|0
+	    this._h = 0x5be0cd19|0
+	
+	    this._len = this._s = 0
+	
+	    return this
+	  }
+	
+	  function S (X, n) {
+	    return (X >>> n) | (X << (32 - n));
+	  }
+	
+	  function R (X, n) {
+	    return (X >>> n);
+	  }
+	
+	  function Ch (x, y, z) {
+	    return ((x & y) ^ ((~x) & z));
+	  }
+	
+	  function Maj (x, y, z) {
+	    return ((x & y) ^ (x & z) ^ (y & z));
+	  }
+	
+	  function Sigma0256 (x) {
+	    return (S(x, 2) ^ S(x, 13) ^ S(x, 22));
+	  }
+	
+	  function Sigma1256 (x) {
+	    return (S(x, 6) ^ S(x, 11) ^ S(x, 25));
+	  }
+	
+	  function Gamma0256 (x) {
+	    return (S(x, 7) ^ S(x, 18) ^ R(x, 3));
+	  }
+	
+	  function Gamma1256 (x) {
+	    return (S(x, 17) ^ S(x, 19) ^ R(x, 10));
+	  }
+	
+	  Sha256.prototype._update = function(M) {
+	
+	    var W = this._w
+	    var a, b, c, d, e, f, g, h
+	    var T1, T2
+	
+	    a = this._a | 0
+	    b = this._b | 0
+	    c = this._c | 0
+	    d = this._d | 0
+	    e = this._e | 0
+	    f = this._f | 0
+	    g = this._g | 0
+	    h = this._h | 0
+	
+	    for (var j = 0; j < 64; j++) {
+	      var w = W[j] = j < 16
+	        ? M.readInt32BE(j * 4)
+	        : Gamma1256(W[j - 2]) + W[j - 7] + Gamma0256(W[j - 15]) + W[j - 16]
+	
+	      T1 = h + Sigma1256(e) + Ch(e, f, g) + K[j] + w
+	
+	      T2 = Sigma0256(a) + Maj(a, b, c);
+	      h = g; g = f; f = e; e = d + T1; d = c; c = b; b = a; a = T1 + T2;
+	    }
+	
+	    this._a = (a + this._a) | 0
+	    this._b = (b + this._b) | 0
+	    this._c = (c + this._c) | 0
+	    this._d = (d + this._d) | 0
+	    this._e = (e + this._e) | 0
+	    this._f = (f + this._f) | 0
+	    this._g = (g + this._g) | 0
+	    this._h = (h + this._h) | 0
+	
+	  };
+	
+	  Sha256.prototype._hash = function () {
+	    var H = new Buffer(32)
+	
+	    H.writeInt32BE(this._a,  0)
+	    H.writeInt32BE(this._b,  4)
+	    H.writeInt32BE(this._c,  8)
+	    H.writeInt32BE(this._d, 12)
+	    H.writeInt32BE(this._e, 16)
+	    H.writeInt32BE(this._f, 20)
+	    H.writeInt32BE(this._g, 24)
+	    H.writeInt32BE(this._h, 28)
+	
+	    return H
+	  }
+	
+	  return Sha256
+	
+	}
+
+
+/***/ },
+/* 36 */
+/*!****************************!*\
+  !*** ./~/sha.js/sha512.js ***!
+  \****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var inherits = __webpack_require__(/*! util */ 32).inherits
+	
+	module.exports = function (Buffer, Hash) {
+	  var K = [
+	    0x428a2f98, 0xd728ae22, 0x71374491, 0x23ef65cd,
+	    0xb5c0fbcf, 0xec4d3b2f, 0xe9b5dba5, 0x8189dbbc,
+	    0x3956c25b, 0xf348b538, 0x59f111f1, 0xb605d019,
+	    0x923f82a4, 0xaf194f9b, 0xab1c5ed5, 0xda6d8118,
+	    0xd807aa98, 0xa3030242, 0x12835b01, 0x45706fbe,
+	    0x243185be, 0x4ee4b28c, 0x550c7dc3, 0xd5ffb4e2,
+	    0x72be5d74, 0xf27b896f, 0x80deb1fe, 0x3b1696b1,
+	    0x9bdc06a7, 0x25c71235, 0xc19bf174, 0xcf692694,
+	    0xe49b69c1, 0x9ef14ad2, 0xefbe4786, 0x384f25e3,
+	    0x0fc19dc6, 0x8b8cd5b5, 0x240ca1cc, 0x77ac9c65,
+	    0x2de92c6f, 0x592b0275, 0x4a7484aa, 0x6ea6e483,
+	    0x5cb0a9dc, 0xbd41fbd4, 0x76f988da, 0x831153b5,
+	    0x983e5152, 0xee66dfab, 0xa831c66d, 0x2db43210,
+	    0xb00327c8, 0x98fb213f, 0xbf597fc7, 0xbeef0ee4,
+	    0xc6e00bf3, 0x3da88fc2, 0xd5a79147, 0x930aa725,
+	    0x06ca6351, 0xe003826f, 0x14292967, 0x0a0e6e70,
+	    0x27b70a85, 0x46d22ffc, 0x2e1b2138, 0x5c26c926,
+	    0x4d2c6dfc, 0x5ac42aed, 0x53380d13, 0x9d95b3df,
+	    0x650a7354, 0x8baf63de, 0x766a0abb, 0x3c77b2a8,
+	    0x81c2c92e, 0x47edaee6, 0x92722c85, 0x1482353b,
+	    0xa2bfe8a1, 0x4cf10364, 0xa81a664b, 0xbc423001,
+	    0xc24b8b70, 0xd0f89791, 0xc76c51a3, 0x0654be30,
+	    0xd192e819, 0xd6ef5218, 0xd6990624, 0x5565a910,
+	    0xf40e3585, 0x5771202a, 0x106aa070, 0x32bbd1b8,
+	    0x19a4c116, 0xb8d2d0c8, 0x1e376c08, 0x5141ab53,
+	    0x2748774c, 0xdf8eeb99, 0x34b0bcb5, 0xe19b48a8,
+	    0x391c0cb3, 0xc5c95a63, 0x4ed8aa4a, 0xe3418acb,
+	    0x5b9cca4f, 0x7763e373, 0x682e6ff3, 0xd6b2b8a3,
+	    0x748f82ee, 0x5defb2fc, 0x78a5636f, 0x43172f60,
+	    0x84c87814, 0xa1f0ab72, 0x8cc70208, 0x1a6439ec,
+	    0x90befffa, 0x23631e28, 0xa4506ceb, 0xde82bde9,
+	    0xbef9a3f7, 0xb2c67915, 0xc67178f2, 0xe372532b,
+	    0xca273ece, 0xea26619c, 0xd186b8c7, 0x21c0c207,
+	    0xeada7dd6, 0xcde0eb1e, 0xf57d4f7f, 0xee6ed178,
+	    0x06f067aa, 0x72176fba, 0x0a637dc5, 0xa2c898a6,
+	    0x113f9804, 0xbef90dae, 0x1b710b35, 0x131c471b,
+	    0x28db77f5, 0x23047d84, 0x32caab7b, 0x40c72493,
+	    0x3c9ebe0a, 0x15c9bebc, 0x431d67c4, 0x9c100d4c,
+	    0x4cc5d4be, 0xcb3e42b6, 0x597f299c, 0xfc657e2a,
+	    0x5fcb6fab, 0x3ad6faec, 0x6c44198c, 0x4a475817
+	  ]
+	
+	  var W = new Array(160)
+	
+	  function Sha512() {
+	    this.init()
+	    this._w = W
+	
+	    Hash.call(this, 128, 112)
+	  }
+	
+	  inherits(Sha512, Hash)
+	
+	  Sha512.prototype.init = function () {
+	
+	    this._a = 0x6a09e667|0
+	    this._b = 0xbb67ae85|0
+	    this._c = 0x3c6ef372|0
+	    this._d = 0xa54ff53a|0
+	    this._e = 0x510e527f|0
+	    this._f = 0x9b05688c|0
+	    this._g = 0x1f83d9ab|0
+	    this._h = 0x5be0cd19|0
+	
+	    this._al = 0xf3bcc908|0
+	    this._bl = 0x84caa73b|0
+	    this._cl = 0xfe94f82b|0
+	    this._dl = 0x5f1d36f1|0
+	    this._el = 0xade682d1|0
+	    this._fl = 0x2b3e6c1f|0
+	    this._gl = 0xfb41bd6b|0
+	    this._hl = 0x137e2179|0
+	
+	    this._len = this._s = 0
+	
+	    return this
+	  }
+	
+	  function S (X, Xl, n) {
+	    return (X >>> n) | (Xl << (32 - n))
+	  }
+	
+	  function Ch (x, y, z) {
+	    return ((x & y) ^ ((~x) & z));
+	  }
+	
+	  function Maj (x, y, z) {
+	    return ((x & y) ^ (x & z) ^ (y & z));
+	  }
+	
+	  Sha512.prototype._update = function(M) {
+	
+	    var W = this._w
+	    var a, b, c, d, e, f, g, h
+	    var al, bl, cl, dl, el, fl, gl, hl
+	
+	    a = this._a | 0
+	    b = this._b | 0
+	    c = this._c | 0
+	    d = this._d | 0
+	    e = this._e | 0
+	    f = this._f | 0
+	    g = this._g | 0
+	    h = this._h | 0
+	
+	    al = this._al | 0
+	    bl = this._bl | 0
+	    cl = this._cl | 0
+	    dl = this._dl | 0
+	    el = this._el | 0
+	    fl = this._fl | 0
+	    gl = this._gl | 0
+	    hl = this._hl | 0
+	
+	    for (var i = 0; i < 80; i++) {
+	      var j = i * 2
+	
+	      var Wi, Wil
+	
+	      if (i < 16) {
+	        Wi = W[j] = M.readInt32BE(j * 4)
+	        Wil = W[j + 1] = M.readInt32BE(j * 4 + 4)
+	
+	      } else {
+	        var x  = W[j - 15*2]
+	        var xl = W[j - 15*2 + 1]
+	        var gamma0  = S(x, xl, 1) ^ S(x, xl, 8) ^ (x >>> 7)
+	        var gamma0l = S(xl, x, 1) ^ S(xl, x, 8) ^ S(xl, x, 7)
+	
+	        x  = W[j - 2*2]
+	        xl = W[j - 2*2 + 1]
+	        var gamma1  = S(x, xl, 19) ^ S(xl, x, 29) ^ (x >>> 6)
+	        var gamma1l = S(xl, x, 19) ^ S(x, xl, 29) ^ S(xl, x, 6)
+	
+	        // W[i] = gamma0 + W[i - 7] + gamma1 + W[i - 16]
+	        var Wi7  = W[j - 7*2]
+	        var Wi7l = W[j - 7*2 + 1]
+	
+	        var Wi16  = W[j - 16*2]
+	        var Wi16l = W[j - 16*2 + 1]
+	
+	        Wil = gamma0l + Wi7l
+	        Wi  = gamma0  + Wi7 + ((Wil >>> 0) < (gamma0l >>> 0) ? 1 : 0)
+	        Wil = Wil + gamma1l
+	        Wi  = Wi  + gamma1  + ((Wil >>> 0) < (gamma1l >>> 0) ? 1 : 0)
+	        Wil = Wil + Wi16l
+	        Wi  = Wi  + Wi16 + ((Wil >>> 0) < (Wi16l >>> 0) ? 1 : 0)
+	
+	        W[j] = Wi
+	        W[j + 1] = Wil
+	      }
+	
+	      var maj = Maj(a, b, c)
+	      var majl = Maj(al, bl, cl)
+	
+	      var sigma0h = S(a, al, 28) ^ S(al, a, 2) ^ S(al, a, 7)
+	      var sigma0l = S(al, a, 28) ^ S(a, al, 2) ^ S(a, al, 7)
+	      var sigma1h = S(e, el, 14) ^ S(e, el, 18) ^ S(el, e, 9)
+	      var sigma1l = S(el, e, 14) ^ S(el, e, 18) ^ S(e, el, 9)
+	
+	      // t1 = h + sigma1 + ch + K[i] + W[i]
+	      var Ki = K[j]
+	      var Kil = K[j + 1]
+	
+	      var ch = Ch(e, f, g)
+	      var chl = Ch(el, fl, gl)
+	
+	      var t1l = hl + sigma1l
+	      var t1 = h + sigma1h + ((t1l >>> 0) < (hl >>> 0) ? 1 : 0)
+	      t1l = t1l + chl
+	      t1 = t1 + ch + ((t1l >>> 0) < (chl >>> 0) ? 1 : 0)
+	      t1l = t1l + Kil
+	      t1 = t1 + Ki + ((t1l >>> 0) < (Kil >>> 0) ? 1 : 0)
+	      t1l = t1l + Wil
+	      t1 = t1 + Wi + ((t1l >>> 0) < (Wil >>> 0) ? 1 : 0)
+	
+	      // t2 = sigma0 + maj
+	      var t2l = sigma0l + majl
+	      var t2 = sigma0h + maj + ((t2l >>> 0) < (sigma0l >>> 0) ? 1 : 0)
+	
+	      h  = g
+	      hl = gl
+	      g  = f
+	      gl = fl
+	      f  = e
+	      fl = el
+	      el = (dl + t1l) | 0
+	      e  = (d + t1 + ((el >>> 0) < (dl >>> 0) ? 1 : 0)) | 0
+	      d  = c
+	      dl = cl
+	      c  = b
+	      cl = bl
+	      b  = a
+	      bl = al
+	      al = (t1l + t2l) | 0
+	      a  = (t1 + t2 + ((al >>> 0) < (t1l >>> 0) ? 1 : 0)) | 0
+	    }
+	
+	    this._al = (this._al + al) | 0
+	    this._bl = (this._bl + bl) | 0
+	    this._cl = (this._cl + cl) | 0
+	    this._dl = (this._dl + dl) | 0
+	    this._el = (this._el + el) | 0
+	    this._fl = (this._fl + fl) | 0
+	    this._gl = (this._gl + gl) | 0
+	    this._hl = (this._hl + hl) | 0
+	
+	    this._a = (this._a + a + ((this._al >>> 0) < (al >>> 0) ? 1 : 0)) | 0
+	    this._b = (this._b + b + ((this._bl >>> 0) < (bl >>> 0) ? 1 : 0)) | 0
+	    this._c = (this._c + c + ((this._cl >>> 0) < (cl >>> 0) ? 1 : 0)) | 0
+	    this._d = (this._d + d + ((this._dl >>> 0) < (dl >>> 0) ? 1 : 0)) | 0
+	    this._e = (this._e + e + ((this._el >>> 0) < (el >>> 0) ? 1 : 0)) | 0
+	    this._f = (this._f + f + ((this._fl >>> 0) < (fl >>> 0) ? 1 : 0)) | 0
+	    this._g = (this._g + g + ((this._gl >>> 0) < (gl >>> 0) ? 1 : 0)) | 0
+	    this._h = (this._h + h + ((this._hl >>> 0) < (hl >>> 0) ? 1 : 0)) | 0
+	  }
+	
+	  Sha512.prototype._hash = function () {
+	    var H = new Buffer(64)
+	
+	    function writeInt64BE(h, l, offset) {
+	      H.writeInt32BE(h, offset)
+	      H.writeInt32BE(l, offset + 4)
+	    }
+	
+	    writeInt64BE(this._a, this._al, 0)
+	    writeInt64BE(this._b, this._bl, 8)
+	    writeInt64BE(this._c, this._cl, 16)
+	    writeInt64BE(this._d, this._dl, 24)
+	    writeInt64BE(this._e, this._el, 32)
+	    writeInt64BE(this._f, this._fl, 40)
+	    writeInt64BE(this._g, this._gl, 48)
+	    writeInt64BE(this._h, this._hl, 56)
+	
+	    return H
+	  }
+	
+	  return Sha512
+	
+	}
+
+
+/***/ },
+/* 37 */
+/*!************************************!*\
+  !*** ./~/crypto-browserify/md5.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message
+	 * Digest Algorithm, as defined in RFC 1321.
+	 * Version 2.1 Copyright (C) Paul Johnston 1999 - 2002.
+	 * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
+	 * Distributed under the BSD License
+	 * See http://pajhome.org.uk/crypt/md5 for more info.
+	 */
+	
+	var helpers = __webpack_require__(/*! ./helpers */ 38);
+	
+	/*
+	 * Calculate the MD5 of an array of little-endian words, and a bit length
+	 */
+	function core_md5(x, len)
+	{
+	  /* append padding */
+	  x[len >> 5] |= 0x80 << ((len) % 32);
+	  x[(((len + 64) >>> 9) << 4) + 14] = len;
+	
+	  var a =  1732584193;
+	  var b = -271733879;
+	  var c = -1732584194;
+	  var d =  271733878;
+	
+	  for(var i = 0; i < x.length; i += 16)
+	  {
+	    var olda = a;
+	    var oldb = b;
+	    var oldc = c;
+	    var oldd = d;
+	
+	    a = md5_ff(a, b, c, d, x[i+ 0], 7 , -680876936);
+	    d = md5_ff(d, a, b, c, x[i+ 1], 12, -389564586);
+	    c = md5_ff(c, d, a, b, x[i+ 2], 17,  606105819);
+	    b = md5_ff(b, c, d, a, x[i+ 3], 22, -1044525330);
+	    a = md5_ff(a, b, c, d, x[i+ 4], 7 , -176418897);
+	    d = md5_ff(d, a, b, c, x[i+ 5], 12,  1200080426);
+	    c = md5_ff(c, d, a, b, x[i+ 6], 17, -1473231341);
+	    b = md5_ff(b, c, d, a, x[i+ 7], 22, -45705983);
+	    a = md5_ff(a, b, c, d, x[i+ 8], 7 ,  1770035416);
+	    d = md5_ff(d, a, b, c, x[i+ 9], 12, -1958414417);
+	    c = md5_ff(c, d, a, b, x[i+10], 17, -42063);
+	    b = md5_ff(b, c, d, a, x[i+11], 22, -1990404162);
+	    a = md5_ff(a, b, c, d, x[i+12], 7 ,  1804603682);
+	    d = md5_ff(d, a, b, c, x[i+13], 12, -40341101);
+	    c = md5_ff(c, d, a, b, x[i+14], 17, -1502002290);
+	    b = md5_ff(b, c, d, a, x[i+15], 22,  1236535329);
+	
+	    a = md5_gg(a, b, c, d, x[i+ 1], 5 , -165796510);
+	    d = md5_gg(d, a, b, c, x[i+ 6], 9 , -1069501632);
+	    c = md5_gg(c, d, a, b, x[i+11], 14,  643717713);
+	    b = md5_gg(b, c, d, a, x[i+ 0], 20, -373897302);
+	    a = md5_gg(a, b, c, d, x[i+ 5], 5 , -701558691);
+	    d = md5_gg(d, a, b, c, x[i+10], 9 ,  38016083);
+	    c = md5_gg(c, d, a, b, x[i+15], 14, -660478335);
+	    b = md5_gg(b, c, d, a, x[i+ 4], 20, -405537848);
+	    a = md5_gg(a, b, c, d, x[i+ 9], 5 ,  568446438);
+	    d = md5_gg(d, a, b, c, x[i+14], 9 , -1019803690);
+	    c = md5_gg(c, d, a, b, x[i+ 3], 14, -187363961);
+	    b = md5_gg(b, c, d, a, x[i+ 8], 20,  1163531501);
+	    a = md5_gg(a, b, c, d, x[i+13], 5 , -1444681467);
+	    d = md5_gg(d, a, b, c, x[i+ 2], 9 , -51403784);
+	    c = md5_gg(c, d, a, b, x[i+ 7], 14,  1735328473);
+	    b = md5_gg(b, c, d, a, x[i+12], 20, -1926607734);
+	
+	    a = md5_hh(a, b, c, d, x[i+ 5], 4 , -378558);
+	    d = md5_hh(d, a, b, c, x[i+ 8], 11, -2022574463);
+	    c = md5_hh(c, d, a, b, x[i+11], 16,  1839030562);
+	    b = md5_hh(b, c, d, a, x[i+14], 23, -35309556);
+	    a = md5_hh(a, b, c, d, x[i+ 1], 4 , -1530992060);
+	    d = md5_hh(d, a, b, c, x[i+ 4], 11,  1272893353);
+	    c = md5_hh(c, d, a, b, x[i+ 7], 16, -155497632);
+	    b = md5_hh(b, c, d, a, x[i+10], 23, -1094730640);
+	    a = md5_hh(a, b, c, d, x[i+13], 4 ,  681279174);
+	    d = md5_hh(d, a, b, c, x[i+ 0], 11, -358537222);
+	    c = md5_hh(c, d, a, b, x[i+ 3], 16, -722521979);
+	    b = md5_hh(b, c, d, a, x[i+ 6], 23,  76029189);
+	    a = md5_hh(a, b, c, d, x[i+ 9], 4 , -640364487);
+	    d = md5_hh(d, a, b, c, x[i+12], 11, -421815835);
+	    c = md5_hh(c, d, a, b, x[i+15], 16,  530742520);
+	    b = md5_hh(b, c, d, a, x[i+ 2], 23, -995338651);
+	
+	    a = md5_ii(a, b, c, d, x[i+ 0], 6 , -198630844);
+	    d = md5_ii(d, a, b, c, x[i+ 7], 10,  1126891415);
+	    c = md5_ii(c, d, a, b, x[i+14], 15, -1416354905);
+	    b = md5_ii(b, c, d, a, x[i+ 5], 21, -57434055);
+	    a = md5_ii(a, b, c, d, x[i+12], 6 ,  1700485571);
+	    d = md5_ii(d, a, b, c, x[i+ 3], 10, -1894986606);
+	    c = md5_ii(c, d, a, b, x[i+10], 15, -1051523);
+	    b = md5_ii(b, c, d, a, x[i+ 1], 21, -2054922799);
+	    a = md5_ii(a, b, c, d, x[i+ 8], 6 ,  1873313359);
+	    d = md5_ii(d, a, b, c, x[i+15], 10, -30611744);
+	    c = md5_ii(c, d, a, b, x[i+ 6], 15, -1560198380);
+	    b = md5_ii(b, c, d, a, x[i+13], 21,  1309151649);
+	    a = md5_ii(a, b, c, d, x[i+ 4], 6 , -145523070);
+	    d = md5_ii(d, a, b, c, x[i+11], 10, -1120210379);
+	    c = md5_ii(c, d, a, b, x[i+ 2], 15,  718787259);
+	    b = md5_ii(b, c, d, a, x[i+ 9], 21, -343485551);
+	
+	    a = safe_add(a, olda);
+	    b = safe_add(b, oldb);
+	    c = safe_add(c, oldc);
+	    d = safe_add(d, oldd);
+	  }
+	  return Array(a, b, c, d);
+	
+	}
+	
+	/*
+	 * These functions implement the four basic operations the algorithm uses.
+	 */
+	function md5_cmn(q, a, b, x, s, t)
+	{
+	  return safe_add(bit_rol(safe_add(safe_add(a, q), safe_add(x, t)), s),b);
+	}
+	function md5_ff(a, b, c, d, x, s, t)
+	{
+	  return md5_cmn((b & c) | ((~b) & d), a, b, x, s, t);
+	}
+	function md5_gg(a, b, c, d, x, s, t)
+	{
+	  return md5_cmn((b & d) | (c & (~d)), a, b, x, s, t);
+	}
+	function md5_hh(a, b, c, d, x, s, t)
+	{
+	  return md5_cmn(b ^ c ^ d, a, b, x, s, t);
+	}
+	function md5_ii(a, b, c, d, x, s, t)
+	{
+	  return md5_cmn(c ^ (b | (~d)), a, b, x, s, t);
+	}
+	
+	/*
+	 * Add integers, wrapping at 2^32. This uses 16-bit operations internally
+	 * to work around bugs in some JS interpreters.
+	 */
+	function safe_add(x, y)
+	{
+	  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+	  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+	  return (msw << 16) | (lsw & 0xFFFF);
+	}
+	
+	/*
+	 * Bitwise rotate a 32-bit number to the left.
+	 */
+	function bit_rol(num, cnt)
+	{
+	  return (num << cnt) | (num >>> (32 - cnt));
+	}
+	
+	module.exports = function md5(buf) {
+	  return helpers.hash(buf, core_md5, 16);
+	};
+
+
+/***/ },
+/* 38 */
+/*!****************************************!*\
+  !*** ./~/crypto-browserify/helpers.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var intSize = 4;
+	var zeroBuffer = new Buffer(intSize); zeroBuffer.fill(0);
+	var chrsz = 8;
+	
+	function toArray(buf, bigEndian) {
+	  if ((buf.length % intSize) !== 0) {
+	    var len = buf.length + (intSize - (buf.length % intSize));
+	    buf = Buffer.concat([buf, zeroBuffer], len);
+	  }
+	
+	  var arr = [];
+	  var fn = bigEndian ? buf.readInt32BE : buf.readInt32LE;
+	  for (var i = 0; i < buf.length; i += intSize) {
+	    arr.push(fn.call(buf, i));
+	  }
+	  return arr;
+	}
+	
+	function toBuffer(arr, size, bigEndian) {
+	  var buf = new Buffer(size);
+	  var fn = bigEndian ? buf.writeInt32BE : buf.writeInt32LE;
+	  for (var i = 0; i < arr.length; i++) {
+	    fn.call(buf, arr[i], i * 4, true);
+	  }
+	  return buf;
+	}
+	
+	function hash(buf, fn, hashSize, bigEndian) {
+	  if (!Buffer.isBuffer(buf)) buf = new Buffer(buf);
+	  var arr = fn(toArray(buf, bigEndian), buf.length * chrsz);
+	  return toBuffer(arr, hashSize, bigEndian);
+	}
+	
+	module.exports = { hash: hash };
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 22).Buffer))
+
+/***/ },
+/* 39 */
+/*!**************************************!*\
+  !*** ./~/ripemd160/lib/ripemd160.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer) {
+	module.exports = ripemd160
+	
+	
+	
+	/*
+	CryptoJS v3.1.2
+	code.google.com/p/crypto-js
+	(c) 2009-2013 by Jeff Mott. All rights reserved.
+	code.google.com/p/crypto-js/wiki/License
+	*/
+	/** @preserve
+	(c) 2012 by Cédric Mesnil. All rights reserved.
+	
+	Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+	
+	    - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+	    - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+	
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	*/
+	
+	// Constants table
+	var zl = [
+	    0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
+	    7,  4, 13,  1, 10,  6, 15,  3, 12,  0,  9,  5,  2, 14, 11,  8,
+	    3, 10, 14,  4,  9, 15,  8,  1,  2,  7,  0,  6, 13, 11,  5, 12,
+	    1,  9, 11, 10,  0,  8, 12,  4, 13,  3,  7, 15, 14,  5,  6,  2,
+	    4,  0,  5,  9,  7, 12,  2, 10, 14,  1,  3,  8, 11,  6, 15, 13];
+	var zr = [
+	    5, 14,  7,  0,  9,  2, 11,  4, 13,  6, 15,  8,  1, 10,  3, 12,
+	    6, 11,  3,  7,  0, 13,  5, 10, 14, 15,  8, 12,  4,  9,  1,  2,
+	    15,  5,  1,  3,  7, 14,  6,  9, 11,  8, 12,  2, 10,  0,  4, 13,
+	    8,  6,  4,  1,  3, 11, 15,  0,  5, 12,  2, 13,  9,  7, 10, 14,
+	    12, 15, 10,  4,  1,  5,  8,  7,  6,  2, 13, 14,  0,  3,  9, 11];
+	var sl = [
+	     11, 14, 15, 12,  5,  8,  7,  9, 11, 13, 14, 15,  6,  7,  9,  8,
+	    7, 6,   8, 13, 11,  9,  7, 15,  7, 12, 15,  9, 11,  7, 13, 12,
+	    11, 13,  6,  7, 14,  9, 13, 15, 14,  8, 13,  6,  5, 12,  7,  5,
+	      11, 12, 14, 15, 14, 15,  9,  8,  9, 14,  5,  6,  8,  6,  5, 12,
+	    9, 15,  5, 11,  6,  8, 13, 12,  5, 12, 13, 14, 11,  8,  5,  6 ];
+	var sr = [
+	    8,  9,  9, 11, 13, 15, 15,  5,  7,  7,  8, 11, 14, 14, 12,  6,
+	    9, 13, 15,  7, 12,  8,  9, 11,  7,  7, 12,  7,  6, 15, 13, 11,
+	    9,  7, 15, 11,  8,  6,  6, 14, 12, 13,  5, 14, 13, 13,  7,  5,
+	    15,  5,  8, 11, 14, 14,  6, 14,  6,  9, 12,  9, 12,  5, 15,  8,
+	    8,  5, 12,  9, 12,  5, 14,  6,  8, 13,  6,  5, 15, 13, 11, 11 ];
+	
+	var hl =  [ 0x00000000, 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xA953FD4E];
+	var hr =  [ 0x50A28BE6, 0x5C4DD124, 0x6D703EF3, 0x7A6D76E9, 0x00000000];
+	
+	var bytesToWords = function (bytes) {
+	  var words = [];
+	  for (var i = 0, b = 0; i < bytes.length; i++, b += 8) {
+	    words[b >>> 5] |= bytes[i] << (24 - b % 32);
+	  }
+	  return words;
+	};
+	
+	var wordsToBytes = function (words) {
+	  var bytes = [];
+	  for (var b = 0; b < words.length * 32; b += 8) {
+	    bytes.push((words[b >>> 5] >>> (24 - b % 32)) & 0xFF);
+	  }
+	  return bytes;
+	};
+	
+	var processBlock = function (H, M, offset) {
+	
+	  // Swap endian
+	  for (var i = 0; i < 16; i++) {
+	    var offset_i = offset + i;
+	    var M_offset_i = M[offset_i];
+	
+	    // Swap
+	    M[offset_i] = (
+	        (((M_offset_i << 8)  | (M_offset_i >>> 24)) & 0x00ff00ff) |
+	        (((M_offset_i << 24) | (M_offset_i >>> 8))  & 0xff00ff00)
+	    );
+	  }
+	
+	  // Working variables
+	  var al, bl, cl, dl, el;
+	  var ar, br, cr, dr, er;
+	
+	  ar = al = H[0];
+	  br = bl = H[1];
+	  cr = cl = H[2];
+	  dr = dl = H[3];
+	  er = el = H[4];
+	  // Computation
+	  var t;
+	  for (var i = 0; i < 80; i += 1) {
+	    t = (al +  M[offset+zl[i]])|0;
+	    if (i<16){
+	        t +=  f1(bl,cl,dl) + hl[0];
+	    } else if (i<32) {
+	        t +=  f2(bl,cl,dl) + hl[1];
+	    } else if (i<48) {
+	        t +=  f3(bl,cl,dl) + hl[2];
+	    } else if (i<64) {
+	        t +=  f4(bl,cl,dl) + hl[3];
+	    } else {// if (i<80) {
+	        t +=  f5(bl,cl,dl) + hl[4];
+	    }
+	    t = t|0;
+	    t =  rotl(t,sl[i]);
+	    t = (t+el)|0;
+	    al = el;
+	    el = dl;
+	    dl = rotl(cl, 10);
+	    cl = bl;
+	    bl = t;
+	
+	    t = (ar + M[offset+zr[i]])|0;
+	    if (i<16){
+	        t +=  f5(br,cr,dr) + hr[0];
+	    } else if (i<32) {
+	        t +=  f4(br,cr,dr) + hr[1];
+	    } else if (i<48) {
+	        t +=  f3(br,cr,dr) + hr[2];
+	    } else if (i<64) {
+	        t +=  f2(br,cr,dr) + hr[3];
+	    } else {// if (i<80) {
+	        t +=  f1(br,cr,dr) + hr[4];
+	    }
+	    t = t|0;
+	    t =  rotl(t,sr[i]) ;
+	    t = (t+er)|0;
+	    ar = er;
+	    er = dr;
+	    dr = rotl(cr, 10);
+	    cr = br;
+	    br = t;
+	  }
+	  // Intermediate hash value
+	  t    = (H[1] + cl + dr)|0;
+	  H[1] = (H[2] + dl + er)|0;
+	  H[2] = (H[3] + el + ar)|0;
+	  H[3] = (H[4] + al + br)|0;
+	  H[4] = (H[0] + bl + cr)|0;
+	  H[0] =  t;
+	};
+	
+	function f1(x, y, z) {
+	  return ((x) ^ (y) ^ (z));
+	}
+	
+	function f2(x, y, z) {
+	  return (((x)&(y)) | ((~x)&(z)));
+	}
+	
+	function f3(x, y, z) {
+	  return (((x) | (~(y))) ^ (z));
+	}
+	
+	function f4(x, y, z) {
+	  return (((x) & (z)) | ((y)&(~(z))));
+	}
+	
+	function f5(x, y, z) {
+	  return ((x) ^ ((y) |(~(z))));
+	}
+	
+	function rotl(x,n) {
+	  return (x<<n) | (x>>>(32-n));
+	}
+	
+	function ripemd160(message) {
+	  var H = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0];
+	
+	  if (typeof message == 'string')
+	    message = new Buffer(message, 'utf8');
+	
+	  var m = bytesToWords(message);
+	
+	  var nBitsLeft = message.length * 8;
+	  var nBitsTotal = message.length * 8;
+	
+	  // Add padding
+	  m[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	  m[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
+	      (((nBitsTotal << 8)  | (nBitsTotal >>> 24)) & 0x00ff00ff) |
+	      (((nBitsTotal << 24) | (nBitsTotal >>> 8))  & 0xff00ff00)
+	  );
+	
+	  for (var i=0 ; i<m.length; i += 16) {
+	    processBlock(H, m, i);
+	  }
+	
+	  // Swap endian
+	  for (var i = 0; i < 5; i++) {
+	      // Shortcut
+	    var H_i = H[i];
+	
+	    // Swap
+	    H[i] = (((H_i << 8)  | (H_i >>> 24)) & 0x00ff00ff) |
+	          (((H_i << 24) | (H_i >>> 8))  & 0xff00ff00);
+	  }
+	
+	  var digestbytes = wordsToBytes(H);
+	  return new Buffer(digestbytes);
+	}
+	
+	
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 22).Buffer))
+
+/***/ },
+/* 40 */
+/*!********************************************!*\
+  !*** ./~/crypto-browserify/create-hmac.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(/*! ./create-hash */ 28)
+	
+	var zeroBuffer = new Buffer(128)
+	zeroBuffer.fill(0)
+	
+	module.exports = Hmac
+	
+	function Hmac (alg, key) {
+	  if(!(this instanceof Hmac)) return new Hmac(alg, key)
+	  this._opad = opad
+	  this._alg = alg
+	
+	  var blocksize = (alg === 'sha512') ? 128 : 64
+	
+	  key = this._key = !Buffer.isBuffer(key) ? new Buffer(key) : key
+	
+	  if(key.length > blocksize) {
+	    key = createHash(alg).update(key).digest()
+	  } else if(key.length < blocksize) {
+	    key = Buffer.concat([key, zeroBuffer], blocksize)
+	  }
+	
+	  var ipad = this._ipad = new Buffer(blocksize)
+	  var opad = this._opad = new Buffer(blocksize)
+	
+	  for(var i = 0; i < blocksize; i++) {
+	    ipad[i] = key[i] ^ 0x36
+	    opad[i] = key[i] ^ 0x5C
+	  }
+	
+	  this._hash = createHash(alg).update(ipad)
+	}
+	
+	Hmac.prototype.update = function (data, enc) {
+	  this._hash.update(data, enc)
+	  return this
+	}
+	
+	Hmac.prototype.digest = function (enc) {
+	  var h = this._hash.digest()
+	  return createHash(this._alg).update(this._opad).update(h).digest(enc)
+	}
+	
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 22).Buffer))
+
+/***/ },
+/* 41 */
+/*!***************************************!*\
+  !*** ./~/crypto-browserify/pbkdf2.js ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var pbkdf2Export = __webpack_require__(/*! pbkdf2-compat/pbkdf2 */ 42)
+	
+	module.exports = function (crypto, exports) {
+	  exports = exports || {}
+	
+	  var exported = pbkdf2Export(crypto)
+	
+	  exports.pbkdf2 = exported.pbkdf2
+	  exports.pbkdf2Sync = exported.pbkdf2Sync
+	
+	  return exports
+	}
+
+
+/***/ },
+/* 42 */
+/*!***********************************!*\
+  !*** ./~/pbkdf2-compat/pbkdf2.js ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer) {module.exports = function(crypto) {
+	  function pbkdf2(password, salt, iterations, keylen, digest, callback) {
+	    if ('function' === typeof digest) {
+	      callback = digest
+	      digest = undefined
+	    }
+	
+	    if ('function' !== typeof callback)
+	      throw new Error('No callback provided to pbkdf2')
+	
+	    setTimeout(function() {
+	      var result
+	
+	      try {
+	        result = pbkdf2Sync(password, salt, iterations, keylen, digest)
+	      } catch (e) {
+	        return callback(e)
+	      }
+	
+	      callback(undefined, result)
+	    })
+	  }
+	
+	  function pbkdf2Sync(password, salt, iterations, keylen, digest) {
+	    if ('number' !== typeof iterations)
+	      throw new TypeError('Iterations not a number')
+	
+	    if (iterations < 0)
+	      throw new TypeError('Bad iterations')
+	
+	    if ('number' !== typeof keylen)
+	      throw new TypeError('Key length not a number')
+	
+	    if (keylen < 0)
+	      throw new TypeError('Bad key length')
+	
+	    digest = digest || 'sha1'
+	
+	    if (!Buffer.isBuffer(password)) password = new Buffer(password)
+	    if (!Buffer.isBuffer(salt)) salt = new Buffer(salt)
+	
+	    var hLen, l = 1, r, T
+	    var DK = new Buffer(keylen)
+	    var block1 = new Buffer(salt.length + 4)
+	    salt.copy(block1, 0, 0, salt.length)
+	
+	    for (var i = 1; i <= l; i++) {
+	      block1.writeUInt32BE(i, salt.length)
+	
+	      var U = crypto.createHmac(digest, password).update(block1).digest()
+	
+	      if (!hLen) {
+	        hLen = U.length
+	        T = new Buffer(hLen)
+	        l = Math.ceil(keylen / hLen)
+	        r = keylen - (l - 1) * hLen
+	
+	        if (keylen > (Math.pow(2, 32) - 1) * hLen)
+	          throw new TypeError('keylen exceeds maximum length')
+	      }
+	
+	      U.copy(T, 0, 0, hLen)
+	
+	      for (var j = 1; j < iterations; j++) {
+	        U = crypto.createHmac(digest, password).update(U).digest()
+	
+	        for (var k = 0; k < hLen; k++) {
+	          T[k] ^= U[k]
+	        }
+	      }
+	
+	      var destPos = (i - 1) * hLen
+	      var len = (i == l ? r : hLen)
+	      T.copy(DK, destPos, 0, len)
+	    }
+	
+	    return DK
+	  }
+	
+	  return {
+	    pbkdf2: pbkdf2,
+	    pbkdf2Sync: pbkdf2Sync
+	  }
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 22).Buffer))
+
+/***/ },
+/* 43 */
+/*!************************************!*\
+  !*** ./src/store/actions/cache.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.getAccounts = getAccounts;
+	exports.saveAccount = saveAccount;
+	exports.getCurrentAccountId = getCurrentAccountId;
+	exports.saveCurrentAccountId = saveCurrentAccountId;
+	exports.removeAccount = removeAccount;
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _localforage = __webpack_require__(/*! localforage */ 44);
+	
+	var _localforage2 = _interopRequireDefault(_localforage);
+	
+	var CACHE_KEY_ACCOUNTS = 'accounts-v1';
+	var CACHE_KEY_CURRENT_ACCOUNT_ID = 'current-account-id-v1';
+	
+	var ACCOUNT_EXAMPLE = {
+	  id: 'EXAMPLE',
+	  url: 'http://127.0.0.1:5000/wechat/',
+	  token: 'FAKE_WECHAT_TOKEN'
+	};
+	
+	function getAccounts() {
+	  var promise = new Promise(function (resolve, reject) {
+	    _localforage2['default'].getItem(CACHE_KEY_ACCOUNTS, function (err, accounts) {
+	      if (err) {
+	        reject(err);
+	      }
+	
+	      if (accounts) {
+	        resolve(accounts);
+	      } else {
+	        resolve([ACCOUNT_EXAMPLE]);
+	      }
+	    });
+	  });
+	
+	  return promise;
+	}
+	
+	// create or update
+	
+	function saveAccount(account) {
+	  var promise = new Promise(function (resolve, reject) {
+	    getAccounts().then(function (accounts) {
+	      var idx = accounts.findIndex(function (a) {
+	        return a.id === account.id;
+	      });
+	      if (idx > -1) {
+	        accounts.splice(idx, 1, account);
+	      } else {
+	        accounts.push(account);
+	      }
+	
+	      _localforage2['default'].setItem(CACHE_KEY_ACCOUNTS, accounts, function (err_set) {
+	        if (err_set) {
+	          reject(err_set);
+	        }
+	
+	        resolve(true);
+	      });
+	    })['catch'](function (err_get) {
+	      reject(err_get);
+	    });
+	  });
+	
+	  return promise;
+	}
+	
+	function getCurrentAccountId() {
+	  var promise = new Promise(function (resolve, reject) {
+	    _localforage2['default'].getItem(CACHE_KEY_CURRENT_ACCOUNT_ID, function (err, id) {
+	      if (err) {
+	        reject(err);
+	      }
+	
+	      resolve(id || null);
+	    });
+	  });
+	
+	  return promise;
+	}
+	
+	function saveCurrentAccountId(id) {
+	  var promise = new Promise(function (resolve, reject) {
+	    _localforage2['default'].setItem(CACHE_KEY_CURRENT_ACCOUNT_ID, id, function (err) {
+	      if (err) {
+	        reject(err);
+	      }
+	
+	      resolve(true);
+	    });
+	  });
+	
+	  return promise;
+	}
+	
+	function removeAccount(id) {
+	  var promise = new Promise(function (resolve, reject) {
+	    getAccounts().then(function (accounts) {
+	      var idx = accounts.findIndex(function (a) {
+	        return a.id === id;
+	      });
+	      accounts.splice(idx, 1);
+	
+	      _localforage2['default'].setItem(CACHE_KEY_ACCOUNTS, accounts, function (err) {
+	        if (err) {
+	          reject(err);
+	        }
+	
+	        resolve(true);
+	      });
+	    })['catch'](function (err) {
+	      reject(err);
+	    });
+	  });
+	
+	  return promise;
+	}
+
+/***/ },
+/* 44 */
 /*!*******************************************!*\
   !*** ./~/localforage/dist/localforage.js ***!
   \*******************************************/
@@ -19409,3892 +23371,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./~/process/browser.js */ 2)))
 
 /***/ },
-/* 17 */
-/*!**************************************!*\
-  !*** ./src/store/mutations/types.js ***!
-  \**************************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	var INIT = 'INIT';
-	exports.INIT = INIT;
-	var CHANGE_NAV = 'CHANGE_NAV';
-	exports.CHANGE_NAV = CHANGE_NAV;
-
-/***/ },
-/* 18 */
-/*!****************************************!*\
-  !*** ./src/store/actions/signature.js ***!
-  \****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports['default'] = generate_query;
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _crypto = __webpack_require__(/*! crypto */ 19);
-	
-	var _crypto2 = _interopRequireDefault(_crypto);
-	
-	function generate_query(token) {
-	  var timestamp = Math.floor(Date.now() / 1000);
-	  var nonce = Math.random().toString(36).substring(2);
-	
-	  var source = [token.toString(), timestamp.toString(), nonce.toString()].sort().join('');
-	  var signature = _crypto2['default'].createHash('sha1').update(source).digest('hex');
-	
-	  return { timestamp: timestamp, nonce: nonce, signature: signature };
-	}
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 19 */
-/*!**************************************!*\
-  !*** ./~/crypto-browserify/index.js ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var rng = __webpack_require__(/*! ./rng */ 24)
-	
-	function error () {
-	  var m = [].slice.call(arguments).join(' ')
-	  throw new Error([
-	    m,
-	    'we accept pull requests',
-	    'http://github.com/dominictarr/crypto-browserify'
-	    ].join('\n'))
-	}
-	
-	exports.createHash = __webpack_require__(/*! ./create-hash */ 26)
-	
-	exports.createHmac = __webpack_require__(/*! ./create-hmac */ 38)
-	
-	exports.randomBytes = function(size, callback) {
-	  if (callback && callback.call) {
-	    try {
-	      callback.call(this, undefined, new Buffer(rng(size)))
-	    } catch (err) { callback(err) }
-	  } else {
-	    return new Buffer(rng(size))
-	  }
-	}
-	
-	function each(a, f) {
-	  for(var i in a)
-	    f(a[i], i)
-	}
-	
-	exports.getHashes = function () {
-	  return ['sha1', 'sha256', 'sha512', 'md5', 'rmd160']
-	}
-	
-	var p = __webpack_require__(/*! ./pbkdf2 */ 39)(exports)
-	exports.pbkdf2 = p.pbkdf2
-	exports.pbkdf2Sync = p.pbkdf2Sync
-	
-	
-	// the least I can do is make error messages for the rest of the node.js/crypto api.
-	each(['createCredentials'
-	, 'createCipher'
-	, 'createCipheriv'
-	, 'createDecipher'
-	, 'createDecipheriv'
-	, 'createSign'
-	, 'createVerify'
-	, 'createDiffieHellman'
-	], function (name) {
-	  exports[name] = function () {
-	    error('sorry,', name, 'is not implemented yet')
-	  }
-	})
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 20).Buffer))
-
-/***/ },
-/* 20 */
-/*!***************************!*\
-  !*** ./~/buffer/index.js ***!
-  \***************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(Buffer, global) {/*!
-	 * The buffer module from node.js, for the browser.
-	 *
-	 * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
-	 * @license  MIT
-	 */
-	/* eslint-disable no-proto */
-	
-	var base64 = __webpack_require__(/*! base64-js */ 21)
-	var ieee754 = __webpack_require__(/*! ieee754 */ 22)
-	var isArray = __webpack_require__(/*! isarray */ 23)
-	
-	exports.Buffer = Buffer
-	exports.SlowBuffer = SlowBuffer
-	exports.INSPECT_MAX_BYTES = 50
-	Buffer.poolSize = 8192 // not used by this implementation
-	
-	var rootParent = {}
-	
-	/**
-	 * If `Buffer.TYPED_ARRAY_SUPPORT`:
-	 *   === true    Use Uint8Array implementation (fastest)
-	 *   === false   Use Object implementation (most compatible, even IE6)
-	 *
-	 * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
-	 * Opera 11.6+, iOS 4.2+.
-	 *
-	 * Due to various browser bugs, sometimes the Object implementation will be used even
-	 * when the browser supports typed arrays.
-	 *
-	 * Note:
-	 *
-	 *   - Firefox 4-29 lacks support for adding new properties to `Uint8Array` instances,
-	 *     See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
-	 *
-	 *   - Safari 5-7 lacks support for changing the `Object.prototype.constructor` property
-	 *     on objects.
-	 *
-	 *   - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
-	 *
-	 *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
-	 *     incorrect length in some situations.
-	
-	 * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
-	 * get the Object implementation, which is slower but behaves correctly.
-	 */
-	Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
-	  ? global.TYPED_ARRAY_SUPPORT
-	  : typedArraySupport()
-	
-	function typedArraySupport () {
-	  function Bar () {}
-	  try {
-	    var arr = new Uint8Array(1)
-	    arr.foo = function () { return 42 }
-	    arr.constructor = Bar
-	    return arr.foo() === 42 && // typed array instances can be augmented
-	        arr.constructor === Bar && // constructor can be set
-	        typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
-	        arr.subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
-	  } catch (e) {
-	    return false
-	  }
-	}
-	
-	function kMaxLength () {
-	  return Buffer.TYPED_ARRAY_SUPPORT
-	    ? 0x7fffffff
-	    : 0x3fffffff
-	}
-	
-	/**
-	 * Class: Buffer
-	 * =============
-	 *
-	 * The Buffer constructor returns instances of `Uint8Array` that are augmented
-	 * with function properties for all the node `Buffer` API functions. We use
-	 * `Uint8Array` so that square bracket notation works as expected -- it returns
-	 * a single octet.
-	 *
-	 * By augmenting the instances, we can avoid modifying the `Uint8Array`
-	 * prototype.
-	 */
-	function Buffer (arg) {
-	  if (!(this instanceof Buffer)) {
-	    // Avoid going through an ArgumentsAdaptorTrampoline in the common case.
-	    if (arguments.length > 1) return new Buffer(arg, arguments[1])
-	    return new Buffer(arg)
-	  }
-	
-	  this.length = 0
-	  this.parent = undefined
-	
-	  // Common case.
-	  if (typeof arg === 'number') {
-	    return fromNumber(this, arg)
-	  }
-	
-	  // Slightly less common case.
-	  if (typeof arg === 'string') {
-	    return fromString(this, arg, arguments.length > 1 ? arguments[1] : 'utf8')
-	  }
-	
-	  // Unusual.
-	  return fromObject(this, arg)
-	}
-	
-	function fromNumber (that, length) {
-	  that = allocate(that, length < 0 ? 0 : checked(length) | 0)
-	  if (!Buffer.TYPED_ARRAY_SUPPORT) {
-	    for (var i = 0; i < length; i++) {
-	      that[i] = 0
-	    }
-	  }
-	  return that
-	}
-	
-	function fromString (that, string, encoding) {
-	  if (typeof encoding !== 'string' || encoding === '') encoding = 'utf8'
-	
-	  // Assumption: byteLength() return value is always < kMaxLength.
-	  var length = byteLength(string, encoding) | 0
-	  that = allocate(that, length)
-	
-	  that.write(string, encoding)
-	  return that
-	}
-	
-	function fromObject (that, object) {
-	  if (Buffer.isBuffer(object)) return fromBuffer(that, object)
-	
-	  if (isArray(object)) return fromArray(that, object)
-	
-	  if (object == null) {
-	    throw new TypeError('must start with number, buffer, array or string')
-	  }
-	
-	  if (typeof ArrayBuffer !== 'undefined') {
-	    if (object.buffer instanceof ArrayBuffer) {
-	      return fromTypedArray(that, object)
-	    }
-	    if (object instanceof ArrayBuffer) {
-	      return fromArrayBuffer(that, object)
-	    }
-	  }
-	
-	  if (object.length) return fromArrayLike(that, object)
-	
-	  return fromJsonObject(that, object)
-	}
-	
-	function fromBuffer (that, buffer) {
-	  var length = checked(buffer.length) | 0
-	  that = allocate(that, length)
-	  buffer.copy(that, 0, 0, length)
-	  return that
-	}
-	
-	function fromArray (that, array) {
-	  var length = checked(array.length) | 0
-	  that = allocate(that, length)
-	  for (var i = 0; i < length; i += 1) {
-	    that[i] = array[i] & 255
-	  }
-	  return that
-	}
-	
-	// Duplicate of fromArray() to keep fromArray() monomorphic.
-	function fromTypedArray (that, array) {
-	  var length = checked(array.length) | 0
-	  that = allocate(that, length)
-	  // Truncating the elements is probably not what people expect from typed
-	  // arrays with BYTES_PER_ELEMENT > 1 but it's compatible with the behavior
-	  // of the old Buffer constructor.
-	  for (var i = 0; i < length; i += 1) {
-	    that[i] = array[i] & 255
-	  }
-	  return that
-	}
-	
-	function fromArrayBuffer (that, array) {
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    // Return an augmented `Uint8Array` instance, for best performance
-	    array.byteLength
-	    that = Buffer._augment(new Uint8Array(array))
-	  } else {
-	    // Fallback: Return an object instance of the Buffer class
-	    that = fromTypedArray(that, new Uint8Array(array))
-	  }
-	  return that
-	}
-	
-	function fromArrayLike (that, array) {
-	  var length = checked(array.length) | 0
-	  that = allocate(that, length)
-	  for (var i = 0; i < length; i += 1) {
-	    that[i] = array[i] & 255
-	  }
-	  return that
-	}
-	
-	// Deserialize { type: 'Buffer', data: [1,2,3,...] } into a Buffer object.
-	// Returns a zero-length buffer for inputs that don't conform to the spec.
-	function fromJsonObject (that, object) {
-	  var array
-	  var length = 0
-	
-	  if (object.type === 'Buffer' && isArray(object.data)) {
-	    array = object.data
-	    length = checked(array.length) | 0
-	  }
-	  that = allocate(that, length)
-	
-	  for (var i = 0; i < length; i += 1) {
-	    that[i] = array[i] & 255
-	  }
-	  return that
-	}
-	
-	if (Buffer.TYPED_ARRAY_SUPPORT) {
-	  Buffer.prototype.__proto__ = Uint8Array.prototype
-	  Buffer.__proto__ = Uint8Array
-	}
-	
-	function allocate (that, length) {
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    // Return an augmented `Uint8Array` instance, for best performance
-	    that = Buffer._augment(new Uint8Array(length))
-	    that.__proto__ = Buffer.prototype
-	  } else {
-	    // Fallback: Return an object instance of the Buffer class
-	    that.length = length
-	    that._isBuffer = true
-	  }
-	
-	  var fromPool = length !== 0 && length <= Buffer.poolSize >>> 1
-	  if (fromPool) that.parent = rootParent
-	
-	  return that
-	}
-	
-	function checked (length) {
-	  // Note: cannot use `length < kMaxLength` here because that fails when
-	  // length is NaN (which is otherwise coerced to zero.)
-	  if (length >= kMaxLength()) {
-	    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
-	                         'size: 0x' + kMaxLength().toString(16) + ' bytes')
-	  }
-	  return length | 0
-	}
-	
-	function SlowBuffer (subject, encoding) {
-	  if (!(this instanceof SlowBuffer)) return new SlowBuffer(subject, encoding)
-	
-	  var buf = new Buffer(subject, encoding)
-	  delete buf.parent
-	  return buf
-	}
-	
-	Buffer.isBuffer = function isBuffer (b) {
-	  return !!(b != null && b._isBuffer)
-	}
-	
-	Buffer.compare = function compare (a, b) {
-	  if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
-	    throw new TypeError('Arguments must be Buffers')
-	  }
-	
-	  if (a === b) return 0
-	
-	  var x = a.length
-	  var y = b.length
-	
-	  var i = 0
-	  var len = Math.min(x, y)
-	  while (i < len) {
-	    if (a[i] !== b[i]) break
-	
-	    ++i
-	  }
-	
-	  if (i !== len) {
-	    x = a[i]
-	    y = b[i]
-	  }
-	
-	  if (x < y) return -1
-	  if (y < x) return 1
-	  return 0
-	}
-	
-	Buffer.isEncoding = function isEncoding (encoding) {
-	  switch (String(encoding).toLowerCase()) {
-	    case 'hex':
-	    case 'utf8':
-	    case 'utf-8':
-	    case 'ascii':
-	    case 'binary':
-	    case 'base64':
-	    case 'raw':
-	    case 'ucs2':
-	    case 'ucs-2':
-	    case 'utf16le':
-	    case 'utf-16le':
-	      return true
-	    default:
-	      return false
-	  }
-	}
-	
-	Buffer.concat = function concat (list, length) {
-	  if (!isArray(list)) throw new TypeError('list argument must be an Array of Buffers.')
-	
-	  if (list.length === 0) {
-	    return new Buffer(0)
-	  }
-	
-	  var i
-	  if (length === undefined) {
-	    length = 0
-	    for (i = 0; i < list.length; i++) {
-	      length += list[i].length
-	    }
-	  }
-	
-	  var buf = new Buffer(length)
-	  var pos = 0
-	  for (i = 0; i < list.length; i++) {
-	    var item = list[i]
-	    item.copy(buf, pos)
-	    pos += item.length
-	  }
-	  return buf
-	}
-	
-	function byteLength (string, encoding) {
-	  if (typeof string !== 'string') string = '' + string
-	
-	  var len = string.length
-	  if (len === 0) return 0
-	
-	  // Use a for loop to avoid recursion
-	  var loweredCase = false
-	  for (;;) {
-	    switch (encoding) {
-	      case 'ascii':
-	      case 'binary':
-	      // Deprecated
-	      case 'raw':
-	      case 'raws':
-	        return len
-	      case 'utf8':
-	      case 'utf-8':
-	        return utf8ToBytes(string).length
-	      case 'ucs2':
-	      case 'ucs-2':
-	      case 'utf16le':
-	      case 'utf-16le':
-	        return len * 2
-	      case 'hex':
-	        return len >>> 1
-	      case 'base64':
-	        return base64ToBytes(string).length
-	      default:
-	        if (loweredCase) return utf8ToBytes(string).length // assume utf8
-	        encoding = ('' + encoding).toLowerCase()
-	        loweredCase = true
-	    }
-	  }
-	}
-	Buffer.byteLength = byteLength
-	
-	// pre-set for values that may exist in the future
-	Buffer.prototype.length = undefined
-	Buffer.prototype.parent = undefined
-	
-	function slowToString (encoding, start, end) {
-	  var loweredCase = false
-	
-	  start = start | 0
-	  end = end === undefined || end === Infinity ? this.length : end | 0
-	
-	  if (!encoding) encoding = 'utf8'
-	  if (start < 0) start = 0
-	  if (end > this.length) end = this.length
-	  if (end <= start) return ''
-	
-	  while (true) {
-	    switch (encoding) {
-	      case 'hex':
-	        return hexSlice(this, start, end)
-	
-	      case 'utf8':
-	      case 'utf-8':
-	        return utf8Slice(this, start, end)
-	
-	      case 'ascii':
-	        return asciiSlice(this, start, end)
-	
-	      case 'binary':
-	        return binarySlice(this, start, end)
-	
-	      case 'base64':
-	        return base64Slice(this, start, end)
-	
-	      case 'ucs2':
-	      case 'ucs-2':
-	      case 'utf16le':
-	      case 'utf-16le':
-	        return utf16leSlice(this, start, end)
-	
-	      default:
-	        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
-	        encoding = (encoding + '').toLowerCase()
-	        loweredCase = true
-	    }
-	  }
-	}
-	
-	Buffer.prototype.toString = function toString () {
-	  var length = this.length | 0
-	  if (length === 0) return ''
-	  if (arguments.length === 0) return utf8Slice(this, 0, length)
-	  return slowToString.apply(this, arguments)
-	}
-	
-	Buffer.prototype.equals = function equals (b) {
-	  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
-	  if (this === b) return true
-	  return Buffer.compare(this, b) === 0
-	}
-	
-	Buffer.prototype.inspect = function inspect () {
-	  var str = ''
-	  var max = exports.INSPECT_MAX_BYTES
-	  if (this.length > 0) {
-	    str = this.toString('hex', 0, max).match(/.{2}/g).join(' ')
-	    if (this.length > max) str += ' ... '
-	  }
-	  return '<Buffer ' + str + '>'
-	}
-	
-	Buffer.prototype.compare = function compare (b) {
-	  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
-	  if (this === b) return 0
-	  return Buffer.compare(this, b)
-	}
-	
-	Buffer.prototype.indexOf = function indexOf (val, byteOffset) {
-	  if (byteOffset > 0x7fffffff) byteOffset = 0x7fffffff
-	  else if (byteOffset < -0x80000000) byteOffset = -0x80000000
-	  byteOffset >>= 0
-	
-	  if (this.length === 0) return -1
-	  if (byteOffset >= this.length) return -1
-	
-	  // Negative offsets start from the end of the buffer
-	  if (byteOffset < 0) byteOffset = Math.max(this.length + byteOffset, 0)
-	
-	  if (typeof val === 'string') {
-	    if (val.length === 0) return -1 // special case: looking for empty string always fails
-	    return String.prototype.indexOf.call(this, val, byteOffset)
-	  }
-	  if (Buffer.isBuffer(val)) {
-	    return arrayIndexOf(this, val, byteOffset)
-	  }
-	  if (typeof val === 'number') {
-	    if (Buffer.TYPED_ARRAY_SUPPORT && Uint8Array.prototype.indexOf === 'function') {
-	      return Uint8Array.prototype.indexOf.call(this, val, byteOffset)
-	    }
-	    return arrayIndexOf(this, [ val ], byteOffset)
-	  }
-	
-	  function arrayIndexOf (arr, val, byteOffset) {
-	    var foundIndex = -1
-	    for (var i = 0; byteOffset + i < arr.length; i++) {
-	      if (arr[byteOffset + i] === val[foundIndex === -1 ? 0 : i - foundIndex]) {
-	        if (foundIndex === -1) foundIndex = i
-	        if (i - foundIndex + 1 === val.length) return byteOffset + foundIndex
-	      } else {
-	        foundIndex = -1
-	      }
-	    }
-	    return -1
-	  }
-	
-	  throw new TypeError('val must be string, number or Buffer')
-	}
-	
-	// `get` is deprecated
-	Buffer.prototype.get = function get (offset) {
-	  console.log('.get() is deprecated. Access using array indexes instead.')
-	  return this.readUInt8(offset)
-	}
-	
-	// `set` is deprecated
-	Buffer.prototype.set = function set (v, offset) {
-	  console.log('.set() is deprecated. Access using array indexes instead.')
-	  return this.writeUInt8(v, offset)
-	}
-	
-	function hexWrite (buf, string, offset, length) {
-	  offset = Number(offset) || 0
-	  var remaining = buf.length - offset
-	  if (!length) {
-	    length = remaining
-	  } else {
-	    length = Number(length)
-	    if (length > remaining) {
-	      length = remaining
-	    }
-	  }
-	
-	  // must be an even number of digits
-	  var strLen = string.length
-	  if (strLen % 2 !== 0) throw new Error('Invalid hex string')
-	
-	  if (length > strLen / 2) {
-	    length = strLen / 2
-	  }
-	  for (var i = 0; i < length; i++) {
-	    var parsed = parseInt(string.substr(i * 2, 2), 16)
-	    if (isNaN(parsed)) throw new Error('Invalid hex string')
-	    buf[offset + i] = parsed
-	  }
-	  return i
-	}
-	
-	function utf8Write (buf, string, offset, length) {
-	  return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
-	}
-	
-	function asciiWrite (buf, string, offset, length) {
-	  return blitBuffer(asciiToBytes(string), buf, offset, length)
-	}
-	
-	function binaryWrite (buf, string, offset, length) {
-	  return asciiWrite(buf, string, offset, length)
-	}
-	
-	function base64Write (buf, string, offset, length) {
-	  return blitBuffer(base64ToBytes(string), buf, offset, length)
-	}
-	
-	function ucs2Write (buf, string, offset, length) {
-	  return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
-	}
-	
-	Buffer.prototype.write = function write (string, offset, length, encoding) {
-	  // Buffer#write(string)
-	  if (offset === undefined) {
-	    encoding = 'utf8'
-	    length = this.length
-	    offset = 0
-	  // Buffer#write(string, encoding)
-	  } else if (length === undefined && typeof offset === 'string') {
-	    encoding = offset
-	    length = this.length
-	    offset = 0
-	  // Buffer#write(string, offset[, length][, encoding])
-	  } else if (isFinite(offset)) {
-	    offset = offset | 0
-	    if (isFinite(length)) {
-	      length = length | 0
-	      if (encoding === undefined) encoding = 'utf8'
-	    } else {
-	      encoding = length
-	      length = undefined
-	    }
-	  // legacy write(string, encoding, offset, length) - remove in v0.13
-	  } else {
-	    var swap = encoding
-	    encoding = offset
-	    offset = length | 0
-	    length = swap
-	  }
-	
-	  var remaining = this.length - offset
-	  if (length === undefined || length > remaining) length = remaining
-	
-	  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
-	    throw new RangeError('attempt to write outside buffer bounds')
-	  }
-	
-	  if (!encoding) encoding = 'utf8'
-	
-	  var loweredCase = false
-	  for (;;) {
-	    switch (encoding) {
-	      case 'hex':
-	        return hexWrite(this, string, offset, length)
-	
-	      case 'utf8':
-	      case 'utf-8':
-	        return utf8Write(this, string, offset, length)
-	
-	      case 'ascii':
-	        return asciiWrite(this, string, offset, length)
-	
-	      case 'binary':
-	        return binaryWrite(this, string, offset, length)
-	
-	      case 'base64':
-	        // Warning: maxLength not taken into account in base64Write
-	        return base64Write(this, string, offset, length)
-	
-	      case 'ucs2':
-	      case 'ucs-2':
-	      case 'utf16le':
-	      case 'utf-16le':
-	        return ucs2Write(this, string, offset, length)
-	
-	      default:
-	        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
-	        encoding = ('' + encoding).toLowerCase()
-	        loweredCase = true
-	    }
-	  }
-	}
-	
-	Buffer.prototype.toJSON = function toJSON () {
-	  return {
-	    type: 'Buffer',
-	    data: Array.prototype.slice.call(this._arr || this, 0)
-	  }
-	}
-	
-	function base64Slice (buf, start, end) {
-	  if (start === 0 && end === buf.length) {
-	    return base64.fromByteArray(buf)
-	  } else {
-	    return base64.fromByteArray(buf.slice(start, end))
-	  }
-	}
-	
-	function utf8Slice (buf, start, end) {
-	  end = Math.min(buf.length, end)
-	  var res = []
-	
-	  var i = start
-	  while (i < end) {
-	    var firstByte = buf[i]
-	    var codePoint = null
-	    var bytesPerSequence = (firstByte > 0xEF) ? 4
-	      : (firstByte > 0xDF) ? 3
-	      : (firstByte > 0xBF) ? 2
-	      : 1
-	
-	    if (i + bytesPerSequence <= end) {
-	      var secondByte, thirdByte, fourthByte, tempCodePoint
-	
-	      switch (bytesPerSequence) {
-	        case 1:
-	          if (firstByte < 0x80) {
-	            codePoint = firstByte
-	          }
-	          break
-	        case 2:
-	          secondByte = buf[i + 1]
-	          if ((secondByte & 0xC0) === 0x80) {
-	            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
-	            if (tempCodePoint > 0x7F) {
-	              codePoint = tempCodePoint
-	            }
-	          }
-	          break
-	        case 3:
-	          secondByte = buf[i + 1]
-	          thirdByte = buf[i + 2]
-	          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
-	            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
-	            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
-	              codePoint = tempCodePoint
-	            }
-	          }
-	          break
-	        case 4:
-	          secondByte = buf[i + 1]
-	          thirdByte = buf[i + 2]
-	          fourthByte = buf[i + 3]
-	          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
-	            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
-	            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
-	              codePoint = tempCodePoint
-	            }
-	          }
-	      }
-	    }
-	
-	    if (codePoint === null) {
-	      // we did not generate a valid codePoint so insert a
-	      // replacement char (U+FFFD) and advance only 1 byte
-	      codePoint = 0xFFFD
-	      bytesPerSequence = 1
-	    } else if (codePoint > 0xFFFF) {
-	      // encode to utf16 (surrogate pair dance)
-	      codePoint -= 0x10000
-	      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
-	      codePoint = 0xDC00 | codePoint & 0x3FF
-	    }
-	
-	    res.push(codePoint)
-	    i += bytesPerSequence
-	  }
-	
-	  return decodeCodePointsArray(res)
-	}
-	
-	// Based on http://stackoverflow.com/a/22747272/680742, the browser with
-	// the lowest limit is Chrome, with 0x10000 args.
-	// We go 1 magnitude less, for safety
-	var MAX_ARGUMENTS_LENGTH = 0x1000
-	
-	function decodeCodePointsArray (codePoints) {
-	  var len = codePoints.length
-	  if (len <= MAX_ARGUMENTS_LENGTH) {
-	    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
-	  }
-	
-	  // Decode in chunks to avoid "call stack size exceeded".
-	  var res = ''
-	  var i = 0
-	  while (i < len) {
-	    res += String.fromCharCode.apply(
-	      String,
-	      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
-	    )
-	  }
-	  return res
-	}
-	
-	function asciiSlice (buf, start, end) {
-	  var ret = ''
-	  end = Math.min(buf.length, end)
-	
-	  for (var i = start; i < end; i++) {
-	    ret += String.fromCharCode(buf[i] & 0x7F)
-	  }
-	  return ret
-	}
-	
-	function binarySlice (buf, start, end) {
-	  var ret = ''
-	  end = Math.min(buf.length, end)
-	
-	  for (var i = start; i < end; i++) {
-	    ret += String.fromCharCode(buf[i])
-	  }
-	  return ret
-	}
-	
-	function hexSlice (buf, start, end) {
-	  var len = buf.length
-	
-	  if (!start || start < 0) start = 0
-	  if (!end || end < 0 || end > len) end = len
-	
-	  var out = ''
-	  for (var i = start; i < end; i++) {
-	    out += toHex(buf[i])
-	  }
-	  return out
-	}
-	
-	function utf16leSlice (buf, start, end) {
-	  var bytes = buf.slice(start, end)
-	  var res = ''
-	  for (var i = 0; i < bytes.length; i += 2) {
-	    res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256)
-	  }
-	  return res
-	}
-	
-	Buffer.prototype.slice = function slice (start, end) {
-	  var len = this.length
-	  start = ~~start
-	  end = end === undefined ? len : ~~end
-	
-	  if (start < 0) {
-	    start += len
-	    if (start < 0) start = 0
-	  } else if (start > len) {
-	    start = len
-	  }
-	
-	  if (end < 0) {
-	    end += len
-	    if (end < 0) end = 0
-	  } else if (end > len) {
-	    end = len
-	  }
-	
-	  if (end < start) end = start
-	
-	  var newBuf
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    newBuf = Buffer._augment(this.subarray(start, end))
-	  } else {
-	    var sliceLen = end - start
-	    newBuf = new Buffer(sliceLen, undefined)
-	    for (var i = 0; i < sliceLen; i++) {
-	      newBuf[i] = this[i + start]
-	    }
-	  }
-	
-	  if (newBuf.length) newBuf.parent = this.parent || this
-	
-	  return newBuf
-	}
-	
-	/*
-	 * Need to make sure that buffer isn't trying to write out of bounds.
-	 */
-	function checkOffset (offset, ext, length) {
-	  if ((offset % 1) !== 0 || offset < 0) throw new RangeError('offset is not uint')
-	  if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length')
-	}
-	
-	Buffer.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert) {
-	  offset = offset | 0
-	  byteLength = byteLength | 0
-	  if (!noAssert) checkOffset(offset, byteLength, this.length)
-	
-	  var val = this[offset]
-	  var mul = 1
-	  var i = 0
-	  while (++i < byteLength && (mul *= 0x100)) {
-	    val += this[offset + i] * mul
-	  }
-	
-	  return val
-	}
-	
-	Buffer.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert) {
-	  offset = offset | 0
-	  byteLength = byteLength | 0
-	  if (!noAssert) {
-	    checkOffset(offset, byteLength, this.length)
-	  }
-	
-	  var val = this[offset + --byteLength]
-	  var mul = 1
-	  while (byteLength > 0 && (mul *= 0x100)) {
-	    val += this[offset + --byteLength] * mul
-	  }
-	
-	  return val
-	}
-	
-	Buffer.prototype.readUInt8 = function readUInt8 (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 1, this.length)
-	  return this[offset]
-	}
-	
-	Buffer.prototype.readUInt16LE = function readUInt16LE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 2, this.length)
-	  return this[offset] | (this[offset + 1] << 8)
-	}
-	
-	Buffer.prototype.readUInt16BE = function readUInt16BE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 2, this.length)
-	  return (this[offset] << 8) | this[offset + 1]
-	}
-	
-	Buffer.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 4, this.length)
-	
-	  return ((this[offset]) |
-	      (this[offset + 1] << 8) |
-	      (this[offset + 2] << 16)) +
-	      (this[offset + 3] * 0x1000000)
-	}
-	
-	Buffer.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 4, this.length)
-	
-	  return (this[offset] * 0x1000000) +
-	    ((this[offset + 1] << 16) |
-	    (this[offset + 2] << 8) |
-	    this[offset + 3])
-	}
-	
-	Buffer.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
-	  offset = offset | 0
-	  byteLength = byteLength | 0
-	  if (!noAssert) checkOffset(offset, byteLength, this.length)
-	
-	  var val = this[offset]
-	  var mul = 1
-	  var i = 0
-	  while (++i < byteLength && (mul *= 0x100)) {
-	    val += this[offset + i] * mul
-	  }
-	  mul *= 0x80
-	
-	  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
-	
-	  return val
-	}
-	
-	Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
-	  offset = offset | 0
-	  byteLength = byteLength | 0
-	  if (!noAssert) checkOffset(offset, byteLength, this.length)
-	
-	  var i = byteLength
-	  var mul = 1
-	  var val = this[offset + --i]
-	  while (i > 0 && (mul *= 0x100)) {
-	    val += this[offset + --i] * mul
-	  }
-	  mul *= 0x80
-	
-	  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
-	
-	  return val
-	}
-	
-	Buffer.prototype.readInt8 = function readInt8 (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 1, this.length)
-	  if (!(this[offset] & 0x80)) return (this[offset])
-	  return ((0xff - this[offset] + 1) * -1)
-	}
-	
-	Buffer.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 2, this.length)
-	  var val = this[offset] | (this[offset + 1] << 8)
-	  return (val & 0x8000) ? val | 0xFFFF0000 : val
-	}
-	
-	Buffer.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 2, this.length)
-	  var val = this[offset + 1] | (this[offset] << 8)
-	  return (val & 0x8000) ? val | 0xFFFF0000 : val
-	}
-	
-	Buffer.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 4, this.length)
-	
-	  return (this[offset]) |
-	    (this[offset + 1] << 8) |
-	    (this[offset + 2] << 16) |
-	    (this[offset + 3] << 24)
-	}
-	
-	Buffer.prototype.readInt32BE = function readInt32BE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 4, this.length)
-	
-	  return (this[offset] << 24) |
-	    (this[offset + 1] << 16) |
-	    (this[offset + 2] << 8) |
-	    (this[offset + 3])
-	}
-	
-	Buffer.prototype.readFloatLE = function readFloatLE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 4, this.length)
-	  return ieee754.read(this, offset, true, 23, 4)
-	}
-	
-	Buffer.prototype.readFloatBE = function readFloatBE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 4, this.length)
-	  return ieee754.read(this, offset, false, 23, 4)
-	}
-	
-	Buffer.prototype.readDoubleLE = function readDoubleLE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 8, this.length)
-	  return ieee754.read(this, offset, true, 52, 8)
-	}
-	
-	Buffer.prototype.readDoubleBE = function readDoubleBE (offset, noAssert) {
-	  if (!noAssert) checkOffset(offset, 8, this.length)
-	  return ieee754.read(this, offset, false, 52, 8)
-	}
-	
-	function checkInt (buf, value, offset, ext, max, min) {
-	  if (!Buffer.isBuffer(buf)) throw new TypeError('buffer must be a Buffer instance')
-	  if (value > max || value < min) throw new RangeError('value is out of bounds')
-	  if (offset + ext > buf.length) throw new RangeError('index out of range')
-	}
-	
-	Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  byteLength = byteLength | 0
-	  if (!noAssert) checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
-	
-	  var mul = 1
-	  var i = 0
-	  this[offset] = value & 0xFF
-	  while (++i < byteLength && (mul *= 0x100)) {
-	    this[offset + i] = (value / mul) & 0xFF
-	  }
-	
-	  return offset + byteLength
-	}
-	
-	Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  byteLength = byteLength | 0
-	  if (!noAssert) checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
-	
-	  var i = byteLength - 1
-	  var mul = 1
-	  this[offset + i] = value & 0xFF
-	  while (--i >= 0 && (mul *= 0x100)) {
-	    this[offset + i] = (value / mul) & 0xFF
-	  }
-	
-	  return offset + byteLength
-	}
-	
-	Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
-	  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
-	  this[offset] = (value & 0xff)
-	  return offset + 1
-	}
-	
-	function objectWriteUInt16 (buf, value, offset, littleEndian) {
-	  if (value < 0) value = 0xffff + value + 1
-	  for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; i++) {
-	    buf[offset + i] = (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
-	      (littleEndian ? i : 1 - i) * 8
-	  }
-	}
-	
-	Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    this[offset] = (value & 0xff)
-	    this[offset + 1] = (value >>> 8)
-	  } else {
-	    objectWriteUInt16(this, value, offset, true)
-	  }
-	  return offset + 2
-	}
-	
-	Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    this[offset] = (value >>> 8)
-	    this[offset + 1] = (value & 0xff)
-	  } else {
-	    objectWriteUInt16(this, value, offset, false)
-	  }
-	  return offset + 2
-	}
-	
-	function objectWriteUInt32 (buf, value, offset, littleEndian) {
-	  if (value < 0) value = 0xffffffff + value + 1
-	  for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; i++) {
-	    buf[offset + i] = (value >>> (littleEndian ? i : 3 - i) * 8) & 0xff
-	  }
-	}
-	
-	Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    this[offset + 3] = (value >>> 24)
-	    this[offset + 2] = (value >>> 16)
-	    this[offset + 1] = (value >>> 8)
-	    this[offset] = (value & 0xff)
-	  } else {
-	    objectWriteUInt32(this, value, offset, true)
-	  }
-	  return offset + 4
-	}
-	
-	Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    this[offset] = (value >>> 24)
-	    this[offset + 1] = (value >>> 16)
-	    this[offset + 2] = (value >>> 8)
-	    this[offset + 3] = (value & 0xff)
-	  } else {
-	    objectWriteUInt32(this, value, offset, false)
-	  }
-	  return offset + 4
-	}
-	
-	Buffer.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) {
-	    var limit = Math.pow(2, 8 * byteLength - 1)
-	
-	    checkInt(this, value, offset, byteLength, limit - 1, -limit)
-	  }
-	
-	  var i = 0
-	  var mul = 1
-	  var sub = value < 0 ? 1 : 0
-	  this[offset] = value & 0xFF
-	  while (++i < byteLength && (mul *= 0x100)) {
-	    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
-	  }
-	
-	  return offset + byteLength
-	}
-	
-	Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) {
-	    var limit = Math.pow(2, 8 * byteLength - 1)
-	
-	    checkInt(this, value, offset, byteLength, limit - 1, -limit)
-	  }
-	
-	  var i = byteLength - 1
-	  var mul = 1
-	  var sub = value < 0 ? 1 : 0
-	  this[offset + i] = value & 0xFF
-	  while (--i >= 0 && (mul *= 0x100)) {
-	    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
-	  }
-	
-	  return offset + byteLength
-	}
-	
-	Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
-	  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
-	  if (value < 0) value = 0xff + value + 1
-	  this[offset] = (value & 0xff)
-	  return offset + 1
-	}
-	
-	Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    this[offset] = (value & 0xff)
-	    this[offset + 1] = (value >>> 8)
-	  } else {
-	    objectWriteUInt16(this, value, offset, true)
-	  }
-	  return offset + 2
-	}
-	
-	Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    this[offset] = (value >>> 8)
-	    this[offset + 1] = (value & 0xff)
-	  } else {
-	    objectWriteUInt16(this, value, offset, false)
-	  }
-	  return offset + 2
-	}
-	
-	Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    this[offset] = (value & 0xff)
-	    this[offset + 1] = (value >>> 8)
-	    this[offset + 2] = (value >>> 16)
-	    this[offset + 3] = (value >>> 24)
-	  } else {
-	    objectWriteUInt32(this, value, offset, true)
-	  }
-	  return offset + 4
-	}
-	
-	Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
-	  value = +value
-	  offset = offset | 0
-	  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
-	  if (value < 0) value = 0xffffffff + value + 1
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    this[offset] = (value >>> 24)
-	    this[offset + 1] = (value >>> 16)
-	    this[offset + 2] = (value >>> 8)
-	    this[offset + 3] = (value & 0xff)
-	  } else {
-	    objectWriteUInt32(this, value, offset, false)
-	  }
-	  return offset + 4
-	}
-	
-	function checkIEEE754 (buf, value, offset, ext, max, min) {
-	  if (value > max || value < min) throw new RangeError('value is out of bounds')
-	  if (offset + ext > buf.length) throw new RangeError('index out of range')
-	  if (offset < 0) throw new RangeError('index out of range')
-	}
-	
-	function writeFloat (buf, value, offset, littleEndian, noAssert) {
-	  if (!noAssert) {
-	    checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -3.4028234663852886e+38)
-	  }
-	  ieee754.write(buf, value, offset, littleEndian, 23, 4)
-	  return offset + 4
-	}
-	
-	Buffer.prototype.writeFloatLE = function writeFloatLE (value, offset, noAssert) {
-	  return writeFloat(this, value, offset, true, noAssert)
-	}
-	
-	Buffer.prototype.writeFloatBE = function writeFloatBE (value, offset, noAssert) {
-	  return writeFloat(this, value, offset, false, noAssert)
-	}
-	
-	function writeDouble (buf, value, offset, littleEndian, noAssert) {
-	  if (!noAssert) {
-	    checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -1.7976931348623157E+308)
-	  }
-	  ieee754.write(buf, value, offset, littleEndian, 52, 8)
-	  return offset + 8
-	}
-	
-	Buffer.prototype.writeDoubleLE = function writeDoubleLE (value, offset, noAssert) {
-	  return writeDouble(this, value, offset, true, noAssert)
-	}
-	
-	Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert) {
-	  return writeDouble(this, value, offset, false, noAssert)
-	}
-	
-	// copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
-	Buffer.prototype.copy = function copy (target, targetStart, start, end) {
-	  if (!start) start = 0
-	  if (!end && end !== 0) end = this.length
-	  if (targetStart >= target.length) targetStart = target.length
-	  if (!targetStart) targetStart = 0
-	  if (end > 0 && end < start) end = start
-	
-	  // Copy 0 bytes; we're done
-	  if (end === start) return 0
-	  if (target.length === 0 || this.length === 0) return 0
-	
-	  // Fatal error conditions
-	  if (targetStart < 0) {
-	    throw new RangeError('targetStart out of bounds')
-	  }
-	  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
-	  if (end < 0) throw new RangeError('sourceEnd out of bounds')
-	
-	  // Are we oob?
-	  if (end > this.length) end = this.length
-	  if (target.length - targetStart < end - start) {
-	    end = target.length - targetStart + start
-	  }
-	
-	  var len = end - start
-	  var i
-	
-	  if (this === target && start < targetStart && targetStart < end) {
-	    // descending copy from end
-	    for (i = len - 1; i >= 0; i--) {
-	      target[i + targetStart] = this[i + start]
-	    }
-	  } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
-	    // ascending copy from start
-	    for (i = 0; i < len; i++) {
-	      target[i + targetStart] = this[i + start]
-	    }
-	  } else {
-	    target._set(this.subarray(start, start + len), targetStart)
-	  }
-	
-	  return len
-	}
-	
-	// fill(value, start=0, end=buffer.length)
-	Buffer.prototype.fill = function fill (value, start, end) {
-	  if (!value) value = 0
-	  if (!start) start = 0
-	  if (!end) end = this.length
-	
-	  if (end < start) throw new RangeError('end < start')
-	
-	  // Fill 0 bytes; we're done
-	  if (end === start) return
-	  if (this.length === 0) return
-	
-	  if (start < 0 || start >= this.length) throw new RangeError('start out of bounds')
-	  if (end < 0 || end > this.length) throw new RangeError('end out of bounds')
-	
-	  var i
-	  if (typeof value === 'number') {
-	    for (i = start; i < end; i++) {
-	      this[i] = value
-	    }
-	  } else {
-	    var bytes = utf8ToBytes(value.toString())
-	    var len = bytes.length
-	    for (i = start; i < end; i++) {
-	      this[i] = bytes[i % len]
-	    }
-	  }
-	
-	  return this
-	}
-	
-	/**
-	 * Creates a new `ArrayBuffer` with the *copied* memory of the buffer instance.
-	 * Added in Node 0.12. Only available in browsers that support ArrayBuffer.
-	 */
-	Buffer.prototype.toArrayBuffer = function toArrayBuffer () {
-	  if (typeof Uint8Array !== 'undefined') {
-	    if (Buffer.TYPED_ARRAY_SUPPORT) {
-	      return (new Buffer(this)).buffer
-	    } else {
-	      var buf = new Uint8Array(this.length)
-	      for (var i = 0, len = buf.length; i < len; i += 1) {
-	        buf[i] = this[i]
-	      }
-	      return buf.buffer
-	    }
-	  } else {
-	    throw new TypeError('Buffer.toArrayBuffer not supported in this browser')
-	  }
-	}
-	
-	// HELPER FUNCTIONS
-	// ================
-	
-	var BP = Buffer.prototype
-	
-	/**
-	 * Augment a Uint8Array *instance* (not the Uint8Array class!) with Buffer methods
-	 */
-	Buffer._augment = function _augment (arr) {
-	  arr.constructor = Buffer
-	  arr._isBuffer = true
-	
-	  // save reference to original Uint8Array set method before overwriting
-	  arr._set = arr.set
-	
-	  // deprecated
-	  arr.get = BP.get
-	  arr.set = BP.set
-	
-	  arr.write = BP.write
-	  arr.toString = BP.toString
-	  arr.toLocaleString = BP.toString
-	  arr.toJSON = BP.toJSON
-	  arr.equals = BP.equals
-	  arr.compare = BP.compare
-	  arr.indexOf = BP.indexOf
-	  arr.copy = BP.copy
-	  arr.slice = BP.slice
-	  arr.readUIntLE = BP.readUIntLE
-	  arr.readUIntBE = BP.readUIntBE
-	  arr.readUInt8 = BP.readUInt8
-	  arr.readUInt16LE = BP.readUInt16LE
-	  arr.readUInt16BE = BP.readUInt16BE
-	  arr.readUInt32LE = BP.readUInt32LE
-	  arr.readUInt32BE = BP.readUInt32BE
-	  arr.readIntLE = BP.readIntLE
-	  arr.readIntBE = BP.readIntBE
-	  arr.readInt8 = BP.readInt8
-	  arr.readInt16LE = BP.readInt16LE
-	  arr.readInt16BE = BP.readInt16BE
-	  arr.readInt32LE = BP.readInt32LE
-	  arr.readInt32BE = BP.readInt32BE
-	  arr.readFloatLE = BP.readFloatLE
-	  arr.readFloatBE = BP.readFloatBE
-	  arr.readDoubleLE = BP.readDoubleLE
-	  arr.readDoubleBE = BP.readDoubleBE
-	  arr.writeUInt8 = BP.writeUInt8
-	  arr.writeUIntLE = BP.writeUIntLE
-	  arr.writeUIntBE = BP.writeUIntBE
-	  arr.writeUInt16LE = BP.writeUInt16LE
-	  arr.writeUInt16BE = BP.writeUInt16BE
-	  arr.writeUInt32LE = BP.writeUInt32LE
-	  arr.writeUInt32BE = BP.writeUInt32BE
-	  arr.writeIntLE = BP.writeIntLE
-	  arr.writeIntBE = BP.writeIntBE
-	  arr.writeInt8 = BP.writeInt8
-	  arr.writeInt16LE = BP.writeInt16LE
-	  arr.writeInt16BE = BP.writeInt16BE
-	  arr.writeInt32LE = BP.writeInt32LE
-	  arr.writeInt32BE = BP.writeInt32BE
-	  arr.writeFloatLE = BP.writeFloatLE
-	  arr.writeFloatBE = BP.writeFloatBE
-	  arr.writeDoubleLE = BP.writeDoubleLE
-	  arr.writeDoubleBE = BP.writeDoubleBE
-	  arr.fill = BP.fill
-	  arr.inspect = BP.inspect
-	  arr.toArrayBuffer = BP.toArrayBuffer
-	
-	  return arr
-	}
-	
-	var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g
-	
-	function base64clean (str) {
-	  // Node strips out invalid characters like \n and \t from the string, base64-js does not
-	  str = stringtrim(str).replace(INVALID_BASE64_RE, '')
-	  // Node converts strings with length < 2 to ''
-	  if (str.length < 2) return ''
-	  // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
-	  while (str.length % 4 !== 0) {
-	    str = str + '='
-	  }
-	  return str
-	}
-	
-	function stringtrim (str) {
-	  if (str.trim) return str.trim()
-	  return str.replace(/^\s+|\s+$/g, '')
-	}
-	
-	function toHex (n) {
-	  if (n < 16) return '0' + n.toString(16)
-	  return n.toString(16)
-	}
-	
-	function utf8ToBytes (string, units) {
-	  units = units || Infinity
-	  var codePoint
-	  var length = string.length
-	  var leadSurrogate = null
-	  var bytes = []
-	
-	  for (var i = 0; i < length; i++) {
-	    codePoint = string.charCodeAt(i)
-	
-	    // is surrogate component
-	    if (codePoint > 0xD7FF && codePoint < 0xE000) {
-	      // last char was a lead
-	      if (!leadSurrogate) {
-	        // no lead yet
-	        if (codePoint > 0xDBFF) {
-	          // unexpected trail
-	          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-	          continue
-	        } else if (i + 1 === length) {
-	          // unpaired lead
-	          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-	          continue
-	        }
-	
-	        // valid lead
-	        leadSurrogate = codePoint
-	
-	        continue
-	      }
-	
-	      // 2 leads in a row
-	      if (codePoint < 0xDC00) {
-	        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-	        leadSurrogate = codePoint
-	        continue
-	      }
-	
-	      // valid surrogate pair
-	      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
-	    } else if (leadSurrogate) {
-	      // valid bmp char, but last char was a lead
-	      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-	    }
-	
-	    leadSurrogate = null
-	
-	    // encode utf8
-	    if (codePoint < 0x80) {
-	      if ((units -= 1) < 0) break
-	      bytes.push(codePoint)
-	    } else if (codePoint < 0x800) {
-	      if ((units -= 2) < 0) break
-	      bytes.push(
-	        codePoint >> 0x6 | 0xC0,
-	        codePoint & 0x3F | 0x80
-	      )
-	    } else if (codePoint < 0x10000) {
-	      if ((units -= 3) < 0) break
-	      bytes.push(
-	        codePoint >> 0xC | 0xE0,
-	        codePoint >> 0x6 & 0x3F | 0x80,
-	        codePoint & 0x3F | 0x80
-	      )
-	    } else if (codePoint < 0x110000) {
-	      if ((units -= 4) < 0) break
-	      bytes.push(
-	        codePoint >> 0x12 | 0xF0,
-	        codePoint >> 0xC & 0x3F | 0x80,
-	        codePoint >> 0x6 & 0x3F | 0x80,
-	        codePoint & 0x3F | 0x80
-	      )
-	    } else {
-	      throw new Error('Invalid code point')
-	    }
-	  }
-	
-	  return bytes
-	}
-	
-	function asciiToBytes (str) {
-	  var byteArray = []
-	  for (var i = 0; i < str.length; i++) {
-	    // Node's code seems to be doing this and not & 0x7F..
-	    byteArray.push(str.charCodeAt(i) & 0xFF)
-	  }
-	  return byteArray
-	}
-	
-	function utf16leToBytes (str, units) {
-	  var c, hi, lo
-	  var byteArray = []
-	  for (var i = 0; i < str.length; i++) {
-	    if ((units -= 2) < 0) break
-	
-	    c = str.charCodeAt(i)
-	    hi = c >> 8
-	    lo = c % 256
-	    byteArray.push(lo)
-	    byteArray.push(hi)
-	  }
-	
-	  return byteArray
-	}
-	
-	function base64ToBytes (str) {
-	  return base64.toByteArray(base64clean(str))
-	}
-	
-	function blitBuffer (src, dst, offset, length) {
-	  for (var i = 0; i < length; i++) {
-	    if ((i + offset >= dst.length) || (i >= src.length)) break
-	    dst[i + offset] = src[i]
-	  }
-	  return i
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 20).Buffer, (function() { return this; }())))
-
-/***/ },
-/* 21 */
-/*!********************************!*\
-  !*** ./~/base64-js/lib/b64.js ***!
-  \********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-	
-	;(function (exports) {
-		'use strict';
-	
-	  var Arr = (typeof Uint8Array !== 'undefined')
-	    ? Uint8Array
-	    : Array
-	
-		var PLUS   = '+'.charCodeAt(0)
-		var SLASH  = '/'.charCodeAt(0)
-		var NUMBER = '0'.charCodeAt(0)
-		var LOWER  = 'a'.charCodeAt(0)
-		var UPPER  = 'A'.charCodeAt(0)
-		var PLUS_URL_SAFE = '-'.charCodeAt(0)
-		var SLASH_URL_SAFE = '_'.charCodeAt(0)
-	
-		function decode (elt) {
-			var code = elt.charCodeAt(0)
-			if (code === PLUS ||
-			    code === PLUS_URL_SAFE)
-				return 62 // '+'
-			if (code === SLASH ||
-			    code === SLASH_URL_SAFE)
-				return 63 // '/'
-			if (code < NUMBER)
-				return -1 //no match
-			if (code < NUMBER + 10)
-				return code - NUMBER + 26 + 26
-			if (code < UPPER + 26)
-				return code - UPPER
-			if (code < LOWER + 26)
-				return code - LOWER + 26
-		}
-	
-		function b64ToByteArray (b64) {
-			var i, j, l, tmp, placeHolders, arr
-	
-			if (b64.length % 4 > 0) {
-				throw new Error('Invalid string. Length must be a multiple of 4')
-			}
-	
-			// the number of equal signs (place holders)
-			// if there are two placeholders, than the two characters before it
-			// represent one byte
-			// if there is only one, then the three characters before it represent 2 bytes
-			// this is just a cheap hack to not do indexOf twice
-			var len = b64.length
-			placeHolders = '=' === b64.charAt(len - 2) ? 2 : '=' === b64.charAt(len - 1) ? 1 : 0
-	
-			// base64 is 4/3 + up to two characters of the original data
-			arr = new Arr(b64.length * 3 / 4 - placeHolders)
-	
-			// if there are placeholders, only get up to the last complete 4 chars
-			l = placeHolders > 0 ? b64.length - 4 : b64.length
-	
-			var L = 0
-	
-			function push (v) {
-				arr[L++] = v
-			}
-	
-			for (i = 0, j = 0; i < l; i += 4, j += 3) {
-				tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
-				push((tmp & 0xFF0000) >> 16)
-				push((tmp & 0xFF00) >> 8)
-				push(tmp & 0xFF)
-			}
-	
-			if (placeHolders === 2) {
-				tmp = (decode(b64.charAt(i)) << 2) | (decode(b64.charAt(i + 1)) >> 4)
-				push(tmp & 0xFF)
-			} else if (placeHolders === 1) {
-				tmp = (decode(b64.charAt(i)) << 10) | (decode(b64.charAt(i + 1)) << 4) | (decode(b64.charAt(i + 2)) >> 2)
-				push((tmp >> 8) & 0xFF)
-				push(tmp & 0xFF)
-			}
-	
-			return arr
-		}
-	
-		function uint8ToBase64 (uint8) {
-			var i,
-				extraBytes = uint8.length % 3, // if we have 1 byte left, pad 2 bytes
-				output = "",
-				temp, length
-	
-			function encode (num) {
-				return lookup.charAt(num)
-			}
-	
-			function tripletToBase64 (num) {
-				return encode(num >> 18 & 0x3F) + encode(num >> 12 & 0x3F) + encode(num >> 6 & 0x3F) + encode(num & 0x3F)
-			}
-	
-			// go through the array every three bytes, we'll deal with trailing stuff later
-			for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
-				temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
-				output += tripletToBase64(temp)
-			}
-	
-			// pad the end with zeros, but make sure to not forget the extra bytes
-			switch (extraBytes) {
-				case 1:
-					temp = uint8[uint8.length - 1]
-					output += encode(temp >> 2)
-					output += encode((temp << 4) & 0x3F)
-					output += '=='
-					break
-				case 2:
-					temp = (uint8[uint8.length - 2] << 8) + (uint8[uint8.length - 1])
-					output += encode(temp >> 10)
-					output += encode((temp >> 4) & 0x3F)
-					output += encode((temp << 2) & 0x3F)
-					output += '='
-					break
-			}
-	
-			return output
-		}
-	
-		exports.toByteArray = b64ToByteArray
-		exports.fromByteArray = uint8ToBase64
-	}( false ? (this.base64js = {}) : exports))
-
-
-/***/ },
-/* 22 */
-/*!****************************!*\
-  !*** ./~/ieee754/index.js ***!
-  \****************************/
-/***/ function(module, exports) {
-
-	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
-	  var e, m
-	  var eLen = nBytes * 8 - mLen - 1
-	  var eMax = (1 << eLen) - 1
-	  var eBias = eMax >> 1
-	  var nBits = -7
-	  var i = isLE ? (nBytes - 1) : 0
-	  var d = isLE ? -1 : 1
-	  var s = buffer[offset + i]
-	
-	  i += d
-	
-	  e = s & ((1 << (-nBits)) - 1)
-	  s >>= (-nBits)
-	  nBits += eLen
-	  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
-	
-	  m = e & ((1 << (-nBits)) - 1)
-	  e >>= (-nBits)
-	  nBits += mLen
-	  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
-	
-	  if (e === 0) {
-	    e = 1 - eBias
-	  } else if (e === eMax) {
-	    return m ? NaN : ((s ? -1 : 1) * Infinity)
-	  } else {
-	    m = m + Math.pow(2, mLen)
-	    e = e - eBias
-	  }
-	  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
-	}
-	
-	exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
-	  var e, m, c
-	  var eLen = nBytes * 8 - mLen - 1
-	  var eMax = (1 << eLen) - 1
-	  var eBias = eMax >> 1
-	  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
-	  var i = isLE ? 0 : (nBytes - 1)
-	  var d = isLE ? 1 : -1
-	  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
-	
-	  value = Math.abs(value)
-	
-	  if (isNaN(value) || value === Infinity) {
-	    m = isNaN(value) ? 1 : 0
-	    e = eMax
-	  } else {
-	    e = Math.floor(Math.log(value) / Math.LN2)
-	    if (value * (c = Math.pow(2, -e)) < 1) {
-	      e--
-	      c *= 2
-	    }
-	    if (e + eBias >= 1) {
-	      value += rt / c
-	    } else {
-	      value += rt * Math.pow(2, 1 - eBias)
-	    }
-	    if (value * c >= 2) {
-	      e++
-	      c /= 2
-	    }
-	
-	    if (e + eBias >= eMax) {
-	      m = 0
-	      e = eMax
-	    } else if (e + eBias >= 1) {
-	      m = (value * c - 1) * Math.pow(2, mLen)
-	      e = e + eBias
-	    } else {
-	      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
-	      e = 0
-	    }
-	  }
-	
-	  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
-	
-	  e = (e << mLen) | m
-	  eLen += mLen
-	  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
-	
-	  buffer[offset + i - d] |= s * 128
-	}
-
-
-/***/ },
-/* 23 */
-/*!****************************!*\
-  !*** ./~/isarray/index.js ***!
-  \****************************/
-/***/ function(module, exports) {
-
-	module.exports = Array.isArray || function (arr) {
-	  return Object.prototype.toString.call(arr) == '[object Array]';
-	};
-
-
-/***/ },
-/* 24 */
-/*!************************************!*\
-  !*** ./~/crypto-browserify/rng.js ***!
-  \************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global, Buffer) {(function() {
-	  var g = ('undefined' === typeof window ? global : window) || {}
-	  _crypto = (
-	    g.crypto || g.msCrypto || __webpack_require__(/*! crypto */ 25)
-	  )
-	  module.exports = function(size) {
-	    // Modern Browsers
-	    if(_crypto.getRandomValues) {
-	      var bytes = new Buffer(size); //in browserify, this is an extended Uint8Array
-	      /* This will not work in older browsers.
-	       * See https://developer.mozilla.org/en-US/docs/Web/API/window.crypto.getRandomValues
-	       */
-	    
-	      _crypto.getRandomValues(bytes);
-	      return bytes;
-	    }
-	    else if (_crypto.randomBytes) {
-	      return _crypto.randomBytes(size)
-	    }
-	    else
-	      throw new Error(
-	        'secure random number generation not supported by this browser\n'+
-	        'use chrome, FireFox or Internet Explorer 11'
-	      )
-	  }
-	}())
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./~/buffer/index.js */ 20).Buffer))
-
-/***/ },
-/* 25 */
-/*!************************!*\
-  !*** crypto (ignored) ***!
-  \************************/
-/***/ function(module, exports) {
-
-	/* (ignored) */
-
-/***/ },
-/* 26 */
-/*!********************************************!*\
-  !*** ./~/crypto-browserify/create-hash.js ***!
-  \********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(/*! sha.js */ 27)
-	
-	var md5 = toConstructor(__webpack_require__(/*! ./md5 */ 35))
-	var rmd160 = toConstructor(__webpack_require__(/*! ripemd160 */ 37))
-	
-	function toConstructor (fn) {
-	  return function () {
-	    var buffers = []
-	    var m= {
-	      update: function (data, enc) {
-	        if(!Buffer.isBuffer(data)) data = new Buffer(data, enc)
-	        buffers.push(data)
-	        return this
-	      },
-	      digest: function (enc) {
-	        var buf = Buffer.concat(buffers)
-	        var r = fn(buf)
-	        buffers = null
-	        return enc ? r.toString(enc) : r
-	      }
-	    }
-	    return m
-	  }
-	}
-	
-	module.exports = function (alg) {
-	  if('md5' === alg) return new md5()
-	  if('rmd160' === alg) return new rmd160()
-	  return createHash(alg)
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 20).Buffer))
-
-/***/ },
-/* 27 */
-/*!***************************!*\
-  !*** ./~/sha.js/index.js ***!
-  \***************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var exports = module.exports = function (alg) {
-	  var Alg = exports[alg]
-	  if(!Alg) throw new Error(alg + ' is not supported (we accept pull requests)')
-	  return new Alg()
-	}
-	
-	var Buffer = __webpack_require__(/*! buffer */ 20).Buffer
-	var Hash   = __webpack_require__(/*! ./hash */ 28)(Buffer)
-	
-	exports.sha1 = __webpack_require__(/*! ./sha1 */ 29)(Buffer, Hash)
-	exports.sha256 = __webpack_require__(/*! ./sha256 */ 33)(Buffer, Hash)
-	exports.sha512 = __webpack_require__(/*! ./sha512 */ 34)(Buffer, Hash)
-
-
-/***/ },
-/* 28 */
-/*!**************************!*\
-  !*** ./~/sha.js/hash.js ***!
-  \**************************/
-/***/ function(module, exports) {
-
-	module.exports = function (Buffer) {
-	
-	  //prototype class for hash functions
-	  function Hash (blockSize, finalSize) {
-	    this._block = new Buffer(blockSize) //new Uint32Array(blockSize/4)
-	    this._finalSize = finalSize
-	    this._blockSize = blockSize
-	    this._len = 0
-	    this._s = 0
-	  }
-	
-	  Hash.prototype.init = function () {
-	    this._s = 0
-	    this._len = 0
-	  }
-	
-	  Hash.prototype.update = function (data, enc) {
-	    if ("string" === typeof data) {
-	      enc = enc || "utf8"
-	      data = new Buffer(data, enc)
-	    }
-	
-	    var l = this._len += data.length
-	    var s = this._s = (this._s || 0)
-	    var f = 0
-	    var buffer = this._block
-	
-	    while (s < l) {
-	      var t = Math.min(data.length, f + this._blockSize - (s % this._blockSize))
-	      var ch = (t - f)
-	
-	      for (var i = 0; i < ch; i++) {
-	        buffer[(s % this._blockSize) + i] = data[i + f]
-	      }
-	
-	      s += ch
-	      f += ch
-	
-	      if ((s % this._blockSize) === 0) {
-	        this._update(buffer)
-	      }
-	    }
-	    this._s = s
-	
-	    return this
-	  }
-	
-	  Hash.prototype.digest = function (enc) {
-	    // Suppose the length of the message M, in bits, is l
-	    var l = this._len * 8
-	
-	    // Append the bit 1 to the end of the message
-	    this._block[this._len % this._blockSize] = 0x80
-	
-	    // and then k zero bits, where k is the smallest non-negative solution to the equation (l + 1 + k) === finalSize mod blockSize
-	    this._block.fill(0, this._len % this._blockSize + 1)
-	
-	    if (l % (this._blockSize * 8) >= this._finalSize * 8) {
-	      this._update(this._block)
-	      this._block.fill(0)
-	    }
-	
-	    // to this append the block which is equal to the number l written in binary
-	    // TODO: handle case where l is > Math.pow(2, 29)
-	    this._block.writeInt32BE(l, this._blockSize - 4)
-	
-	    var hash = this._update(this._block) || this._hash()
-	
-	    return enc ? hash.toString(enc) : hash
-	  }
-	
-	  Hash.prototype._update = function () {
-	    throw new Error('_update must be implemented by subclass')
-	  }
-	
-	  return Hash
-	}
-
-
-/***/ },
-/* 29 */
-/*!**************************!*\
-  !*** ./~/sha.js/sha1.js ***!
-  \**************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
-	 * in FIPS PUB 180-1
-	 * Version 2.1a Copyright Paul Johnston 2000 - 2002.
-	 * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
-	 * Distributed under the BSD License
-	 * See http://pajhome.org.uk/crypt/md5 for details.
-	 */
-	
-	var inherits = __webpack_require__(/*! util */ 30).inherits
-	
-	module.exports = function (Buffer, Hash) {
-	
-	  var A = 0|0
-	  var B = 4|0
-	  var C = 8|0
-	  var D = 12|0
-	  var E = 16|0
-	
-	  var W = new (typeof Int32Array === 'undefined' ? Array : Int32Array)(80)
-	
-	  var POOL = []
-	
-	  function Sha1 () {
-	    if(POOL.length)
-	      return POOL.pop().init()
-	
-	    if(!(this instanceof Sha1)) return new Sha1()
-	    this._w = W
-	    Hash.call(this, 16*4, 14*4)
-	
-	    this._h = null
-	    this.init()
-	  }
-	
-	  inherits(Sha1, Hash)
-	
-	  Sha1.prototype.init = function () {
-	    this._a = 0x67452301
-	    this._b = 0xefcdab89
-	    this._c = 0x98badcfe
-	    this._d = 0x10325476
-	    this._e = 0xc3d2e1f0
-	
-	    Hash.prototype.init.call(this)
-	    return this
-	  }
-	
-	  Sha1.prototype._POOL = POOL
-	  Sha1.prototype._update = function (X) {
-	
-	    var a, b, c, d, e, _a, _b, _c, _d, _e
-	
-	    a = _a = this._a
-	    b = _b = this._b
-	    c = _c = this._c
-	    d = _d = this._d
-	    e = _e = this._e
-	
-	    var w = this._w
-	
-	    for(var j = 0; j < 80; j++) {
-	      var W = w[j] = j < 16 ? X.readInt32BE(j*4)
-	        : rol(w[j - 3] ^ w[j -  8] ^ w[j - 14] ^ w[j - 16], 1)
-	
-	      var t = add(
-	        add(rol(a, 5), sha1_ft(j, b, c, d)),
-	        add(add(e, W), sha1_kt(j))
-	      )
-	
-	      e = d
-	      d = c
-	      c = rol(b, 30)
-	      b = a
-	      a = t
-	    }
-	
-	    this._a = add(a, _a)
-	    this._b = add(b, _b)
-	    this._c = add(c, _c)
-	    this._d = add(d, _d)
-	    this._e = add(e, _e)
-	  }
-	
-	  Sha1.prototype._hash = function () {
-	    if(POOL.length < 100) POOL.push(this)
-	    var H = new Buffer(20)
-	    //console.log(this._a|0, this._b|0, this._c|0, this._d|0, this._e|0)
-	    H.writeInt32BE(this._a|0, A)
-	    H.writeInt32BE(this._b|0, B)
-	    H.writeInt32BE(this._c|0, C)
-	    H.writeInt32BE(this._d|0, D)
-	    H.writeInt32BE(this._e|0, E)
-	    return H
-	  }
-	
-	  /*
-	   * Perform the appropriate triplet combination function for the current
-	   * iteration
-	   */
-	  function sha1_ft(t, b, c, d) {
-	    if(t < 20) return (b & c) | ((~b) & d);
-	    if(t < 40) return b ^ c ^ d;
-	    if(t < 60) return (b & c) | (b & d) | (c & d);
-	    return b ^ c ^ d;
-	  }
-	
-	  /*
-	   * Determine the appropriate additive constant for the current iteration
-	   */
-	  function sha1_kt(t) {
-	    return (t < 20) ?  1518500249 : (t < 40) ?  1859775393 :
-	           (t < 60) ? -1894007588 : -899497514;
-	  }
-	
-	  /*
-	   * Add integers, wrapping at 2^32. This uses 16-bit operations internally
-	   * to work around bugs in some JS interpreters.
-	   * //dominictarr: this is 10 years old, so maybe this can be dropped?)
-	   *
-	   */
-	  function add(x, y) {
-	    return (x + y ) | 0
-	  //lets see how this goes on testling.
-	  //  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
-	  //  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-	  //  return (msw << 16) | (lsw & 0xFFFF);
-	  }
-	
-	  /*
-	   * Bitwise rotate a 32-bit number to the left.
-	   */
-	  function rol(num, cnt) {
-	    return (num << cnt) | (num >>> (32 - cnt));
-	  }
-	
-	  return Sha1
-	}
-
-
-/***/ },
-/* 30 */
-/*!************************!*\
-  !*** ./~/util/util.js ***!
-  \************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
-	//
-	// Permission is hereby granted, free of charge, to any person obtaining a
-	// copy of this software and associated documentation files (the
-	// "Software"), to deal in the Software without restriction, including
-	// without limitation the rights to use, copy, modify, merge, publish,
-	// distribute, sublicense, and/or sell copies of the Software, and to permit
-	// persons to whom the Software is furnished to do so, subject to the
-	// following conditions:
-	//
-	// The above copyright notice and this permission notice shall be included
-	// in all copies or substantial portions of the Software.
-	//
-	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-	// USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
-	var formatRegExp = /%[sdj%]/g;
-	exports.format = function(f) {
-	  if (!isString(f)) {
-	    var objects = [];
-	    for (var i = 0; i < arguments.length; i++) {
-	      objects.push(inspect(arguments[i]));
-	    }
-	    return objects.join(' ');
-	  }
-	
-	  var i = 1;
-	  var args = arguments;
-	  var len = args.length;
-	  var str = String(f).replace(formatRegExp, function(x) {
-	    if (x === '%%') return '%';
-	    if (i >= len) return x;
-	    switch (x) {
-	      case '%s': return String(args[i++]);
-	      case '%d': return Number(args[i++]);
-	      case '%j':
-	        try {
-	          return JSON.stringify(args[i++]);
-	        } catch (_) {
-	          return '[Circular]';
-	        }
-	      default:
-	        return x;
-	    }
-	  });
-	  for (var x = args[i]; i < len; x = args[++i]) {
-	    if (isNull(x) || !isObject(x)) {
-	      str += ' ' + x;
-	    } else {
-	      str += ' ' + inspect(x);
-	    }
-	  }
-	  return str;
-	};
-	
-	
-	// Mark that a method should not be used.
-	// Returns a modified function which warns once by default.
-	// If --no-deprecation is set, then it is a no-op.
-	exports.deprecate = function(fn, msg) {
-	  // Allow for deprecating things in the process of starting up.
-	  if (isUndefined(global.process)) {
-	    return function() {
-	      return exports.deprecate(fn, msg).apply(this, arguments);
-	    };
-	  }
-	
-	  if (process.noDeprecation === true) {
-	    return fn;
-	  }
-	
-	  var warned = false;
-	  function deprecated() {
-	    if (!warned) {
-	      if (process.throwDeprecation) {
-	        throw new Error(msg);
-	      } else if (process.traceDeprecation) {
-	        console.trace(msg);
-	      } else {
-	        console.error(msg);
-	      }
-	      warned = true;
-	    }
-	    return fn.apply(this, arguments);
-	  }
-	
-	  return deprecated;
-	};
-	
-	
-	var debugs = {};
-	var debugEnviron;
-	exports.debuglog = function(set) {
-	  if (isUndefined(debugEnviron))
-	    debugEnviron = process.env.NODE_DEBUG || '';
-	  set = set.toUpperCase();
-	  if (!debugs[set]) {
-	    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
-	      var pid = process.pid;
-	      debugs[set] = function() {
-	        var msg = exports.format.apply(exports, arguments);
-	        console.error('%s %d: %s', set, pid, msg);
-	      };
-	    } else {
-	      debugs[set] = function() {};
-	    }
-	  }
-	  return debugs[set];
-	};
-	
-	
-	/**
-	 * Echos the value of a value. Trys to print the value out
-	 * in the best way possible given the different types.
-	 *
-	 * @param {Object} obj The object to print out.
-	 * @param {Object} opts Optional options object that alters the output.
-	 */
-	/* legacy: obj, showHidden, depth, colors*/
-	function inspect(obj, opts) {
-	  // default options
-	  var ctx = {
-	    seen: [],
-	    stylize: stylizeNoColor
-	  };
-	  // legacy...
-	  if (arguments.length >= 3) ctx.depth = arguments[2];
-	  if (arguments.length >= 4) ctx.colors = arguments[3];
-	  if (isBoolean(opts)) {
-	    // legacy...
-	    ctx.showHidden = opts;
-	  } else if (opts) {
-	    // got an "options" object
-	    exports._extend(ctx, opts);
-	  }
-	  // set default options
-	  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
-	  if (isUndefined(ctx.depth)) ctx.depth = 2;
-	  if (isUndefined(ctx.colors)) ctx.colors = false;
-	  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
-	  if (ctx.colors) ctx.stylize = stylizeWithColor;
-	  return formatValue(ctx, obj, ctx.depth);
-	}
-	exports.inspect = inspect;
-	
-	
-	// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
-	inspect.colors = {
-	  'bold' : [1, 22],
-	  'italic' : [3, 23],
-	  'underline' : [4, 24],
-	  'inverse' : [7, 27],
-	  'white' : [37, 39],
-	  'grey' : [90, 39],
-	  'black' : [30, 39],
-	  'blue' : [34, 39],
-	  'cyan' : [36, 39],
-	  'green' : [32, 39],
-	  'magenta' : [35, 39],
-	  'red' : [31, 39],
-	  'yellow' : [33, 39]
-	};
-	
-	// Don't use 'blue' not visible on cmd.exe
-	inspect.styles = {
-	  'special': 'cyan',
-	  'number': 'yellow',
-	  'boolean': 'yellow',
-	  'undefined': 'grey',
-	  'null': 'bold',
-	  'string': 'green',
-	  'date': 'magenta',
-	  // "name": intentionally not styling
-	  'regexp': 'red'
-	};
-	
-	
-	function stylizeWithColor(str, styleType) {
-	  var style = inspect.styles[styleType];
-	
-	  if (style) {
-	    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
-	           '\u001b[' + inspect.colors[style][1] + 'm';
-	  } else {
-	    return str;
-	  }
-	}
-	
-	
-	function stylizeNoColor(str, styleType) {
-	  return str;
-	}
-	
-	
-	function arrayToHash(array) {
-	  var hash = {};
-	
-	  array.forEach(function(val, idx) {
-	    hash[val] = true;
-	  });
-	
-	  return hash;
-	}
-	
-	
-	function formatValue(ctx, value, recurseTimes) {
-	  // Provide a hook for user-specified inspect functions.
-	  // Check that value is an object with an inspect function on it
-	  if (ctx.customInspect &&
-	      value &&
-	      isFunction(value.inspect) &&
-	      // Filter out the util module, it's inspect function is special
-	      value.inspect !== exports.inspect &&
-	      // Also filter out any prototype objects using the circular check.
-	      !(value.constructor && value.constructor.prototype === value)) {
-	    var ret = value.inspect(recurseTimes, ctx);
-	    if (!isString(ret)) {
-	      ret = formatValue(ctx, ret, recurseTimes);
-	    }
-	    return ret;
-	  }
-	
-	  // Primitive types cannot have properties
-	  var primitive = formatPrimitive(ctx, value);
-	  if (primitive) {
-	    return primitive;
-	  }
-	
-	  // Look up the keys of the object.
-	  var keys = Object.keys(value);
-	  var visibleKeys = arrayToHash(keys);
-	
-	  if (ctx.showHidden) {
-	    keys = Object.getOwnPropertyNames(value);
-	  }
-	
-	  // IE doesn't make error fields non-enumerable
-	  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
-	  if (isError(value)
-	      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
-	    return formatError(value);
-	  }
-	
-	  // Some type of object without properties can be shortcutted.
-	  if (keys.length === 0) {
-	    if (isFunction(value)) {
-	      var name = value.name ? ': ' + value.name : '';
-	      return ctx.stylize('[Function' + name + ']', 'special');
-	    }
-	    if (isRegExp(value)) {
-	      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-	    }
-	    if (isDate(value)) {
-	      return ctx.stylize(Date.prototype.toString.call(value), 'date');
-	    }
-	    if (isError(value)) {
-	      return formatError(value);
-	    }
-	  }
-	
-	  var base = '', array = false, braces = ['{', '}'];
-	
-	  // Make Array say that they are Array
-	  if (isArray(value)) {
-	    array = true;
-	    braces = ['[', ']'];
-	  }
-	
-	  // Make functions say that they are functions
-	  if (isFunction(value)) {
-	    var n = value.name ? ': ' + value.name : '';
-	    base = ' [Function' + n + ']';
-	  }
-	
-	  // Make RegExps say that they are RegExps
-	  if (isRegExp(value)) {
-	    base = ' ' + RegExp.prototype.toString.call(value);
-	  }
-	
-	  // Make dates with properties first say the date
-	  if (isDate(value)) {
-	    base = ' ' + Date.prototype.toUTCString.call(value);
-	  }
-	
-	  // Make error with message first say the error
-	  if (isError(value)) {
-	    base = ' ' + formatError(value);
-	  }
-	
-	  if (keys.length === 0 && (!array || value.length == 0)) {
-	    return braces[0] + base + braces[1];
-	  }
-	
-	  if (recurseTimes < 0) {
-	    if (isRegExp(value)) {
-	      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-	    } else {
-	      return ctx.stylize('[Object]', 'special');
-	    }
-	  }
-	
-	  ctx.seen.push(value);
-	
-	  var output;
-	  if (array) {
-	    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
-	  } else {
-	    output = keys.map(function(key) {
-	      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
-	    });
-	  }
-	
-	  ctx.seen.pop();
-	
-	  return reduceToSingleString(output, base, braces);
-	}
-	
-	
-	function formatPrimitive(ctx, value) {
-	  if (isUndefined(value))
-	    return ctx.stylize('undefined', 'undefined');
-	  if (isString(value)) {
-	    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
-	                                             .replace(/'/g, "\\'")
-	                                             .replace(/\\"/g, '"') + '\'';
-	    return ctx.stylize(simple, 'string');
-	  }
-	  if (isNumber(value))
-	    return ctx.stylize('' + value, 'number');
-	  if (isBoolean(value))
-	    return ctx.stylize('' + value, 'boolean');
-	  // For some reason typeof null is "object", so special case here.
-	  if (isNull(value))
-	    return ctx.stylize('null', 'null');
-	}
-	
-	
-	function formatError(value) {
-	  return '[' + Error.prototype.toString.call(value) + ']';
-	}
-	
-	
-	function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
-	  var output = [];
-	  for (var i = 0, l = value.length; i < l; ++i) {
-	    if (hasOwnProperty(value, String(i))) {
-	      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-	          String(i), true));
-	    } else {
-	      output.push('');
-	    }
-	  }
-	  keys.forEach(function(key) {
-	    if (!key.match(/^\d+$/)) {
-	      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-	          key, true));
-	    }
-	  });
-	  return output;
-	}
-	
-	
-	function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
-	  var name, str, desc;
-	  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
-	  if (desc.get) {
-	    if (desc.set) {
-	      str = ctx.stylize('[Getter/Setter]', 'special');
-	    } else {
-	      str = ctx.stylize('[Getter]', 'special');
-	    }
-	  } else {
-	    if (desc.set) {
-	      str = ctx.stylize('[Setter]', 'special');
-	    }
-	  }
-	  if (!hasOwnProperty(visibleKeys, key)) {
-	    name = '[' + key + ']';
-	  }
-	  if (!str) {
-	    if (ctx.seen.indexOf(desc.value) < 0) {
-	      if (isNull(recurseTimes)) {
-	        str = formatValue(ctx, desc.value, null);
-	      } else {
-	        str = formatValue(ctx, desc.value, recurseTimes - 1);
-	      }
-	      if (str.indexOf('\n') > -1) {
-	        if (array) {
-	          str = str.split('\n').map(function(line) {
-	            return '  ' + line;
-	          }).join('\n').substr(2);
-	        } else {
-	          str = '\n' + str.split('\n').map(function(line) {
-	            return '   ' + line;
-	          }).join('\n');
-	        }
-	      }
-	    } else {
-	      str = ctx.stylize('[Circular]', 'special');
-	    }
-	  }
-	  if (isUndefined(name)) {
-	    if (array && key.match(/^\d+$/)) {
-	      return str;
-	    }
-	    name = JSON.stringify('' + key);
-	    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
-	      name = name.substr(1, name.length - 2);
-	      name = ctx.stylize(name, 'name');
-	    } else {
-	      name = name.replace(/'/g, "\\'")
-	                 .replace(/\\"/g, '"')
-	                 .replace(/(^"|"$)/g, "'");
-	      name = ctx.stylize(name, 'string');
-	    }
-	  }
-	
-	  return name + ': ' + str;
-	}
-	
-	
-	function reduceToSingleString(output, base, braces) {
-	  var numLinesEst = 0;
-	  var length = output.reduce(function(prev, cur) {
-	    numLinesEst++;
-	    if (cur.indexOf('\n') >= 0) numLinesEst++;
-	    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
-	  }, 0);
-	
-	  if (length > 60) {
-	    return braces[0] +
-	           (base === '' ? '' : base + '\n ') +
-	           ' ' +
-	           output.join(',\n  ') +
-	           ' ' +
-	           braces[1];
-	  }
-	
-	  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
-	}
-	
-	
-	// NOTE: These type checking functions intentionally don't use `instanceof`
-	// because it is fragile and can be easily faked with `Object.create()`.
-	function isArray(ar) {
-	  return Array.isArray(ar);
-	}
-	exports.isArray = isArray;
-	
-	function isBoolean(arg) {
-	  return typeof arg === 'boolean';
-	}
-	exports.isBoolean = isBoolean;
-	
-	function isNull(arg) {
-	  return arg === null;
-	}
-	exports.isNull = isNull;
-	
-	function isNullOrUndefined(arg) {
-	  return arg == null;
-	}
-	exports.isNullOrUndefined = isNullOrUndefined;
-	
-	function isNumber(arg) {
-	  return typeof arg === 'number';
-	}
-	exports.isNumber = isNumber;
-	
-	function isString(arg) {
-	  return typeof arg === 'string';
-	}
-	exports.isString = isString;
-	
-	function isSymbol(arg) {
-	  return typeof arg === 'symbol';
-	}
-	exports.isSymbol = isSymbol;
-	
-	function isUndefined(arg) {
-	  return arg === void 0;
-	}
-	exports.isUndefined = isUndefined;
-	
-	function isRegExp(re) {
-	  return isObject(re) && objectToString(re) === '[object RegExp]';
-	}
-	exports.isRegExp = isRegExp;
-	
-	function isObject(arg) {
-	  return typeof arg === 'object' && arg !== null;
-	}
-	exports.isObject = isObject;
-	
-	function isDate(d) {
-	  return isObject(d) && objectToString(d) === '[object Date]';
-	}
-	exports.isDate = isDate;
-	
-	function isError(e) {
-	  return isObject(e) &&
-	      (objectToString(e) === '[object Error]' || e instanceof Error);
-	}
-	exports.isError = isError;
-	
-	function isFunction(arg) {
-	  return typeof arg === 'function';
-	}
-	exports.isFunction = isFunction;
-	
-	function isPrimitive(arg) {
-	  return arg === null ||
-	         typeof arg === 'boolean' ||
-	         typeof arg === 'number' ||
-	         typeof arg === 'string' ||
-	         typeof arg === 'symbol' ||  // ES6 symbol
-	         typeof arg === 'undefined';
-	}
-	exports.isPrimitive = isPrimitive;
-	
-	exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ 31);
-	
-	function objectToString(o) {
-	  return Object.prototype.toString.call(o);
-	}
-	
-	
-	function pad(n) {
-	  return n < 10 ? '0' + n.toString(10) : n.toString(10);
-	}
-	
-	
-	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-	              'Oct', 'Nov', 'Dec'];
-	
-	// 26 Feb 16:19:34
-	function timestamp() {
-	  var d = new Date();
-	  var time = [pad(d.getHours()),
-	              pad(d.getMinutes()),
-	              pad(d.getSeconds())].join(':');
-	  return [d.getDate(), months[d.getMonth()], time].join(' ');
-	}
-	
-	
-	// log is just a thin wrapper to console.log that prepends a timestamp
-	exports.log = function() {
-	  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
-	};
-	
-	
-	/**
-	 * Inherit the prototype methods from one constructor into another.
-	 *
-	 * The Function.prototype.inherits from lang.js rewritten as a standalone
-	 * function (not on Function.prototype). NOTE: If this file is to be loaded
-	 * during bootstrapping this function needs to be rewritten using some native
-	 * functions as prototype setup using normal JavaScript does not work as
-	 * expected during bootstrapping (see mirror.js in r114903).
-	 *
-	 * @param {function} ctor Constructor function which needs to inherit the
-	 *     prototype.
-	 * @param {function} superCtor Constructor function to inherit prototype from.
-	 */
-	exports.inherits = __webpack_require__(/*! inherits */ 32);
-	
-	exports._extend = function(origin, add) {
-	  // Don't do anything if add isn't an object
-	  if (!add || !isObject(add)) return origin;
-	
-	  var keys = Object.keys(add);
-	  var i = keys.length;
-	  while (i--) {
-	    origin[keys[i]] = add[keys[i]];
-	  }
-	  return origin;
-	};
-	
-	function hasOwnProperty(obj, prop) {
-	  return Object.prototype.hasOwnProperty.call(obj, prop);
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./~/process/browser.js */ 2)))
-
-/***/ },
-/* 31 */
-/*!*******************************************!*\
-  !*** ./~/util/support/isBufferBrowser.js ***!
-  \*******************************************/
-/***/ function(module, exports) {
-
-	module.exports = function isBuffer(arg) {
-	  return arg && typeof arg === 'object'
-	    && typeof arg.copy === 'function'
-	    && typeof arg.fill === 'function'
-	    && typeof arg.readUInt8 === 'function';
-	}
-
-/***/ },
-/* 32 */
-/*!****************************************!*\
-  !*** ./~/inherits/inherits_browser.js ***!
-  \****************************************/
-/***/ function(module, exports) {
-
-	if (typeof Object.create === 'function') {
-	  // implementation from standard node.js 'util' module
-	  module.exports = function inherits(ctor, superCtor) {
-	    ctor.super_ = superCtor
-	    ctor.prototype = Object.create(superCtor.prototype, {
-	      constructor: {
-	        value: ctor,
-	        enumerable: false,
-	        writable: true,
-	        configurable: true
-	      }
-	    });
-	  };
-	} else {
-	  // old school shim for old browsers
-	  module.exports = function inherits(ctor, superCtor) {
-	    ctor.super_ = superCtor
-	    var TempCtor = function () {}
-	    TempCtor.prototype = superCtor.prototype
-	    ctor.prototype = new TempCtor()
-	    ctor.prototype.constructor = ctor
-	  }
-	}
-
-
-/***/ },
-/* 33 */
-/*!****************************!*\
-  !*** ./~/sha.js/sha256.js ***!
-  \****************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	/**
-	 * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
-	 * in FIPS 180-2
-	 * Version 2.2-beta Copyright Angel Marin, Paul Johnston 2000 - 2009.
-	 * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
-	 *
-	 */
-	
-	var inherits = __webpack_require__(/*! util */ 30).inherits
-	
-	module.exports = function (Buffer, Hash) {
-	
-	  var K = [
-	      0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5,
-	      0x3956C25B, 0x59F111F1, 0x923F82A4, 0xAB1C5ED5,
-	      0xD807AA98, 0x12835B01, 0x243185BE, 0x550C7DC3,
-	      0x72BE5D74, 0x80DEB1FE, 0x9BDC06A7, 0xC19BF174,
-	      0xE49B69C1, 0xEFBE4786, 0x0FC19DC6, 0x240CA1CC,
-	      0x2DE92C6F, 0x4A7484AA, 0x5CB0A9DC, 0x76F988DA,
-	      0x983E5152, 0xA831C66D, 0xB00327C8, 0xBF597FC7,
-	      0xC6E00BF3, 0xD5A79147, 0x06CA6351, 0x14292967,
-	      0x27B70A85, 0x2E1B2138, 0x4D2C6DFC, 0x53380D13,
-	      0x650A7354, 0x766A0ABB, 0x81C2C92E, 0x92722C85,
-	      0xA2BFE8A1, 0xA81A664B, 0xC24B8B70, 0xC76C51A3,
-	      0xD192E819, 0xD6990624, 0xF40E3585, 0x106AA070,
-	      0x19A4C116, 0x1E376C08, 0x2748774C, 0x34B0BCB5,
-	      0x391C0CB3, 0x4ED8AA4A, 0x5B9CCA4F, 0x682E6FF3,
-	      0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208,
-	      0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2
-	    ]
-	
-	  var W = new Array(64)
-	
-	  function Sha256() {
-	    this.init()
-	
-	    this._w = W //new Array(64)
-	
-	    Hash.call(this, 16*4, 14*4)
-	  }
-	
-	  inherits(Sha256, Hash)
-	
-	  Sha256.prototype.init = function () {
-	
-	    this._a = 0x6a09e667|0
-	    this._b = 0xbb67ae85|0
-	    this._c = 0x3c6ef372|0
-	    this._d = 0xa54ff53a|0
-	    this._e = 0x510e527f|0
-	    this._f = 0x9b05688c|0
-	    this._g = 0x1f83d9ab|0
-	    this._h = 0x5be0cd19|0
-	
-	    this._len = this._s = 0
-	
-	    return this
-	  }
-	
-	  function S (X, n) {
-	    return (X >>> n) | (X << (32 - n));
-	  }
-	
-	  function R (X, n) {
-	    return (X >>> n);
-	  }
-	
-	  function Ch (x, y, z) {
-	    return ((x & y) ^ ((~x) & z));
-	  }
-	
-	  function Maj (x, y, z) {
-	    return ((x & y) ^ (x & z) ^ (y & z));
-	  }
-	
-	  function Sigma0256 (x) {
-	    return (S(x, 2) ^ S(x, 13) ^ S(x, 22));
-	  }
-	
-	  function Sigma1256 (x) {
-	    return (S(x, 6) ^ S(x, 11) ^ S(x, 25));
-	  }
-	
-	  function Gamma0256 (x) {
-	    return (S(x, 7) ^ S(x, 18) ^ R(x, 3));
-	  }
-	
-	  function Gamma1256 (x) {
-	    return (S(x, 17) ^ S(x, 19) ^ R(x, 10));
-	  }
-	
-	  Sha256.prototype._update = function(M) {
-	
-	    var W = this._w
-	    var a, b, c, d, e, f, g, h
-	    var T1, T2
-	
-	    a = this._a | 0
-	    b = this._b | 0
-	    c = this._c | 0
-	    d = this._d | 0
-	    e = this._e | 0
-	    f = this._f | 0
-	    g = this._g | 0
-	    h = this._h | 0
-	
-	    for (var j = 0; j < 64; j++) {
-	      var w = W[j] = j < 16
-	        ? M.readInt32BE(j * 4)
-	        : Gamma1256(W[j - 2]) + W[j - 7] + Gamma0256(W[j - 15]) + W[j - 16]
-	
-	      T1 = h + Sigma1256(e) + Ch(e, f, g) + K[j] + w
-	
-	      T2 = Sigma0256(a) + Maj(a, b, c);
-	      h = g; g = f; f = e; e = d + T1; d = c; c = b; b = a; a = T1 + T2;
-	    }
-	
-	    this._a = (a + this._a) | 0
-	    this._b = (b + this._b) | 0
-	    this._c = (c + this._c) | 0
-	    this._d = (d + this._d) | 0
-	    this._e = (e + this._e) | 0
-	    this._f = (f + this._f) | 0
-	    this._g = (g + this._g) | 0
-	    this._h = (h + this._h) | 0
-	
-	  };
-	
-	  Sha256.prototype._hash = function () {
-	    var H = new Buffer(32)
-	
-	    H.writeInt32BE(this._a,  0)
-	    H.writeInt32BE(this._b,  4)
-	    H.writeInt32BE(this._c,  8)
-	    H.writeInt32BE(this._d, 12)
-	    H.writeInt32BE(this._e, 16)
-	    H.writeInt32BE(this._f, 20)
-	    H.writeInt32BE(this._g, 24)
-	    H.writeInt32BE(this._h, 28)
-	
-	    return H
-	  }
-	
-	  return Sha256
-	
-	}
-
-
-/***/ },
-/* 34 */
-/*!****************************!*\
-  !*** ./~/sha.js/sha512.js ***!
-  \****************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var inherits = __webpack_require__(/*! util */ 30).inherits
-	
-	module.exports = function (Buffer, Hash) {
-	  var K = [
-	    0x428a2f98, 0xd728ae22, 0x71374491, 0x23ef65cd,
-	    0xb5c0fbcf, 0xec4d3b2f, 0xe9b5dba5, 0x8189dbbc,
-	    0x3956c25b, 0xf348b538, 0x59f111f1, 0xb605d019,
-	    0x923f82a4, 0xaf194f9b, 0xab1c5ed5, 0xda6d8118,
-	    0xd807aa98, 0xa3030242, 0x12835b01, 0x45706fbe,
-	    0x243185be, 0x4ee4b28c, 0x550c7dc3, 0xd5ffb4e2,
-	    0x72be5d74, 0xf27b896f, 0x80deb1fe, 0x3b1696b1,
-	    0x9bdc06a7, 0x25c71235, 0xc19bf174, 0xcf692694,
-	    0xe49b69c1, 0x9ef14ad2, 0xefbe4786, 0x384f25e3,
-	    0x0fc19dc6, 0x8b8cd5b5, 0x240ca1cc, 0x77ac9c65,
-	    0x2de92c6f, 0x592b0275, 0x4a7484aa, 0x6ea6e483,
-	    0x5cb0a9dc, 0xbd41fbd4, 0x76f988da, 0x831153b5,
-	    0x983e5152, 0xee66dfab, 0xa831c66d, 0x2db43210,
-	    0xb00327c8, 0x98fb213f, 0xbf597fc7, 0xbeef0ee4,
-	    0xc6e00bf3, 0x3da88fc2, 0xd5a79147, 0x930aa725,
-	    0x06ca6351, 0xe003826f, 0x14292967, 0x0a0e6e70,
-	    0x27b70a85, 0x46d22ffc, 0x2e1b2138, 0x5c26c926,
-	    0x4d2c6dfc, 0x5ac42aed, 0x53380d13, 0x9d95b3df,
-	    0x650a7354, 0x8baf63de, 0x766a0abb, 0x3c77b2a8,
-	    0x81c2c92e, 0x47edaee6, 0x92722c85, 0x1482353b,
-	    0xa2bfe8a1, 0x4cf10364, 0xa81a664b, 0xbc423001,
-	    0xc24b8b70, 0xd0f89791, 0xc76c51a3, 0x0654be30,
-	    0xd192e819, 0xd6ef5218, 0xd6990624, 0x5565a910,
-	    0xf40e3585, 0x5771202a, 0x106aa070, 0x32bbd1b8,
-	    0x19a4c116, 0xb8d2d0c8, 0x1e376c08, 0x5141ab53,
-	    0x2748774c, 0xdf8eeb99, 0x34b0bcb5, 0xe19b48a8,
-	    0x391c0cb3, 0xc5c95a63, 0x4ed8aa4a, 0xe3418acb,
-	    0x5b9cca4f, 0x7763e373, 0x682e6ff3, 0xd6b2b8a3,
-	    0x748f82ee, 0x5defb2fc, 0x78a5636f, 0x43172f60,
-	    0x84c87814, 0xa1f0ab72, 0x8cc70208, 0x1a6439ec,
-	    0x90befffa, 0x23631e28, 0xa4506ceb, 0xde82bde9,
-	    0xbef9a3f7, 0xb2c67915, 0xc67178f2, 0xe372532b,
-	    0xca273ece, 0xea26619c, 0xd186b8c7, 0x21c0c207,
-	    0xeada7dd6, 0xcde0eb1e, 0xf57d4f7f, 0xee6ed178,
-	    0x06f067aa, 0x72176fba, 0x0a637dc5, 0xa2c898a6,
-	    0x113f9804, 0xbef90dae, 0x1b710b35, 0x131c471b,
-	    0x28db77f5, 0x23047d84, 0x32caab7b, 0x40c72493,
-	    0x3c9ebe0a, 0x15c9bebc, 0x431d67c4, 0x9c100d4c,
-	    0x4cc5d4be, 0xcb3e42b6, 0x597f299c, 0xfc657e2a,
-	    0x5fcb6fab, 0x3ad6faec, 0x6c44198c, 0x4a475817
-	  ]
-	
-	  var W = new Array(160)
-	
-	  function Sha512() {
-	    this.init()
-	    this._w = W
-	
-	    Hash.call(this, 128, 112)
-	  }
-	
-	  inherits(Sha512, Hash)
-	
-	  Sha512.prototype.init = function () {
-	
-	    this._a = 0x6a09e667|0
-	    this._b = 0xbb67ae85|0
-	    this._c = 0x3c6ef372|0
-	    this._d = 0xa54ff53a|0
-	    this._e = 0x510e527f|0
-	    this._f = 0x9b05688c|0
-	    this._g = 0x1f83d9ab|0
-	    this._h = 0x5be0cd19|0
-	
-	    this._al = 0xf3bcc908|0
-	    this._bl = 0x84caa73b|0
-	    this._cl = 0xfe94f82b|0
-	    this._dl = 0x5f1d36f1|0
-	    this._el = 0xade682d1|0
-	    this._fl = 0x2b3e6c1f|0
-	    this._gl = 0xfb41bd6b|0
-	    this._hl = 0x137e2179|0
-	
-	    this._len = this._s = 0
-	
-	    return this
-	  }
-	
-	  function S (X, Xl, n) {
-	    return (X >>> n) | (Xl << (32 - n))
-	  }
-	
-	  function Ch (x, y, z) {
-	    return ((x & y) ^ ((~x) & z));
-	  }
-	
-	  function Maj (x, y, z) {
-	    return ((x & y) ^ (x & z) ^ (y & z));
-	  }
-	
-	  Sha512.prototype._update = function(M) {
-	
-	    var W = this._w
-	    var a, b, c, d, e, f, g, h
-	    var al, bl, cl, dl, el, fl, gl, hl
-	
-	    a = this._a | 0
-	    b = this._b | 0
-	    c = this._c | 0
-	    d = this._d | 0
-	    e = this._e | 0
-	    f = this._f | 0
-	    g = this._g | 0
-	    h = this._h | 0
-	
-	    al = this._al | 0
-	    bl = this._bl | 0
-	    cl = this._cl | 0
-	    dl = this._dl | 0
-	    el = this._el | 0
-	    fl = this._fl | 0
-	    gl = this._gl | 0
-	    hl = this._hl | 0
-	
-	    for (var i = 0; i < 80; i++) {
-	      var j = i * 2
-	
-	      var Wi, Wil
-	
-	      if (i < 16) {
-	        Wi = W[j] = M.readInt32BE(j * 4)
-	        Wil = W[j + 1] = M.readInt32BE(j * 4 + 4)
-	
-	      } else {
-	        var x  = W[j - 15*2]
-	        var xl = W[j - 15*2 + 1]
-	        var gamma0  = S(x, xl, 1) ^ S(x, xl, 8) ^ (x >>> 7)
-	        var gamma0l = S(xl, x, 1) ^ S(xl, x, 8) ^ S(xl, x, 7)
-	
-	        x  = W[j - 2*2]
-	        xl = W[j - 2*2 + 1]
-	        var gamma1  = S(x, xl, 19) ^ S(xl, x, 29) ^ (x >>> 6)
-	        var gamma1l = S(xl, x, 19) ^ S(x, xl, 29) ^ S(xl, x, 6)
-	
-	        // W[i] = gamma0 + W[i - 7] + gamma1 + W[i - 16]
-	        var Wi7  = W[j - 7*2]
-	        var Wi7l = W[j - 7*2 + 1]
-	
-	        var Wi16  = W[j - 16*2]
-	        var Wi16l = W[j - 16*2 + 1]
-	
-	        Wil = gamma0l + Wi7l
-	        Wi  = gamma0  + Wi7 + ((Wil >>> 0) < (gamma0l >>> 0) ? 1 : 0)
-	        Wil = Wil + gamma1l
-	        Wi  = Wi  + gamma1  + ((Wil >>> 0) < (gamma1l >>> 0) ? 1 : 0)
-	        Wil = Wil + Wi16l
-	        Wi  = Wi  + Wi16 + ((Wil >>> 0) < (Wi16l >>> 0) ? 1 : 0)
-	
-	        W[j] = Wi
-	        W[j + 1] = Wil
-	      }
-	
-	      var maj = Maj(a, b, c)
-	      var majl = Maj(al, bl, cl)
-	
-	      var sigma0h = S(a, al, 28) ^ S(al, a, 2) ^ S(al, a, 7)
-	      var sigma0l = S(al, a, 28) ^ S(a, al, 2) ^ S(a, al, 7)
-	      var sigma1h = S(e, el, 14) ^ S(e, el, 18) ^ S(el, e, 9)
-	      var sigma1l = S(el, e, 14) ^ S(el, e, 18) ^ S(e, el, 9)
-	
-	      // t1 = h + sigma1 + ch + K[i] + W[i]
-	      var Ki = K[j]
-	      var Kil = K[j + 1]
-	
-	      var ch = Ch(e, f, g)
-	      var chl = Ch(el, fl, gl)
-	
-	      var t1l = hl + sigma1l
-	      var t1 = h + sigma1h + ((t1l >>> 0) < (hl >>> 0) ? 1 : 0)
-	      t1l = t1l + chl
-	      t1 = t1 + ch + ((t1l >>> 0) < (chl >>> 0) ? 1 : 0)
-	      t1l = t1l + Kil
-	      t1 = t1 + Ki + ((t1l >>> 0) < (Kil >>> 0) ? 1 : 0)
-	      t1l = t1l + Wil
-	      t1 = t1 + Wi + ((t1l >>> 0) < (Wil >>> 0) ? 1 : 0)
-	
-	      // t2 = sigma0 + maj
-	      var t2l = sigma0l + majl
-	      var t2 = sigma0h + maj + ((t2l >>> 0) < (sigma0l >>> 0) ? 1 : 0)
-	
-	      h  = g
-	      hl = gl
-	      g  = f
-	      gl = fl
-	      f  = e
-	      fl = el
-	      el = (dl + t1l) | 0
-	      e  = (d + t1 + ((el >>> 0) < (dl >>> 0) ? 1 : 0)) | 0
-	      d  = c
-	      dl = cl
-	      c  = b
-	      cl = bl
-	      b  = a
-	      bl = al
-	      al = (t1l + t2l) | 0
-	      a  = (t1 + t2 + ((al >>> 0) < (t1l >>> 0) ? 1 : 0)) | 0
-	    }
-	
-	    this._al = (this._al + al) | 0
-	    this._bl = (this._bl + bl) | 0
-	    this._cl = (this._cl + cl) | 0
-	    this._dl = (this._dl + dl) | 0
-	    this._el = (this._el + el) | 0
-	    this._fl = (this._fl + fl) | 0
-	    this._gl = (this._gl + gl) | 0
-	    this._hl = (this._hl + hl) | 0
-	
-	    this._a = (this._a + a + ((this._al >>> 0) < (al >>> 0) ? 1 : 0)) | 0
-	    this._b = (this._b + b + ((this._bl >>> 0) < (bl >>> 0) ? 1 : 0)) | 0
-	    this._c = (this._c + c + ((this._cl >>> 0) < (cl >>> 0) ? 1 : 0)) | 0
-	    this._d = (this._d + d + ((this._dl >>> 0) < (dl >>> 0) ? 1 : 0)) | 0
-	    this._e = (this._e + e + ((this._el >>> 0) < (el >>> 0) ? 1 : 0)) | 0
-	    this._f = (this._f + f + ((this._fl >>> 0) < (fl >>> 0) ? 1 : 0)) | 0
-	    this._g = (this._g + g + ((this._gl >>> 0) < (gl >>> 0) ? 1 : 0)) | 0
-	    this._h = (this._h + h + ((this._hl >>> 0) < (hl >>> 0) ? 1 : 0)) | 0
-	  }
-	
-	  Sha512.prototype._hash = function () {
-	    var H = new Buffer(64)
-	
-	    function writeInt64BE(h, l, offset) {
-	      H.writeInt32BE(h, offset)
-	      H.writeInt32BE(l, offset + 4)
-	    }
-	
-	    writeInt64BE(this._a, this._al, 0)
-	    writeInt64BE(this._b, this._bl, 8)
-	    writeInt64BE(this._c, this._cl, 16)
-	    writeInt64BE(this._d, this._dl, 24)
-	    writeInt64BE(this._e, this._el, 32)
-	    writeInt64BE(this._f, this._fl, 40)
-	    writeInt64BE(this._g, this._gl, 48)
-	    writeInt64BE(this._h, this._hl, 56)
-	
-	    return H
-	  }
-	
-	  return Sha512
-	
-	}
-
-
-/***/ },
-/* 35 */
-/*!************************************!*\
-  !*** ./~/crypto-browserify/md5.js ***!
-  \************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message
-	 * Digest Algorithm, as defined in RFC 1321.
-	 * Version 2.1 Copyright (C) Paul Johnston 1999 - 2002.
-	 * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
-	 * Distributed under the BSD License
-	 * See http://pajhome.org.uk/crypt/md5 for more info.
-	 */
-	
-	var helpers = __webpack_require__(/*! ./helpers */ 36);
-	
-	/*
-	 * Calculate the MD5 of an array of little-endian words, and a bit length
-	 */
-	function core_md5(x, len)
-	{
-	  /* append padding */
-	  x[len >> 5] |= 0x80 << ((len) % 32);
-	  x[(((len + 64) >>> 9) << 4) + 14] = len;
-	
-	  var a =  1732584193;
-	  var b = -271733879;
-	  var c = -1732584194;
-	  var d =  271733878;
-	
-	  for(var i = 0; i < x.length; i += 16)
-	  {
-	    var olda = a;
-	    var oldb = b;
-	    var oldc = c;
-	    var oldd = d;
-	
-	    a = md5_ff(a, b, c, d, x[i+ 0], 7 , -680876936);
-	    d = md5_ff(d, a, b, c, x[i+ 1], 12, -389564586);
-	    c = md5_ff(c, d, a, b, x[i+ 2], 17,  606105819);
-	    b = md5_ff(b, c, d, a, x[i+ 3], 22, -1044525330);
-	    a = md5_ff(a, b, c, d, x[i+ 4], 7 , -176418897);
-	    d = md5_ff(d, a, b, c, x[i+ 5], 12,  1200080426);
-	    c = md5_ff(c, d, a, b, x[i+ 6], 17, -1473231341);
-	    b = md5_ff(b, c, d, a, x[i+ 7], 22, -45705983);
-	    a = md5_ff(a, b, c, d, x[i+ 8], 7 ,  1770035416);
-	    d = md5_ff(d, a, b, c, x[i+ 9], 12, -1958414417);
-	    c = md5_ff(c, d, a, b, x[i+10], 17, -42063);
-	    b = md5_ff(b, c, d, a, x[i+11], 22, -1990404162);
-	    a = md5_ff(a, b, c, d, x[i+12], 7 ,  1804603682);
-	    d = md5_ff(d, a, b, c, x[i+13], 12, -40341101);
-	    c = md5_ff(c, d, a, b, x[i+14], 17, -1502002290);
-	    b = md5_ff(b, c, d, a, x[i+15], 22,  1236535329);
-	
-	    a = md5_gg(a, b, c, d, x[i+ 1], 5 , -165796510);
-	    d = md5_gg(d, a, b, c, x[i+ 6], 9 , -1069501632);
-	    c = md5_gg(c, d, a, b, x[i+11], 14,  643717713);
-	    b = md5_gg(b, c, d, a, x[i+ 0], 20, -373897302);
-	    a = md5_gg(a, b, c, d, x[i+ 5], 5 , -701558691);
-	    d = md5_gg(d, a, b, c, x[i+10], 9 ,  38016083);
-	    c = md5_gg(c, d, a, b, x[i+15], 14, -660478335);
-	    b = md5_gg(b, c, d, a, x[i+ 4], 20, -405537848);
-	    a = md5_gg(a, b, c, d, x[i+ 9], 5 ,  568446438);
-	    d = md5_gg(d, a, b, c, x[i+14], 9 , -1019803690);
-	    c = md5_gg(c, d, a, b, x[i+ 3], 14, -187363961);
-	    b = md5_gg(b, c, d, a, x[i+ 8], 20,  1163531501);
-	    a = md5_gg(a, b, c, d, x[i+13], 5 , -1444681467);
-	    d = md5_gg(d, a, b, c, x[i+ 2], 9 , -51403784);
-	    c = md5_gg(c, d, a, b, x[i+ 7], 14,  1735328473);
-	    b = md5_gg(b, c, d, a, x[i+12], 20, -1926607734);
-	
-	    a = md5_hh(a, b, c, d, x[i+ 5], 4 , -378558);
-	    d = md5_hh(d, a, b, c, x[i+ 8], 11, -2022574463);
-	    c = md5_hh(c, d, a, b, x[i+11], 16,  1839030562);
-	    b = md5_hh(b, c, d, a, x[i+14], 23, -35309556);
-	    a = md5_hh(a, b, c, d, x[i+ 1], 4 , -1530992060);
-	    d = md5_hh(d, a, b, c, x[i+ 4], 11,  1272893353);
-	    c = md5_hh(c, d, a, b, x[i+ 7], 16, -155497632);
-	    b = md5_hh(b, c, d, a, x[i+10], 23, -1094730640);
-	    a = md5_hh(a, b, c, d, x[i+13], 4 ,  681279174);
-	    d = md5_hh(d, a, b, c, x[i+ 0], 11, -358537222);
-	    c = md5_hh(c, d, a, b, x[i+ 3], 16, -722521979);
-	    b = md5_hh(b, c, d, a, x[i+ 6], 23,  76029189);
-	    a = md5_hh(a, b, c, d, x[i+ 9], 4 , -640364487);
-	    d = md5_hh(d, a, b, c, x[i+12], 11, -421815835);
-	    c = md5_hh(c, d, a, b, x[i+15], 16,  530742520);
-	    b = md5_hh(b, c, d, a, x[i+ 2], 23, -995338651);
-	
-	    a = md5_ii(a, b, c, d, x[i+ 0], 6 , -198630844);
-	    d = md5_ii(d, a, b, c, x[i+ 7], 10,  1126891415);
-	    c = md5_ii(c, d, a, b, x[i+14], 15, -1416354905);
-	    b = md5_ii(b, c, d, a, x[i+ 5], 21, -57434055);
-	    a = md5_ii(a, b, c, d, x[i+12], 6 ,  1700485571);
-	    d = md5_ii(d, a, b, c, x[i+ 3], 10, -1894986606);
-	    c = md5_ii(c, d, a, b, x[i+10], 15, -1051523);
-	    b = md5_ii(b, c, d, a, x[i+ 1], 21, -2054922799);
-	    a = md5_ii(a, b, c, d, x[i+ 8], 6 ,  1873313359);
-	    d = md5_ii(d, a, b, c, x[i+15], 10, -30611744);
-	    c = md5_ii(c, d, a, b, x[i+ 6], 15, -1560198380);
-	    b = md5_ii(b, c, d, a, x[i+13], 21,  1309151649);
-	    a = md5_ii(a, b, c, d, x[i+ 4], 6 , -145523070);
-	    d = md5_ii(d, a, b, c, x[i+11], 10, -1120210379);
-	    c = md5_ii(c, d, a, b, x[i+ 2], 15,  718787259);
-	    b = md5_ii(b, c, d, a, x[i+ 9], 21, -343485551);
-	
-	    a = safe_add(a, olda);
-	    b = safe_add(b, oldb);
-	    c = safe_add(c, oldc);
-	    d = safe_add(d, oldd);
-	  }
-	  return Array(a, b, c, d);
-	
-	}
-	
-	/*
-	 * These functions implement the four basic operations the algorithm uses.
-	 */
-	function md5_cmn(q, a, b, x, s, t)
-	{
-	  return safe_add(bit_rol(safe_add(safe_add(a, q), safe_add(x, t)), s),b);
-	}
-	function md5_ff(a, b, c, d, x, s, t)
-	{
-	  return md5_cmn((b & c) | ((~b) & d), a, b, x, s, t);
-	}
-	function md5_gg(a, b, c, d, x, s, t)
-	{
-	  return md5_cmn((b & d) | (c & (~d)), a, b, x, s, t);
-	}
-	function md5_hh(a, b, c, d, x, s, t)
-	{
-	  return md5_cmn(b ^ c ^ d, a, b, x, s, t);
-	}
-	function md5_ii(a, b, c, d, x, s, t)
-	{
-	  return md5_cmn(c ^ (b | (~d)), a, b, x, s, t);
-	}
-	
-	/*
-	 * Add integers, wrapping at 2^32. This uses 16-bit operations internally
-	 * to work around bugs in some JS interpreters.
-	 */
-	function safe_add(x, y)
-	{
-	  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
-	  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-	  return (msw << 16) | (lsw & 0xFFFF);
-	}
-	
-	/*
-	 * Bitwise rotate a 32-bit number to the left.
-	 */
-	function bit_rol(num, cnt)
-	{
-	  return (num << cnt) | (num >>> (32 - cnt));
-	}
-	
-	module.exports = function md5(buf) {
-	  return helpers.hash(buf, core_md5, 16);
-	};
-
-
-/***/ },
-/* 36 */
-/*!****************************************!*\
-  !*** ./~/crypto-browserify/helpers.js ***!
-  \****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var intSize = 4;
-	var zeroBuffer = new Buffer(intSize); zeroBuffer.fill(0);
-	var chrsz = 8;
-	
-	function toArray(buf, bigEndian) {
-	  if ((buf.length % intSize) !== 0) {
-	    var len = buf.length + (intSize - (buf.length % intSize));
-	    buf = Buffer.concat([buf, zeroBuffer], len);
-	  }
-	
-	  var arr = [];
-	  var fn = bigEndian ? buf.readInt32BE : buf.readInt32LE;
-	  for (var i = 0; i < buf.length; i += intSize) {
-	    arr.push(fn.call(buf, i));
-	  }
-	  return arr;
-	}
-	
-	function toBuffer(arr, size, bigEndian) {
-	  var buf = new Buffer(size);
-	  var fn = bigEndian ? buf.writeInt32BE : buf.writeInt32LE;
-	  for (var i = 0; i < arr.length; i++) {
-	    fn.call(buf, arr[i], i * 4, true);
-	  }
-	  return buf;
-	}
-	
-	function hash(buf, fn, hashSize, bigEndian) {
-	  if (!Buffer.isBuffer(buf)) buf = new Buffer(buf);
-	  var arr = fn(toArray(buf, bigEndian), buf.length * chrsz);
-	  return toBuffer(arr, hashSize, bigEndian);
-	}
-	
-	module.exports = { hash: hash };
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 20).Buffer))
-
-/***/ },
-/* 37 */
-/*!**************************************!*\
-  !*** ./~/ripemd160/lib/ripemd160.js ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(Buffer) {
-	module.exports = ripemd160
-	
-	
-	
-	/*
-	CryptoJS v3.1.2
-	code.google.com/p/crypto-js
-	(c) 2009-2013 by Jeff Mott. All rights reserved.
-	code.google.com/p/crypto-js/wiki/License
-	*/
-	/** @preserve
-	(c) 2012 by Cédric Mesnil. All rights reserved.
-	
-	Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-	
-	    - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-	    - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-	
-	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-	*/
-	
-	// Constants table
-	var zl = [
-	    0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
-	    7,  4, 13,  1, 10,  6, 15,  3, 12,  0,  9,  5,  2, 14, 11,  8,
-	    3, 10, 14,  4,  9, 15,  8,  1,  2,  7,  0,  6, 13, 11,  5, 12,
-	    1,  9, 11, 10,  0,  8, 12,  4, 13,  3,  7, 15, 14,  5,  6,  2,
-	    4,  0,  5,  9,  7, 12,  2, 10, 14,  1,  3,  8, 11,  6, 15, 13];
-	var zr = [
-	    5, 14,  7,  0,  9,  2, 11,  4, 13,  6, 15,  8,  1, 10,  3, 12,
-	    6, 11,  3,  7,  0, 13,  5, 10, 14, 15,  8, 12,  4,  9,  1,  2,
-	    15,  5,  1,  3,  7, 14,  6,  9, 11,  8, 12,  2, 10,  0,  4, 13,
-	    8,  6,  4,  1,  3, 11, 15,  0,  5, 12,  2, 13,  9,  7, 10, 14,
-	    12, 15, 10,  4,  1,  5,  8,  7,  6,  2, 13, 14,  0,  3,  9, 11];
-	var sl = [
-	     11, 14, 15, 12,  5,  8,  7,  9, 11, 13, 14, 15,  6,  7,  9,  8,
-	    7, 6,   8, 13, 11,  9,  7, 15,  7, 12, 15,  9, 11,  7, 13, 12,
-	    11, 13,  6,  7, 14,  9, 13, 15, 14,  8, 13,  6,  5, 12,  7,  5,
-	      11, 12, 14, 15, 14, 15,  9,  8,  9, 14,  5,  6,  8,  6,  5, 12,
-	    9, 15,  5, 11,  6,  8, 13, 12,  5, 12, 13, 14, 11,  8,  5,  6 ];
-	var sr = [
-	    8,  9,  9, 11, 13, 15, 15,  5,  7,  7,  8, 11, 14, 14, 12,  6,
-	    9, 13, 15,  7, 12,  8,  9, 11,  7,  7, 12,  7,  6, 15, 13, 11,
-	    9,  7, 15, 11,  8,  6,  6, 14, 12, 13,  5, 14, 13, 13,  7,  5,
-	    15,  5,  8, 11, 14, 14,  6, 14,  6,  9, 12,  9, 12,  5, 15,  8,
-	    8,  5, 12,  9, 12,  5, 14,  6,  8, 13,  6,  5, 15, 13, 11, 11 ];
-	
-	var hl =  [ 0x00000000, 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xA953FD4E];
-	var hr =  [ 0x50A28BE6, 0x5C4DD124, 0x6D703EF3, 0x7A6D76E9, 0x00000000];
-	
-	var bytesToWords = function (bytes) {
-	  var words = [];
-	  for (var i = 0, b = 0; i < bytes.length; i++, b += 8) {
-	    words[b >>> 5] |= bytes[i] << (24 - b % 32);
-	  }
-	  return words;
-	};
-	
-	var wordsToBytes = function (words) {
-	  var bytes = [];
-	  for (var b = 0; b < words.length * 32; b += 8) {
-	    bytes.push((words[b >>> 5] >>> (24 - b % 32)) & 0xFF);
-	  }
-	  return bytes;
-	};
-	
-	var processBlock = function (H, M, offset) {
-	
-	  // Swap endian
-	  for (var i = 0; i < 16; i++) {
-	    var offset_i = offset + i;
-	    var M_offset_i = M[offset_i];
-	
-	    // Swap
-	    M[offset_i] = (
-	        (((M_offset_i << 8)  | (M_offset_i >>> 24)) & 0x00ff00ff) |
-	        (((M_offset_i << 24) | (M_offset_i >>> 8))  & 0xff00ff00)
-	    );
-	  }
-	
-	  // Working variables
-	  var al, bl, cl, dl, el;
-	  var ar, br, cr, dr, er;
-	
-	  ar = al = H[0];
-	  br = bl = H[1];
-	  cr = cl = H[2];
-	  dr = dl = H[3];
-	  er = el = H[4];
-	  // Computation
-	  var t;
-	  for (var i = 0; i < 80; i += 1) {
-	    t = (al +  M[offset+zl[i]])|0;
-	    if (i<16){
-	        t +=  f1(bl,cl,dl) + hl[0];
-	    } else if (i<32) {
-	        t +=  f2(bl,cl,dl) + hl[1];
-	    } else if (i<48) {
-	        t +=  f3(bl,cl,dl) + hl[2];
-	    } else if (i<64) {
-	        t +=  f4(bl,cl,dl) + hl[3];
-	    } else {// if (i<80) {
-	        t +=  f5(bl,cl,dl) + hl[4];
-	    }
-	    t = t|0;
-	    t =  rotl(t,sl[i]);
-	    t = (t+el)|0;
-	    al = el;
-	    el = dl;
-	    dl = rotl(cl, 10);
-	    cl = bl;
-	    bl = t;
-	
-	    t = (ar + M[offset+zr[i]])|0;
-	    if (i<16){
-	        t +=  f5(br,cr,dr) + hr[0];
-	    } else if (i<32) {
-	        t +=  f4(br,cr,dr) + hr[1];
-	    } else if (i<48) {
-	        t +=  f3(br,cr,dr) + hr[2];
-	    } else if (i<64) {
-	        t +=  f2(br,cr,dr) + hr[3];
-	    } else {// if (i<80) {
-	        t +=  f1(br,cr,dr) + hr[4];
-	    }
-	    t = t|0;
-	    t =  rotl(t,sr[i]) ;
-	    t = (t+er)|0;
-	    ar = er;
-	    er = dr;
-	    dr = rotl(cr, 10);
-	    cr = br;
-	    br = t;
-	  }
-	  // Intermediate hash value
-	  t    = (H[1] + cl + dr)|0;
-	  H[1] = (H[2] + dl + er)|0;
-	  H[2] = (H[3] + el + ar)|0;
-	  H[3] = (H[4] + al + br)|0;
-	  H[4] = (H[0] + bl + cr)|0;
-	  H[0] =  t;
-	};
-	
-	function f1(x, y, z) {
-	  return ((x) ^ (y) ^ (z));
-	}
-	
-	function f2(x, y, z) {
-	  return (((x)&(y)) | ((~x)&(z)));
-	}
-	
-	function f3(x, y, z) {
-	  return (((x) | (~(y))) ^ (z));
-	}
-	
-	function f4(x, y, z) {
-	  return (((x) & (z)) | ((y)&(~(z))));
-	}
-	
-	function f5(x, y, z) {
-	  return ((x) ^ ((y) |(~(z))));
-	}
-	
-	function rotl(x,n) {
-	  return (x<<n) | (x>>>(32-n));
-	}
-	
-	function ripemd160(message) {
-	  var H = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0];
-	
-	  if (typeof message == 'string')
-	    message = new Buffer(message, 'utf8');
-	
-	  var m = bytesToWords(message);
-	
-	  var nBitsLeft = message.length * 8;
-	  var nBitsTotal = message.length * 8;
-	
-	  // Add padding
-	  m[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
-	  m[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
-	      (((nBitsTotal << 8)  | (nBitsTotal >>> 24)) & 0x00ff00ff) |
-	      (((nBitsTotal << 24) | (nBitsTotal >>> 8))  & 0xff00ff00)
-	  );
-	
-	  for (var i=0 ; i<m.length; i += 16) {
-	    processBlock(H, m, i);
-	  }
-	
-	  // Swap endian
-	  for (var i = 0; i < 5; i++) {
-	      // Shortcut
-	    var H_i = H[i];
-	
-	    // Swap
-	    H[i] = (((H_i << 8)  | (H_i >>> 24)) & 0x00ff00ff) |
-	          (((H_i << 24) | (H_i >>> 8))  & 0xff00ff00);
-	  }
-	
-	  var digestbytes = wordsToBytes(H);
-	  return new Buffer(digestbytes);
-	}
-	
-	
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 20).Buffer))
-
-/***/ },
-/* 38 */
-/*!********************************************!*\
-  !*** ./~/crypto-browserify/create-hmac.js ***!
-  \********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(/*! ./create-hash */ 26)
-	
-	var zeroBuffer = new Buffer(128)
-	zeroBuffer.fill(0)
-	
-	module.exports = Hmac
-	
-	function Hmac (alg, key) {
-	  if(!(this instanceof Hmac)) return new Hmac(alg, key)
-	  this._opad = opad
-	  this._alg = alg
-	
-	  var blocksize = (alg === 'sha512') ? 128 : 64
-	
-	  key = this._key = !Buffer.isBuffer(key) ? new Buffer(key) : key
-	
-	  if(key.length > blocksize) {
-	    key = createHash(alg).update(key).digest()
-	  } else if(key.length < blocksize) {
-	    key = Buffer.concat([key, zeroBuffer], blocksize)
-	  }
-	
-	  var ipad = this._ipad = new Buffer(blocksize)
-	  var opad = this._opad = new Buffer(blocksize)
-	
-	  for(var i = 0; i < blocksize; i++) {
-	    ipad[i] = key[i] ^ 0x36
-	    opad[i] = key[i] ^ 0x5C
-	  }
-	
-	  this._hash = createHash(alg).update(ipad)
-	}
-	
-	Hmac.prototype.update = function (data, enc) {
-	  this._hash.update(data, enc)
-	  return this
-	}
-	
-	Hmac.prototype.digest = function (enc) {
-	  var h = this._hash.digest()
-	  return createHash(this._alg).update(this._opad).update(h).digest(enc)
-	}
-	
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 20).Buffer))
-
-/***/ },
-/* 39 */
-/*!***************************************!*\
-  !*** ./~/crypto-browserify/pbkdf2.js ***!
-  \***************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var pbkdf2Export = __webpack_require__(/*! pbkdf2-compat/pbkdf2 */ 40)
-	
-	module.exports = function (crypto, exports) {
-	  exports = exports || {}
-	
-	  var exported = pbkdf2Export(crypto)
-	
-	  exports.pbkdf2 = exported.pbkdf2
-	  exports.pbkdf2Sync = exported.pbkdf2Sync
-	
-	  return exports
-	}
-
-
-/***/ },
-/* 40 */
-/*!***********************************!*\
-  !*** ./~/pbkdf2-compat/pbkdf2.js ***!
-  \***********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(Buffer) {module.exports = function(crypto) {
-	  function pbkdf2(password, salt, iterations, keylen, digest, callback) {
-	    if ('function' === typeof digest) {
-	      callback = digest
-	      digest = undefined
-	    }
-	
-	    if ('function' !== typeof callback)
-	      throw new Error('No callback provided to pbkdf2')
-	
-	    setTimeout(function() {
-	      var result
-	
-	      try {
-	        result = pbkdf2Sync(password, salt, iterations, keylen, digest)
-	      } catch (e) {
-	        return callback(e)
-	      }
-	
-	      callback(undefined, result)
-	    })
-	  }
-	
-	  function pbkdf2Sync(password, salt, iterations, keylen, digest) {
-	    if ('number' !== typeof iterations)
-	      throw new TypeError('Iterations not a number')
-	
-	    if (iterations < 0)
-	      throw new TypeError('Bad iterations')
-	
-	    if ('number' !== typeof keylen)
-	      throw new TypeError('Key length not a number')
-	
-	    if (keylen < 0)
-	      throw new TypeError('Bad key length')
-	
-	    digest = digest || 'sha1'
-	
-	    if (!Buffer.isBuffer(password)) password = new Buffer(password)
-	    if (!Buffer.isBuffer(salt)) salt = new Buffer(salt)
-	
-	    var hLen, l = 1, r, T
-	    var DK = new Buffer(keylen)
-	    var block1 = new Buffer(salt.length + 4)
-	    salt.copy(block1, 0, 0, salt.length)
-	
-	    for (var i = 1; i <= l; i++) {
-	      block1.writeUInt32BE(i, salt.length)
-	
-	      var U = crypto.createHmac(digest, password).update(block1).digest()
-	
-	      if (!hLen) {
-	        hLen = U.length
-	        T = new Buffer(hLen)
-	        l = Math.ceil(keylen / hLen)
-	        r = keylen - (l - 1) * hLen
-	
-	        if (keylen > (Math.pow(2, 32) - 1) * hLen)
-	          throw new TypeError('keylen exceeds maximum length')
-	      }
-	
-	      U.copy(T, 0, 0, hLen)
-	
-	      for (var j = 1; j < iterations; j++) {
-	        U = crypto.createHmac(digest, password).update(U).digest()
-	
-	        for (var k = 0; k < hLen; k++) {
-	          T[k] ^= U[k]
-	        }
-	      }
-	
-	      var destPos = (i - 1) * hLen
-	      var len = (i == l ? r : hLen)
-	      T.copy(DK, destPos, 0, len)
-	    }
-	
-	    return DK
-	  }
-	
-	  return {
-	    pbkdf2: pbkdf2,
-	    pbkdf2Sync: pbkdf2Sync
-	  }
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/buffer/index.js */ 20).Buffer))
-
-/***/ },
-/* 41 */
+/* 45 */
 /*!**************************************!*\
   !*** ./src/store/mutations/index.js ***!
   \**************************************/
@@ -23306,26 +23383,34 @@
 	  value: true
 	});
 	
-	var _types$INIT$types$CHANGE_NAV;
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+	var _setup_types$LOAD_ACCOUNTS$setup_types$ACCOUNT_EXPIRES$setup_types$CHANGE_ACCOUNT$setup_types$REMOVE_ACCOUNT$nav_types$CHANGE_NAV;
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var _types = __webpack_require__(/*! ./types */ 17);
+	var _types = __webpack_require__(/*! ../types */ 19);
 	
-	var types = _interopRequireWildcard(_types);
-	
-	exports['default'] = (_types$INIT$types$CHANGE_NAV = {}, _defineProperty(_types$INIT$types$CHANGE_NAV, types.INIT, function (state, init_state) {
-	  Object.assign(state, init_state);
-	}), _defineProperty(_types$INIT$types$CHANGE_NAV, types.CHANGE_NAV, function (state, id) {
+	exports['default'] = (_setup_types$LOAD_ACCOUNTS$setup_types$ACCOUNT_EXPIRES$setup_types$CHANGE_ACCOUNT$setup_types$REMOVE_ACCOUNT$nav_types$CHANGE_NAV = {}, _defineProperty(_setup_types$LOAD_ACCOUNTS$setup_types$ACCOUNT_EXPIRES$setup_types$CHANGE_ACCOUNT$setup_types$REMOVE_ACCOUNT$nav_types$CHANGE_NAV, _types.setup_types.LOAD_ACCOUNTS, function (state, accounts) {
+	  state.accounts = accounts;
+	}), _defineProperty(_setup_types$LOAD_ACCOUNTS$setup_types$ACCOUNT_EXPIRES$setup_types$CHANGE_ACCOUNT$setup_types$REMOVE_ACCOUNT$nav_types$CHANGE_NAV, _types.setup_types.ACCOUNT_EXPIRES, function (state) {
+	  state.current_account_id = null;
+	}), _defineProperty(_setup_types$LOAD_ACCOUNTS$setup_types$ACCOUNT_EXPIRES$setup_types$CHANGE_ACCOUNT$setup_types$REMOVE_ACCOUNT$nav_types$CHANGE_NAV, _types.setup_types.CHANGE_ACCOUNT, function (state, id) {
+	  state.current_account_id = id;
+	}), _defineProperty(_setup_types$LOAD_ACCOUNTS$setup_types$ACCOUNT_EXPIRES$setup_types$CHANGE_ACCOUNT$setup_types$REMOVE_ACCOUNT$nav_types$CHANGE_NAV, _types.setup_types.REMOVE_ACCOUNT, function (state, id) {
+	  if (state.current_account_id === id) {
+	    state.current_account_id = null;
+	  }
+	  var idx = state.accounts.findIndex(function (a) {
+	    return a.id === id;
+	  });
+	  state.accounts.splice(idx, 1);
+	}), _defineProperty(_setup_types$LOAD_ACCOUNTS$setup_types$ACCOUNT_EXPIRES$setup_types$CHANGE_ACCOUNT$setup_types$REMOVE_ACCOUNT$nav_types$CHANGE_NAV, _types.nav_types.CHANGE_NAV, function (state, id) {
 	  state.current_nav_id = id;
 	  state.current_subnav_id = id;
-	}), _types$INIT$types$CHANGE_NAV);
+	}), _setup_types$LOAD_ACCOUNTS$setup_types$ACCOUNT_EXPIRES$setup_types$CHANGE_ACCOUNT$setup_types$REMOVE_ACCOUNT$nav_types$CHANGE_NAV);
 	module.exports = exports['default'];
 
 /***/ },
-/* 42 */
+/* 46 */
 /*!****************************!*\
   !*** ./src/nav/style.scss ***!
   \****************************/
@@ -23334,10 +23419,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./../../~/postcss-loader!./../../~/sass-loader!./style.scss */ 43);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./../../~/postcss-loader!./../../~/sass-loader!./style.scss */ 47);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 45)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 49)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -23354,13 +23439,13 @@
 	}
 
 /***/ },
-/* 43 */
+/* 47 */
 /*!******************************************************************************!*\
   !*** ./~/css-loader!./~/postcss-loader!./~/sass-loader!./src/nav/style.scss ***!
   \******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 44)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 48)();
 	// imports
 	
 	
@@ -23371,7 +23456,7 @@
 
 
 /***/ },
-/* 44 */
+/* 48 */
 /*!**************************************!*\
   !*** ./~/css-loader/lib/css-base.js ***!
   \**************************************/
@@ -23430,7 +23515,7 @@
 
 
 /***/ },
-/* 45 */
+/* 49 */
 /*!*************************************!*\
   !*** ./~/style-loader/addStyles.js ***!
   \*************************************/
@@ -23687,7 +23772,7 @@
 
 
 /***/ },
-/* 46 */
+/* 50 */
 /*!****************************!*\
   !*** ./src/setup/index.js ***!
   \****************************/
@@ -23701,14 +23786,20 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _modal = __webpack_require__(/*! ./modal */ 47);
+	var _account = __webpack_require__(/*! ./account */ 52);
 	
-	var _modal2 = _interopRequireDefault(_modal);
+	var _account2 = _interopRequireDefault(_account);
 	
-	__webpack_require__(/*! ./style */ 48);
+	var _store = __webpack_require__(/*! ../store */ 9);
+	
+	__webpack_require__(/*! ./style */ 53);
 	
 	var Setup = {
 	  el: '.js-setup',
+	
+	  components: {
+	    account: _account2['default']
+	  },
 	
 	  data: function data() {
 	    return {
@@ -23716,8 +23807,18 @@
 	    };
 	  },
 	
-	  components: {
-	    'setup-modal': _modal2['default']
+	  methods: {
+	    open: function open() {
+	      this.active = true;
+	    },
+	
+	    close: function close() {
+	      this.active = false;
+	    }
+	  },
+	
+	  ready: function ready() {
+	    _store.actions.loadSetup();
 	  }
 	};
 	
@@ -23725,10 +23826,11 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 47 */
-/*!*****************************!*\
-  !*** ./src/setup/modal.jsx ***!
-  \*****************************/
+/* 51 */,
+/* 52 */
+/*!*******************************!*\
+  !*** ./src/setup/account.jsx ***!
+  \*******************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23737,49 +23839,118 @@
 	  value: true
 	});
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _dispatcher = __webpack_require__(/*! ../dispatcher */ 3);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
 	var _store = __webpack_require__(/*! ../store */ 9);
 	
-	var Modal = {
-	  props: ['active'],
+	var Account = {
+	  props: ['tab', 'close'],
 	
 	  data: function data() {
 	    return {
-	      isValidating: false,
-	      msgError: null,
-	      msgSuccess: null,
+	      selected: null,
+	      is_validating: false,
+	
+	      msg_error: null,
+	      msg_success: null,
+	
+	      id: null,
+	      valid: null,
 	      url: null,
-	      token: null,
-	      echo_str: null
+	      token: null
 	    };
 	  },
 	
-	  template: '\n  <div class="modal fade Setup-modal" :class="{active: active, in: active}">\n    <div class="modal-backdrop fade Setup-backdrop" :class="{active: active, in: active}" @click="close"></div>\n    <div class="modal-dialog">\n      <div class="modal-content">\n        <div class="modal-header">\n          <button type="button" class="close" @click="close">&times;</button>\n          <h4 class="modal-title">配置您的微信账号</h4>\n        </div>\n        <div class="modal-body">\n          <div class="alert alert-warning">\n            <p>\n              <em>* 开发者提交服务器信息后，微信服务器将发送 GET 请求到填写的服务器地址 URL 上，从而验证开发者服务器地址的有效性</em>\n              <a href="http://mp.weixin.qq.com/wiki/17/2d4265491f12608cd170a95559800f2d.html" target="_blank" title="第二步：验证服务器地址的有效性">\n                <i class="glyphicon glyphicon-question-sign"></i>\n              </a>\n            </p>\n          </div>\n          <form class="form-horizontal">\n            <div class="form-group">\n              <label class="col-sm-4 control-label required">服务器接口 url</label>\n              <div class="col-sm-8">\n                <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" v-model="url" />\n              </div>\n            </div>\n            <div class="form-group has-feedback">\n              <label class="col-sm-4 control-label required">Token</label>\n              <div class="col-sm-8">\n                <input type="text" class="form-control" placeholder="Token" v-model="token" />\n              </div>\n            </div>\n          </form>\n        </div>\n        <div class="modal-footer">\n          <div class="alert alert-success text-center" v-if="msgSuccess">{{ msgSuccess }}</div>\n          <div class="alert alert-danger text-center" v-if="msgError">{{ msgError }}</div>\n          <button type="button" class="btn btn-primary" :class="{disabled: isValidating}" v-if="!msgSuccess" @click="validate">\n            {{ isValidating ? \'验证中...\' : \'验证\' }}\n          </button>\n        </div>\n      </div>\n    </div>\n  </div>\n  ',
+	  computed: {
+	    accounts: function accounts() {
+	      return _store.state.accounts;
+	    },
+	
+	    current_account_id: function current_account_id() {
+	      return _store.state.current_account_id;
+	    }
+	  },
+	
+	  watch: {
+	    current_account_id: function current_account_id(id, prev_id) {
+	      var _this = this;
+	
+	      console.log(id, prev_id);
+	      if (id) {
+	        this.selected = id;
+	        this.is_validating = false;
+	        this.msg_success = '验证通过';
+	
+	        setTimeout(function () {
+	          _this.msg_success = null;
+	          _this.close();
+	        }, 1500);
+	      }
+	    },
+	
+	    selected: function selected() {
+	      this.reset();
+	    }
+	  },
+	
+	  template: '\n  <div class="alert alert-warning">\n    <p>\n      <em>* 开发者提交服务器信息后，微信服务器将发送 GET 请求到填写的服务器地址 URL 上，从而验证开发者服务器地址的有效性</em>\n      <a href="http://mp.weixin.qq.com/wiki/17/2d4265491f12608cd170a95559800f2d.html" target="_blank" title="第二步：验证服务器地址的有效性">\n        <i class="glyphicon glyphicon-question-sign"></i>\n      </a>\n    </p>\n  </div>\n  <ul class="nav nav-tabs">\n    <li v-for="a in accounts" :class="{active: a.id === selected}" @click="selected = a.id">\n      <a><i class="glyphicon glyphicon-ok" v-if="a.id === current_account_id"></i>{{a.id}}</a>\n    </li>\n    <li :class="{active: !selected}" @click="selected = null">\n      <a><i class="glyphicon glyphicon-plus"></i></a>\n    </li>\n  </ul>\n  <form class="form-horizontal">\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">Id</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="和微信无关，用作在本地缓存多个帐号" v-model="id" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">服务器接口 url</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" v-model="url" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">Token</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="Token" v-model="token" />\n      </div>\n    </div>\n    <div class="row">\n      <div class="col-sm-12 text-center" v-if="msg_error">\n        <div class="bg-warning">{{msg_error}}</div>\n      </div>\n      <div class="col-sm-12 text-center" v-if="msg_success">\n        <div class="bg-success">{{msg_success}}</div>\n      </div>\n      <div class="col-sm-12 text-right" v-if="!msg_success">\n        <button type="button" class="btn btn-default pull-left" v-if="selected" @click="remove"><i class="glyphicon glyphicon-remove"></i> 删除</button>\n        <button type="button" class="btn btn-link" @click="reset">取消</button>\n        <button type="button" class="btn btn-primary" :class="{disabled: is_validating}" @click="validate">\n          {{ is_validating ? \'验证中...\' : \'验证\' }}\n        </button>\n      </div>\n    </div>\n  </form>\n  ',
 	
 	  methods: {
-	    close: function close() {
-	      this.active = false;
-	      this.isValidating = false;
-	      this.msgError = null;
-	      this.msgSuccess = null;
+	    reset: function reset() {
+	      var _this2 = this;
+	
+	      this.is_validating = false;
+	
+	      var account = _store.state.accounts.filter(function (a) {
+	        return a.id === _this2.selected;
+	      })[0];
+	      if (account) {
+	        this.id = account.id;
+	        this.url = account.url;
+	        this.token = account.token;
+	      } else {
+	        this.id = null;
+	        this.url = null;
+	        this.token = null;
+	      }
 	    },
 	
 	    validate: function validate() {
-	      _store.actions.validate(this.token);
+	      if (!this.is_validating) {
+	        this.is_validating = true;
+	        this.msg_error = null;
+	        _store.actions.validate(this.id, this.url, this.token);
+	      }
+	    },
+	
+	    remove: function remove() {
+	      this.id = null;
+	      this.url = null;
+	      this.token = null;
+	      // this.selected = null;
+	      _store.actions.removeAccount(this.selected);
 	    }
 	  },
 	
 	  ready: function ready() {
-	    _store.actions.init();
-	    this.url = _store.state.url;
-	    this.token = _store.state.token;
+	    var that = this;
+	
+	    _dispatcher2['default'].$on('INVALID_ACCOUNT', function (message) {
+	      that.is_validating = false;
+	      that.msg_error = message;
+	    });
 	  }
 	};
 	
-	exports['default'] = Modal;
+	exports['default'] = Account;
 	module.exports = exports['default'];
 
 /***/ },
-/* 48 */
+/* 53 */
 /*!******************************!*\
   !*** ./src/setup/style.scss ***!
   \******************************/
@@ -23788,10 +23959,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./../../~/postcss-loader!./../../~/sass-loader!./style.scss */ 49);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./../../~/postcss-loader!./../../~/sass-loader!./style.scss */ 54);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 45)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 49)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -23808,24 +23979,24 @@
 	}
 
 /***/ },
-/* 49 */
+/* 54 */
 /*!********************************************************************************!*\
   !*** ./~/css-loader!./~/postcss-loader!./~/sass-loader!./src/setup/style.scss ***!
   \********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 44)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 48)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, ".Setup {\n  position: absolute;\n  top: 15px;\n  right: 15px;\n  z-index: 10; }\n\n.Setup-logo {\n  width: 64px;\n  height: 64px; }\n\n.Setup-backdrop.active {\n  bottom: 0; }\n\n.Setup-modal.active {\n  display: block; }\n", ""]);
+	exports.push([module.id, ".Setup {\n  position: absolute;\n  top: 15px;\n  right: 15px;\n  z-index: 10; }\n\n.Setup-logo {\n  width: 64px;\n  height: 64px; }\n\n.Setup-backdrop.active {\n  bottom: 0; }\n\n.Setup-modal.active {\n  display: block; }\n\n.Setup-modal .nav-tabs {\n  margin-bottom: 20px; }\n  .Setup-modal .nav-tabs > li > a {\n    cursor: pointer; }\n    .Setup-modal .nav-tabs > li > a > i {\n      margin-right: 4px; }\n\n.Setup-modal form .bg-success,\n.Setup-modal form .bg-warning {\n  padding: 8px 15px;\n  margin-bottom: 10px; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 50 */
+/* 55 */
 /*!****************************!*\
   !*** ./src/panel/index.js ***!
   \****************************/
@@ -23839,27 +24010,27 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _highlightJs = __webpack_require__(/*! highlight.js */ 51);
+	var _highlightJs = __webpack_require__(/*! highlight.js */ 56);
 	
 	var _highlightJs2 = _interopRequireDefault(_highlightJs);
 	
-	var _to_user_name = __webpack_require__(/*! ./to_user_name */ 190);
+	var _to_user_name = __webpack_require__(/*! ./to_user_name */ 195);
 	
 	var _to_user_name2 = _interopRequireDefault(_to_user_name);
 	
-	var _from_user_name = __webpack_require__(/*! ./from_user_name */ 191);
+	var _from_user_name = __webpack_require__(/*! ./from_user_name */ 196);
 	
 	var _from_user_name2 = _interopRequireDefault(_from_user_name);
 	
-	var _create_time = __webpack_require__(/*! ./create_time */ 192);
+	var _create_time = __webpack_require__(/*! ./create_time */ 197);
 	
 	var _create_time2 = _interopRequireDefault(_create_time);
 	
-	var _content = __webpack_require__(/*! ./content */ 193);
+	var _content = __webpack_require__(/*! ./content */ 198);
 	
 	var _content2 = _interopRequireDefault(_content);
 	
-	var _msg_id = __webpack_require__(/*! ./msg_id */ 194);
+	var _msg_id = __webpack_require__(/*! ./msg_id */ 199);
 	
 	var _msg_id2 = _interopRequireDefault(_msg_id);
 	
@@ -23919,156 +24090,156 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 51 */
+/* 56 */
 /*!*************************************!*\
   !*** ./~/highlight.js/lib/index.js ***!
   \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var hljs = __webpack_require__(/*! ./highlight */ 52);
+	var hljs = __webpack_require__(/*! ./highlight */ 57);
 	
-	hljs.registerLanguage('1c', __webpack_require__(/*! ./languages/1c */ 53));
-	hljs.registerLanguage('accesslog', __webpack_require__(/*! ./languages/accesslog */ 54));
-	hljs.registerLanguage('actionscript', __webpack_require__(/*! ./languages/actionscript */ 55));
-	hljs.registerLanguage('apache', __webpack_require__(/*! ./languages/apache */ 56));
-	hljs.registerLanguage('applescript', __webpack_require__(/*! ./languages/applescript */ 57));
-	hljs.registerLanguage('armasm', __webpack_require__(/*! ./languages/armasm */ 58));
-	hljs.registerLanguage('xml', __webpack_require__(/*! ./languages/xml */ 59));
-	hljs.registerLanguage('asciidoc', __webpack_require__(/*! ./languages/asciidoc */ 60));
-	hljs.registerLanguage('aspectj', __webpack_require__(/*! ./languages/aspectj */ 61));
-	hljs.registerLanguage('autohotkey', __webpack_require__(/*! ./languages/autohotkey */ 62));
-	hljs.registerLanguage('autoit', __webpack_require__(/*! ./languages/autoit */ 63));
-	hljs.registerLanguage('avrasm', __webpack_require__(/*! ./languages/avrasm */ 64));
-	hljs.registerLanguage('axapta', __webpack_require__(/*! ./languages/axapta */ 65));
-	hljs.registerLanguage('bash', __webpack_require__(/*! ./languages/bash */ 66));
-	hljs.registerLanguage('brainfuck', __webpack_require__(/*! ./languages/brainfuck */ 67));
-	hljs.registerLanguage('cal', __webpack_require__(/*! ./languages/cal */ 68));
-	hljs.registerLanguage('capnproto', __webpack_require__(/*! ./languages/capnproto */ 69));
-	hljs.registerLanguage('ceylon', __webpack_require__(/*! ./languages/ceylon */ 70));
-	hljs.registerLanguage('clojure', __webpack_require__(/*! ./languages/clojure */ 71));
-	hljs.registerLanguage('clojure-repl', __webpack_require__(/*! ./languages/clojure-repl */ 72));
-	hljs.registerLanguage('cmake', __webpack_require__(/*! ./languages/cmake */ 73));
-	hljs.registerLanguage('coffeescript', __webpack_require__(/*! ./languages/coffeescript */ 74));
-	hljs.registerLanguage('cpp', __webpack_require__(/*! ./languages/cpp */ 75));
-	hljs.registerLanguage('crmsh', __webpack_require__(/*! ./languages/crmsh */ 76));
-	hljs.registerLanguage('crystal', __webpack_require__(/*! ./languages/crystal */ 77));
-	hljs.registerLanguage('cs', __webpack_require__(/*! ./languages/cs */ 78));
-	hljs.registerLanguage('css', __webpack_require__(/*! ./languages/css */ 79));
-	hljs.registerLanguage('d', __webpack_require__(/*! ./languages/d */ 80));
-	hljs.registerLanguage('markdown', __webpack_require__(/*! ./languages/markdown */ 81));
-	hljs.registerLanguage('dart', __webpack_require__(/*! ./languages/dart */ 82));
-	hljs.registerLanguage('delphi', __webpack_require__(/*! ./languages/delphi */ 83));
-	hljs.registerLanguage('diff', __webpack_require__(/*! ./languages/diff */ 84));
-	hljs.registerLanguage('django', __webpack_require__(/*! ./languages/django */ 85));
-	hljs.registerLanguage('dns', __webpack_require__(/*! ./languages/dns */ 86));
-	hljs.registerLanguage('dockerfile', __webpack_require__(/*! ./languages/dockerfile */ 87));
-	hljs.registerLanguage('dos', __webpack_require__(/*! ./languages/dos */ 88));
-	hljs.registerLanguage('dust', __webpack_require__(/*! ./languages/dust */ 89));
-	hljs.registerLanguage('elixir', __webpack_require__(/*! ./languages/elixir */ 90));
-	hljs.registerLanguage('elm', __webpack_require__(/*! ./languages/elm */ 91));
-	hljs.registerLanguage('ruby', __webpack_require__(/*! ./languages/ruby */ 92));
-	hljs.registerLanguage('erb', __webpack_require__(/*! ./languages/erb */ 93));
-	hljs.registerLanguage('erlang-repl', __webpack_require__(/*! ./languages/erlang-repl */ 94));
-	hljs.registerLanguage('erlang', __webpack_require__(/*! ./languages/erlang */ 95));
-	hljs.registerLanguage('fix', __webpack_require__(/*! ./languages/fix */ 96));
-	hljs.registerLanguage('fortran', __webpack_require__(/*! ./languages/fortran */ 97));
-	hljs.registerLanguage('fsharp', __webpack_require__(/*! ./languages/fsharp */ 98));
-	hljs.registerLanguage('gams', __webpack_require__(/*! ./languages/gams */ 99));
-	hljs.registerLanguage('gcode', __webpack_require__(/*! ./languages/gcode */ 100));
-	hljs.registerLanguage('gherkin', __webpack_require__(/*! ./languages/gherkin */ 101));
-	hljs.registerLanguage('glsl', __webpack_require__(/*! ./languages/glsl */ 102));
-	hljs.registerLanguage('go', __webpack_require__(/*! ./languages/go */ 103));
-	hljs.registerLanguage('golo', __webpack_require__(/*! ./languages/golo */ 104));
-	hljs.registerLanguage('gradle', __webpack_require__(/*! ./languages/gradle */ 105));
-	hljs.registerLanguage('groovy', __webpack_require__(/*! ./languages/groovy */ 106));
-	hljs.registerLanguage('haml', __webpack_require__(/*! ./languages/haml */ 107));
-	hljs.registerLanguage('handlebars', __webpack_require__(/*! ./languages/handlebars */ 108));
-	hljs.registerLanguage('haskell', __webpack_require__(/*! ./languages/haskell */ 109));
-	hljs.registerLanguage('haxe', __webpack_require__(/*! ./languages/haxe */ 110));
-	hljs.registerLanguage('http', __webpack_require__(/*! ./languages/http */ 111));
-	hljs.registerLanguage('inform7', __webpack_require__(/*! ./languages/inform7 */ 112));
-	hljs.registerLanguage('ini', __webpack_require__(/*! ./languages/ini */ 113));
-	hljs.registerLanguage('irpf90', __webpack_require__(/*! ./languages/irpf90 */ 114));
-	hljs.registerLanguage('java', __webpack_require__(/*! ./languages/java */ 115));
-	hljs.registerLanguage('javascript', __webpack_require__(/*! ./languages/javascript */ 116));
-	hljs.registerLanguage('json', __webpack_require__(/*! ./languages/json */ 117));
-	hljs.registerLanguage('julia', __webpack_require__(/*! ./languages/julia */ 118));
-	hljs.registerLanguage('kotlin', __webpack_require__(/*! ./languages/kotlin */ 119));
-	hljs.registerLanguage('lasso', __webpack_require__(/*! ./languages/lasso */ 120));
-	hljs.registerLanguage('less', __webpack_require__(/*! ./languages/less */ 121));
-	hljs.registerLanguage('lisp', __webpack_require__(/*! ./languages/lisp */ 122));
-	hljs.registerLanguage('livecodeserver', __webpack_require__(/*! ./languages/livecodeserver */ 123));
-	hljs.registerLanguage('livescript', __webpack_require__(/*! ./languages/livescript */ 124));
-	hljs.registerLanguage('lua', __webpack_require__(/*! ./languages/lua */ 125));
-	hljs.registerLanguage('makefile', __webpack_require__(/*! ./languages/makefile */ 126));
-	hljs.registerLanguage('mathematica', __webpack_require__(/*! ./languages/mathematica */ 127));
-	hljs.registerLanguage('matlab', __webpack_require__(/*! ./languages/matlab */ 128));
-	hljs.registerLanguage('mel', __webpack_require__(/*! ./languages/mel */ 129));
-	hljs.registerLanguage('mercury', __webpack_require__(/*! ./languages/mercury */ 130));
-	hljs.registerLanguage('mizar', __webpack_require__(/*! ./languages/mizar */ 131));
-	hljs.registerLanguage('perl', __webpack_require__(/*! ./languages/perl */ 132));
-	hljs.registerLanguage('mojolicious', __webpack_require__(/*! ./languages/mojolicious */ 133));
-	hljs.registerLanguage('monkey', __webpack_require__(/*! ./languages/monkey */ 134));
-	hljs.registerLanguage('nginx', __webpack_require__(/*! ./languages/nginx */ 135));
-	hljs.registerLanguage('nimrod', __webpack_require__(/*! ./languages/nimrod */ 136));
-	hljs.registerLanguage('nix', __webpack_require__(/*! ./languages/nix */ 137));
-	hljs.registerLanguage('nsis', __webpack_require__(/*! ./languages/nsis */ 138));
-	hljs.registerLanguage('objectivec', __webpack_require__(/*! ./languages/objectivec */ 139));
-	hljs.registerLanguage('ocaml', __webpack_require__(/*! ./languages/ocaml */ 140));
-	hljs.registerLanguage('openscad', __webpack_require__(/*! ./languages/openscad */ 141));
-	hljs.registerLanguage('oxygene', __webpack_require__(/*! ./languages/oxygene */ 142));
-	hljs.registerLanguage('parser3', __webpack_require__(/*! ./languages/parser3 */ 143));
-	hljs.registerLanguage('pf', __webpack_require__(/*! ./languages/pf */ 144));
-	hljs.registerLanguage('php', __webpack_require__(/*! ./languages/php */ 145));
-	hljs.registerLanguage('powershell', __webpack_require__(/*! ./languages/powershell */ 146));
-	hljs.registerLanguage('processing', __webpack_require__(/*! ./languages/processing */ 147));
-	hljs.registerLanguage('profile', __webpack_require__(/*! ./languages/profile */ 148));
-	hljs.registerLanguage('prolog', __webpack_require__(/*! ./languages/prolog */ 149));
-	hljs.registerLanguage('protobuf', __webpack_require__(/*! ./languages/protobuf */ 150));
-	hljs.registerLanguage('puppet', __webpack_require__(/*! ./languages/puppet */ 151));
-	hljs.registerLanguage('python', __webpack_require__(/*! ./languages/python */ 152));
-	hljs.registerLanguage('q', __webpack_require__(/*! ./languages/q */ 153));
-	hljs.registerLanguage('r', __webpack_require__(/*! ./languages/r */ 154));
-	hljs.registerLanguage('rib', __webpack_require__(/*! ./languages/rib */ 155));
-	hljs.registerLanguage('roboconf', __webpack_require__(/*! ./languages/roboconf */ 156));
-	hljs.registerLanguage('rsl', __webpack_require__(/*! ./languages/rsl */ 157));
-	hljs.registerLanguage('ruleslanguage', __webpack_require__(/*! ./languages/ruleslanguage */ 158));
-	hljs.registerLanguage('rust', __webpack_require__(/*! ./languages/rust */ 159));
-	hljs.registerLanguage('scala', __webpack_require__(/*! ./languages/scala */ 160));
-	hljs.registerLanguage('scheme', __webpack_require__(/*! ./languages/scheme */ 161));
-	hljs.registerLanguage('scilab', __webpack_require__(/*! ./languages/scilab */ 162));
-	hljs.registerLanguage('scss', __webpack_require__(/*! ./languages/scss */ 163));
-	hljs.registerLanguage('smali', __webpack_require__(/*! ./languages/smali */ 164));
-	hljs.registerLanguage('smalltalk', __webpack_require__(/*! ./languages/smalltalk */ 165));
-	hljs.registerLanguage('sml', __webpack_require__(/*! ./languages/sml */ 166));
-	hljs.registerLanguage('sqf', __webpack_require__(/*! ./languages/sqf */ 167));
-	hljs.registerLanguage('sql', __webpack_require__(/*! ./languages/sql */ 168));
-	hljs.registerLanguage('stata', __webpack_require__(/*! ./languages/stata */ 169));
-	hljs.registerLanguage('step21', __webpack_require__(/*! ./languages/step21 */ 170));
-	hljs.registerLanguage('stylus', __webpack_require__(/*! ./languages/stylus */ 171));
-	hljs.registerLanguage('swift', __webpack_require__(/*! ./languages/swift */ 172));
-	hljs.registerLanguage('tcl', __webpack_require__(/*! ./languages/tcl */ 173));
-	hljs.registerLanguage('tex', __webpack_require__(/*! ./languages/tex */ 174));
-	hljs.registerLanguage('thrift', __webpack_require__(/*! ./languages/thrift */ 175));
-	hljs.registerLanguage('tp', __webpack_require__(/*! ./languages/tp */ 176));
-	hljs.registerLanguage('twig', __webpack_require__(/*! ./languages/twig */ 177));
-	hljs.registerLanguage('typescript', __webpack_require__(/*! ./languages/typescript */ 178));
-	hljs.registerLanguage('vala', __webpack_require__(/*! ./languages/vala */ 179));
-	hljs.registerLanguage('vbnet', __webpack_require__(/*! ./languages/vbnet */ 180));
-	hljs.registerLanguage('vbscript', __webpack_require__(/*! ./languages/vbscript */ 181));
-	hljs.registerLanguage('vbscript-html', __webpack_require__(/*! ./languages/vbscript-html */ 182));
-	hljs.registerLanguage('verilog', __webpack_require__(/*! ./languages/verilog */ 183));
-	hljs.registerLanguage('vhdl', __webpack_require__(/*! ./languages/vhdl */ 184));
-	hljs.registerLanguage('vim', __webpack_require__(/*! ./languages/vim */ 185));
-	hljs.registerLanguage('x86asm', __webpack_require__(/*! ./languages/x86asm */ 186));
-	hljs.registerLanguage('xl', __webpack_require__(/*! ./languages/xl */ 187));
-	hljs.registerLanguage('xquery', __webpack_require__(/*! ./languages/xquery */ 188));
-	hljs.registerLanguage('zephir', __webpack_require__(/*! ./languages/zephir */ 189));
+	hljs.registerLanguage('1c', __webpack_require__(/*! ./languages/1c */ 58));
+	hljs.registerLanguage('accesslog', __webpack_require__(/*! ./languages/accesslog */ 59));
+	hljs.registerLanguage('actionscript', __webpack_require__(/*! ./languages/actionscript */ 60));
+	hljs.registerLanguage('apache', __webpack_require__(/*! ./languages/apache */ 61));
+	hljs.registerLanguage('applescript', __webpack_require__(/*! ./languages/applescript */ 62));
+	hljs.registerLanguage('armasm', __webpack_require__(/*! ./languages/armasm */ 63));
+	hljs.registerLanguage('xml', __webpack_require__(/*! ./languages/xml */ 64));
+	hljs.registerLanguage('asciidoc', __webpack_require__(/*! ./languages/asciidoc */ 65));
+	hljs.registerLanguage('aspectj', __webpack_require__(/*! ./languages/aspectj */ 66));
+	hljs.registerLanguage('autohotkey', __webpack_require__(/*! ./languages/autohotkey */ 67));
+	hljs.registerLanguage('autoit', __webpack_require__(/*! ./languages/autoit */ 68));
+	hljs.registerLanguage('avrasm', __webpack_require__(/*! ./languages/avrasm */ 69));
+	hljs.registerLanguage('axapta', __webpack_require__(/*! ./languages/axapta */ 70));
+	hljs.registerLanguage('bash', __webpack_require__(/*! ./languages/bash */ 71));
+	hljs.registerLanguage('brainfuck', __webpack_require__(/*! ./languages/brainfuck */ 72));
+	hljs.registerLanguage('cal', __webpack_require__(/*! ./languages/cal */ 73));
+	hljs.registerLanguage('capnproto', __webpack_require__(/*! ./languages/capnproto */ 74));
+	hljs.registerLanguage('ceylon', __webpack_require__(/*! ./languages/ceylon */ 75));
+	hljs.registerLanguage('clojure', __webpack_require__(/*! ./languages/clojure */ 76));
+	hljs.registerLanguage('clojure-repl', __webpack_require__(/*! ./languages/clojure-repl */ 77));
+	hljs.registerLanguage('cmake', __webpack_require__(/*! ./languages/cmake */ 78));
+	hljs.registerLanguage('coffeescript', __webpack_require__(/*! ./languages/coffeescript */ 79));
+	hljs.registerLanguage('cpp', __webpack_require__(/*! ./languages/cpp */ 80));
+	hljs.registerLanguage('crmsh', __webpack_require__(/*! ./languages/crmsh */ 81));
+	hljs.registerLanguage('crystal', __webpack_require__(/*! ./languages/crystal */ 82));
+	hljs.registerLanguage('cs', __webpack_require__(/*! ./languages/cs */ 83));
+	hljs.registerLanguage('css', __webpack_require__(/*! ./languages/css */ 84));
+	hljs.registerLanguage('d', __webpack_require__(/*! ./languages/d */ 85));
+	hljs.registerLanguage('markdown', __webpack_require__(/*! ./languages/markdown */ 86));
+	hljs.registerLanguage('dart', __webpack_require__(/*! ./languages/dart */ 87));
+	hljs.registerLanguage('delphi', __webpack_require__(/*! ./languages/delphi */ 88));
+	hljs.registerLanguage('diff', __webpack_require__(/*! ./languages/diff */ 89));
+	hljs.registerLanguage('django', __webpack_require__(/*! ./languages/django */ 90));
+	hljs.registerLanguage('dns', __webpack_require__(/*! ./languages/dns */ 91));
+	hljs.registerLanguage('dockerfile', __webpack_require__(/*! ./languages/dockerfile */ 92));
+	hljs.registerLanguage('dos', __webpack_require__(/*! ./languages/dos */ 93));
+	hljs.registerLanguage('dust', __webpack_require__(/*! ./languages/dust */ 94));
+	hljs.registerLanguage('elixir', __webpack_require__(/*! ./languages/elixir */ 95));
+	hljs.registerLanguage('elm', __webpack_require__(/*! ./languages/elm */ 96));
+	hljs.registerLanguage('ruby', __webpack_require__(/*! ./languages/ruby */ 97));
+	hljs.registerLanguage('erb', __webpack_require__(/*! ./languages/erb */ 98));
+	hljs.registerLanguage('erlang-repl', __webpack_require__(/*! ./languages/erlang-repl */ 99));
+	hljs.registerLanguage('erlang', __webpack_require__(/*! ./languages/erlang */ 100));
+	hljs.registerLanguage('fix', __webpack_require__(/*! ./languages/fix */ 101));
+	hljs.registerLanguage('fortran', __webpack_require__(/*! ./languages/fortran */ 102));
+	hljs.registerLanguage('fsharp', __webpack_require__(/*! ./languages/fsharp */ 103));
+	hljs.registerLanguage('gams', __webpack_require__(/*! ./languages/gams */ 104));
+	hljs.registerLanguage('gcode', __webpack_require__(/*! ./languages/gcode */ 105));
+	hljs.registerLanguage('gherkin', __webpack_require__(/*! ./languages/gherkin */ 106));
+	hljs.registerLanguage('glsl', __webpack_require__(/*! ./languages/glsl */ 107));
+	hljs.registerLanguage('go', __webpack_require__(/*! ./languages/go */ 108));
+	hljs.registerLanguage('golo', __webpack_require__(/*! ./languages/golo */ 109));
+	hljs.registerLanguage('gradle', __webpack_require__(/*! ./languages/gradle */ 110));
+	hljs.registerLanguage('groovy', __webpack_require__(/*! ./languages/groovy */ 111));
+	hljs.registerLanguage('haml', __webpack_require__(/*! ./languages/haml */ 112));
+	hljs.registerLanguage('handlebars', __webpack_require__(/*! ./languages/handlebars */ 113));
+	hljs.registerLanguage('haskell', __webpack_require__(/*! ./languages/haskell */ 114));
+	hljs.registerLanguage('haxe', __webpack_require__(/*! ./languages/haxe */ 115));
+	hljs.registerLanguage('http', __webpack_require__(/*! ./languages/http */ 116));
+	hljs.registerLanguage('inform7', __webpack_require__(/*! ./languages/inform7 */ 117));
+	hljs.registerLanguage('ini', __webpack_require__(/*! ./languages/ini */ 118));
+	hljs.registerLanguage('irpf90', __webpack_require__(/*! ./languages/irpf90 */ 119));
+	hljs.registerLanguage('java', __webpack_require__(/*! ./languages/java */ 120));
+	hljs.registerLanguage('javascript', __webpack_require__(/*! ./languages/javascript */ 121));
+	hljs.registerLanguage('json', __webpack_require__(/*! ./languages/json */ 122));
+	hljs.registerLanguage('julia', __webpack_require__(/*! ./languages/julia */ 123));
+	hljs.registerLanguage('kotlin', __webpack_require__(/*! ./languages/kotlin */ 124));
+	hljs.registerLanguage('lasso', __webpack_require__(/*! ./languages/lasso */ 125));
+	hljs.registerLanguage('less', __webpack_require__(/*! ./languages/less */ 126));
+	hljs.registerLanguage('lisp', __webpack_require__(/*! ./languages/lisp */ 127));
+	hljs.registerLanguage('livecodeserver', __webpack_require__(/*! ./languages/livecodeserver */ 128));
+	hljs.registerLanguage('livescript', __webpack_require__(/*! ./languages/livescript */ 129));
+	hljs.registerLanguage('lua', __webpack_require__(/*! ./languages/lua */ 130));
+	hljs.registerLanguage('makefile', __webpack_require__(/*! ./languages/makefile */ 131));
+	hljs.registerLanguage('mathematica', __webpack_require__(/*! ./languages/mathematica */ 132));
+	hljs.registerLanguage('matlab', __webpack_require__(/*! ./languages/matlab */ 133));
+	hljs.registerLanguage('mel', __webpack_require__(/*! ./languages/mel */ 134));
+	hljs.registerLanguage('mercury', __webpack_require__(/*! ./languages/mercury */ 135));
+	hljs.registerLanguage('mizar', __webpack_require__(/*! ./languages/mizar */ 136));
+	hljs.registerLanguage('perl', __webpack_require__(/*! ./languages/perl */ 137));
+	hljs.registerLanguage('mojolicious', __webpack_require__(/*! ./languages/mojolicious */ 138));
+	hljs.registerLanguage('monkey', __webpack_require__(/*! ./languages/monkey */ 139));
+	hljs.registerLanguage('nginx', __webpack_require__(/*! ./languages/nginx */ 140));
+	hljs.registerLanguage('nimrod', __webpack_require__(/*! ./languages/nimrod */ 141));
+	hljs.registerLanguage('nix', __webpack_require__(/*! ./languages/nix */ 142));
+	hljs.registerLanguage('nsis', __webpack_require__(/*! ./languages/nsis */ 143));
+	hljs.registerLanguage('objectivec', __webpack_require__(/*! ./languages/objectivec */ 144));
+	hljs.registerLanguage('ocaml', __webpack_require__(/*! ./languages/ocaml */ 145));
+	hljs.registerLanguage('openscad', __webpack_require__(/*! ./languages/openscad */ 146));
+	hljs.registerLanguage('oxygene', __webpack_require__(/*! ./languages/oxygene */ 147));
+	hljs.registerLanguage('parser3', __webpack_require__(/*! ./languages/parser3 */ 148));
+	hljs.registerLanguage('pf', __webpack_require__(/*! ./languages/pf */ 149));
+	hljs.registerLanguage('php', __webpack_require__(/*! ./languages/php */ 150));
+	hljs.registerLanguage('powershell', __webpack_require__(/*! ./languages/powershell */ 151));
+	hljs.registerLanguage('processing', __webpack_require__(/*! ./languages/processing */ 152));
+	hljs.registerLanguage('profile', __webpack_require__(/*! ./languages/profile */ 153));
+	hljs.registerLanguage('prolog', __webpack_require__(/*! ./languages/prolog */ 154));
+	hljs.registerLanguage('protobuf', __webpack_require__(/*! ./languages/protobuf */ 155));
+	hljs.registerLanguage('puppet', __webpack_require__(/*! ./languages/puppet */ 156));
+	hljs.registerLanguage('python', __webpack_require__(/*! ./languages/python */ 157));
+	hljs.registerLanguage('q', __webpack_require__(/*! ./languages/q */ 158));
+	hljs.registerLanguage('r', __webpack_require__(/*! ./languages/r */ 159));
+	hljs.registerLanguage('rib', __webpack_require__(/*! ./languages/rib */ 160));
+	hljs.registerLanguage('roboconf', __webpack_require__(/*! ./languages/roboconf */ 161));
+	hljs.registerLanguage('rsl', __webpack_require__(/*! ./languages/rsl */ 162));
+	hljs.registerLanguage('ruleslanguage', __webpack_require__(/*! ./languages/ruleslanguage */ 163));
+	hljs.registerLanguage('rust', __webpack_require__(/*! ./languages/rust */ 164));
+	hljs.registerLanguage('scala', __webpack_require__(/*! ./languages/scala */ 165));
+	hljs.registerLanguage('scheme', __webpack_require__(/*! ./languages/scheme */ 166));
+	hljs.registerLanguage('scilab', __webpack_require__(/*! ./languages/scilab */ 167));
+	hljs.registerLanguage('scss', __webpack_require__(/*! ./languages/scss */ 168));
+	hljs.registerLanguage('smali', __webpack_require__(/*! ./languages/smali */ 169));
+	hljs.registerLanguage('smalltalk', __webpack_require__(/*! ./languages/smalltalk */ 170));
+	hljs.registerLanguage('sml', __webpack_require__(/*! ./languages/sml */ 171));
+	hljs.registerLanguage('sqf', __webpack_require__(/*! ./languages/sqf */ 172));
+	hljs.registerLanguage('sql', __webpack_require__(/*! ./languages/sql */ 173));
+	hljs.registerLanguage('stata', __webpack_require__(/*! ./languages/stata */ 174));
+	hljs.registerLanguage('step21', __webpack_require__(/*! ./languages/step21 */ 175));
+	hljs.registerLanguage('stylus', __webpack_require__(/*! ./languages/stylus */ 176));
+	hljs.registerLanguage('swift', __webpack_require__(/*! ./languages/swift */ 177));
+	hljs.registerLanguage('tcl', __webpack_require__(/*! ./languages/tcl */ 178));
+	hljs.registerLanguage('tex', __webpack_require__(/*! ./languages/tex */ 179));
+	hljs.registerLanguage('thrift', __webpack_require__(/*! ./languages/thrift */ 180));
+	hljs.registerLanguage('tp', __webpack_require__(/*! ./languages/tp */ 181));
+	hljs.registerLanguage('twig', __webpack_require__(/*! ./languages/twig */ 182));
+	hljs.registerLanguage('typescript', __webpack_require__(/*! ./languages/typescript */ 183));
+	hljs.registerLanguage('vala', __webpack_require__(/*! ./languages/vala */ 184));
+	hljs.registerLanguage('vbnet', __webpack_require__(/*! ./languages/vbnet */ 185));
+	hljs.registerLanguage('vbscript', __webpack_require__(/*! ./languages/vbscript */ 186));
+	hljs.registerLanguage('vbscript-html', __webpack_require__(/*! ./languages/vbscript-html */ 187));
+	hljs.registerLanguage('verilog', __webpack_require__(/*! ./languages/verilog */ 188));
+	hljs.registerLanguage('vhdl', __webpack_require__(/*! ./languages/vhdl */ 189));
+	hljs.registerLanguage('vim', __webpack_require__(/*! ./languages/vim */ 190));
+	hljs.registerLanguage('x86asm', __webpack_require__(/*! ./languages/x86asm */ 191));
+	hljs.registerLanguage('xl', __webpack_require__(/*! ./languages/xl */ 192));
+	hljs.registerLanguage('xquery', __webpack_require__(/*! ./languages/xquery */ 193));
+	hljs.registerLanguage('zephir', __webpack_require__(/*! ./languages/zephir */ 194));
 	
 	module.exports = hljs;
 
 /***/ },
-/* 52 */
+/* 57 */
 /*!*****************************************!*\
   !*** ./~/highlight.js/lib/highlight.js ***!
   \*****************************************/
@@ -24848,7 +25019,7 @@
 
 
 /***/ },
-/* 53 */
+/* 58 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/1c.js ***!
   \********************************************/
@@ -24941,7 +25112,7 @@
 	};
 
 /***/ },
-/* 54 */
+/* 59 */
 /*!***************************************************!*\
   !*** ./~/highlight.js/lib/languages/accesslog.js ***!
   \***************************************************/
@@ -24986,7 +25157,7 @@
 	};
 
 /***/ },
-/* 55 */
+/* 60 */
 /*!******************************************************!*\
   !*** ./~/highlight.js/lib/languages/actionscript.js ***!
   \******************************************************/
@@ -25068,7 +25239,7 @@
 	};
 
 /***/ },
-/* 56 */
+/* 61 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/apache.js ***!
   \************************************************/
@@ -25121,7 +25292,7 @@
 	};
 
 /***/ },
-/* 57 */
+/* 62 */
 /*!*****************************************************!*\
   !*** ./~/highlight.js/lib/languages/applescript.js ***!
   \*****************************************************/
@@ -25225,7 +25396,7 @@
 	};
 
 /***/ },
-/* 58 */
+/* 63 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/armasm.js ***!
   \************************************************/
@@ -25324,7 +25495,7 @@
 	};
 
 /***/ },
-/* 59 */
+/* 64 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/xml.js ***!
   \*********************************************/
@@ -25434,7 +25605,7 @@
 	};
 
 /***/ },
-/* 60 */
+/* 65 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/asciidoc.js ***!
   \**************************************************/
@@ -25633,7 +25804,7 @@
 	};
 
 /***/ },
-/* 61 */
+/* 66 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/aspectj.js ***!
   \*************************************************/
@@ -25778,7 +25949,7 @@
 	};
 
 /***/ },
-/* 62 */
+/* 67 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/autohotkey.js ***!
   \****************************************************/
@@ -25847,7 +26018,7 @@
 	};
 
 /***/ },
-/* 63 */
+/* 68 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/autoit.js ***!
   \************************************************/
@@ -27609,7 +27780,7 @@
 	};
 
 /***/ },
-/* 64 */
+/* 69 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/avrasm.js ***!
   \************************************************/
@@ -27678,7 +27849,7 @@
 	};
 
 /***/ },
-/* 65 */
+/* 70 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/axapta.js ***!
   \************************************************/
@@ -27716,7 +27887,7 @@
 	};
 
 /***/ },
-/* 66 */
+/* 71 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/bash.js ***!
   \**********************************************/
@@ -27799,7 +27970,7 @@
 	};
 
 /***/ },
-/* 67 */
+/* 72 */
 /*!***************************************************!*\
   !*** ./~/highlight.js/lib/languages/brainfuck.js ***!
   \***************************************************/
@@ -27843,7 +28014,7 @@
 	};
 
 /***/ },
-/* 68 */
+/* 73 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/cal.js ***!
   \*********************************************/
@@ -27930,7 +28101,7 @@
 	};
 
 /***/ },
-/* 69 */
+/* 74 */
 /*!***************************************************!*\
   !*** ./~/highlight.js/lib/languages/capnproto.js ***!
   \***************************************************/
@@ -27986,7 +28157,7 @@
 	};
 
 /***/ },
-/* 70 */
+/* 75 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/ceylon.js ***!
   \************************************************/
@@ -28061,7 +28232,7 @@
 	};
 
 /***/ },
-/* 71 */
+/* 76 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/clojure.js ***!
   \*************************************************/
@@ -28165,7 +28336,7 @@
 	};
 
 /***/ },
-/* 72 */
+/* 77 */
 /*!******************************************************!*\
   !*** ./~/highlight.js/lib/languages/clojure-repl.js ***!
   \******************************************************/
@@ -28187,7 +28358,7 @@
 	};
 
 /***/ },
-/* 73 */
+/* 78 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/cmake.js ***!
   \***********************************************/
@@ -28233,7 +28404,7 @@
 	};
 
 /***/ },
-/* 74 */
+/* 79 */
 /*!******************************************************!*\
   !*** ./~/highlight.js/lib/languages/coffeescript.js ***!
   \******************************************************/
@@ -28381,7 +28552,7 @@
 	};
 
 /***/ },
-/* 75 */
+/* 80 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/cpp.js ***!
   \*********************************************/
@@ -28529,7 +28700,7 @@
 	};
 
 /***/ },
-/* 76 */
+/* 81 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/crmsh.js ***!
   \***********************************************/
@@ -28634,7 +28805,7 @@
 	};
 
 /***/ },
-/* 77 */
+/* 82 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/crystal.js ***!
   \*************************************************/
@@ -28833,7 +29004,7 @@
 	};
 
 /***/ },
-/* 78 */
+/* 83 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/cs.js ***!
   \********************************************/
@@ -28959,7 +29130,7 @@
 	};
 
 /***/ },
-/* 79 */
+/* 84 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/css.js ***!
   \*********************************************/
@@ -29068,7 +29239,7 @@
 	};
 
 /***/ },
-/* 80 */
+/* 85 */
 /*!*******************************************!*\
   !*** ./~/highlight.js/lib/languages/d.js ***!
   \*******************************************/
@@ -29333,7 +29504,7 @@
 	};
 
 /***/ },
-/* 81 */
+/* 86 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/markdown.js ***!
   \**************************************************/
@@ -29442,7 +29613,7 @@
 	};
 
 /***/ },
-/* 82 */
+/* 87 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/dart.js ***!
   \**********************************************/
@@ -29550,7 +29721,7 @@
 	};
 
 /***/ },
-/* 83 */
+/* 88 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/delphi.js ***!
   \************************************************/
@@ -29624,7 +29795,7 @@
 	};
 
 /***/ },
-/* 84 */
+/* 89 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/diff.js ***!
   \**********************************************/
@@ -29671,7 +29842,7 @@
 	};
 
 /***/ },
-/* 85 */
+/* 90 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/django.js ***!
   \************************************************/
@@ -29728,7 +29899,7 @@
 	};
 
 /***/ },
-/* 86 */
+/* 91 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/dns.js ***!
   \*********************************************/
@@ -29763,7 +29934,7 @@
 	};
 
 /***/ },
-/* 87 */
+/* 92 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/dockerfile.js ***!
   \****************************************************/
@@ -29805,7 +29976,7 @@
 	};
 
 /***/ },
-/* 88 */
+/* 93 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/dos.js ***!
   \*********************************************/
@@ -29861,7 +30032,7 @@
 	};
 
 /***/ },
-/* 89 */
+/* 94 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/dust.js ***!
   \**********************************************/
@@ -29903,7 +30074,7 @@
 	};
 
 /***/ },
-/* 90 */
+/* 95 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/elixir.js ***!
   \************************************************/
@@ -30012,7 +30183,7 @@
 	};
 
 /***/ },
-/* 91 */
+/* 96 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/elm.js ***!
   \*********************************************/
@@ -30105,7 +30276,7 @@
 	};
 
 /***/ },
-/* 92 */
+/* 97 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/ruby.js ***!
   \**********************************************/
@@ -30282,7 +30453,7 @@
 	};
 
 /***/ },
-/* 93 */
+/* 98 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/erb.js ***!
   \*********************************************/
@@ -30304,7 +30475,7 @@
 	};
 
 /***/ },
-/* 94 */
+/* 99 */
 /*!*****************************************************!*\
   !*** ./~/highlight.js/lib/languages/erlang-repl.js ***!
   \*****************************************************/
@@ -30359,7 +30530,7 @@
 	};
 
 /***/ },
-/* 95 */
+/* 100 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/erlang.js ***!
   \************************************************/
@@ -30518,7 +30689,7 @@
 	};
 
 /***/ },
-/* 96 */
+/* 101 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/fix.js ***!
   \*********************************************/
@@ -30554,7 +30725,7 @@
 	};
 
 /***/ },
-/* 97 */
+/* 102 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/fortran.js ***!
   \*************************************************/
@@ -30632,7 +30803,7 @@
 	};
 
 /***/ },
-/* 98 */
+/* 103 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/fsharp.js ***!
   \************************************************/
@@ -30698,7 +30869,7 @@
 	};
 
 /***/ },
-/* 99 */
+/* 104 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/gams.js ***!
   \**********************************************/
@@ -30742,7 +30913,7 @@
 	};
 
 /***/ },
-/* 100 */
+/* 105 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/gcode.js ***!
   \***********************************************/
@@ -30822,7 +30993,7 @@
 	};
 
 /***/ },
-/* 101 */
+/* 106 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/gherkin.js ***!
   \*************************************************/
@@ -30862,7 +31033,7 @@
 	};
 
 /***/ },
-/* 102 */
+/* 107 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/glsl.js ***!
   \**********************************************/
@@ -30963,7 +31134,7 @@
 	};
 
 /***/ },
-/* 103 */
+/* 108 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/go.js ***!
   \********************************************/
@@ -31009,7 +31180,7 @@
 	};
 
 /***/ },
-/* 104 */
+/* 109 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/golo.js ***!
   \**********************************************/
@@ -31040,7 +31211,7 @@
 	};
 
 /***/ },
-/* 105 */
+/* 110 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/gradle.js ***!
   \************************************************/
@@ -31082,7 +31253,7 @@
 	};
 
 /***/ },
-/* 106 */
+/* 111 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/groovy.js ***!
   \************************************************/
@@ -31177,7 +31348,7 @@
 	};
 
 /***/ },
-/* 107 */
+/* 112 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/haml.js ***!
   \**********************************************/
@@ -31292,7 +31463,7 @@
 	};
 
 /***/ },
-/* 108 */
+/* 113 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/handlebars.js ***!
   \****************************************************/
@@ -31332,7 +31503,7 @@
 	};
 
 /***/ },
-/* 109 */
+/* 114 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/haskell.js ***!
   \*************************************************/
@@ -31463,7 +31634,7 @@
 	};
 
 /***/ },
-/* 110 */
+/* 115 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/haxe.js ***!
   \**********************************************/
@@ -31531,7 +31702,7 @@
 	};
 
 /***/ },
-/* 111 */
+/* 116 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/http.js ***!
   \**********************************************/
@@ -31573,7 +31744,7 @@
 	};
 
 /***/ },
-/* 112 */
+/* 117 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/inform7.js ***!
   \*************************************************/
@@ -31638,7 +31809,7 @@
 	};
 
 /***/ },
-/* 113 */
+/* 118 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/ini.js ***!
   \*********************************************/
@@ -31705,7 +31876,7 @@
 	};
 
 /***/ },
-/* 114 */
+/* 119 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/irpf90.js ***!
   \************************************************/
@@ -31788,7 +31959,7 @@
 	};
 
 /***/ },
-/* 115 */
+/* 120 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/java.js ***!
   \**********************************************/
@@ -31895,7 +32066,7 @@
 	};
 
 /***/ },
-/* 116 */
+/* 121 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/javascript.js ***!
   \****************************************************/
@@ -32014,7 +32185,7 @@
 	};
 
 /***/ },
-/* 117 */
+/* 122 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/json.js ***!
   \**********************************************/
@@ -32059,7 +32230,7 @@
 	};
 
 /***/ },
-/* 118 */
+/* 123 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/julia.js ***!
   \***********************************************/
@@ -32227,7 +32398,7 @@
 	};
 
 /***/ },
-/* 119 */
+/* 124 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/kotlin.js ***!
   \************************************************/
@@ -32335,7 +32506,7 @@
 	};
 
 /***/ },
-/* 120 */
+/* 125 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/lasso.js ***!
   \***********************************************/
@@ -32528,7 +32699,7 @@
 	};
 
 /***/ },
-/* 121 */
+/* 126 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/less.js ***!
   \**********************************************/
@@ -32672,7 +32843,7 @@
 	};
 
 /***/ },
-/* 122 */
+/* 127 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/lisp.js ***!
   \**********************************************/
@@ -32786,7 +32957,7 @@
 	};
 
 /***/ },
-/* 123 */
+/* 128 */
 /*!********************************************************!*\
   !*** ./~/highlight.js/lib/languages/livecodeserver.js ***!
   \********************************************************/
@@ -32951,7 +33122,7 @@
 	};
 
 /***/ },
-/* 124 */
+/* 129 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/livescript.js ***!
   \****************************************************/
@@ -33109,7 +33280,7 @@
 	};
 
 /***/ },
-/* 125 */
+/* 130 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/lua.js ***!
   \*********************************************/
@@ -33172,7 +33343,7 @@
 	};
 
 /***/ },
-/* 126 */
+/* 131 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/makefile.js ***!
   \**************************************************/
@@ -33225,7 +33396,7 @@
 	};
 
 /***/ },
-/* 127 */
+/* 132 */
 /*!*****************************************************!*\
   !*** ./~/highlight.js/lib/languages/mathematica.js ***!
   \*****************************************************/
@@ -33291,7 +33462,7 @@
 	};
 
 /***/ },
-/* 128 */
+/* 133 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/matlab.js ***!
   \************************************************/
@@ -33389,7 +33560,7 @@
 	};
 
 /***/ },
-/* 129 */
+/* 134 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/mel.js ***!
   \*********************************************/
@@ -33626,7 +33797,7 @@
 	};
 
 /***/ },
-/* 130 */
+/* 135 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/mercury.js ***!
   \*************************************************/
@@ -33722,7 +33893,7 @@
 	};
 
 /***/ },
-/* 131 */
+/* 136 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/mizar.js ***!
   \***********************************************/
@@ -33748,7 +33919,7 @@
 	};
 
 /***/ },
-/* 132 */
+/* 137 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/perl.js ***!
   \**********************************************/
@@ -33912,7 +34083,7 @@
 	};
 
 /***/ },
-/* 133 */
+/* 138 */
 /*!*****************************************************!*\
   !*** ./~/highlight.js/lib/languages/mojolicious.js ***!
   \*****************************************************/
@@ -33944,7 +34115,7 @@
 	};
 
 /***/ },
-/* 134 */
+/* 139 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/monkey.js ***!
   \************************************************/
@@ -34030,7 +34201,7 @@
 	};
 
 /***/ },
-/* 135 */
+/* 140 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/nginx.js ***!
   \***********************************************/
@@ -34119,7 +34290,7 @@
 	};
 
 /***/ },
-/* 136 */
+/* 141 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/nimrod.js ***!
   \************************************************/
@@ -34178,7 +34349,7 @@
 	};
 
 /***/ },
-/* 137 */
+/* 142 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/nix.js ***!
   \*********************************************/
@@ -34236,7 +34407,7 @@
 	};
 
 /***/ },
-/* 138 */
+/* 143 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/nsis.js ***!
   \**********************************************/
@@ -34331,7 +34502,7 @@
 	};
 
 /***/ },
-/* 139 */
+/* 144 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/objectivec.js ***!
   \****************************************************/
@@ -34417,7 +34588,7 @@
 	};
 
 /***/ },
-/* 140 */
+/* 145 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/ocaml.js ***!
   \***********************************************/
@@ -34495,7 +34666,7 @@
 	};
 
 /***/ },
-/* 141 */
+/* 146 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/openscad.js ***!
   \**************************************************/
@@ -34560,7 +34731,7 @@
 	};
 
 /***/ },
-/* 142 */
+/* 147 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/oxygene.js ***!
   \*************************************************/
@@ -34636,7 +34807,7 @@
 	};
 
 /***/ },
-/* 143 */
+/* 148 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/parser3.js ***!
   \*************************************************/
@@ -34691,7 +34862,7 @@
 	};
 
 /***/ },
-/* 144 */
+/* 149 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/pf.js ***!
   \********************************************/
@@ -34750,7 +34921,7 @@
 	};
 
 /***/ },
-/* 145 */
+/* 150 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/php.js ***!
   \*********************************************/
@@ -34882,7 +35053,7 @@
 	};
 
 /***/ },
-/* 146 */
+/* 151 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/powershell.js ***!
   \****************************************************/
@@ -34937,7 +35108,7 @@
 	};
 
 /***/ },
-/* 147 */
+/* 152 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/processing.js ***!
   \****************************************************/
@@ -34992,7 +35163,7 @@
 	};
 
 /***/ },
-/* 148 */
+/* 153 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/profile.js ***!
   \*************************************************/
@@ -35041,7 +35212,7 @@
 	};
 
 /***/ },
-/* 149 */
+/* 154 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/prolog.js ***!
   \************************************************/
@@ -35137,7 +35308,7 @@
 	};
 
 /***/ },
-/* 150 */
+/* 155 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/protobuf.js ***!
   \**************************************************/
@@ -35181,7 +35352,7 @@
 	};
 
 /***/ },
-/* 151 */
+/* 156 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/puppet.js ***!
   \************************************************/
@@ -35296,7 +35467,7 @@
 	};
 
 /***/ },
-/* 152 */
+/* 157 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/python.js ***!
   \************************************************/
@@ -35388,7 +35559,7 @@
 	};
 
 /***/ },
-/* 153 */
+/* 158 */
 /*!*******************************************!*\
   !*** ./~/highlight.js/lib/languages/q.js ***!
   \*******************************************/
@@ -35418,7 +35589,7 @@
 	};
 
 /***/ },
-/* 154 */
+/* 159 */
 /*!*******************************************!*\
   !*** ./~/highlight.js/lib/languages/r.js ***!
   \*******************************************/
@@ -35495,7 +35666,7 @@
 	};
 
 /***/ },
-/* 155 */
+/* 160 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/rib.js ***!
   \*********************************************/
@@ -35529,7 +35700,7 @@
 	};
 
 /***/ },
-/* 156 */
+/* 161 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/roboconf.js ***!
   \**************************************************/
@@ -35596,7 +35767,7 @@
 	};
 
 /***/ },
-/* 157 */
+/* 162 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/rsl.js ***!
   \*********************************************/
@@ -35640,7 +35811,7 @@
 	};
 
 /***/ },
-/* 158 */
+/* 163 */
 /*!*******************************************************!*\
   !*** ./~/highlight.js/lib/languages/ruleslanguage.js ***!
   \*******************************************************/
@@ -35708,7 +35879,7 @@
 	};
 
 /***/ },
-/* 159 */
+/* 164 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/rust.js ***!
   \**********************************************/
@@ -35801,7 +35972,7 @@
 	};
 
 /***/ },
-/* 160 */
+/* 165 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/scala.js ***!
   \***********************************************/
@@ -35871,7 +36042,7 @@
 	};
 
 /***/ },
-/* 161 */
+/* 166 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/scheme.js ***!
   \************************************************/
@@ -36000,7 +36171,7 @@
 	};
 
 /***/ },
-/* 162 */
+/* 167 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/scilab.js ***!
   \************************************************/
@@ -36062,7 +36233,7 @@
 	};
 
 /***/ },
-/* 163 */
+/* 168 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/scss.js ***!
   \**********************************************/
@@ -36186,7 +36357,7 @@
 	};
 
 /***/ },
-/* 164 */
+/* 169 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/smali.js ***!
   \***********************************************/
@@ -36276,7 +36447,7 @@
 	};
 
 /***/ },
-/* 165 */
+/* 170 */
 /*!***************************************************!*\
   !*** ./~/highlight.js/lib/languages/smalltalk.js ***!
   \***************************************************/
@@ -36336,7 +36507,7 @@
 	};
 
 /***/ },
-/* 166 */
+/* 171 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/sml.js ***!
   \*********************************************/
@@ -36408,7 +36579,7 @@
 	};
 
 /***/ },
-/* 167 */
+/* 172 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/sqf.js ***!
   \*********************************************/
@@ -36511,7 +36682,7 @@
 	};
 
 /***/ },
-/* 168 */
+/* 173 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/sql.js ***!
   \*********************************************/
@@ -36678,7 +36849,7 @@
 	};
 
 /***/ },
-/* 169 */
+/* 174 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/stata.js ***!
   \***********************************************/
@@ -36723,7 +36894,7 @@
 	};
 
 /***/ },
-/* 170 */
+/* 175 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/step21.js ***!
   \************************************************/
@@ -36782,7 +36953,7 @@
 	};
 
 /***/ },
-/* 171 */
+/* 176 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/stylus.js ***!
   \************************************************/
@@ -37232,7 +37403,7 @@
 	};
 
 /***/ },
-/* 172 */
+/* 177 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/swift.js ***!
   \***********************************************/
@@ -37359,7 +37530,7 @@
 	};
 
 /***/ },
-/* 173 */
+/* 178 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/tcl.js ***!
   \*********************************************/
@@ -37428,7 +37599,7 @@
 	};
 
 /***/ },
-/* 174 */
+/* 179 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/tex.js ***!
   \*********************************************/
@@ -37490,7 +37661,7 @@
 	};
 
 /***/ },
-/* 175 */
+/* 180 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/thrift.js ***!
   \************************************************/
@@ -37532,7 +37703,7 @@
 	};
 
 /***/ },
-/* 176 */
+/* 181 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/tp.js ***!
   \********************************************/
@@ -37623,7 +37794,7 @@
 	};
 
 /***/ },
-/* 177 */
+/* 182 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/twig.js ***!
   \**********************************************/
@@ -37687,7 +37858,7 @@
 	};
 
 /***/ },
-/* 178 */
+/* 183 */
 /*!****************************************************!*\
   !*** ./~/highlight.js/lib/languages/typescript.js ***!
   \****************************************************/
@@ -37792,7 +37963,7 @@
 	};
 
 /***/ },
-/* 179 */
+/* 184 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/vala.js ***!
   \**********************************************/
@@ -37854,7 +38025,7 @@
 	};
 
 /***/ },
-/* 180 */
+/* 185 */
 /*!***********************************************!*\
   !*** ./~/highlight.js/lib/languages/vbnet.js ***!
   \***********************************************/
@@ -37917,7 +38088,7 @@
 	};
 
 /***/ },
-/* 181 */
+/* 186 */
 /*!**************************************************!*\
   !*** ./~/highlight.js/lib/languages/vbscript.js ***!
   \**************************************************/
@@ -37963,7 +38134,7 @@
 	};
 
 /***/ },
-/* 182 */
+/* 187 */
 /*!*******************************************************!*\
   !*** ./~/highlight.js/lib/languages/vbscript-html.js ***!
   \*******************************************************/
@@ -37982,7 +38153,7 @@
 	};
 
 /***/ },
-/* 183 */
+/* 188 */
 /*!*************************************************!*\
   !*** ./~/highlight.js/lib/languages/verilog.js ***!
   \*************************************************/
@@ -38039,7 +38210,7 @@
 	};
 
 /***/ },
-/* 184 */
+/* 189 */
 /*!**********************************************!*\
   !*** ./~/highlight.js/lib/languages/vhdl.js ***!
   \**********************************************/
@@ -38102,7 +38273,7 @@
 	};
 
 /***/ },
-/* 185 */
+/* 190 */
 /*!*********************************************!*\
   !*** ./~/highlight.js/lib/languages/vim.js ***!
   \*********************************************/
@@ -38172,7 +38343,7 @@
 	};
 
 /***/ },
-/* 186 */
+/* 191 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/x86asm.js ***!
   \************************************************/
@@ -38315,7 +38486,7 @@
 	};
 
 /***/ },
-/* 187 */
+/* 192 */
 /*!********************************************!*\
   !*** ./~/highlight.js/lib/languages/xl.js ***!
   \********************************************/
@@ -38409,7 +38580,7 @@
 	};
 
 /***/ },
-/* 188 */
+/* 193 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/xquery.js ***!
   \************************************************/
@@ -38489,7 +38660,7 @@
 	};
 
 /***/ },
-/* 189 */
+/* 194 */
 /*!************************************************!*\
   !*** ./~/highlight.js/lib/languages/zephir.js ***!
   \************************************************/
@@ -38603,7 +38774,7 @@
 	};
 
 /***/ },
-/* 190 */
+/* 195 */
 /*!***********************************!*\
   !*** ./src/panel/to_user_name.js ***!
   \***********************************/
@@ -38624,7 +38795,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 191 */
+/* 196 */
 /*!*************************************!*\
   !*** ./src/panel/from_user_name.js ***!
   \*************************************/
@@ -38645,7 +38816,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 192 */
+/* 197 */
 /*!**********************************!*\
   !*** ./src/panel/create_time.js ***!
   \**********************************/
@@ -38666,7 +38837,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 193 */
+/* 198 */
 /*!******************************!*\
   !*** ./src/panel/content.js ***!
   \******************************/
@@ -38687,7 +38858,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 194 */
+/* 199 */
 /*!*****************************!*\
   !*** ./src/panel/msg_id.js ***!
   \*****************************/

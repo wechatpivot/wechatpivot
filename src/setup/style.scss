@@ -20,4 +20,24 @@
   &.active {
     display: block;
   }
+
+  .nav-tabs {
+    margin-bottom: 20px;
+
+    & > li > a {
+      cursor: pointer;
+
+      & > i {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  form {
+    .bg-success,
+    .bg-warning {
+      padding: 8px 15px;
+      margin-bottom: 10px;
+    }
+  }
 }

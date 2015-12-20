@@ -6,7 +6,12 @@ import * as actions from './actions';
 import mutations from './mutations';
 
 
-let state = Object.assign({}, INIT_NAV);
+let state = {
+  accounts: [],
+  current_account_id: null,
+};
+Object.assign(state, INIT_NAV);
+window._state = state;
 
 
 const store = new Vuex.Store({

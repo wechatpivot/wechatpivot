@@ -70,8 +70,21 @@
   </nav>
 
   <div class="Setup js-setup">
-    <img class="Setup-logo" src="./img/iconx128.png" @click="active = true">
-    <setup-modal :active.sync="active"></setup-modal>
+    <img class="Setup-logo" src="./img/iconx128.png" @click="open">
+    <div class="modal fade Setup-modal" :class="{active: active, in: active}">
+      <div class="modal-backdrop fade Setup-backdrop" :class="{active: active, in: active}" @click="close"></div>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" @click="close">&times;</button>
+            <h4 class="modal-title">配置您的微信账号</h4>
+          </div>
+          <div class="modal-body">
+            <account :close="close"></account>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="container Panel js-panel" v-cloak>
@@ -123,9 +136,9 @@
     </div>
   </footer>
 
-  <script src="./js/angular.min.js" ng-csp></script>
-  <script src="./js/angular-route.min.js"></script>
-  <script src="./js/weixin-api-debug.js"></script>
+  <!-- <script src="./js/angular.min.js" ng-csp></script> -->
+  <!-- <script src="./js/angular-route.min.js"></script> -->
+  <!-- <script src="./js/weixin-api-debug.js"></script> -->
   <script src="./js/app.js"></script>
 </body>
 </html>

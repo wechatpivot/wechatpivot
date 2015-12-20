@@ -1,7 +1,5 @@
 import Vue from 'vue';
 Vue.config.debug = true;
-// import store from './store';
-// window._store = store;
 import dispatcher from './dispatcher';
 import InputNumber from './common/input_number';
 import InputString from './common/input_string';

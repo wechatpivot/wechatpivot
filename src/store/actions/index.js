@@ -1,42 +1,57 @@
 import superagent from 'superagent';
-import localforage from 'localforage';
-import * as types from '../mutations/types';
+import dispatcher from '../../dispatcher';
+import { setup_types, nav_types } from '../types';
 import generate_query from './signature';
+import * as cache from './cache';
 
 
-const CACHE_KEY_SETUP = 'setup-v1';
-
-
-export const init = function ({ dispatch }) {
-  localforage.getItem(CACHE_KEY_SETUP, function (err, value) {
-    dispatch(types.INIT, value || {});
-  });
-};
-
-export const updateSetup = function ({ dispatch }, url, token) {
-  localforage.setItem(CACHE_KEY_SETUP, { url, token }, function () {
-    dispatch(types.INIT, { url, token });
-  });
+export const loadSetup = function ({ dispatch }) {
+  Promise
+    .all([
+      cache.getAccounts(),
+      cache.getCurrentAccountId(),
+    ])
+    .then(function ([accounts, current_account_id]) {
+      dispatch(setup_types.LOAD_ACCOUNTS, accounts);
+      dispatch(setup_types.CHANGE_ACCOUNT, current_account_id);
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
 };
 
 export const changeNav = function ({ dispatch }, id) {
-  dispatch(types.CHANGE_NAV, id);
+  dispatch(nav_types.CHANGE_NAV, id);
 };
 
-export const validate = function ({ state }) {
-  const query = generate_query(state.token);
+export const validate = function ({ state, dispatch }, id, url, token) {
+  dispatch(setup_types.ACCOUNT_EXPIRES);
+
+  const query = generate_query(token);
   const echostr = Math.random().toString(36).substring(2);
   query.echostr = echostr;
 
   superagent
-    .get(state.url)
+    .get(url)
     .query(query)
     .end(function (err, res) {
       if (err) {
         console.error(err);
+        // FIXME
+        dispatcher.$emit('INVALID_ACCOUNT', err.message);
       } else {
         if (res.text === echostr) {
-          console.log(res.text);
+          Promise
+            .all([
+              cache.saveAccount({ id, url, token }),
+              cache.saveCurrentAccountId(id),
+            ])
+            .then(function () {
+              loadSetup({ dispatch });
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
         } else {
           console.error(res.text);
         }
@@ -44,19 +59,35 @@ export const validate = function ({ state }) {
     });
 };
 
+export const removeAccount = function ({ dispatch }, id) {
+  cache
+    .removeAccount(id)
+    .then(function () {
+      dispatch(setup_types.REMOVE_ACCOUNT, id);
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
+};
+
 export const send = function ({ state }, xml) {
   const query = generate_query(state.token);
 
-  superagent
-    .post(state.url)
-    .query(query)
-    .send(xml)
-    .set('Content-type', 'text/xml')
-    .end(function (err, res) {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log(res.text);
-      }
-    });
+  if (account) {
+    const query = generate_query(account.token);
+    superagent
+      .post(account.url)
+      .query(query)
+      .send(xml)
+      .set('Content-type', 'text/xml')
+      .end(function (err, res) {
+        if (err) {
+          console.error(err);
+        } else {
+          dispatch(form_types.SEND_SUCCESS, res.text);
+        }
+      });
+  } else {
+    throw new Error('Select a validated account first!');
+  }
 };
