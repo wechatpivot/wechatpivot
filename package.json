@@ -42,6 +42,7 @@
     "localforage": "^1.3.1",
     "superagent": "^0.21.0",
     "uuid": "^2.0.1",
-    "vue": "^1.0.11-csp"
+    "vue": "^1.0.11-csp",
+    "vuex": "^0.2.0"
   }
 }
