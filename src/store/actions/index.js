@@ -1,6 +1,6 @@
 import superagent from 'superagent';
 import dispatcher from '../../dispatcher';
-import { setup_types, nav_types } from '../types';
+import { setup_types, nav_types, form_types } from '../types';
 import generate_query from './signature';
 import * as cache from './cache';
 
@@ -70,8 +70,8 @@ export const removeAccount = function ({ dispatch }, id) {
     });
 };
 
-export const send = function ({ state }, xml) {
-  const query = generate_query(state.token);
+export const send = function ({ state, dispatch }, xml) {
+  let account = state.accounts.filter(a => a.id === state.current_account_id)[0];
 
   if (account) {
     const query = generate_query(account.token);

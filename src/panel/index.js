@@ -1,56 +1,34 @@
 import hljs from 'highlight.js';
-import ToUserName from './to_user_name';
-import FromUserName from './from_user_name';
-import CreateTime from './create_time';
-import Content from './content';
-import MsgId from './msg_id';
-import { actions } from '../store';
+import FormMessageText from './form_message_text';
+import { state, actions } from '../store';
 
 
 const Panel = {
   el: '.js-panel',
 
-  components: {
-    'to-user-name': ToUserName,
-    'from-user-name': FromUserName,
-    'create-time': CreateTime,
-    'content': Content,
-    'msg-id': MsgId,
+  data: {
+    xml: null,
+    msg_error: null,
+    msg_success: null,
   },
 
-  data: function () {
-    return {
-      to_user_name: null,
-      from_user_name: null,
-      create_time: null,
-      content: null,
-      msg_id: null,
-      xml: null,
-      msgError: null,
-      msgSuccess: null,
-    };
+  components: {
+    'form-message-text': FormMessageText,
+  },
+
+  computed: {
+    send_resp: () => state.send_resp,
+
+    form: function () {
+      let ids = state.current_subnav_id.split('/');
+      ids.unshift('form');
+      return ids.join('-');
+    },
   },
 
   methods: {
-    reset: function () {
-      this.to_user_name = null;
-      this.from_user_name = null;
-      this.create_time = null;
-      this.content = null;
-      this.msg_id = null;
-    },
-
-    validate: function () {
-      this.xml = `
-      <xml>
-        <ToUserName><![CDATA[${this.to_user_name}]]></ToUserName>
-        <FromUserName><![CDATA[${this.from_user_name}]]></FromUserName>
-        <CreateTime>${this.create_time}</CreateTime>
-        <MsgType><![CDATA[text]]></MsgType>
-        <Content><![CDATA[${this.content}]]></Content>
-        <MsgId>${this.msg_id}</MsgId>
-      </xml>
-      `;
+    pretty: function (xml) {
+      this.xml = xml;
 
       let $plain = this.$els.codePlain;
       let $pretty = this.$els.codePretty;

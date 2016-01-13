@@ -9,6 +9,8 @@ import mutations from './mutations';
 let state = {
   accounts: [],
   current_account_id: null,
+
+  send_resp: null,
 };
 Object.assign(state, INIT_NAV);
 window._state = state;

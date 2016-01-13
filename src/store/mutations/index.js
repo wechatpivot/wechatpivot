@@ -1,4 +1,4 @@
-import { setup_types, nav_types } from '../types';
+import { setup_types, nav_types, form_types } from '../types';
 
 
 export default {
@@ -25,5 +25,9 @@ export default {
   [nav_types.CHANGE_NAV]: function (state, id) {
     state.current_nav_id = id;
     state.current_subnav_id = id;
+  },
+
+  [form_types.SEND_SUCCESS]: function (state, resp) {
+    state.send_resp = resp;
   },
 };

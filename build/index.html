@@ -90,19 +90,7 @@
   <div class="container Panel js-panel" v-cloak>
     <div class="row">
       <div class="col-md-4">
-        <form class="form-horizontal">
-          <to-user-name :value.sync="to_user_name"></to-user-name>
-          <from-user-name :value.sync="from_user_name"></from-user-name>
-          <create-time :value.sync="create_time"></create-time>
-          <content :value.sync="content"></content>
-          <msg-id :value.sync="msg_id"></msg-id>
-          <div class="form-group">
-            <div class="col-md-12 text-right">
-              <a class="btn btn-link" @click="reset">Reset</a>
-              <button type="button" class="btn btn-default" @click="validate">Validate</button>
-            </div>
-          </div>
-        </form>
+        <component :is="form" :pretty="pretty"></component>
       </div>
 
       <div class="col-md-8">
@@ -110,8 +98,8 @@
           <div class="panel-body">
             <code class="hidden" v-el:code-plain>{{ xml }}</code>
             <pre><code v-el:code-pretty class="xml"></code></pre>
-            <textarea v-if="msgError">{{ msgError }}</textarea>
-            <textarea v-if="msgSuccess">{{ msgSuccess }}</textarea>
+            <pre v-if="send_resp"><code class="xml">{{ send_resp }}</code></pre>
+            <textarea v-if="msg_error">{{ msg_error }}</textarea>
           </div>
           <div class="panel-footer text-right">
             <button type="button" class="btn btn-primary" @click="send">Send</button>
