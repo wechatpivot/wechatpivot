@@ -54,6 +54,8 @@ export const validate = function ({ state, dispatch }, id, url, token) {
             });
         } else {
           console.error(res.text);
+          // FIXME
+          dispatcher.$emit('INVALID_ACCOUNT', res.text);
         }
       }
     });
