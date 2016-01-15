@@ -22,8 +22,13 @@ const Nav = {
   },
 
   methods: {
-    go: function (id) {
+    changeNav: function (id) {
       actions.changeNav(id);
+      this.open = false;
+    },
+
+    changeSubNav: function (id) {
+      actions.changeSubNav(id);
       this.open = false;
     },
   },

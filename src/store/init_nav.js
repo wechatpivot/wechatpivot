@@ -19,14 +19,12 @@ navs.push({
 
 
 navs.push({
-  id: 'event/scan_subscribe',
+  id: 'event/subscribe',
   text: '接收事件推送',
   subnavs: [
-    // {id: 'event/subscribe', text: '关注'},
-    // {id: 'event/unsubscribe', text: '取消关注'},
-    { id: null, text: '关注' },
-    { id: null, text: '取消关注' },
-    { id: 'event/scan_subscribe', text: '未关注时扫描带参数二维码同时完成关注' },
+    { id: 'event/subscribe', text: '关注' },
+    { id: 'event/unsubscribe', text: '取消关注' },
+    { id: 'event/scan/subscribe', text: '未关注时扫描带参数二维码同时完成关注' },
     { id: 'event/scan', text: '已关注时扫描带参数二维码' },
     // 3 上报地理位置事件
     // 4 自定义菜单事件

@@ -27,6 +27,10 @@ export default {
     state.current_subnav_id = id;
   },
 
+  [nav_types.CHANGE_SUB_NAV]: function (state, id) {
+    state.current_subnav_id = id;
+  },
+
   [form_types.SEND_SUCCESS]: function (state, resp) {
     state.send_resp = resp;
   },

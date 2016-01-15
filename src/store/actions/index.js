@@ -24,6 +24,10 @@ export const changeNav = function ({ dispatch }, id) {
   dispatch(nav_types.CHANGE_NAV, id);
 };
 
+export const changeSubNav = function ({ dispatch }, id) {
+  dispatch(nav_types.CHANGE_SUB_NAV, id);
+};
+
 export const validate = function ({ state, dispatch }, id, url, token) {
   dispatch(setup_types.ACCOUNT_EXPIRES);
 

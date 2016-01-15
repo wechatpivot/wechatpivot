@@ -52,14 +52,14 @@
             <a class="dropdown-toggle" @click.stop="open = true">{{ current_nav.text }} <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li v-for="n in navs" :class="{active: n.id === current_nav.id}">
-                <a href="#/{{ n.id }}" @click.stop="go(n.id)">{{ n.text }}</a>
+                <a href="#/{{ n.id }}" @click.stop="changeNav(n.id)">{{ n.text }}</a>
               </li>
             </ul>
           </li>
         </ul>
         <ul class="nav navbar-nav Nav-subnavs">
           <li v-for="s in subnavs" :class="{active: s.id === current_subnav_id, disabled: !s.id}">
-            <a href="#/{{ s.id }}" v-if="s.text">{{ s.text }}</a>
+            <a href="#/{{ s.id }}" @click.stop="changeSubNav(s.id)" v-if="s.text">{{ s.text }}</a>
             <a href="{{ s.id }}" target="_blank" v-if="!s.text">
               <i class="glyphicon glyphicon-question-sign"></i>
             </a>
