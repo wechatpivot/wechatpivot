@@ -12,7 +12,6 @@ navs.push({
     { id: null, text: '小视频消息' },
     { id: null, text: '地理位置消息' },
     { id: null, text: '链接消息' },
-    { id: null, text: '文本消息' },
     { id: 'http://mp.weixin.qq.com/wiki/10/79502792eef98d6e0c6e1739da387346.html', text: null },
   ],
 });
@@ -24,7 +23,7 @@ navs.push({
   subnavs: [
     { id: 'event/subscribe', text: '关注' },
     { id: 'event/unsubscribe', text: '取消关注' },
-    { id: 'event/scan/subscribe', text: '未关注时扫描带参数二维码同时完成关注' },
+    { id: 'event/scan-and-subscribe', text: '未关注时扫描带参数二维码同时完成关注' },
     { id: 'event/scan', text: '已关注时扫描带参数二维码' },
     // 3 上报地理位置事件
     // 4 自定义菜单事件

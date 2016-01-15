@@ -2,6 +2,8 @@ import hljs from 'highlight.js';
 import FormMessageText from './form_message_text';
 import FormEventSubscribe from './form_event_subscribe';
 import FormEventUnsubscribe from './form_event_unsubscribe';
+import FormEventScanAndSubscribe from './form_event_scan_and_subscribe';
+import FormEventScan from './form_event_scan';
 import { state, actions } from '../store';
 
 
@@ -18,6 +20,8 @@ const Panel = {
     'form-message-text': FormMessageText,
     'form-event-subscribe': FormEventSubscribe,
     'form-event-unsubscribe': FormEventUnsubscribe,
+    'form-event-scan-and-subscribe': FormEventScanAndSubscribe,
+    'form-event-scan': FormEventScan,
   },
 
   computed: {

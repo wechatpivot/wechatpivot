@@ -15121,13 +15121,13 @@
 	navs.push({
 	  id: 'message/text',
 	  text: '接收普通消息',
-	  subnavs: [{ id: 'message/text', text: '文本消息' }, { id: null, text: '图片消息' }, { id: null, text: '语音消息' }, { id: null, text: '视频消息' }, { id: null, text: '小视频消息' }, { id: null, text: '地理位置消息' }, { id: null, text: '链接消息' }, { id: null, text: '文本消息' }, { id: 'http://mp.weixin.qq.com/wiki/10/79502792eef98d6e0c6e1739da387346.html', text: null }]
+	  subnavs: [{ id: 'message/text', text: '文本消息' }, { id: null, text: '图片消息' }, { id: null, text: '语音消息' }, { id: null, text: '视频消息' }, { id: null, text: '小视频消息' }, { id: null, text: '地理位置消息' }, { id: null, text: '链接消息' }, { id: 'http://mp.weixin.qq.com/wiki/10/79502792eef98d6e0c6e1739da387346.html', text: null }]
 	});
 	
 	navs.push({
 	  id: 'event/subscribe',
 	  text: '接收事件推送',
-	  subnavs: [{ id: 'event/subscribe', text: '关注' }, { id: 'event/unsubscribe', text: '取消关注' }, { id: 'event/scan/subscribe', text: '未关注时扫描带参数二维码同时完成关注' }, { id: 'event/scan', text: '已关注时扫描带参数二维码' },
+	  subnavs: [{ id: 'event/subscribe', text: '关注' }, { id: 'event/unsubscribe', text: '取消关注' }, { id: 'event/scan-and-subscribe', text: '未关注时扫描带参数二维码同时完成关注' }, { id: 'event/scan', text: '已关注时扫描带参数二维码' },
 	  // 3 上报地理位置事件
 	  // 4 自定义菜单事件
 	  // 5 点击菜单拉取消息时的事件推送
@@ -24062,6 +24062,14 @@
 	
 	var _form_event_unsubscribe2 = _interopRequireDefault(_form_event_unsubscribe);
 	
+	var _form_event_scan_and_subscribe = __webpack_require__(/*! ./form_event_scan_and_subscribe */ 202);
+	
+	var _form_event_scan_and_subscribe2 = _interopRequireDefault(_form_event_scan_and_subscribe);
+	
+	var _form_event_scan = __webpack_require__(/*! ./form_event_scan */ 204);
+	
+	var _form_event_scan2 = _interopRequireDefault(_form_event_scan);
+	
 	var _store = __webpack_require__(/*! ../store */ 9);
 	
 	var Panel = {
@@ -24076,7 +24084,9 @@
 	  components: {
 	    'form-message-text': _form_message_text2['default'],
 	    'form-event-subscribe': _form_event_subscribe2['default'],
-	    'form-event-unsubscribe': _form_event_unsubscribe2['default']
+	    'form-event-unsubscribe': _form_event_unsubscribe2['default'],
+	    'form-event-scan-and-subscribe': _form_event_scan_and_subscribe2['default'],
+	    'form-event-scan': _form_event_scan2['default']
 	  },
 	
 	  computed: {
@@ -39111,6 +39121,169 @@
 	};
 	
 	exports['default'] = FormEventUnsubscribe;
+	module.exports = exports['default'];
+
+/***/ },
+/* 202 */
+/*!*****************************************************!*\
+  !*** ./src/panel/form_event_scan_and_subscribe.jsx ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _to_user_name = __webpack_require__(/*! ./to_user_name */ 195);
+	
+	var _to_user_name2 = _interopRequireDefault(_to_user_name);
+	
+	var _from_user_name = __webpack_require__(/*! ./from_user_name */ 196);
+	
+	var _from_user_name2 = _interopRequireDefault(_from_user_name);
+	
+	var _create_time = __webpack_require__(/*! ./create_time */ 197);
+	
+	var _create_time2 = _interopRequireDefault(_create_time);
+	
+	var _scene_id = __webpack_require__(/*! ./scene_id */ 203);
+	
+	var _scene_id2 = _interopRequireDefault(_scene_id);
+	
+	var FormEventScanAndSubscribe = {
+	  props: ['pretty'],
+	
+	  components: {
+	    'to-user-name': _to_user_name2['default'],
+	    'from-user-name': _from_user_name2['default'],
+	    'create-time': _create_time2['default'],
+	    'scene-id': _scene_id2['default']
+	  },
+	
+	  data: function data() {
+	    return {
+	      to_user_name: null,
+	      from_user_name: null,
+	      create_time: null,
+	      scene_id: null
+	    };
+	  },
+	
+	  template: '\n  <form class="form-horizontal">\n    <to-user-name :value.sync="to_user_name"></to-user-name>\n    <from-user-name :value.sync="from_user_name"></from-user-name>\n    <create-time :value.sync="create_time"></create-time>\n    <scene-id :value.sync="scene_id"></scene-id>\n    <div class="form-group">\n      <div class="col-md-12 text-right">\n        <a class="btn btn-link" @click="reset">Reset</a>\n        <button type="button" class="btn btn-default" @click="validate">Validate</button>\n      </div>\n    </div>\n  </form>\n  ',
+	
+	  methods: {
+	    reset: function reset() {
+	      this.to_user_name = null;
+	      this.from_user_name = null;
+	      this.create_time = null;
+	      this.scene_id = null;
+	    },
+	
+	    validate: function validate() {
+	      var xml = '\n      <xml>\n        <ToUserName><![CDATA[' + this.to_user_name + ']]></ToUserName>\n        <FromUserName><![CDATA[' + this.from_user_name + ']]></FromUserName>\n        <CreateTime>' + this.create_time + '</CreateTime>\n        <MsgType><![CDATA[event]]></MsgType>\n        <Event><![CDATA[subscribe]]></Event>\n        <EventKey><![CDATA[qrscene_' + this.scene_id + ']]></EventKey>\n        <Ticket><![CDATA[TICKET_TO_ACCESS_QRCODE]]></Ticket>\n      </xml>\n      ';
+	
+	      this.pretty(xml);
+	    }
+	  }
+	};
+	
+	exports['default'] = FormEventScanAndSubscribe;
+	module.exports = exports['default'];
+
+/***/ },
+/* 203 */
+/*!********************************!*\
+  !*** ./src/panel/scene_id.jsx ***!
+  \********************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	var SceneId = {
+	  props: ['value'],
+	
+	  template: '\n  <div class="form-group has-feedback">\n    <label class="col-sm-4 control-label required">SceneId</label>\n    <input-number placeholder="二维码的 scene_id（32 无符号整形）" :value.sync="value"></input-timestamp>\n  </div>\n  '
+	};
+	
+	exports['default'] = SceneId;
+	module.exports = exports['default'];
+
+/***/ },
+/* 204 */
+/*!***************************************!*\
+  !*** ./src/panel/form_event_scan.jsx ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _to_user_name = __webpack_require__(/*! ./to_user_name */ 195);
+	
+	var _to_user_name2 = _interopRequireDefault(_to_user_name);
+	
+	var _from_user_name = __webpack_require__(/*! ./from_user_name */ 196);
+	
+	var _from_user_name2 = _interopRequireDefault(_from_user_name);
+	
+	var _create_time = __webpack_require__(/*! ./create_time */ 197);
+	
+	var _create_time2 = _interopRequireDefault(_create_time);
+	
+	var _scene_id = __webpack_require__(/*! ./scene_id */ 203);
+	
+	var _scene_id2 = _interopRequireDefault(_scene_id);
+	
+	var FormEventScan = {
+	  props: ['pretty'],
+	
+	  components: {
+	    'to-user-name': _to_user_name2['default'],
+	    'from-user-name': _from_user_name2['default'],
+	    'create-time': _create_time2['default'],
+	    'scene-id': _scene_id2['default']
+	  },
+	
+	  data: function data() {
+	    return {
+	      to_user_name: null,
+	      from_user_name: null,
+	      create_time: null,
+	      scene_id: null
+	    };
+	  },
+	
+	  template: '\n  <form class="form-horizontal">\n    <to-user-name :value.sync="to_user_name"></to-user-name>\n    <from-user-name :value.sync="from_user_name"></from-user-name>\n    <create-time :value.sync="create_time"></create-time>\n    <scene-id :value.sync="scene_id"></scene-id>\n    <div class="form-group">\n      <div class="col-md-12 text-right">\n        <a class="btn btn-link" @click="reset">Reset</a>\n        <button type="button" class="btn btn-default" @click="validate">Validate</button>\n      </div>\n    </div>\n  </form>\n  ',
+	
+	  methods: {
+	    reset: function reset() {
+	      this.to_user_name = null;
+	      this.from_user_name = null;
+	      this.create_time = null;
+	      this.scene_id = null;
+	    },
+	
+	    validate: function validate() {
+	      var xml = '\n      <xml>\n        <ToUserName><![CDATA[' + this.to_user_name + ']]></ToUserName>\n        <FromUserName><![CDATA[' + this.from_user_name + ']]></FromUserName>\n        <CreateTime>' + this.create_time + '</CreateTime>\n        <MsgType><![CDATA[event]]></MsgType>\n        <Event><![CDATA[SCAN]]></Event>\n        <EventKey><![CDATA[' + this.scene_id + ']]></EventKey>\n        <Ticket><![CDATA[TICKET_TO_ACCESS_QRCODE]]></Ticket>\n      </xml>\n      ';
+	
+	      this.pretty(xml);
+	    }
+	  }
+	};
+	
+	exports['default'] = FormEventScan;
 	module.exports = exports['default'];
 
 /***/ }
