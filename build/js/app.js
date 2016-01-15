@@ -20500,25 +20500,32 @@
 	var CACHE_KEY_ACCOUNTS = 'accounts-v1';
 	var CACHE_KEY_CURRENT_ACCOUNT_ID = 'current-account-id-v1';
 	
-	var ACCOUNT_EXAMPLE = {
-	  id: 'EXAMPLE',
-	  url: 'http://127.0.0.1:5000/wechat/',
-	  token: 'FAKE_WECHAT_TOKEN'
-	};
+	var _accounts = [];
+	var _current_account_id = null;
+	
+	function _plainAccounts() {
+	  return _accounts.filter(function () {
+	    return true;
+	  });
+	}
 	
 	function getAccounts() {
 	  var promise = new Promise(function (resolve, reject) {
-	    _localforage2['default'].getItem(CACHE_KEY_ACCOUNTS, function (err, accounts) {
-	      if (err) {
-	        reject(err);
-	      }
+	    if (_accounts.length > 0) {
+	      resolve(_plainAccounts());
+	    } else {
+	      _localforage2['default'].getItem(CACHE_KEY_ACCOUNTS, function (err, accounts) {
+	        if (err) {
+	          reject(err);
+	        }
 	
-	      if (accounts) {
-	        resolve(accounts);
-	      } else {
-	        resolve([ACCOUNT_EXAMPLE]);
-	      }
-	    });
+	        if (accounts) {
+	          _accounts = accounts;
+	        }
+	
+	        resolve(_plainAccounts());
+	      });
+	    }
 	  });
 	
 	  return promise;
@@ -20528,25 +20535,21 @@
 	
 	function saveAccount(account) {
 	  var promise = new Promise(function (resolve, reject) {
-	    getAccounts().then(function (accounts) {
-	      var idx = accounts.findIndex(function (a) {
-	        return a.id === account.id;
-	      });
-	      if (idx > -1) {
-	        accounts.splice(idx, 1, account);
-	      } else {
-	        accounts.push(account);
+	    var idx = _accounts.findIndex(function (a) {
+	      return a.id === account.id;
+	    });
+	    if (idx > -1) {
+	      _accounts.splice(idx, 1, account);
+	    } else {
+	      _accounts.push(account);
+	    }
+	
+	    _localforage2['default'].setItem(CACHE_KEY_ACCOUNTS, _accounts, function (err) {
+	      if (err) {
+	        reject(err);
 	      }
 	
-	      _localforage2['default'].setItem(CACHE_KEY_ACCOUNTS, accounts, function (err_set) {
-	        if (err_set) {
-	          reject(err_set);
-	        }
-	
-	        resolve(true);
-	      });
-	    })['catch'](function (err_get) {
-	      reject(err_get);
+	      resolve(true);
 	    });
 	  });
 	
@@ -20555,13 +20558,21 @@
 	
 	function getCurrentAccountId() {
 	  var promise = new Promise(function (resolve, reject) {
-	    _localforage2['default'].getItem(CACHE_KEY_CURRENT_ACCOUNT_ID, function (err, id) {
-	      if (err) {
-	        reject(err);
-	      }
+	    if (_current_account_id) {
+	      resolve(_current_account_id);
+	    } else {
+	      _localforage2['default'].getItem(CACHE_KEY_CURRENT_ACCOUNT_ID, function (err, id) {
+	        if (err) {
+	          reject(err);
+	        }
 	
-	      resolve(id || null);
-	    });
+	        if (id) {
+	          _current_account_id = id;
+	        }
+	
+	        resolve(_current_account_id);
+	      });
+	    }
 	  });
 	
 	  return promise;
@@ -20569,7 +20580,9 @@
 	
 	function saveCurrentAccountId(id) {
 	  var promise = new Promise(function (resolve, reject) {
-	    _localforage2['default'].setItem(CACHE_KEY_CURRENT_ACCOUNT_ID, id, function (err) {
+	    _current_account_id = id;
+	
+	    _localforage2['default'].setItem(CACHE_KEY_CURRENT_ACCOUNT_ID, _current_account_id, function (err) {
 	      if (err) {
 	        reject(err);
 	      }
@@ -20583,27 +20596,23 @@
 	
 	function removeAccount(id) {
 	  var promise = new Promise(function (resolve, reject) {
-	    getAccounts().then(function (accounts) {
-	      var idx = accounts.findIndex(function (a) {
-	        return a.id === id;
-	      });
-	      accounts.splice(idx, 1);
+	    var idx = _accounts.findIndex(function (a) {
+	      return a.id === id;
+	    });
+	    _accounts.splice(idx, 1);
 	
-	      _localforage2['default'].setItem(CACHE_KEY_ACCOUNTS, accounts, function (err) {
-	        if (err) {
-	          reject(err);
+	    _localforage2['default'].setItem(CACHE_KEY_ACCOUNTS, _accounts, function (err) {
+	      if (err) {
+	        reject(err);
+	      }
+	
+	      _localforage2['default'].setItem(CACHE_KEY_CURRENT_ACCOUNT_ID, null, function (err2) {
+	        if (err2) {
+	          reject(err2);
 	        }
 	
-	        _localforage2['default'].setItem(CACHE_KEY_CURRENT_ACCOUNT_ID, null, function (err2) {
-	          if (err2) {
-	            reject(err2);
-	          }
-	
-	          resolve(true);
-	        });
+	        resolve(true);
 	      });
-	    })['catch'](function (err) {
-	      reject(err);
 	    });
 	  });
 	
@@ -23933,7 +23942,7 @@
 	    }
 	  },
 	
-	  template: '\n  <div class="alert alert-warning">\n    <p>\n      <em>* 开发者提交服务器信息后，微信服务器将发送 GET 请求到填写的服务器地址 URL 上，从而验证开发者服务器地址的有效性</em>\n      <a href="http://mp.weixin.qq.com/wiki/17/2d4265491f12608cd170a95559800f2d.html" target="_blank" title="第二步：验证服务器地址的有效性">\n        <i class="glyphicon glyphicon-question-sign"></i>\n      </a>\n    </p>\n  </div>\n  <ul class="nav nav-tabs">\n    <li v-for="a in accounts" :class="{active: a.id === selected}" @click="selected = a.id">\n      <a><i class="glyphicon glyphicon-ok" v-if="a.id === current_account_id"></i>{{a.id}}</a>\n    </li>\n    <li :class="{active: !selected}" @click="selected = null">\n      <a><i class="glyphicon glyphicon-plus"></i></a>\n    </li>\n  </ul>\n  <form class="form-horizontal">\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">Id</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="和微信无关，用作在本地缓存多个帐号" v-model="id" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">服务器接口 url</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" v-model="url" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">Token</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="Token" v-model="token" />\n      </div>\n    </div>\n    <div class="row">\n      <div class="col-sm-12 text-center" v-if="msg_error">\n        <div class="bg-warning">{{msg_error}}</div>\n      </div>\n      <div class="col-sm-12 text-center" v-if="msg_success">\n        <div class="bg-success">{{msg_success}}</div>\n      </div>\n      <div class="col-sm-12 text-right" v-if="!msg_success">\n        <button type="button" class="btn btn-default pull-left" v-if="selected" @click="remove"><i class="glyphicon glyphicon-remove"></i> 删除</button>\n        <button type="button" class="btn btn-link" @click="reset">取消</button>\n        <button type="button" class="btn btn-primary" :class="{disabled: is_validating}" @click="validate">\n          {{ is_validating ? \'验证中...\' : \'验证\' }}\n        </button>\n      </div>\n    </div>\n  </form>\n  ',
+	  template: '\n  <ul class="nav nav-tabs">\n    <li v-for="a in accounts" :class="{active: a.id === selected}" @click="selected = a.id">\n      <a><i class="glyphicon glyphicon-ok" v-if="a.id === current_account_id"></i>{{a.id}}</a>\n    </li>\n    <li :class="{active: !selected}" @click="selected = null">\n      <a><i class="glyphicon glyphicon-plus"></i></a>\n    </li>\n  </ul>\n  <form class="form-horizontal">\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">Id</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="和微信无关，用作在本地缓存多个帐号" v-model="id" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">服务器接口 Url</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" v-model="url" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">Token</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="Token" v-model="token" />\n      </div>\n    </div>\n    <div class="row">\n      <div class="col-sm-12 text-center" v-if="msg_error">\n        <div class="bg-warning">{{msg_error}}</div>\n      </div>\n      <div class="col-sm-12 text-center" v-if="msg_success">\n        <div class="bg-success">{{msg_success}}</div>\n      </div>\n      <div class="col-sm-12 text-right" v-if="!msg_success">\n        <button type="button" class="btn btn-default pull-left" v-if="selected" @click="remove"><i class="glyphicon glyphicon-remove"></i> 删除</button>\n        <button type="button" class="btn btn-link" @click="reset">取消</button>\n        <button type="button" class="btn btn-primary" :class="{disabled: is_validating}" @click="validate">\n          {{ is_validating ? \'验证中...\' : \'验证\' }}\n        </button>\n      </div>\n    </div>\n  </form>\n  ',
 	
 	  methods: {
 	    reset: function reset() {

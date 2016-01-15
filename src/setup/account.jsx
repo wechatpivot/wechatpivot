@@ -47,14 +47,6 @@ const Account = {
   },
 
   template: (/* .vue */
-  <div class="alert alert-warning">
-    <p>
-      <em>* 开发者提交服务器信息后，微信服务器将发送 GET 请求到填写的服务器地址 URL 上，从而验证开发者服务器地址的有效性</em>
-      <a href="http://mp.weixin.qq.com/wiki/17/2d4265491f12608cd170a95559800f2d.html" target="_blank" title="第二步：验证服务器地址的有效性">
-        <i class="glyphicon glyphicon-question-sign"></i>
-      </a>
-    </p>
-  </div>
   <ul class="nav nav-tabs">
     <li v-for="a in accounts" :class="{active: a.id === selected}" @click="selected = a.id">
       <a><i class="glyphicon glyphicon-ok" v-if="a.id === current_account_id"></i>{{a.id}}</a>
@@ -71,7 +63,7 @@ const Account = {
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 control-label required">服务器接口 url</label>
+      <label class="col-sm-4 control-label required">服务器接口 Url</label>
       <div class="col-sm-8">
         <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" v-model="url" />
       </div>

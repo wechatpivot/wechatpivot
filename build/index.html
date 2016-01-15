@@ -77,7 +77,12 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" @click="close">&times;</button>
-            <h4 class="modal-title">配置您的微信账号</h4>
+            <h4 class="modal-title">
+              配置您的微信账号
+              <a href="http://mp.weixin.qq.com/wiki/17/2d4265491f12608cd170a95559800f2d.html" target="_blank" title="开发者提交服务器信息后，微信服务器将发送 GET 请求到填写的服务器地址 URL 上，从而验证开发者服务器地址的有效性">
+                <i class="glyphicon glyphicon-question-sign"></i>
+              </a>
+            </h4>
           </div>
           <div class="modal-body">
             <account :close="close"></account>
