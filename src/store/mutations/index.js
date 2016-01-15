@@ -1,4 +1,4 @@
-import { setup_types, nav_types, form_types } from '../types';
+import { setup_types, nav_types, form_types, user_manager_types } from '../types';
 
 
 export default {
@@ -33,5 +33,18 @@ export default {
 
   [form_types.SEND_SUCCESS]: function (state, resp) {
     state.send_resp = resp;
+  },
+
+  [user_manager_types.LOAD_GROUPS]: function (state, groups) {
+    state.user_groups = groups;
+  },
+
+  [user_manager_types.CREATE_GROUP]: function (state, group) {
+    state.user_groups.push(group);
+  },
+
+  [user_manager_types.UPDATE_GROUP]: function (state, group) {
+    let idx = state.user_groups.findIndex(g => g.id === group.id);
+    state.user_groups.splice(idx, 1, group);
   },
 };

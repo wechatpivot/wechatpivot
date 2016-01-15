@@ -11,6 +11,8 @@ let state = {
   current_account_id: null,
 
   send_resp: null,
+
+  user_groups: [],
 };
 Object.assign(state, INIT_NAV);
 window._state = state;

@@ -1,4 +1,5 @@
 import MessageEventManager from './message_event_manager';
+import UserManager from './user_manager';
 import { state } from '../store';
 
 
@@ -7,6 +8,7 @@ const Panel = {
 
   components: {
     'message-event-manager': MessageEventManager,
+    'user-manager': UserManager,
   },
 
   computed: {

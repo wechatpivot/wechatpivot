@@ -13,3 +13,8 @@ export const nav_types = {
 export const form_types = {
   SEND_SUCCESS: 'SEND_SUCCESS',
 };
+
+export const user_manager_types = {
+  LOAD_GROUPS: 'LOAD_GROUPS',
+  CREATE_GROUP: 'CREATE_GROUP',
+};

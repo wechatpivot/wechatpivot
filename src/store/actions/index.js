@@ -1,8 +1,9 @@
 import superagent from 'superagent';
 import dispatcher from '../../dispatcher';
-import { setup_types, nav_types, form_types } from '../types';
+import { setup_types, nav_types, form_types, user_manager_types } from '../types';
 import generate_query from './signature';
 import * as cache from './cache';
+import * as api from './api';
 
 
 export const loadSetup = function ({ dispatch }) {
@@ -96,4 +97,53 @@ export const send = function ({ state, dispatch }, xml) {
   } else {
     throw new Error('Select a validated account first!');
   }
+};
+
+export const loadUserGroups = function ({ state, dispatch }, app_secret) {
+  let account = state.accounts.filter(a => a.id === state.current_account_id)[0];
+  // if (account.access_token && account.access_token_expires_at > Date.now()) {
+  //   //
+  // } else {
+  //   throw new Error('NotImplementedError');
+  // }
+  api
+    .getGroups(account, app_secret)
+    .then(function (results) {
+      let [token, groups] = results;
+      dispatch(user_manager_types.LOAD_GROUPS, groups);
+      cache.saveAccessToken(account.id, token);
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
+};
+
+export const createUserGroup = function ({ state, dispatch }, app_secret, new_group_name) {
+  let account = state.accounts.filter(a => a.id === state.current_account_id)[0];
+
+  api
+    .createGroup(account, app_secret, new_group_name)
+    .then(function (results) {
+      let [token, group] = results;
+      dispatch(user_manager_types.CREATE_GROUP, group);
+      cache.saveAccessToken(account.id, token);
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
+};
+
+export const updateUserGroup = function ({ state, dispatch }, app_secret, id, new_group_name) {
+  let account = state.accounts.filter(a => a.id === state.current_account_id)[0];
+
+  api
+    .updateGroup(account, app_secret, id, new_group_name)
+    .then(function (results) {
+      let [token, group] = results;
+      dispatch(user_manager_types.UPDATE_GROUP, group);
+      cache.saveAccessToken(account.id, token);
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
 };

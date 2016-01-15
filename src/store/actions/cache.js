@@ -41,7 +41,7 @@ export function saveAccount(account) {
   let promise = new Promise(function (resolve, reject) {
     let idx = _accounts.findIndex(a => a.id === account.id);
     if (idx > -1) {
-      _accounts.splice(idx, 1, account);
+      _accounts[idx] = Object.assign({}, _accounts[idx], account);
     } else {
       _accounts.push(account);
     }
@@ -56,6 +56,16 @@ export function saveAccount(account) {
   });
 
   return promise;
+}
+
+export function saveAccessToken(id, token) {
+  saveAccount(Object.assign({}, { id }, token))
+    .then(function () {
+      console.debug('The access_token was cached.');
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
 }
 
 export function getCurrentAccountId() {
