@@ -93,25 +93,7 @@
   </div>
 
   <div class="container Panel js-panel" v-cloak>
-    <div class="row">
-      <div class="col-md-4">
-        <component :is="form" :pretty="pretty"></component>
-      </div>
-
-      <div class="col-md-8">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <code class="hidden" v-el:code-plain>{{ xml }}</code>
-            <pre><code v-el:code-pretty class="xml"></code></pre>
-            <pre v-if="send_resp"><code class="xml">{{ send_resp }}</code></pre>
-            <textarea v-if="msg_error">{{ msg_error }}</textarea>
-          </div>
-          <div class="panel-footer text-right">
-            <button type="button" class="btn btn-primary" @click="send">Send</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <component :is="manager"></component>
   </div>
 
   <footer class="container-fluid">

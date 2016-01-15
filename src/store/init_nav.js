@@ -34,6 +34,16 @@ navs.push({
 });
 
 
+navs.push({
+  id: 'user/group',
+  text: '用户管理',
+  subnavs: [
+    { id: 'user/group', text: '分组管理' },
+    { id: 'http://mp.weixin.qq.com/wiki/8/d6d33cf60bce2a2e4fb10a21be9591b8.html', text: null },
+  ],
+});
+
+
 let current_nav_id = navs[0].id;
 let current_subnav_id = current_nav_id;
 
