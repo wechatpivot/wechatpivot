@@ -15219,7 +15219,7 @@
 	};
 	
 	exports.changeSubNav = changeSubNav;
-	var validate = function validate(_ref5, id, url, token) {
+	var validate = function validate(_ref5, id, url, token, app_id) {
 	  var state = _ref5.state;
 	  var dispatch = _ref5.dispatch;
 	
@@ -15236,7 +15236,7 @@
 	      _dispatcher2['default'].$emit('INVALID_ACCOUNT', err.message);
 	    } else {
 	      if (res.text === echostr) {
-	        Promise.all([cache.saveAccount({ id: id, url: url, token: token }), cache.saveCurrentAccountId(id)]).then(function () {
+	        Promise.all([cache.saveAccount({ id: id, url: url, token: token, app_id: app_id }), cache.saveCurrentAccountId(id)]).then(function () {
 	          loadSetup({ dispatch: dispatch });
 	        })['catch'](function (error) {
 	          console.error(error);
@@ -23912,7 +23912,8 @@
 	      id: null,
 	      valid: null,
 	      url: null,
-	      token: null
+	      token: null,
+	      app_id: null
 	    };
 	  },
 	
@@ -23948,7 +23949,7 @@
 	    }
 	  },
 	
-	  template: '\n  <ul class="nav nav-tabs">\n    <li v-for="a in accounts" :class="{active: a.id === selected}" @click="selected = a.id">\n      <a><i class="glyphicon glyphicon-ok" v-if="a.id === current_account_id"></i>{{a.id}}</a>\n    </li>\n    <li :class="{active: !selected}" @click="selected = null">\n      <a><i class="glyphicon glyphicon-plus"></i></a>\n    </li>\n  </ul>\n  <form class="form-horizontal">\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">Id</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="和微信无关，用作在本地缓存多个帐号" v-model="id" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">服务器接口 Url</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" v-model="url" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">Token</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="Token" v-model="token" />\n      </div>\n    </div>\n    <div class="row">\n      <div class="col-sm-12 text-center" v-if="msg_error">\n        <div class="bg-warning">{{msg_error}}</div>\n      </div>\n      <div class="col-sm-12 text-center" v-if="msg_success">\n        <div class="bg-success">{{msg_success}}</div>\n      </div>\n      <div class="col-sm-12 text-right" v-if="!msg_success">\n        <button type="button" class="btn btn-default pull-left" v-if="selected" @click="remove"><i class="glyphicon glyphicon-remove"></i> 删除</button>\n        <button type="button" class="btn btn-link" @click="reset">取消</button>\n        <button type="button" class="btn btn-primary" :class="{disabled: is_validating}" @click="validate">\n          {{ is_validating ? \'验证中...\' : \'验证\' }}\n        </button>\n      </div>\n    </div>\n  </form>\n  ',
+	  template: '\n  <ul class="nav nav-tabs">\n    <li v-for="a in accounts" :class="{active: a.id === selected}" @click="selected = a.id">\n      <a><i class="glyphicon glyphicon-ok" v-if="a.id === current_account_id"></i>{{a.id}}</a>\n    </li>\n    <li :class="{active: !selected}" @click="selected = null">\n      <a><i class="glyphicon glyphicon-plus"></i></a>\n    </li>\n  </ul>\n  <form class="form-horizontal">\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">Id</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="和微信无关，用作在本地缓存多个帐号" v-model="id" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">服务器接口 Url</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="开发者填写URL，调试时将把消息推送到该URL上" v-model="url" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label required">Token</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="Token" v-model="token" />\n      </div>\n    </div>\n    <div class="form-group">\n      <label class="col-sm-4 control-label">AppId</label>\n      <div class="col-sm-8">\n        <input type="text" class="form-control" placeholder="AppId" v-model="app_id" />\n      </div>\n    </div>\n    <div class="row">\n      <div class="col-sm-12 text-center" v-if="msg_error">\n        <div class="bg-warning">{{msg_error}}</div>\n      </div>\n      <div class="col-sm-12 text-center" v-if="msg_success">\n        <div class="bg-success">{{msg_success}}</div>\n      </div>\n      <div class="col-sm-12 text-right" v-if="!msg_success">\n        <button type="button" class="btn btn-default pull-left" v-if="selected" @click="remove"><i class="glyphicon glyphicon-remove"></i> 删除</button>\n        <button type="button" class="btn btn-link" @click="reset">取消</button>\n        <button type="button" class="btn btn-primary" :class="{disabled: is_validating}" @click="validate">\n          {{ is_validating ? \'验证中...\' : \'验证\' }}\n        </button>\n      </div>\n    </div>\n  </form>\n  ',
 	
 	  methods: {
 	    reset: function reset() {
@@ -23963,10 +23964,12 @@
 	        this.id = account.id;
 	        this.url = account.url;
 	        this.token = account.token;
+	        this.app_id = account.app_id;
 	      } else {
 	        this.id = null;
 	        this.url = null;
 	        this.token = null;
+	        this.app_id = null;
 	      }
 	    },
 	
@@ -23974,7 +23977,7 @@
 	      if (!this.is_validating) {
 	        this.is_validating = true;
 	        this.msg_error = null;
-	        _store.actions.validate(this.id, this.url, this.token);
+	        _store.actions.validate(this.id, this.url, this.token, this.app_id);
 	      }
 	    },
 	
@@ -23982,7 +23985,7 @@
 	      this.id = null;
 	      this.url = null;
 	      this.token = null;
-	      // this.selected = null;
+	      this.app_id = null;
 	      _store.actions.removeAccount(this.selected);
 	    }
 	  },

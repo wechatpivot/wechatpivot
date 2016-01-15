@@ -28,7 +28,7 @@ export const changeSubNav = function ({ dispatch }, id) {
   dispatch(nav_types.CHANGE_SUB_NAV, id);
 };
 
-export const validate = function ({ state, dispatch }, id, url, token) {
+export const validate = function ({ state, dispatch }, id, url, token, app_id) {
   dispatch(setup_types.ACCOUNT_EXPIRES);
 
   const query = generate_query(token);
@@ -47,7 +47,7 @@ export const validate = function ({ state, dispatch }, id, url, token) {
         if (res.text === echostr) {
           Promise
             .all([
-              cache.saveAccount({ id, url, token }),
+              cache.saveAccount({ id, url, token, app_id }),
               cache.saveCurrentAccountId(id),
             ])
             .then(function () {

@@ -17,6 +17,7 @@ const Account = {
       valid: null,
       url: null,
       token: null,
+      app_id: null,
     };
   },
 
@@ -74,6 +75,12 @@ const Account = {
         <input type="text" class="form-control" placeholder="Token" v-model="token" />
       </div>
     </div>
+    <div class="form-group">
+      <label class="col-sm-4 control-label">AppId</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" placeholder="AppId" v-model="app_id" />
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-12 text-center" v-if="msg_error">
         <div class="bg-warning">{{msg_error}}</div>
@@ -101,10 +108,12 @@ const Account = {
         this.id = account.id;
         this.url = account.url;
         this.token = account.token;
+        this.app_id = account.app_id;
       } else {
         this.id = null;
         this.url = null;
         this.token = null;
+        this.app_id = null;
       }
     },
 
@@ -112,7 +121,7 @@ const Account = {
       if (!this.is_validating) {
         this.is_validating = true;
         this.msg_error = null;
-        actions.validate(this.id, this.url, this.token);
+        actions.validate(this.id, this.url, this.token, this.app_id);
       }
     },
 
@@ -120,7 +129,7 @@ const Account = {
       this.id = null;
       this.url = null;
       this.token = null;
-      // this.selected = null;
+      this.app_id = null;
       actions.removeAccount(this.selected);
     },
   },
