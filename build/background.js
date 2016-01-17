@@ -1,6 +1,13 @@
 chrome.app.runtime.onLaunched.addListener(function () {
   chrome.app.window.create(
     'index.html',
+    {
+      id: 'index',
+      outerBounds: {
+        width: 1200,
+        height: 700
+      }
+    },
     function (createdWindow) {
       createdWindow.onClosed.addListener(function () {
         // ** LocalForage defaults
