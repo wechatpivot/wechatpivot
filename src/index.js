@@ -1,5 +1,5 @@
 import Vue from 'vue';
-Vue.config.debug = true;
+Vue.config.debug = process.env.NODE_ENV !== 'production';
 import dispatcher from './dispatcher';
 import InputNumber from './common/input_number';
 import InputString from './common/input_string';

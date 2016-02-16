@@ -26,6 +26,7 @@ node_modules
 
 .DS_Store
 
-*.js.map
+build/js/app.js
+build/js/app.js.map
 
 build.pem

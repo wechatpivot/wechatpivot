@@ -37,7 +37,7 @@ const Nav = {
     let that = this;
 
     dispatcher.$on('CLICK_OUTSIDE', function () {
-      console.debug('dispatcher.CLICK_OUTSIDE');
+      // console.debug('dispatcher.CLICK_OUTSIDE');
       that.open = false;
     });
   },
