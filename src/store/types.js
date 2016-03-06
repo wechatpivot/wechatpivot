@@ -8,7 +8,7 @@ export const setupTypes = {
   REMOVE_ACCOUNT: 'REMOVE_ACCOUNT',
 };
 
-export const nav_types = {
+export const navTypes = {
   CHANGE_NAV: 'CHANGE_NAV',
   CHANGE_SUB_NAV: 'CHANGE_SUB_NAV',
 };
@@ -18,11 +18,15 @@ export const notificationTypes = {
   DISMISS: 'DISMISS',
 };
 
-export const form_types = {
+export const formTypes = {
   SEND_SUCCESS: 'SEND_SUCCESS',
 };
 
-export const user_manager_types = {
+export const userManagerTypes = {
   LOAD_GROUPS: 'LOAD_GROUPS',
   CREATE_GROUP: 'CREATE_GROUP',
+};
+
+export const toolkitMenuTypes = {
+  UPDATE_MENUS: 'UPDATE_MENUS',
 };

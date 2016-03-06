@@ -1,5 +1,5 @@
-import { setup_types, nav_types, form_types, user_manager_types } from '../types';
-
+import Vue from 'vue';
+import { setupTypes, navTypes, notificationTypes, formTypes, userManagerTypes, toolkitMenuTypes } from '../types';
 
 export default {
   [setupTypes.OPEN]: function (state) {
@@ -18,7 +18,7 @@ export default {
       state.setupError.push(key);
     }
 
-    state.setupOpen = true;
+    state.setupDismissAfter = -1;
   },
 
   [setupTypes.LOAD_ACCOUNTS]: function (state, accounts) {
@@ -44,41 +44,59 @@ export default {
     state.setupDismissAfter = 1000;
   },
 
-  [setup_types.CHANGE_ACCOUNT]: function (state, id) {
-    state.current_account_id = id;
+  [setupTypes.CHANGE_ACCOUNT]: function (state, alias) {
+    state.currentAccountAlias = alias;
   },
 
-  [setup_types.REMOVE_ACCOUNT]: function (state, id) {
-    if (state.current_account_id === id) {
-      state.current_account_id = null;
+  [setupTypes.REMOVE_ACCOUNT]: function (state, alias) {
+    if (state.currentAccountAlias === alias) {
+      state.currentAccountAlias = null;
     }
-    let idx = state.accounts.findIndex(a => a.id === id);
+    let idx = state.accounts.findIndex(a => a.alias === alias);
     state.accounts.splice(idx, 1);
   },
 
-  [nav_types.CHANGE_NAV]: function (state, id) {
-    state.current_nav_id = id;
-    state.current_subnav_id = id;
+  [notificationTypes.SHOW]: function (state, notification) {
+    state.notifications.push(notification);
   },
 
-  [nav_types.CHANGE_SUB_NAV]: function (state, id) {
-    state.current_subnav_id = id;
+  [notificationTypes.DISMISS]: function (state, id) {
+    let idx = state.notifications.findIndex(n => n.id === id);
+    if (idx > -1) {
+      state.notifications.splice(idx, 1);
+    }
   },
 
-  [form_types.SEND_SUCCESS]: function (state, resp) {
+  [navTypes.CHANGE_NAV]: function (state, id) {
+    state.currentNavId = id;
+    state.currentSubnavId = id;
+  },
+
+  [navTypes.CHANGE_SUB_NAV]: function (state, id) {
+    state.currentSubnavId = id;
+  },
+
+  [formTypes.SEND_SUCCESS]: function (state, resp) {
     state.send_resp = resp;
   },
 
-  [user_manager_types.LOAD_GROUPS]: function (state, groups) {
-    state.user_groups = groups;
+  [userManagerTypes.LOAD_GROUPS]: function (state, groups) {
+    state.userGroups = groups;
   },
 
-  [user_manager_types.CREATE_GROUP]: function (state, group) {
-    state.user_groups.push(group);
+  [userManagerTypes.CREATE_GROUP]: function (state, group) {
+    state.userGroups.push(group);
   },
 
-  [user_manager_types.UPDATE_GROUP]: function (state, group) {
-    let idx = state.user_groups.findIndex(g => g.id === group.id);
-    state.user_groups.splice(idx, 1, group);
+  [userManagerTypes.UPDATE_GROUP]: function (state, group) {
+    let idx = state.userGroups.findIndex(g => g.id === group.id);
+    state.userGroups.splice(idx, 1, group);
+  },
+
+  [toolkitMenuTypes.UPDATE_MENUS]: function (state, formatted) {
+    formatted.forEach(function (m) {
+      let idx = state.menus.findIndex(menu => menu.x === m.x && menu.y === m.y);
+      state.menus.splice(idx, 1, m);
+    });
   },
 };

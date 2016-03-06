@@ -30,7 +30,7 @@ const MessageEventManager = {
     send_resp: () => state.send_resp,
 
     form: function () {
-      let ids = state.current_subnav_id.split('/');
+      let ids = state.currentSubnavId.split('/');
       ids.unshift('form');
       return ids.join('-');
     },

@@ -4,46 +4,42 @@ import { state, actions } from '../../store';
 const BoardGroup = {
   data: function () {
     return {
-      app_secret: null,
-      update_group_id: null,
-      update_group_name: null,
-      create_group_name: null,
+      updateGroupId: null,
+      updateGroupName: null,
+      createGroupName: null,
     };
   },
 
   computed: {
-    groups_0: () => state.user_groups.filter((g, i) => i < 10),
-    groups_1: () => state.user_groups.filter((g, i) => i > 10 && i < 20),
-    groups_2: () => state.user_groups.filter((g, i) => i > 20 && i < 30),
-    groups_4: () => state.user_groups.filter((g, i) => i > 30 && i < 40),
+    groups0: () => state.userGroups.filter((g, i) => i < 10),
+    groups1: () => state.userGroups.filter((g, i) => i > 10 && i < 20),
+    groups2: () => state.userGroups.filter((g, i) => i > 20 && i < 30),
+    groups3: () => state.userGroups.filter((g, i) => i > 30 && i < 40),
   },
 
   template: (/* .vue */
   <div>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <form class="form-inline">
-          <div class="form-group">
-            <input type="password" class="form-control" placeholder="App Secret" v-model="app_secret">
-          </div>
           <button type="button" class="btn btn-default" @click="loadUserGroups">获取用户分组信息</button>
         </form>
       </div>
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <form class="form-inline">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Name" v-model="create_group_name">
+            <input type="text" class="form-control" placeholder="Name" v-model="createGroupName">
           </div>
           <button type="button" class="btn btn-default" @click="createUserGroup">添加用户分组</button>
         </form>
       </div>
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <form class="form-inline">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Id" v-model="update_group_id" :style="{width: '50px'}">
+            <input type="text" class="form-control" placeholder="Id" v-model="updateGroupId" :style="{width: '50px'}">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Name" v-model="update_group_name">
+            <input type="text" class="form-control" placeholder="Name" v-model="updateGroupName">
           </div>
           <button type="button" class="btn btn-default" @click="updateUserGroup">编辑分组名称</button>
         </form>
@@ -51,7 +47,7 @@ const BoardGroup = {
     </div>
     <hr>
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-sm-3">
         <table class="table table-condensed table-striped table-hover">
           <thead>
             <tr>
@@ -61,7 +57,7 @@ const BoardGroup = {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="g in groups_0">
+            <tr v-for="g in groups0">
               <td>{{ g.id }}</td>
               <td>{{ g.name }}</td>
               <td></td>
@@ -69,7 +65,7 @@ const BoardGroup = {
           </tbody>
         </table>
       </div>
-      <div class="col-md-3">
+      <div class="col-sm-3">
         <table class="table table-condensed table-striped table-hover">
           <thead>
             <tr>
@@ -79,7 +75,7 @@ const BoardGroup = {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="g in groups_1">
+            <tr v-for="g in groups1">
               <td>{{ g.id }}</td>
               <td>{{ g.name }}</td>
               <td></td>
@@ -87,7 +83,7 @@ const BoardGroup = {
           </tbody>
         </table>
       </div>
-      <div class="col-md-3">
+      <div class="col-sm-3">
         <table class="table table-condensed table-striped table-hover">
           <thead>
             <tr>
@@ -97,7 +93,7 @@ const BoardGroup = {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="g in groups_2">
+            <tr v-for="g in groups2">
               <td>{{ g.id }}</td>
               <td>{{ g.name }}</td>
               <td></td>
@@ -105,7 +101,7 @@ const BoardGroup = {
           </tbody>
         </table>
       </div>
-      <div class="col-md-3">
+      <div class="col-sm-3">
         <table class="table table-condensed table-striped table-hover">
           <thead>
             <tr>
@@ -115,7 +111,7 @@ const BoardGroup = {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="g in groups_3">
+            <tr v-for="g in groups3">
               <td>{{ g.id }}</td>
               <td>{{ g.name }}</td>
               <td></td>
@@ -129,22 +125,22 @@ const BoardGroup = {
 
   methods: {
     loadUserGroups: function () {
-      actions.loadUserGroups(this.app_secret);
+      actions.loadUserGroups();
     },
 
     updateUserGroup: function () {
-      if (this.update_group_id >= 100) {
-        actions.updateUserGroup(this.app_secret, this.update_group_id, this.update_group_name);
-        this.update_group_id = null;
-        this.update_group_name = null;
+      if (this.updateGroupId >= 100) {
+        actions.updateUserGroup(this.updateGroupId, this.updateGroupName);
+        this.updateGroupId = null;
+        this.updateGroupName = null;
       } else {
         console.warn('请不要修改默认分组！');
       }
     },
 
     createUserGroup: function () {
-      actions.createUserGroup(this.app_secret, this.create_group_name);
-      this.create_group_name = null;
+      actions.createUserGroup(this.createGroupName);
+      this.createGroupName = null;
     },
   },
 };

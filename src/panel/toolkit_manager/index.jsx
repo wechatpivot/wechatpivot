@@ -1,10 +1,11 @@
-import BoardGroup from './board_group';
+import BoardMenu from './board_menu.jsx';
 import { state } from '../../store';
+import './style.scss';
 
 
-const UserManager = {
+const ToolkitManager = {
   components: {
-    'board-user-group': BoardGroup,
+    'board-toolkit-menu': BoardMenu,
   },
 
   computed: {
@@ -23,4 +24,4 @@ const UserManager = {
 };
 
 
-export default UserManager;
+export default ToolkitManager;

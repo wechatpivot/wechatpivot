@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 import INIT_NAV from './init_nav';
+import { getInitialMenus } from '../models/menu';
 import * as actions from './actions';
 import mutations from './mutations';
 
@@ -18,7 +19,7 @@ let state = {
 
   send_resp: null,
 
-  user_groups: [],
+  userGroups: [],
 
   menus: getInitialMenus(),
 };

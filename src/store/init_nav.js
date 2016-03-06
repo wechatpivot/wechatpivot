@@ -2,6 +2,15 @@ let navs = [];
 
 
 navs.push({
+  id: 'toolkit/menu',
+  text: '工具箱',
+  subnavs: [
+    { id: 'toolkit/menu', text: '菜单管理' },
+  ],
+});
+
+
+navs.push({
   id: 'message/text',
   text: '接收普通消息',
   subnavs: [
@@ -44,12 +53,12 @@ navs.push({
 });
 
 
-let current_nav_id = navs[0].id;
-let current_subnav_id = current_nav_id;
+let currentNavId = navs[0].id;
+let currentSubnavId = currentNavId;
 
 
 export default {
   navs,
-  current_nav_id,
-  current_subnav_id,
+  currentNavId,
+  currentSubnavId,
 };

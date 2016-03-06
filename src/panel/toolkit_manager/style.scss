@@ -1,0 +1,14 @@
+.ToolkitMenu {
+  .list-group-item {
+    cursor: default;
+
+    &:empty {
+      height: 42px;
+    }
+  }
+
+  a.list-group-item-info.list-group-item-warning {
+    color: #31708f;
+    font-weight: bold;
+  }
+}

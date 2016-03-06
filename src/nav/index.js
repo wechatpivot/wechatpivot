@@ -12,13 +12,13 @@ const Nav = {
 
   computed: {
     navs: () => state.navs,
-    current_nav: () => state.navs.filter(n => n.id === state.current_nav_id)[0],
+    currentNav: () => state.navs.filter(n => n.id === state.currentNavId)[0],
 
     subnavs: function () {
-      return this.current_nav.subnavs;
+      return this.currentNav.subnavs;
     },
 
-    current_subnav_id: () => state.current_subnav_id,
+    currentSubnavId: () => state.currentSubnavId,
   },
 
   methods: {
