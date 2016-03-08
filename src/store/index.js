@@ -8,7 +8,11 @@ import mutations from './mutations';
 
 let state = {
   accounts: [],
-  current_account_id: null,
+
+  setupIsValidating: false,
+  setupIsSaving: false,
+  setupDismissAfter: 0,
+  setupError: [],
 
   notifications: [],
 

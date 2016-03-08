@@ -34,6 +34,12 @@
   }
 
   form {
+    hr {
+      margin-top: 0;
+      margin-bottom: 0;
+      border-top: dashed 1px #ddd;
+    }
+
     .bg-success,
     .bg-warning {
       padding: 8px 15px;

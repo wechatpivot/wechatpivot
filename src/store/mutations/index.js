@@ -2,12 +2,46 @@ import { setup_types, nav_types, form_types, user_manager_types } from '../types
 
 
 export default {
-  [setup_types.LOAD_ACCOUNTS]: function (state, accounts) {
+  [setupTypes.OPEN]: function (state) {
+    state.setupDismissAfter = -1;
+  },
+
+  [setupTypes.CLOSE]: function (state, delay) {
+    console.assert(delay >= 0, 'invalid delay');
+    state.setupDismissAfter = delay;
+  },
+
+  [setupTypes.ERROR]: function (state, key, value) {
+    if (value) {
+      state.setupError.push(key + ':' + value);
+    } else {
+      state.setupError.push(key);
+    }
+
+    state.setupOpen = true;
+  },
+
+  [setupTypes.LOAD_ACCOUNTS]: function (state, accounts) {
     state.accounts = accounts;
   },
 
-  [setup_types.ACCOUNT_EXPIRES]: function (state) {
-    state.current_account_id = null;
+  [setupTypes.UPDATE_ACCOUNT]: function (state, account) {
+    let notFound = true;
+    state.accounts.forEach(function (a) {
+      if (a.alias === account.alias) {
+        notFound = false;
+        Object.keys(account).forEach(k => Vue.set(a, k, account[k]));
+      } else {
+        a.isCurrent = false;
+      }
+    });
+
+    if (notFound) {
+      state.accounts.push(account);
+    }
+
+    state.setupError.splice(0, state.setupError.length);
+    state.setupDismissAfter = 1000;
   },
 
   [setup_types.CHANGE_ACCOUNT]: function (state, id) {

@@ -1,25 +1,28 @@
 import superagent from 'superagent';
-import dispatcher from '../../dispatcher';
 import { setup_types, nav_types, form_types, user_manager_types } from '../types';
 import generate_query from './signature';
 import * as cache from './cache';
 import * as api from './api';
 
 
-export const loadSetup = function ({ dispatch }) {
-  Promise
-    .all([
-      cache.getAccounts(),
-      cache.getCurrentAccountId(),
-    ])
-    .then(function ([accounts, current_account_id]) {
-      dispatch(setup_types.LOAD_ACCOUNTS, accounts);
-      dispatch(setup_types.CHANGE_ACCOUNT, current_account_id);
+export function loadSetup({ dispatch }) {
+  cache
+    .getAccounts()
+    .then(function (accounts) {
+      dispatch(setupTypes.LOAD_ACCOUNTS, accounts);
     })
     .catch(function (err) {
       console.error(err);
     });
-};
+}
+
+export function openSetup({ dispatch }) {
+  dispatch(setupTypes.OPEN);
+}
+
+export function closeSetup({ dispatch }) {
+  dispatch(setupTypes.CLOSE, 0);
+}
 
 export const changeNav = function ({ dispatch }, id) {
   dispatch(nav_types.CHANGE_NAV, id);
@@ -55,53 +58,36 @@ export function flashDismiss({ dispatch }, id) {
   dispatch(notificationTypes.DISMISS, id);
 }
 
-export const validate = function ({ state, dispatch }, id, url, token, app_id) {
-  dispatch(setup_types.ACCOUNT_EXPIRES);
 
-  const query = generate_query(token);
-  const echostr = Math.random().toString(36).substring(2);
-  query.echostr = echostr;
-
-  superagent
-    .get(url)
-    .query(query)
-    .end(function (err, res) {
-      if (err) {
-        console.error(err);
-        // FIXME
-        dispatcher.$emit('INVALID_ACCOUNT', err.message);
-      } else {
-        if (res.text === echostr) {
-          Promise
-            .all([
-              cache.saveAccount({ id, url, token, app_id }),
-              cache.saveCurrentAccountId(id),
-            ])
-            .then(function () {
-              loadSetup({ dispatch });
-            })
-            .catch(function (error) {
-              console.error(error);
-            });
-        } else {
-          console.error(res.text);
-          // FIXME
-          dispatcher.$emit('INVALID_ACCOUNT', res.text);
-        }
-      }
-    });
-};
-
-export const removeAccount = function ({ dispatch }, id) {
-  cache
-    .removeAccount(id)
+export function validate({ state, dispatch }, { alias, appId, url, token }) {
+  signature
+    .validate(appId, url, token)
     .then(function () {
-      dispatch(setup_types.REMOVE_ACCOUNT, id);
+      dispatch(setupTypes.UPDATE_ACCOUNT, { alias, appId, url, token });
+
+      flashSuccess({ dispatch }, '验证通过！');
+
+      let accounts = utils.getAccounts(state);
+      cache.setAccounts(accounts);
     })
     .catch(function (err) {
-      console.error(err);
+      dispatch(setupTypes.ERROR, 'validate', err);
     });
-};
+}
+
+export function updateAccount({ state, dispatch }, { alias, appId, appSecret, url, token, id, userOpenId }) {
+  dispatch(setupTypes.UPDATE_ACCOUNT, { alias, isCurrent: true, appId, appSecret, url, token, id, userOpenId });
+
+  let accounts = utils.getAccounts(state);
+  cache.setAccounts(accounts);
+}
+
+export function removeAccount({ state, dispatch }, alias) {
+  dispatch(setupTypes.REMOVE_ACCOUNT, alias);
+
+  let accounts = utils.getAccounts(state);
+  cache.setAccounts(accounts);
+}
 
 export const send = function ({ state, dispatch }, xml) {
   let account = state.accounts.filter(a => a.id === state.current_account_id)[0];

@@ -1,5 +1,5 @@
 import Account from './account';
-import { actions } from '../store';
+import { state, actions } from '../store';
 import './style';
 
 
@@ -16,13 +16,28 @@ const Setup = {
     };
   },
 
+  computed: {
+    dismissAfter: () => state.setupDismissAfter,
+  },
+
+  watch: {
+    dismissAfter: function (ms) {
+      // console.debug(arguments);
+      if (ms < 0) {
+        this.active = true;
+      } else {
+        setTimeout(() => this.active = false, ms);
+      }
+    },
+  },
+
   methods: {
     open: function () {
-      this.active = true;
+      actions.openSetup();
     },
 
     close: function () {
-      this.active = false;
+      actions.closeSetup();
     },
   },
 
