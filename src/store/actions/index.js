@@ -29,6 +29,32 @@ export const changeSubNav = function ({ dispatch }, id) {
   dispatch(nav_types.CHANGE_SUB_NAV, id);
 };
 
+export function flashError({ dispatch }, message, dismissAfter = 2000) {
+  let id = Math.random().toString(36).substring(2);
+  dispatch(notificationTypes.SHOW, { id, message, type: 'error' });
+
+  if (dismissAfter >= 0) {
+    setTimeout(function () {
+      dispatch(notificationTypes.DISMISS, id);
+    }, dismissAfter);
+  }
+}
+
+export function flashSuccess({ dispatch }, message, dismissAfter = 2000) {
+  let id = Math.random().toString(36).substring(2);
+  dispatch(notificationTypes.SHOW, { id, message, type: 'success' });
+
+  if (dismissAfter >= 0) {
+    setTimeout(function () {
+      dispatch(notificationTypes.DISMISS, id);
+    }, dismissAfter);
+  }
+}
+
+export function flashDismiss({ dispatch }, id) {
+  dispatch(notificationTypes.DISMISS, id);
+}
+
 export const validate = function ({ state, dispatch }, id, url, token, app_id) {
   dispatch(setup_types.ACCOUNT_EXPIRES);
 

@@ -69,6 +69,13 @@
     </div>
   </nav>
 
+  <div class="container Notification js-notification" v-cloak>
+    <div :class="{ alert: true, 'alert-danger': n.type === 'error', 'alert-success': n.type === 'success' }" v-for="n in notifications">
+      {{ n.message }}
+      <button type="button" class="close" @click="dismiss(n.id)">&times;</button>
+    </div>
+  </div>
+
   <div class="Setup js-setup">
     <img class="Setup-logo" src="./img/iconx128.png" @click="open">
     <div class="modal fade Setup-modal" :class="{active: active, in: active}">

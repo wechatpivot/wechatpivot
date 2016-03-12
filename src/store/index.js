@@ -10,9 +10,13 @@ let state = {
   accounts: [],
   current_account_id: null,
 
+  notifications: [],
+
   send_resp: null,
 
   user_groups: [],
+
+  menus: getInitialMenus(),
 };
 Object.assign(state, INIT_NAV);
 window._state = state;

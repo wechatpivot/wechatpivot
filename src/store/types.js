@@ -10,6 +10,11 @@ export const nav_types = {
   CHANGE_SUB_NAV: 'CHANGE_SUB_NAV',
 };
 
+export const notificationTypes = {
+  SHOW: 'SHOW',
+  DISMISS: 'DISMISS',
+};
+
 export const form_types = {
   SEND_SUCCESS: 'SEND_SUCCESS',
 };

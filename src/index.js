@@ -6,6 +6,7 @@ import InputString from './common/input_string';
 import InputText from './common/input_text';
 import InputTimestamp from './common/input_timestamp';
 import Nav from './nav';
+import Notification from './notification';
 import Setup from './setup';
 import Panel from './panel';
 
@@ -22,5 +23,6 @@ Vue.component('input-timestamp', InputTimestamp);
 
 
 new Vue(Nav);
+new Vue(Notification);
 new Vue(Setup);
 new Vue(Panel);
