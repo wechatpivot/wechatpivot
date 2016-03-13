@@ -24,8 +24,10 @@ let state = {
   menus: getInitialMenus(),
 };
 Object.assign(state, INIT_NAV);
-window._state = state;
 
+if (process.env.NODE_ENV !== 'production') {
+  window._state = state;
+}
 
 const store = new Vuex.Store({
   state: state,

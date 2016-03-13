@@ -24,13 +24,20 @@ module.exports = {
     loaders: [
       { test: /\.(css|scss)$/, loader: 'style!css!postcss!sass' },
       { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'babel!vue-lite' },
-      // { test: /\.png$/, loader: 'url-loader?limit=10000&minetype=image/png' },
     ],
   },
 
-  // postcss: function () {
-  //   return [
-  //     require('autoprefixer'),
-  //   ];
-  // },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"'
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+      output: {
+        comments: false
+      },
+    }),
+  ],
 };

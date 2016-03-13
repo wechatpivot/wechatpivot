@@ -1,14 +1,15 @@
 {
-  "name": "weixin-api-debug",
-  "version": "0.2.0",
-  "description": "weixin-api-debug",
+  "name": "wechat-api-debug",
+  "version": "0.2.1",
+  "description": "wechat-api-debug",
   "main": "index.js",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/hbrls/weixin-api-debug.git"
+    "url": "https://github.com/hbrls/wechat-api-debug.git"
   },
   "keywords": [
+    "wechat",
     "weixin",
     "api",
     "debug"
@@ -16,9 +17,9 @@
   "author": "shuaizhexu@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hbrls/weixin-api-debug/issues"
+    "url": "https://github.com/hbrls/wechat-api-debug/issues"
   },
-  "homepage": "https://github.com/hbrls/weixin-api-debug",
+  "homepage": "https://github.com/hbrls/wechat-api-debug",
   "devDependencies": {
     "babel-core": "5.8.34",
     "babel-loader": "5.4.0",
@@ -38,8 +39,6 @@
     "bootstrap": "3.3.6",
     "highlight.js": "8.9.1",
     "localforage": "1.3.1",
-    "superagent": "0.21.0",
-    "uuid": "2.0.1",
     "vue": "1.0.11-csp",
     "vuex": "0.2.0"
   }

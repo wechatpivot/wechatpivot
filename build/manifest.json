@@ -10,8 +10,8 @@
         "128": "img/iconx128.png"
     },
     "manifest_version": 2,
-    "name": "WeiXin API Debug",
-    "version": "0.0.1",
+    "name": "WeChat API Debug",
+    "version": "0.2.1",
     "permissions": [
         "http://*/*",
         "https://*/*"
