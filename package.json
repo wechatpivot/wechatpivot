@@ -1,12 +1,12 @@
 {
   "name": "wechat-api-debug",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "wechat-api-debug",
   "main": "index.js",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/hbrls/wechat-api-debug.git"
+    "url": "https://github.com/wechat-developer/wechat-api-debug"
   },
   "keywords": [
     "wechat",
@@ -17,9 +17,9 @@
   "author": "shuaizhexu@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hbrls/wechat-api-debug/issues"
+    "url": "https://github.com/wechat-developer/wechat-api-debug/issues"
   },
-  "homepage": "https://github.com/hbrls/wechat-api-debug",
+  "homepage": "https://github.com/wechat-developer/wechat-api-debug",
   "devDependencies": {
     "babel-core": "5.8.34",
     "babel-loader": "5.4.0",

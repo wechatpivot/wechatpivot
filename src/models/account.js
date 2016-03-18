@@ -1,11 +1,9 @@
 import { pick } from '../common/sugar';
 
 const devFields = ['alias', 'isCurrent'];
-// export const INSENSITIVE_FIELDS = ['appId', 'token', 'url', 'id', 'userOpenId'].concat(devFields);
-// export const FIELDS = ['appSecret', 'accessToken', 'accessTokenExpiredAt'].concat(INSENSITIVE_FIELDS);
-// !!!debug
-export const INSENSITIVE_FIELDS = ['appId', 'token', 'url', 'id', 'userOpenId', 'accessToken', 'accessTokenExpiredAt', 'appSecret'].concat(devFields);
-export const FIELDS = [].concat(INSENSITIVE_FIELDS);
+export const SENSITIVE_FIELDS = ['appSecret', 'accessToken', 'accessTokenExpiredAt', 'token'];
+export const INSENSITIVE_FIELDS = ['appId', 'url', 'id', 'userOpenId'].concat(devFields);
+export const FIELDS = SENSITIVE_FIELDS.concat(INSENSITIVE_FIELDS);
 
 export default function Account(account) {
   // ** flat; copy by value
