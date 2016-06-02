@@ -1,6 +1,6 @@
 {
   "name": "wechat-api-debug",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "wechat-api-debug",
   "main": "index.js",
   "scripts": {},

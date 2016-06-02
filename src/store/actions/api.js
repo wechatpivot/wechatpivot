@@ -56,7 +56,7 @@ export default function API(account) {
 API.prototype.getAccessToken = function () {
   let account = this.account;
   let onAccessTokenUpdated = this.onAccessTokenUpdated;
-  let url = `${this.prefix}token?grant_type=client_credential&appid=${account.appId}&secret=${account.appSecret})`;
+  let url = `${this.prefix}token?grant_type=client_credential&appid=${account.appId}&secret=${account.appSecret}`;
 
   let promise = new Promise(function (resolve) {
     account.shouldHaveAccessToAccessToken();
