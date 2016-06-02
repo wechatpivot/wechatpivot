@@ -128,3 +128,13 @@ API.prototype.createMenu = function (menu) {
   let url = this.prefix + 'menu/create?access_token=' + this.account.accessToken;
   return this.getLatestToken().then(() => $post(url, menu));
 };
+
+API.prototype.getKfList = function () {
+  let url = this.prefix + 'customservice/getkflist?access_token=' + this.account.accessToken;
+  return this.getLatestToken().then(() => $get(url));
+};
+
+API.prototype.getOnlineKfList = function () {
+  let url = this.prefix + 'customservice/getonlinekflist?access_token=' + this.account.accessToken;
+  return this.getLatestToken().then(() => $get(url));
+};

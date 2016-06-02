@@ -48,6 +48,7 @@ navs.push({
   text: '用户管理',
   subnavs: [
     { id: 'user/group', text: '分组管理' },
+    { id: 'user/service', text: '客服管理' },
     { id: 'http://mp.weixin.qq.com/wiki/8/d6d33cf60bce2a2e4fb10a21be9591b8.html', text: null },
   ],
 });

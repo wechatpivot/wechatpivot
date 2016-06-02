@@ -20,6 +20,7 @@ let state = {
   send_resp: null,
 
   userGroups: [],
+  customerServiceStaff: [],
 
   menus: getInitialMenus(),
 };

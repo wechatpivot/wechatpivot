@@ -84,6 +84,10 @@ export default {
     state.userGroups = groups;
   },
 
+  [userManagerTypes.LOAD_CUSTOMER_SERVICE_STARFF]: function (state, staff) {
+    state.customerServiceStaff = staff;
+  },
+
   [userManagerTypes.CREATE_GROUP]: function (state, group) {
     state.userGroups.push(group);
   },

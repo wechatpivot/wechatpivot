@@ -25,6 +25,7 @@ export const formTypes = {
 export const userManagerTypes = {
   LOAD_GROUPS: 'LOAD_GROUPS',
   CREATE_GROUP: 'CREATE_GROUP',
+  LOAD_CUSTOMER_SERVICE_STARFF: 'LOAD_CUSTOMER_SERVICE_STARFF',
 };
 
 export const toolkitMenuTypes = {

@@ -244,3 +244,15 @@ export function uploadMenu({ state, dispatch }) {
     })
     .catch(handleError({ state, dispatch }));
 }
+
+export function getCustomerServiceStaff({ state, dispatch }) {
+  let account = utils.getCurrentAccount(state);
+  let api = new API(account);
+  api.onAccessTokenUpdated = handleAccessTokenUpdated({ state, dispatch });
+
+  api.getKfList()
+    .then(function ({ kf_list }) {
+      dispatch(userManagerTypes.LOAD_CUSTOMER_SERVICE_STARFF, kf_list);
+    })
+    .catch(handleError({ state, dispatch }));
+}
