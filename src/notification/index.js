@@ -1,5 +1,5 @@
 import { state, actions } from '../store';
-import './style';
+import './style.scss';
 
 
 const Notification = {

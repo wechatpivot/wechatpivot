@@ -13,7 +13,7 @@ const FormMessageText = {
     'to-user-name': ToUserName,
     'from-user-name': FromUserName,
     'create-time': CreateTime,
-    'content': Content,
+    'content': Content, // eslint-disable-line quote-props
     'msg-id': MsgId,
   },
 

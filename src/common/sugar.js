@@ -38,6 +38,6 @@ export function parseQuery(search) {
 
 export function stringifyQuery(query) {
   return Object.keys(query).reduce(function (memo, key) {
-    return memo + '&' + key + '=' + query[key];
+    return `${memo}&${key}=${query[key]}`;
   }, '').substring(1);
 }

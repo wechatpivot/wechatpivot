@@ -13,7 +13,7 @@ export default {
 
   [setupTypes.ERROR]: function (state, key, value) {
     if (value) {
-      state.setupError.push(key + ':' + value);
+      state.setupError.push(`${key}:${value}`);
     } else {
       state.setupError.push(key);
     }

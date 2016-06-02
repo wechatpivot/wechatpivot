@@ -27,7 +27,7 @@ function $post(url, data) {
   return fetch(url, {
     method: 'post',
     headers: {
-      'Accept': 'application/json',
+      'Accept': 'application/json', // eslint-disable-line quote-props
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
@@ -56,7 +56,7 @@ export default function API(account) {
 API.prototype.getAccessToken = function () {
   let account = this.account;
   let onAccessTokenUpdated = this.onAccessTokenUpdated;
-  let url = this.prefix + 'token?grant_type=client_credential&appid=' + account.appId + '&secret=' + account.appSecret;
+  let url = `${this.prefix}token?grant_type=client_credential&appid=${account.appId}&secret=${account.appSecret})`;
 
   let promise = new Promise(function (resolve) {
     account.shouldHaveAccessToAccessToken();
@@ -99,12 +99,12 @@ API.parseWechatErrorCode = function (error) {
 // ================================
 
 API.prototype.getGroups = function () {
-  let url = this.prefix + 'groups/get?access_token=' + this.account.accessToken;
+  let url = `${this.prefix}groups/get?access_token=${this.account.accessToken}`;
   return this.getLatestToken().then(() => $get(url));
 };
 
 API.prototype.createGroup = function (name) {
-  let url = this.prefix + 'groups/create?access_token=' + this.account.accessToken;
+  let url = `${this.prefix}groups/create?access_token=${this.account.accessToken}`;
   let data = {
     group: { name },
   };
@@ -112,7 +112,7 @@ API.prototype.createGroup = function (name) {
 };
 
 API.prototype.updateGroup = function (id, name) {
-  let url = this.prefix + 'groups/update?access_token=' + this.account.accessToken;
+  let url = `${this.prefix}groups/update?access_token=${this.account.accessToken}`;
   let data = {
     group: { id, name },
   };
@@ -120,21 +120,21 @@ API.prototype.updateGroup = function (id, name) {
 };
 
 API.prototype.getMenu = function () {
-  let url = this.prefix + 'menu/get?access_token=' + this.account.accessToken;
+  let url = `${this.prefix}menu/get?access_token=${this.account.accessToken}`;
   return this.getLatestToken().then(() => $get(url));
 };
 
 API.prototype.createMenu = function (menu) {
-  let url = this.prefix + 'menu/create?access_token=' + this.account.accessToken;
+  let url = `${this.prefix}menu/create?access_token=${this.account.accessToken}`;
   return this.getLatestToken().then(() => $post(url, menu));
 };
 
 API.prototype.getKfList = function () {
-  let url = this.prefix + 'customservice/getkflist?access_token=' + this.account.accessToken;
+  let url = `${this.prefix}customservice/getkflist?access_token=${this.account.accessToken}`;
   return this.getLatestToken().then(() => $get(url));
 };
 
 API.prototype.getOnlineKfList = function () {
-  let url = this.prefix + 'customservice/getonlinekflist?access_token=' + this.account.accessToken;
+  let url = `${this.prefix}customservice/getonlinekflist?access_token=${this.account.accessToken}`;
   return this.getLatestToken().then(() => $get(url));
 };

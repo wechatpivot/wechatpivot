@@ -22,10 +22,10 @@ SmartView.prototype.fromDumb = function (button, x, y) {
 SmartView.prototype.toSmart = function () {
   let url = parseUrl(this.data.url);
 
-  let api = url.protocol + '//' + url.hostname + url.pathname;
+  let api = `${url.protocol}//${url.hostname}${url.pathname}`;
   if (api === OAUTH_API) {
     let query = parseQuery(url.search);
-    this.data.type += '/' + query.scope;
+    this.data.type += `/${query.scope}`;
     this.data.url = query.redirect_uri;
   }
 
@@ -45,12 +45,16 @@ SmartView.prototype.fromSmart = function (menu) {
 SmartView.prototype.toDumb = function (appId) {
   if (this.data.type === 'view/snsapi_base') {
     this.data.type = 'view';
-    this.data.url = OAUTH_API + '?appid=' + appId + '&redirect_uri=' + encodeURIComponent(this.data.url) + '&response_type=code&scope=snsapi_base&state=' + Math.random().toString(36).substring(2) + '#wechat_redirect';
+    let redirect = encodeURIComponent(this.data.url);
+    let state = Math.random().toString(36).substring(2);
+    this.data.url = `${OAUTH_API}?appid=${appId}&redirect_uri=${redirect}&response_type=code&scope=snsapi_base&state=${state}#wechat_redirect`;
   }
 
   if (this.data.type === 'view/snsapi_userinfo') {
     this.data.type = 'view';
-    this.data.url = OAUTH_API + '?appid=' + appId + '&redirect_uri=' + encodeURIComponent(this.data.url) + '&response_type=code&scope=snsapi_userinfo&state=' + Math.random().toString(36).substring(2) + '#wechat_redirect';
+    let redirect = encodeURIComponent(this.data.url);
+    let state = Math.random().toString(36).substring(2);
+    this.data.url = `${OAUTH_API}?appid=${appId}&redirect_uri=${redirect}&response_type=code&scope=snsapi_userinfo&state=${state}#wechat_redirect`;
   }
 
   return this.data;

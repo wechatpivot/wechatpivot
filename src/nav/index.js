@@ -1,6 +1,6 @@
 import dispatcher from '../dispatcher';
 import { state, actions } from '../store';
-import './style';
+import './style.scss';
 
 
 const Nav = {

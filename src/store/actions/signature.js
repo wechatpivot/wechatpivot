@@ -19,7 +19,7 @@ export function validate(appId, url, token) {
   query.echostr = echostr;
 
   let promise = new Promise(function (resolve, reject) {
-    fetch(url + '?' + stringifyQuery(query))
+    fetch(`${url}?${stringifyQuery(query)}`)
       .then(function (res) {
         return res.text();
       })
@@ -47,11 +47,11 @@ export function send(account, xml) {
     const echostr = Math.random().toString(36).substring(2);
     query.echostr = echostr;
 
-    fetch(acc.url + '?' + stringifyQuery(query),
+    fetch(`${acc.url}?${stringifyQuery(query)}`,
       {
         method: 'post',
         headers: {
-          'Accept': 'text/xml',
+          'Accept': 'text/xml', // eslint-disable-line quote-props
           'Content-Type': 'text/xml',
         },
         body: xml,

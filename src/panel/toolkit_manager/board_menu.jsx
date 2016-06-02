@@ -10,7 +10,7 @@ const MenuItem = {
         'list-group-item': true,
         'list-group-item-info': this.item.isSelected,
         'list-group-item-warning': this.item.isDirty,
-        'active': this.item.selected,
+        'active': this.item.selected, // eslint-disable-line quote-props
       };
     },
 

@@ -1,6 +1,6 @@
 import Account from './account';
 import { state, actions } from '../store';
-import './style';
+import './style.scss';
 
 
 const Setup = {
@@ -26,7 +26,7 @@ const Setup = {
       if (ms < 0) {
         this.active = true;
       } else {
-        setTimeout(() => this.active = false, ms);
+        setTimeout(() => (this.active = false), ms);
       }
     },
   },
