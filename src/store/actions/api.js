@@ -90,6 +90,12 @@ API.prototype.getLatestToken = function () {
   }
 };
 
+API.parseWechatErrorCode = function (error) {
+  let REG = /\[WeChat API Error: (\d+)\].*\[.*\]/i;
+  let match = error.match(REG);
+  return match[1];
+};
+
 // ================================
 
 API.prototype.getGroups = function () {

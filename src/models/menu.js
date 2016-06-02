@@ -122,6 +122,32 @@ export function fromWeixin(menu) {
   return formatted;
 }
 
+export function fromScratch() {
+  let menu = {
+    button: [
+      {
+        name: '点击然后修改',
+        sub_button: [
+          { name: '点击然后修改', type: 'view', url: 'http://www.bing.com' },
+        ],
+      },
+      {
+        name: '点击然后修改',
+        sub_button: [
+          { name: '点击然后修改', type: 'view', url: 'http://www.bing.com' },
+        ],
+      },
+      {
+        name: '点击然后修改',
+        sub_button: [
+          { name: '点击然后修改', type: 'view', url: 'http://www.bing.com' },
+        ],
+      },
+    ],
+  };
+  return fromWeixin(menu);
+}
+
 export function changeSelect(prev, next) {
   let formatted = [];
   if (prev) {

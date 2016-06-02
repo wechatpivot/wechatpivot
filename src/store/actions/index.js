@@ -163,12 +163,6 @@ export function downloadMenu({ state, dispatch }) {
   api
     .getLatestToken()
     .then(function () {
-      // if (accessToken !== account.accessToken) {
-      //   dispatch(setupTypes.UPDATE_ACCOUNT, { alias, accessToken, accessTokenExpiredAt });
-      //   let accounts = utils.getAccounts(state);
-      //   cache.setAccounts(accounts);
-      // }
-
       return api.getMenu();
     })
     .then(function (res) {
@@ -179,8 +173,14 @@ export function downloadMenu({ state, dispatch }) {
       if (err.name === 'ACCOUNT_HAS_NO_VALUE') {
         dispatch(setupTypes.ERROR, err.message);
       } else {
-        console.warn(err);
-        flashError({ dispatch }, err);
+        let errCode = API.parseWechatErrorCode(err);
+        if (errCode === '46003') {
+          let formatted = MenuModel.fromScratch();
+          dispatch(toolkitMenuTypes.UPDATE_MENUS, formatted);
+        } else {
+          console.warn(err);
+          flashError({ dispatch }, err);
+        }
       }
     });
 }
