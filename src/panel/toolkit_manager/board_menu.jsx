@@ -95,10 +95,11 @@ const MenuForm = {
 
   template: (/* .vue */
   <form class="form-horizontal" v-if="x >= 0">
-    <div class="form-group" v-if="type !== 'group'">
+    <div class="form-group">
       <label class="col-sm-2 control-label">Type</label>
       <div class="col-sm-6 text-right">
         <select class="form-control" v-model="type">
+          <option value="group">有子菜单</option>
           <option value="view">普通网页</option>
           <option value="view/snsapi_base">获取用户 OpenId 网页</option>
           <option value="view/snsapi_userinfo">获取用户信息网页</option>

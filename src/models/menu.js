@@ -242,20 +242,49 @@ export function toWeixin(menus, appId) {
   });
   // debugger;
 
+  let payload = [];
+
+  // FIXME: other types
+  if (button0.type === 'view') {
+    payload.push({
+      name: button0.name,
+      type: button0.type,
+      url: button0.url,
+    });
+  } else {
+    payload.push({
+      name: button0.name,
+      sub_button: sub0,
+    });
+  }
+
+  if (button1.type === 'view') {
+    payload.push({
+      name: button1.name,
+      type: button1.type,
+      url: button1.url,
+    });
+  } else {
+    payload.push({
+      name: button1.name,
+      sub_button: sub1,
+    });
+  }
+
+  if (button2.type === 'view') {
+    payload.push({
+      name: button2.name,
+      type: button2.type,
+      url: button2.url,
+    });
+  } else {
+    payload.push({
+      name: button2.name,
+      sub_button: sub2,
+    });
+  }
+
   return {
-    button: [
-      {
-        name: button0.name,
-        sub_button: sub0,
-      },
-      {
-        name: button1.name,
-        sub_button: sub1,
-      },
-      {
-        name: button2.name,
-        sub_button: sub2,
-      },
-    ],
+    button: payload,
   };
 }
