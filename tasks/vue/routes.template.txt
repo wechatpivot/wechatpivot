@@ -1,0 +1,5 @@
+{
+  path: '/{{routeName}}',
+  name: '{{routeName}}',
+  component: require('./components/{{routeName}}View'),
+}

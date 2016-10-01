@@ -1,0 +1,6 @@
+app/node_modules/**
+app/dist/**
+app/electron.js
+
+build/
+src/
