@@ -7,8 +7,8 @@ export function getAccounts({ account }) {
 }
 
 // @return [Object] copy of current account
-export function getCurrentAccount({ account }) {
-  let current = account.accounts.filter(a => a.isCurrent);
+export function getCurrentAccount({ account: state }) {
+  let current = state.accounts.filter(a => a.isCurrent);
   if (current.length === 1) {
     return pick(current[0], FIELDS);
   } else {

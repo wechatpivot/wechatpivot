@@ -32,9 +32,6 @@ const mutations = {
       state.accounts.push(account);
     }
 
-    const accounts = utils.getAccounts(state);
-    cache.setAccounts(accounts);
-
     // state.setupError.splice(0, state.setupError.length);
     state.accountDismissAfter = 1000;
   },

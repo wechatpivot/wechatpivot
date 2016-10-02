@@ -1,3 +1,6 @@
+import ToolkitMenuView from './components/ToolkitMenuView';
+
+
 export default [
   // {
   //   path: '*',
@@ -6,11 +9,16 @@ export default [
   {
     path: '/',
     name: 'landing-page',
-    component: require('components/LandingPageView')
+    component: require('components/LandingPageView'),
+  },
+  {
+    path: '/toolkit/menu',
+    name: 'toolkit-menu',
+    component: ToolkitMenuView,
   },
   {
     path: '/about',
-    name: 'About',
+    name: 'about',
     component: require('./components/AboutView'),
   },
   {

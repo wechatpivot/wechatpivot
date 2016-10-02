@@ -1,10 +1,14 @@
-import { pick, parseUrl, parseQuery } from '../common/sugar';
+import { pick, parseUrl, parseQuery } from '../services/sugar';
 
 
 const FIELDS = ['x', 'y', 'isSelected', 'isDirty', 'name', 'type', 'url'];
 const OAUTH_API = 'https://open.weixin.qq.com/connect/oauth2/authorize';
 
 function SmartView() {
+}
+
+SmartView.create = function () {
+  return new SmartView();
 }
 
 SmartView.prototype.fromDumb = function (button, x, y) {
@@ -96,31 +100,38 @@ export function getInitialMenus(x) {
 }
 
 export function fromWeixin(menu) {
-  console.assert(menu.button.length > 0, 'I\'m supporting this kind of menus only currently.');
+  console.assert(menu.button.length > 0, 'If this is the first time you creating the menu, just work from scratch. You don\'t have to download nothing.');
 
   let formatted = genSchema();
 
   menu.button.forEach(function (button, x) {
-    console.assert(button.sub_button.length > 0, 'I\'m supporting this kind of button only currently.');
-
     let idx = formatted.findIndex(m => m.x === x && m.y === 0);
-    formatted[idx].name = button.name;
-    formatted[idx].type = 'group';
 
-    button.sub_button.reverse().forEach(function (sub, j) {
-      let y = j + 1;
-
-      let index = formatted.findIndex(m => m.x === x && m.y === y);
-      if (sub.type === 'view') {
-        let view = new SmartView();
-        formatted.splice(index, 1, view.fromDumb(sub, x, y).toSmart());
+    if (button.sub_button.length === 0) {
+      // ** only level 1 menu
+      if (button.type === 'view') {
+        formatted.splice(idx, 1, SmartView.create().fromDumb(button, x, 0).toSmart());
       } else {
-        // formatted[index].name = sub.name;
-        // formatted[index].type = sub.type;
-        // formatted[index].url = sub.url;
-        throw new Error('NotImplementedError: mode.menu.fromWeixin');
+        throw new Error('[model.menu.fromWeixin - NotImplementedError] button should only be the view type');
       }
-    });
+    } else {
+      formatted[idx].name = button.name;
+      formatted[idx].type = 'group';
+
+      button.sub_button.reverse().forEach(function (sub, j) {
+        let y = j + 1;
+
+        let index = formatted.findIndex(m => m.x === x && m.y === y);
+        if (sub.type === 'view') {
+          formatted.splice(index, 1, SmartView.create().fromDumb(sub, x, y).toSmart());
+        } else {
+          // formatted[index].name = sub.name;
+          // formatted[index].type = sub.type;
+          // formatted[index].url = sub.url;
+          throw new Error('[model.menu.fromWeixin - NotImplementedError] button should only be the view type');
+        }
+      });
+    }
   });
   // debugger;
   return formatted;
@@ -223,22 +234,19 @@ export function toWeixin(menus, appId) {
   let button0 = menus.filter(m => m.x === 0 && m.y === 0)[0];
   let group0 = menus.filter(m => m.x === 0 && m.y > 0 && m.name);
   let sub0 = group0.map(function (m) {
-    let view = new SmartView();
-    return view.fromSmart(m).toDumb(appId);
+    return SmartView.create().fromSmart(m).toDumb(appId);
   });
 
   let button1 = menus.filter(m => m.x === 1 && m.y === 0)[0];
   let group1 = menus.filter(m => m.x === 1 && m.y > 0 && m.name);
   let sub1 = group1.map(function (m) {
-    let view = new SmartView();
-    return view.fromSmart(m).toDumb(appId);
+    return SmartView.create().fromSmart(m).toDumb(appId);
   });
 
   let button2 = menus.filter(m => m.x === 2 && m.y === 0)[0];
   let group2 = menus.filter(m => m.x === 2 && m.y > 0 && m.name);
   let sub2 = group2.map(function (m) {
-    let view = new SmartView();
-    return view.fromSmart(m).toDumb(appId);
+    return SmartView.create().fromSmart(m).toDumb(appId);
   });
   // debugger;
 

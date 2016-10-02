@@ -1,0 +1,45 @@
+.ToolkitMenu .el-card {
+  margin-bottom: 20px;
+}
+
+.ToolkitMenu .el-card__body {
+  padding: 0;
+}
+
+.ToolkitMenu-item {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 20px;
+  border-bottom: 1px solid #eee;
+  cursor: default;
+}
+
+.ToolkitMenu-item:empty {
+  height: 56px;
+}
+
+.ToolkitMenu-item:hover {
+  font-weight: bold;
+}
+
+.ToolkitMenu-item:last-child {
+  border-bottom: none;
+}
+
+.ToolkitMenu-item--selected {
+  background-color: #d3dce6;
+}
+
+.ToolkitMenu-item--dirty {
+  background-color: #f7ba2a;
+}
+
+.ToolkitMenu-item--active {
+  background-color: #13ce66;
+}
+
+.ToolkitMenu hr {
+  margin-bottom: 20px;
+  border: none;
+  border-top: 1px solid #eee;
+}

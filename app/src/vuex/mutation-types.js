@@ -1,3 +1,5 @@
 export const ACCOUNT_LOAD = 'ACCOUNT/LOAD';
 export const ACCOUNT_OPEN = 'ACCOUNT/OPEN';
 export const ACCOUNT_UPDATE = 'ACCOUNT/UPDATE';
+
+export const TOOKIT_MENU_UPDATE = 'TOOKIT_MENU/UPDATE';
