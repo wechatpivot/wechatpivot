@@ -1,23 +1,25 @@
-import Vue from 'vue'
+import Vue from 'vue';
 // import Electron from 'vue-electron'
 // import Resource from 'vue-resource'
-import Router from 'vue-router'
+import Router from 'vue-router';
+import Element from 'element-ui';
 
-import App from './App'
-import routes from './routes'
+import App from './App';
+import routes from './routes';
 
-// Vue.use(Electron)
-// Vue.use(Resource)
-Vue.use(Router)
-Vue.config.debug = true
+// Vue.use(Electron);
+// Vue.use(Resource);
+Vue.use(Router);
+Vue.use(Element);
+Vue.config.debug = true;
 
 const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
-  routes
-})
+  routes,
+});
 
 /* eslint-disable no-new */
 new Vue({
   router,
-  ...App
-}).$mount('#app')
+  ...App,
+}).$mount('#app');
