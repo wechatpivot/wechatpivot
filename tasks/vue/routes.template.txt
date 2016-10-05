@@ -1,5 +1,5 @@
-{
-  path: '/{{routeName}}',
-  name: '{{routeName}}',
-  component: require('./components/{{routeName}}View'),
-}
+  {
+    path: '/{{routeName}}',
+    name: '{{routeName}}',
+    component: require('./components/{{RouteName}}View'),
+  },

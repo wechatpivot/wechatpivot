@@ -31,7 +31,7 @@ let config = {
         loader: 'vue-html-loader'
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         exclude: /node_modules/
       },
@@ -79,7 +79,7 @@ let config = {
       'components': path.join(__dirname, 'app/src/components'),
       'src': path.join(__dirname, 'app/src')
     },
-    extensions: ['', '.js', '.vue', '.json', '.css'],
+    extensions: ['', '.js', '.jsx', '.vue', '.json', '.css'],
     fallback: [path.join(__dirname, 'app/node_modules')]
   },
   resolveLoader: {

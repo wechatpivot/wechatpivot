@@ -1,7 +1,8 @@
 'use strict'
 
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
+const changeCase = require('change-case');
 
 let routeName = process.argv[2]
 let routes = fs.readFileSync(
@@ -17,21 +18,29 @@ let routesTemplate = fs.readFileSync(
   'utf8'
 )
 
-routes[routes.length - 3] = routes[routes.length - 3] + ','
+routes[routes.length - 3] = routes[routes.length - 3];
 routes.splice(
   routes.length - 2,
   0,
   routesTemplate
-    .replace(/{{routeName}}/g, routeName)
+    .replace(/{{routeName}}/g, changeCase.camelCase(routeName))
+    .replace(/{{RouteName}}/g, changeCase.pascalCase(routeName))
     .replace(/\n$/, '')
-)
+);
 
 fs.writeFileSync(
-  path.join(__dirname, `../../app/src/components/${routeName}View.vue`),
+  path.join(__dirname, `../../app/src/components/${routeName}View.jsx`),
   routeTemplate
+    .replace(/{{routeName}}/g, changeCase.camelCase(routeName))
+    .replace(/{{RouteName}}/g, changeCase.pascalCase(routeName))
 )
 
-fs.mkdirSync(path.join(__dirname, `../../app/src/components/${routeName}View`))
+fs.mkdirSync(path.join(__dirname, `../../app/src/components/${routeName}View`));
+
+fs.writeFileSync(
+  path.join(__dirname, `../../app/src/components/${routeName}View/styles.css`),
+  ''
+);
 
 fs.writeFileSync(
   path.join(__dirname, '../../app/src/routes.js'),
