@@ -13,4 +13,9 @@ export default [
     name: 'About',
     component: require('./components/AboutView'),
   },
+  {
+    path: '/account',
+    name: 'account',
+    component: require('./components/AccountView'),
+  },
 ]

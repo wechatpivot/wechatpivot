@@ -1,4 +1,4 @@
-import Account from '../../models/account';
+import Account from '../models/account';
 
 
 /*
@@ -6,7 +6,7 @@ import Account from '../../models/account';
  * 参见：http://mp.weixin.qq.com/wiki/17/fa4e1434e57290788bde25603fa2fcbd.html
  */
 function wrapper(res) {
-  let promise = new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     res.json().then(function (data) {
       if (data.errcode) {
         reject(`[WeChat API Error: ${data.errcode}] ${data.errmsg}`);
@@ -15,8 +15,6 @@ function wrapper(res) {
       }
     });
   });
-
-  return promise;
 }
 
 function $get(url) {
@@ -25,6 +23,7 @@ function $get(url) {
 
 function $post(url, data) {
   return fetch(url, {
+    mode: 'cors',
     method: 'post',
     headers: {
       'Accept': 'application/json', // eslint-disable-line quote-props

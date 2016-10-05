@@ -1,4 +1,4 @@
-import { pick } from '../common/sugar';
+import { pick } from '../services/sugar';
 
 const devFields = ['alias', 'isCurrent'];
 export const SENSITIVE_FIELDS = ['appSecret', 'accessToken', 'accessTokenExpiredAt', 'token'];

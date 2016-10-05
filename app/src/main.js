@@ -5,6 +5,7 @@ import Router from 'vue-router';
 import Element from 'element-ui';
 
 import App from './App';
+import AccountView from './components/AccountView';
 import routes from './routes';
 
 // Vue.use(Electron);
@@ -12,6 +13,8 @@ import routes from './routes';
 Vue.use(Router);
 Vue.use(Element);
 Vue.config.debug = true;
+
+Vue.component('account', AccountView);
 
 const router = new Router({
   scrollBehavior: () => ({ y: 0 }),

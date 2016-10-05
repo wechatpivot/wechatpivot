@@ -89,6 +89,7 @@
         <router-view></router-view>
       </el-col>
     </el-row>
+    <account></account>
     <footer>&copy; 2016 hbrls</footer>
   </div>
 </template>

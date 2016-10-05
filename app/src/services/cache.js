@@ -1,6 +1,6 @@
 import localforage from 'localforage';
-import { pick } from '../../common/sugar';
-import { SENSITIVE_FIELDS, INSENSITIVE_FIELDS } from '../../models/account';
+import { pick } from '../services/sugar';
+import { SENSITIVE_FIELDS, INSENSITIVE_FIELDS } from '../models/account';
 
 
 const CACHE_KEY_ACCOUNTS = 'accounts-v2';

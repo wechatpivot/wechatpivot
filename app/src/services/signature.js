@@ -1,6 +1,6 @@
 import crypto from 'crypto';
-import { stringifyQuery } from '../../common/sugar';
-import Account from '../../models/account';
+import { stringifyQuery } from '../services/sugar';
+import Account from '../models/account';
 
 
 export function genQuery(token) {
