@@ -36,4 +36,9 @@ export default [
     name: 'account',
     component: require('./components/AccountView'),
   },
+  {
+    path: '/user/info',
+    name: 'user-info',
+    component: require('./components/UserInfoView'),
+  },
 ]

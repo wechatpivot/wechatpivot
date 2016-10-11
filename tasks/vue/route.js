@@ -29,7 +29,7 @@ routes.splice(
 );
 
 fs.writeFileSync(
-  path.join(__dirname, `../../app/src/components/${routeName}View.jsx`),
+  path.join(__dirname, `../../app/src/components/${routeName}View.vue`),
   routeTemplate
     .replace(/{{routeName}}/g, changeCase.camelCase(routeName))
     .replace(/{{RouteName}}/g, changeCase.pascalCase(routeName))

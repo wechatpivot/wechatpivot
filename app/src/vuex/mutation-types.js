@@ -3,3 +3,5 @@ export const ACCOUNT_OPEN = 'ACCOUNT/OPEN';
 export const ACCOUNT_UPDATE = 'ACCOUNT/UPDATE';
 
 export const TOOKIT_MENU_UPDATE = 'TOOKIT_MENU/UPDATE';
+
+export const USER_INFO_PUSH = 'USER_INFO/PUSH';

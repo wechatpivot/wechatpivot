@@ -1,14 +1,16 @@
-import {} from '../mutation-types'
+import * as types from '../mutation-types';
 
 const state = {
-  all: []
-}
+  all: [],
+};
 
 const mutations = {
+  [types.HELLO_WORLD] (state) {
 
-}
+  },
+};
 
 export default {
   state,
-  mutations
+  mutations,
 }

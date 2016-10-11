@@ -1,23 +1,28 @@
-import { mapGetters, mapActions } from 'vuex'
-import './{{RouteName}}View/styles.css';
+<style>
+.{{RouteName}} {
+}
+</style>
+
+<template>
+  <div class="{{RouteName}}">
+  </div>
+</template>
+
+<script>
+  import { mapGetters, mapActions } from 'vuex';
 
 
-export default {
-  name: '{{RouteName}}View',
+  export default {
+    name: '{{RouteName}}View',
 
-  computed: mapGetters([
-    'counter',
-  ]),
+    computed: {
+      ...mapGetters([
+      ])
+    },
 
-  methods: mapActions([
-    'increment',
-  ]),
-
-  render(h) {
-    return (
-      <div class="{{RouteName}}">
-        {{RouteName}}View
-      </div>
-    );
-  } ,
-};
+    methods: {
+      ...mapActions([
+      ]),
+    },
+  }
+</script>

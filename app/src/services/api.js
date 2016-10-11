@@ -1,7 +1,7 @@
 import Account from '../models/account';
 
 
-/*
+/**
  * 对返回结果的一层封装，如果遇见微信返回的错误，将返回一个错误
  * 参见：http://mp.weixin.qq.com/wiki/17/fa4e1434e57290788bde25603fa2fcbd.html
  */
@@ -33,7 +33,7 @@ function $post(url, data) {
   }).then(wrapper);
 }
 
-/*
+/**
  * @param [Plain Key-Value Object] account
  */
 export default function API(account) {
@@ -47,7 +47,7 @@ export default function API(account) {
   this.customservicePrefix = 'https://api.weixin.qq.com/customservice/';
 }
 
-/*!
+/**
  * 根据创建API时传入的appid和appsecret获取access token
  * 进行后续所有API调用时，需要先获取access token
  * 详细请看：<http://mp.weixin.qq.com/wiki/11/0e4b294685f817b95cbed85ba5e82b8f.html>
@@ -135,5 +135,10 @@ API.prototype.getKfList = function () {
 
 API.prototype.getOnlineKfList = function () {
   let url = `${this.prefix}customservice/getonlinekflist?access_token=${this.account.accessToken}`;
+  return this.getLatestToken().then(() => $get(url));
+};
+
+API.prototype.getUser = function (openId) {
+  const url = `${this.prefix}user/info?openid=${openId}&lang=zh_CN&access_token=${this.account.accessToken}`;
   return this.getLatestToken().then(() => $get(url));
 };

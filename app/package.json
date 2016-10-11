@@ -4,9 +4,9 @@
   "description": "wechat-api-debug based on electron, vue, element",
   "main": "electron.js",
   "dependencies": {
-    "element-ui": "1.0.0-rc.5",
+    "element-ui": "1.0.0-rc.6",
     "highlight.js": "9.7.0",
-    "localforage": "1.4.2",
+    "localforage": "1.4.3",
     "vue": "2.0.1",
     "vue-router": "2.0.0",
     "vuex": "2.0.0"

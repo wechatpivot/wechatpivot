@@ -136,3 +136,17 @@ export function uploadMenu({ state, commit }) {
       console.error(err);
     });
 }
+
+export function loadUserInfo({ state, commit }, openId) {
+  const account = utils.getCurrentAccount(state);
+  const api = new API(account);
+  // api.onAccessTokenUpdated = handleAccessTokenUpdated({ state, commit });
+
+  api.getUser(openId)
+    .then(function (user) {
+      commit(types.USER_INFO_PUSH, user);
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
+}
