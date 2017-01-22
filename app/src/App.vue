@@ -38,11 +38,14 @@
   .el-menu-item a {
     display: block;
     position: relative;
-    color: #c0ccda;
+    color: #48576a;
     text-decoration: none;
     transition: all .3s;
   }
-
+  .el-menu-item.is-active a {
+    color: #20a0ff;
+  }
+  
   .AppContainer {
     margin-left: 10px;
     margin-right: 10px;
@@ -57,7 +60,7 @@
   <div class="AppContainer">
     <el-row :gutter="20">
       <el-col :span="4">
-        <el-menu default-active="about">
+        <el-menu default-active="about" unique-opened=true>
           <el-submenu index="/toolkit">
             <template slot="title">工具箱</template>
             <el-menu-item index="/toolkit/menu"><a href="#/toolkit/menu">菜单管理</a></el-menu-item>
@@ -65,8 +68,13 @@
           <el-submenu index="/message">
             <template slot="title">接受消息</template>
             <el-menu-item-group title="普通消息">
-              <el-menu-item index="/message/"></el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
+              <el-menu-item index="/message/"><router-link to="/message/text">文本消息</router-link></el-menu-item>
+              <el-menu-item index="1-2">图片消息</el-menu-item>
+              <el-menu-item index="1-2">语音消息</el-menu-item>
+              <el-menu-item index="1-2">视频消息</el-menu-item>
+              <el-menu-item index="1-2">小视频消息</el-menu-item>
+              <el-menu-item index="1-2">地理位置消息</el-menu-item>
+              <el-menu-item index="1-2">链接消息</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="事件消息">
               <el-menu-item index="1-3">选项3</el-menu-item>
@@ -75,7 +83,7 @@
           <el-submenu index="/user">
             <template slot="title">用户管理</template>
             <el-menu-item-group title="普通消息">
-              <el-menu-item index="/user/group"></el-menu-item>
+              <el-menu-item index="/user/group">用户群</el-menu-item>
               <el-menu-item index="1-2">选项2</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="事件消息">
