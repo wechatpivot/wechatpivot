@@ -1,4 +1,6 @@
 import ToolkitMenuView from './components/ToolkitMenuView';
+import MessageView from './components/MessageView';
+import MessageTextView from './components/MessageTextView/MessageTextView';
 
 
 export default [
@@ -15,6 +17,14 @@ export default [
     path: '/toolkit/menu',
     name: 'toolkit-menu',
     component: ToolkitMenuView,
+  },
+  {
+    path: '/message',
+    name: 'message',
+    component: MessageView,
+    children: [
+      {path: 'text', component: MessageTextView}
+    ]
   },
   {
     path: '/about',

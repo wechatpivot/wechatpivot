@@ -30,6 +30,8 @@ function createWindow () {
 
   mainWindow.loadURL(config.url)
 
+  mainWindow.webContents.openDevTools(); //调试
+
   if (process.env.NODE_ENV === 'development') {
     BrowserWindow.addDevToolsExtension(path.join(__dirname, '../node_modules/devtron'))
 
