@@ -28,8 +28,7 @@
 		</el-form>
 		<div class="preview">
 			<pre>
-				<code class='xml'>			      
-				</code>
+				<code class="xml"></code>
 			</pre>
 		</div>
 	</div>
@@ -79,16 +78,16 @@
 				}
 			},
 			preview() {
-				let xml = `
-			      <xml>
-			        <ToUserName><![CDATA[${this.form.to}]]></ToUserName>
-			        <FromUserName><![CDATA[${this.form.from}]]></FromUserName>
-			        <CreateTime>${this.form.createTime}</CreateTime>
-			        <MsgType><![CDATA[text]]></MsgType>
-			        <Content><![CDATA[${this.form.content}]]></Content>
-			        <MsgId>${this.form.msgId}</MsgId>
-			      </xml>
-			      `;
+				let xml = 
+				`
+&lt;xml&gt;
+    &lt;ToUserName&gt;&lt;![CDATA[${this.form.to}]]&gt;&lt;/ToUserName&gt;
+    &lt;FromUserName&gt;&lt;![CDATA[${this.form.from}]]&gt;&lt;/FromUserName&gt;
+    &lt;CreateTime&gt;${this.form.createTime}&lt;/CreateTime&gt;
+    &lt;MsgType&gt;&lt;![CDATA[text]]&gt;&lt;/MsgType&gt;
+    &lt;Content&gt;&lt;![CDATA[${this.form.content}]]&gt;&lt;/Content&gt;
+    &lt;MsgId&gt;${this.form.msgId}&lt;/MsgId&gt;
+&lt;/xml&gt;`;
 			    let $code = document.querySelector('.xml');
 			    $code.innerHTML = xml;
 				hljs.highlightBlock($code);
@@ -108,7 +107,7 @@
 </script>
 
 <style>
-	@import 'default.css';
+	@import 'monokai.css';
 	@font-face {
 	  font-family: 'Glyphicons Halflings';
 	  src: url('../fonts/glyphicons-halflings-regular.eot');
@@ -116,7 +115,7 @@
 	}
 	.el-form{
 		width: 300px;
-		display:inline-block;
+		float:left;
 	}
 	.el-form textarea{
 		resize: none;
@@ -137,6 +136,13 @@
 		content: "\e031";
 	}
 	.preview{
-		display: inline-block;
+		float:left;
+		margin-left: 30px;
 	}
+	.xml{
+		width: 600px;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+
 </style>
