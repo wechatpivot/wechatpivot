@@ -14,12 +14,7 @@ const WEBPACK = {
   module: {
     rules: [
       {
-        test: /\.vue$/,
-        exclude: /node_modules/,
-        loader: 'vue-loader',
-      },
-      {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
       },

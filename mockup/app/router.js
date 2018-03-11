@@ -7,6 +7,7 @@ module.exports = app => {
   app.get('/private-api/jssdk/config', 'pivot.jssdkConfig');
 
   app.get('/', 'view.index');
+  app.get('/debugger', 'view.debugger');
 
   app.post('/api/login', 'api.login');
   app.get('/api/users', 'api.users');

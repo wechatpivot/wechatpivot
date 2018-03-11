@@ -20,7 +20,7 @@ module.exports = merge(WEBPACK, {
   module: {
     rules: [
       // {
-      //   test: /\.(js|vue)$/,
+      //   test: /\.(js|jsx)$/,
       //   exclude: /node_modules/,
       //   loader: 'eslint-loader',
       //   enforce: 'pre',
