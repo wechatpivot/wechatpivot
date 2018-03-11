@@ -1,0 +1,12 @@
+body {
+  padding-top: 60px;
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+:global {
+  .Login,
+  .Redirect {
+    margin-top: 60px;
+  }
+}

@@ -1,0 +1,8 @@
+postgres.address={{address}}
+postgres.database={{database}}
+postgres.username={{username}}
+postgres.password={{password}}
+url.self={{url}}
+wechat.appid={{wechatappid}}
+wechat.appsecret={{wechatappsecret}}
+egg.env=dev
