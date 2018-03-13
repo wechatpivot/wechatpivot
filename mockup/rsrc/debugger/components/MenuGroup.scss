@@ -1,0 +1,15 @@
+.item {
+  width: 100%;
+  height: 66px;
+  text-align: center;
+  cursor: pointer;
+
+  &:global(:last-child) {
+    font-weight: bold;
+  }
+
+  &-selected {
+    background-color: #d3dce6;
+  }
+}
+

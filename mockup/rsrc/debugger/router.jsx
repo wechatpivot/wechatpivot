@@ -26,7 +26,7 @@ export default function router({ history, app }) {
       models: () => [
         import('./models/menu'),
       ],
-      component: () => import('./pages/menu'),
+      component: () => import('./pages/MenuPage'),
     },
     // {
     //   path: '/app/user',
