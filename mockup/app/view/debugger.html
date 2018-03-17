@@ -9,16 +9,16 @@
 
   {% if env === 'dev' %}
   {% else %}
-  <link rel="stylesheet" href="/public/dist/debugger-stamp4hash.css" />
+  <link rel="stylesheet" href="/public/dist/debugger-ignore.css" />
   {% endif %}
 </head>
 <body>
   <div class="App"></div>
 
   {% if env === 'dev' %}
-  <script src="http://127.0.0.1:3001/static/js/debugger-stamp4hash.js"></script>
+  <script src="http://127.0.0.1:3001/static/js/debugger-ignore.js"></script>
   {% else %}
-  <script src="/public/dist/debugger-stamp4hash.js"></script>
+  <script src="/public/dist/debugger-ignore.js"></script>
   {% endif %}
 </body>
 </html>

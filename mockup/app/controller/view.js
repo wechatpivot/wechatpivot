@@ -1,14 +1,14 @@
 
 module.exports = app => {
   class ViewController extends app.Controller {
-    * index() {
+    async index() {
       const { ctx, config } = this;
-      yield ctx.render('index.html', { env: config.props['egg.env'] });
+      await ctx.render('index.html', { env: config.props['egg.env'] });
     }
 
-    * debugger() {
+    async debugger() {
       const { ctx, config } = this;
-      yield ctx.render('debugger.html', { env: config.props['egg.env'] });
+      await ctx.render('debugger.html', { env: config.props['egg.env'] });
     }
   }
 

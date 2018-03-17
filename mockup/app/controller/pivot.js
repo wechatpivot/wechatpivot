@@ -3,7 +3,7 @@ const rnd = require('vanilla.js/random/dummy');
 
 module.exports = app => {
   class PivotController extends app.Controller {
-    * oauth() {
+    async oauth() {
       const { ctx, config } = this;
       const env = config.props['egg.env'];
       const { code, r } = ctx.queries;
@@ -12,7 +12,7 @@ module.exports = app => {
         throw new Error('INVALID R');
       }
 
-      yield ctx.service.oauth.getAccessToken(code);
+      await ctx.service.oauth.getAccessToken(code);
 
       let redirect = r;
       if (r.indexOf('?') > -1) {
@@ -21,10 +21,10 @@ module.exports = app => {
         redirect += '?code=' + code;
       }
 
-      yield ctx.render('oauth.html', { redirect, code, env });
+      await ctx.render('oauth.html', { redirect, code, env });
     }
 
-    * oauthUrl() {
+    async oauthUrl() {
       const { ctx, config } = this;
       const { r } = ctx.request.body;
 
@@ -41,7 +41,7 @@ module.exports = app => {
       ctx.status = 201;
     }
 
-    * oauthInfo() {
+    async oauthInfo() {
       const { ctx, config } = this;
       const { code } = ctx.queries;
 
@@ -51,7 +51,7 @@ module.exports = app => {
       ctx.status = 201;
     }
 
-    * jssdkConfig() {
+    async jssdkConfig() {
       const { ctx, config } = this;
       const { url } = ctx.queries;
 

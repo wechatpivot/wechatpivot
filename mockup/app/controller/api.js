@@ -1,9 +1,9 @@
 
 module.exports = app => {
   class ApiController extends app.Controller {
-    * users() {
+    async users() {
       const { ctx } = this;
-      const users = yield ctx.model.User.findAll();
+      const users = await ctx.model.User.findAll();
 
       ctx.status = 201;
       ctx.body = {
@@ -15,14 +15,14 @@ module.exports = app => {
       };
     }
 
-    * login() {
+    async login() {
       const { ctx } = this;
 
       const { username, code } = ctx.request.body;
-      const user = yield ctx.model.User.findOne({ username });
-      const userWechat = yield ctx.model.UserWechat.findOne({ userId: user.id });
+      const user = await ctx.model.User.findOne({ username });
+      const userWechat = await ctx.model.UserWechat.findOne({ userId: user.id });
 
-      yield ctx.service.oauth.getAccessToken(code, userWechat.openId);
+      await ctx.service.oauth.getAccessToken(code, userWechat.openId);
 
       ctx.body = { code: 0, message: 'ok' };
       ctx.status = 201;
