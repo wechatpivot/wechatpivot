@@ -65,3 +65,5 @@ mockup/app/public/dist/
 package-lock.json
 webpack-assets.json
 envfile
+
+electron/
