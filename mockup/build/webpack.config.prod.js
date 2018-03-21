@@ -42,8 +42,6 @@ module.exports = merge(WEBPACK, {
     ],
   },
 
-  devtool: 'cheap-module-eval-source-map',
-
   plugins: [
     new DefinePlugin({
       'process.env.NODE_ENV': '"production"',

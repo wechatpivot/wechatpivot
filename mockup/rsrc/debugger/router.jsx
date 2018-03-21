@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, routerRedux } from 'dva/router';
 import PropTypes from 'prop-types';
 import dynamic from 'dva/dynamic';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb, Alert, Icon } from 'antd';
 const { Header, Content, Footer } = Layout;
 const MenuItem = Menu.Item;
 const BreadcrumbItem = Breadcrumb.Item;
@@ -58,6 +58,7 @@ export default function router({ history, app }) {
             <BreadcrumbItem>菜单管理</BreadcrumbItem>
             <BreadcrumbItem>Menu</BreadcrumbItem>
           </Breadcrumb>
+          <Alert message={<p>应该使用你自己的服务器做微信接口转发 <a><Icon type="question-circle-o" /></a></p>} type="warning" style={{ position: 'absolute', right: 50, top: 72, paddingRight: 8 }} />
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
             <Switch>
               {routes.map(({ path, ...dynamics }) => <Route exact path={path} key={path} component={dynamic({ app, ...dynamics })} />)}

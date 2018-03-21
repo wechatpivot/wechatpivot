@@ -1,4 +1,4 @@
-import pick from 'vanilla.js/lodash/pick';
+import pick from 'lodash/pick';
 import parseUri from 'vanilla.js/uri/parseUri';
 
 

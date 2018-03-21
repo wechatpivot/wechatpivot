@@ -1,11 +1,29 @@
 {
-  "presets": [
-    "es2015",
-    "stage-0",
-    "react"
-  ],
-  "plugins": [
-    "transform-decorators-legacy",
-    "transform-runtime"
-  ]
+  "env": {
+    "development": {
+      "presets": [
+        "es2015",
+        "stage-0",
+        "react"
+      ],
+      "plugins": [
+        "transform-decorators-legacy",
+        "transform-runtime",
+        ["import", { "libraryName": "antd", "style": "false" }]
+      ]
+    },
+
+    "production": {
+      "presets": [
+        "es2015",
+        "stage-0",
+        "react"
+      ],
+      "plugins": [
+        "transform-decorators-legacy",
+        "transform-runtime",
+        ["import", { "libraryName": "antd", "style": "false" }]
+      ]
+    }
+  }
 }

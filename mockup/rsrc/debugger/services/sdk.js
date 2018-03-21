@@ -55,7 +55,7 @@ function $post(url, data) {
 export default function SDK(account) {
   this.account = account;
 
-  const PROXY = 'http://api.weixin.qq.com.proxy.lisitede.com';
+  const PROXY = 'https://api-weixin-qq-com-proxy.lisitede.com';
 
   this.prefix = PROXY + '/cgi-bin/';
   this.mpPrefix = 'https://mp.weixin.qq.com/cgi-bin/';
