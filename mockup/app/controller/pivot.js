@@ -12,6 +12,10 @@ module.exports = app => {
         throw new Error('INVALID R');
       }
 
+      if (!code) {
+        throw new Error('INVALID CODE');
+      }
+
       await ctx.service.oauth.getAccessToken(code);
 
       let redirect = r;

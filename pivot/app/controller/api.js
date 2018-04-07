@@ -1,3 +1,5 @@
+const rnd = require('vanilla.js/random/dummy');
+
 
 module.exports = app => {
   class ApiController extends app.Controller {
@@ -29,14 +31,18 @@ module.exports = app => {
       ctx.status = 201;
     }
 
-    * jssdk() {
-      // const { ctx, config } = this;
-      // const { code } = ctx.queries;
+    async jsConfig() {
+      const { ctx, config } = this;
+      const { url } = ctx.query;
 
-      // const { openId } = ctx.service.oauth.get(code);
+      if (!url || url.length === 0) {
+        throw new Error('INVALID URL');
+      }
 
-      // ctx.body = { openId };
-      // ctx.status = 201;
+      const jsConfig = await ctx.service.jssdk.getJsConfig(decodeURIComponent(url));
+
+      ctx.body = jsConfig;
+      ctx.status = 201;
     }
   }
 
