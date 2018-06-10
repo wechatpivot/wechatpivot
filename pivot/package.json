@@ -10,7 +10,7 @@
     "pg": "7.3.0",
     "pg-hstore": "2.3.2",
     "promise-wechat-api": "1.0.2",
-    "promise-wechat-message": "0.0.2",
+    "promise-wechat-message": "0.0.4",
     "promise-wechat-oauth": "1.0.1",
     "utility": "1.13.1",
     "vanilla.js": "0.1.4"

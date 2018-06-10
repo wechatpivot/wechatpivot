@@ -46,10 +46,25 @@ module.exports = app => {
       ctx.status = 201;
     }
 
+    async messageInVerify() {
+      const { ctx, config } = this;
+      const { signature, timestamp, nonce, echostr } = ctx.query;
+      const token = config.props['wechat.token'];
+      // console.log(signature, timestamp, nonce, token, echostr);
+
+      if (wechatMessage.verify(signature, timestamp, nonce, token)) {
+        ctx.body = echostr;
+        ctx.status = 200;
+      } else {
+        ctx.body = 'INVALID SIGNATURE';
+        ctx.status = 400;
+      }
+    }
+
     async messageIn() {
       const { ctx, app: { messenger } } = this;
 
-      const msg = await wechatMessage.xml2json(ctx.request.body);
+      const msg = await wechatMessage.receive(ctx.request.body);
       // console.log(msg);
 
       const action = {
