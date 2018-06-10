@@ -1,3 +1,4 @@
+const wechatMessage = require('promise-wechat-message');
 const rnd = require('vanilla.js/random/dummy');
 
 
@@ -43,6 +44,22 @@ module.exports = app => {
 
       ctx.body = jsConfig;
       ctx.status = 201;
+    }
+
+    async messageIn() {
+      const { ctx, app: { messenger } } = this;
+
+      const msg = await wechatMessage.xml2json(ctx.request.body);
+      // console.log(msg);
+
+      const action = {
+        type: `${msg.MsgType}.${msg.FromUserName}`,
+        payload: msg,
+      };
+      messenger.send('wechatpivot.exchange.messageIn', action);
+
+      ctx.body = 'success';
+      ctx.status = 200;
     }
   }
 

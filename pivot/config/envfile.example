@@ -1,0 +1,7 @@
+url.self=http:/www.example.com
+wechat.appid={appid}
+wechat.appsecret={appsecret}
+rabbitmq.username={username}
+rabbitmq.password={password}
+rabbitmq.address={address}
+rabbitmq.port={port}

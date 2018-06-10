@@ -13,6 +13,13 @@ module.exports = appInfo => {
     csrf: false,
   };
 
+  config.bodyParser = {
+    enableTypes: ['json', 'form', 'text'],
+    extendTypes: {
+      text: ['text/xml', 'application/xml'],
+    },
+  };
+
   config.view = {
     defaultViewEngine: 'nunjucks',
     mapping: {
@@ -33,6 +40,24 @@ module.exports = appInfo => {
   });
   config.props = props;
 
+  config.mq = {
+    rabbitmq: `amqp://${props['rabbitmq.username']}:${encodeURIComponent(props['rabbitmq.password'])}@${props['rabbitmq.address']}:${props['rabbitmq.port']}`,
+    producers: [
+      {
+        exchange: 'wechatpivot.exchange.messageIn',
+        exchangeType: 'topic',
+      },
+    ],
+    consumers: [
+      {
+        exchange: 'wechatpivot.exchange.messageOut',
+        exchangeType: 'topic',
+        queue: 'wechatpivot.queue.messageOutText',
+        topic: 'text.*',
+        consumer: 'messageOut.text',
+      },
+    ],
+  };
 
   return config;
 };
