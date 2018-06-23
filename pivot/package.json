@@ -4,7 +4,7 @@
   "description": "wechat pivot server",
   "dependencies": {
     "egg": "2.2.1",
-    "egg-mq": "0.0.6",
+    "egg-mq": "0.0.7",
     "egg-sequelize": "3.1.0",
     "egg-view-nunjucks": "2.1.3",
     "pg": "7.3.0",
