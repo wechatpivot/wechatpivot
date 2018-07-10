@@ -68,10 +68,10 @@ module.exports = app => {
       // console.log(msg);
 
       const action = {
-        type: `${msg.MsgType}.${msg.FromUserName}`,
+        topic: `${msg.MsgType}.${msg.FromUserName}`,
         payload: msg,
       };
-      messenger.send('wechatpivot.exchange.messageIn', action);
+      messenger.send('@@egg-mq/producer/wechatpivot.exchange.messageIn', action);
 
       ctx.body = 'success';
       ctx.status = 200;

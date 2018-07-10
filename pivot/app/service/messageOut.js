@@ -3,7 +3,7 @@ const WechatAPI = require('promise-wechat-api');
 
 module.exports = app => {
   return class MessageOut extends app.Service {
-    async text(topic, content) {
+    async text(topic, payload) {
       const { ctx, config } = this;
       const appid = config.props['wechat.appid'];
       const appsecret = config.props['wechat.appsecret'];
@@ -12,7 +12,7 @@ module.exports = app => {
 
       try {
         const client = new WechatAPI(appid, appsecret);
-        const res = await client.sendText(openId, content);
+        const res = await client.sendText(openId, payload.Content); // { MsgType: 'text', Content: 'blabla' }
         ctx.logger.info(res);
       } catch (err) {
         ctx.logger.error(err);
