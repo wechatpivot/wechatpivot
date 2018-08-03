@@ -8,6 +8,7 @@
     "egg-sequelize": "3.1.0",
     "egg-view-nunjucks": "2.1.3",
     "egg-web": "0.0.4",
+    "le_node": "1.7.1",
     "pg": "7.3.0",
     "pg-hstore": "2.3.2",
     "promise-wechat-api": "1.0.2",

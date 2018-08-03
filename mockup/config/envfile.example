@@ -5,4 +5,5 @@ postgres.password={{password}}
 url.self={{url}}
 wechat.appid={{wechatappid}}
 wechat.appsecret={{wechatappsecret}}
+logentries.token={{token}}
 egg.env=dev

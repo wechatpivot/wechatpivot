@@ -3,6 +3,8 @@ const path = require('path');
 const gulp = require('gulp');
 const del = require('del');
 const replace = require('gulp-replace');
+const lineno = require('egg-web/tasks/append-line-number.js');
+const replaceByLine = require('egg-web/tasks/replace-by-line.js');
 
 
 gulp.task('clean', function () {
@@ -22,4 +24,24 @@ gulp.task('replace', function () {
       return assetsMap[p1][p2];
     }))
     .pipe(gulp.dest(path.resolve('./app/view')));
+});
+
+
+gulp.task('logger', function () {
+  const PATTERN = /(ctx\.logger\.)(debug|info|warn|error)\('(.+)'(, .+)?\);(.*)/;
+  const LINENO = lineno.LINENO;
+
+  gulp
+    .src([
+      'app/**/*',
+      '!app/middleware/**/*',
+      '!app/public/**/*',
+      '!app/router.js',
+    ])
+    .pipe(lineno(PATTERN))
+    .pipe(replaceByLine(PATTERN, function (match, p1, p2, p3, p4, p5) {
+      const ln = p5.match(LINENO)[1];
+      return `${p1}${p2}('${p3}'${p4 || ''}, '[${ln}]');`;
+    }))
+    .pipe(gulp.dest('app/'));
 });

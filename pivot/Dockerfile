@@ -7,13 +7,13 @@ RUN \
 
 
 RUN \
+  mv /var/app/package-build.json /var/app-build/package.json && \
+  cd /var/app-build && npm install --production --no-optional --no-package-lock && \
   mv /var/app-build/node_modules /var/app && \
-  # cd /var/app && \
-  # npm run build && \
+  cd /var/app && npm run build && \
   rm -rf /var/app/node_modules
-
 
 RUN \
   mv /var/app-run/node_modules /var/app && \
   cd /var/app && \
-  npm install --production --no-optional
+  npm install --production --no-optional --no-package-lock

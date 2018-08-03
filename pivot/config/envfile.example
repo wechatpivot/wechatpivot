@@ -5,3 +5,5 @@ rabbitmq.username={username}
 rabbitmq.password={password}
 rabbitmq.address={address}
 rabbitmq.port={port}
+logentries.token={token}
+egg.env=dev
