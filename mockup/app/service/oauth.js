@@ -12,7 +12,8 @@ module.exports = app => {
       return data;
     }
 
-    * getAccessToken(code, openId) {
+    async getAccessToken(code, openId) {
+      const { ctx } = this;
       const accessToken = rnd();
       memoryCache[code] = { accessToken, openId };
     }

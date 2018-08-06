@@ -19,10 +19,12 @@ module.exports = app => {
       const { ctx } = this;
 
       const { username, code } = ctx.request.body;
-      const user = await ctx.model.User.findOne({ username });
-      const userWechat = await ctx.model.UserWechat.findOne({ userId: user.id });
+      const user = await ctx.model.User.findOne({ where: { username } });
+      const { openId } = await ctx.model.UserWechat.findOne({ where: { userId: user.id } });
 
-      await ctx.service.oauth.getAccessToken(code, userWechat.openId);
+      await ctx.service.oauth.getAccessToken(code, openId);
+      // const dbg = JSON.stringify({ code, openId });
+      // ctx.logger.info(dbg);
 
       ctx.body = { code: 0, message: 'ok' };
       ctx.status = 201;

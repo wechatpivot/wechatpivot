@@ -16,7 +16,7 @@ module.exports = app => {
         throw new Error('INVALID CODE');
       }
 
-      await ctx.service.oauth.getAccessToken(code);
+      // await ctx.service.oauth.getAccessToken(code);
 
       let redirect = r;
       if (r.indexOf('?') > -1) {
