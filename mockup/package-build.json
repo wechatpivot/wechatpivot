@@ -43,7 +43,8 @@
     "url-loader": "0.5.9",
     "vanilla.js": "0.1.4",
     "webpack": "2.7.0",
-    "webpack-merge": "4.1.0"
+    "webpack-merge": "4.1.0",
+    "wechatpivot": "0.0.1"
   },
   "engines": {
     "node": ">=8.9.0"

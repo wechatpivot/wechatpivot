@@ -1,8 +1,9 @@
 import pick from 'lodash/pick';
 import parseUri from 'vanilla.js/uri/parseUri';
+import rnd from 'vanilla.js/random/dummy';
 
 
-const FIELDS = ['x', 'y', 'isSelected', 'isDirty', 'name', 'type', 'url'];
+const FIELDS = ['x', 'y', 'name', 'type', 'url', '$dirty'];
 const OAUTH_API = 'https://open.weixin.qq.com/connect/oauth2/authorize';
 
 function SmartView() {
@@ -51,14 +52,14 @@ SmartView.prototype.toDumb = function (appId) {
   if (this.data.type === 'view/snsapi_base') {
     this.data.type = 'view';
     let redirect = encodeURIComponent(this.data.url);
-    let state = Math.random().toString(36).substring(2);
+    let state = rnd();
     this.data.url = `${OAUTH_API}?appid=${appId}&redirect_uri=${redirect}&response_type=code&scope=snsapi_base&state=${state}#wechat_redirect`;
   }
 
   if (this.data.type === 'view/snsapi_userinfo') {
     this.data.type = 'view';
     let redirect = encodeURIComponent(this.data.url);
-    let state = Math.random().toString(36).substring(2);
+    let state = rnd();
     this.data.url = `${OAUTH_API}?appid=${appId}&redirect_uri=${redirect}&response_type=code&scope=snsapi_userinfo&state=${state}#wechat_redirect`;
   }
 
@@ -68,26 +69,26 @@ SmartView.prototype.toDumb = function (appId) {
 
 function genSchema() {
   return [
-    { x: 0, y: 5, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 0, y: 4, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 0, y: 3, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 0, y: 2, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 0, y: 1, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 0, y: 0, isSelected: false, isDirty: false, name: '', type: '', url: '' },
+    { x: 1, y: 6, name: '', type: '', url: '' },
+    { x: 1, y: 5, name: '', type: '', url: '' },
+    { x: 1, y: 4, name: '', type: '', url: '' },
+    { x: 1, y: 3, name: '', type: '', url: '' },
+    { x: 1, y: 2, name: '', type: '', url: '' },
+    { x: 1, y: 1, name: '', type: '', url: '' },
 
-    { x: 1, y: 5, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 1, y: 4, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 1, y: 3, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 1, y: 2, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 1, y: 1, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 1, y: 0, isSelected: false, isDirty: false, name: '', type: '', url: '' },
+    { x: 2, y: 6, name: '', type: '', url: '' },
+    { x: 2, y: 5, name: '', type: '', url: '' },
+    { x: 2, y: 4, name: '', type: '', url: '' },
+    { x: 2, y: 3, name: '', type: '', url: '' },
+    { x: 2, y: 2, name: '', type: '', url: '' },
+    { x: 2, y: 1, name: '', type: '', url: '' },
 
-    { x: 2, y: 5, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 2, y: 4, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 2, y: 3, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 2, y: 2, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 2, y: 1, isSelected: false, isDirty: false, name: '', type: '', url: '' },
-    { x: 2, y: 0, isSelected: false, isDirty: false, name: '', type: '', url: '' },
+    { x: 3, y: 6, name: '', type: '', url: '' },
+    { x: 3, y: 5, name: '', type: '', url: '' },
+    { x: 3, y: 4, name: '', type: '', url: '' },
+    { x: 3, y: 3, name: '', type: '', url: '' },
+    { x: 3, y: 2, name: '', type: '', url: '' },
+    { x: 3, y: 1, name: '', type: '', url: '' },
   ];
 }
 
@@ -106,12 +107,13 @@ export function fromWeixin(menu) {
   let formatted = genSchema();
 
   menu.button.forEach(function (button, x) {
-    let idx = formatted.findIndex(m => m.x === x && m.y === 0);
+    x += 1;
+    let idx = formatted.findIndex(m => m.x === x && m.y === 1);
 
     if (button.sub_button.length === 0) {
       // ** only level 1 menu
       if (button.type === 'view') {
-        formatted.splice(idx, 1, SmartView.create().fromDumb(button, x, 0).toSmart());
+        formatted.splice(idx, 1, SmartView.create().fromDumb(button, x, 1).toSmart());
       } else {
         throw new Error('[model.menu.fromWeixin - NotImplementedError] button should only be the view type');
       }
@@ -119,8 +121,8 @@ export function fromWeixin(menu) {
       formatted[idx].name = button.name;
       formatted[idx].type = 'group';
 
-      button.sub_button.reverse().forEach(function (sub, j) {
-        let y = j + 1;
+      button.sub_button.reverse().forEach(function (sub, y) {
+        y += 2;
 
         let index = formatted.findIndex(m => m.x === x && m.y === y);
         if (sub.type === 'view') {
@@ -134,6 +136,7 @@ export function fromWeixin(menu) {
       });
     }
   });
+
   // debugger;
   return formatted;
 }
@@ -182,7 +185,7 @@ export function changeSelect(prev, next) {
 export function updateByXY(updates) {
   let menu = pick(updates, FIELDS);
   menu.isSelected = false;
-  menu.isDirty = true;
+  menu.$dirty = true;
   return [menu];
 }
 
@@ -191,12 +194,12 @@ export function exchange(menu1, menu2) {
   m1.x = menu2.x;
   m1.y = menu2.y;
   m1.isSelected = true;
-  m1.isDirty = true;
+  m1.$dirty = true;
   let m2 = pick(menu2, FIELDS);
   m2.x = menu1.x;
   m2.y = menu1.y;
   m2.isSelected = false;
-  m2.isDirty = true;
+  m2.$dirty = true;
   return [m2, m1];
 }
 
@@ -205,7 +208,7 @@ export function translate(group, toX) {
   formatted.forEach(function (m) {
     m.x = toX;
     m.isSelected = false;
-    m.isDirty = !!m.name;
+    m.$dirty = !!m.name;
   });
   return formatted;
 }
@@ -215,10 +218,10 @@ export function moveDown(uppers) {
   formatted.forEach(function (m) {
     m.y -= 1;
     if (m.name) {
-      m.isDirty = true;
+      m.$dirty = true;
     }
   });
-  formatted.push({ x: formatted[0].x, y: 5, isSelected: false, isDirty: false, name: '', type: '', url: '' });
+  formatted.push({ x: formatted[0].x, y: 5, name: '', type: '', url: '', $dirty: false });
   return formatted;
 }
 
@@ -226,26 +229,26 @@ export function cleanup(menus) {
   let formatted = menus.map(m => pick(m, FIELDS));
   formatted.forEach(function (m) {
     m.isSelected = false;
-    m.isDirty = false;
+    m.$dirty = false;
   });
   return formatted;
 }
 
 export function toWeixin(menus, appId) {
-  let button0 = menus.filter(m => m.x === 0 && m.y === 0)[0];
-  let group0 = menus.filter(m => m.x === 0 && m.y > 0 && m.name);
+  let button0 = menus.filter(m => m.x === 1 && m.y === 1)[0];
+  let group0 = menus.filter(m => m.x === 1 && m.y > 1 && m.name);
   let sub0 = group0.map(function (m) {
     return SmartView.create().fromSmart(m).toDumb(appId);
   });
 
-  let button1 = menus.filter(m => m.x === 1 && m.y === 0)[0];
-  let group1 = menus.filter(m => m.x === 1 && m.y > 0 && m.name);
+  let button1 = menus.filter(m => m.x === 2 && m.y === 1)[0];
+  let group1 = menus.filter(m => m.x === 2 && m.y > 1 && m.name);
   let sub1 = group1.map(function (m) {
     return SmartView.create().fromSmart(m).toDumb(appId);
   });
 
-  let button2 = menus.filter(m => m.x === 2 && m.y === 0)[0];
-  let group2 = menus.filter(m => m.x === 2 && m.y > 0 && m.name);
+  let button2 = menus.filter(m => m.x === 3 && m.y === 1)[0];
+  let group2 = menus.filter(m => m.x === 3 && m.y > 1 && m.name);
   let sub2 = group2.map(function (m) {
     return SmartView.create().fromSmart(m).toDumb(appId);
   });

@@ -12,10 +12,13 @@ class MenuForm extends Component {
   }
 
   save() {
-    console.log(this.props.form.getFieldsValue());
+    const { x, y } = this.props.dataSource;
+    const command = { ...this.props.form.getFieldsValue(), x, y };
+    this.props.save(command);
   }
 
   render() {
+    const form = this.props.dataSource;
     const { getFieldDecorator } = this.props.form;
 
     const formItemLayout = {
@@ -39,7 +42,7 @@ class MenuForm extends Component {
     return (
       <Form>
         <FormItem {...formItemLayout} label="Type">
-          {getFieldDecorator('type')(
+          {getFieldDecorator('type', { initialValue: form.type })(
             <Select>
               <Option value="group">有子菜单</Option>
               <Option value="view">普通网页</Option>
@@ -48,13 +51,13 @@ class MenuForm extends Component {
             </Select>)}
         </FormItem>
         <FormItem {...formItemLayout} label="Name">
-          {getFieldDecorator('name')(<Input />)}
+          {getFieldDecorator('name', { initialValue: form.name })(<Input autoComplete="off" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="Url">
-          {getFieldDecorator('url')(<Input />)}
+          {getFieldDecorator('url', { initialValue: form.url })(<Input autoComplete="off" />)}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary" size="default" htmlType="button" onClick={this.save}>保存</Button>
+          <Button type="primary" size="default" htmlType="button" onClick={this.save}>更新</Button>
         </FormItem>
       </Form>
     );

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import dynamic from 'dva/dynamic';
 import { Layout, Menu, Breadcrumb, Alert, Icon } from 'antd';
 const { Header, Content, Footer } = Layout;
-const MenuItem = Menu.Item;
-const BreadcrumbItem = Breadcrumb.Item;
+const { Item: MenuItem } = Menu;
+const { Item: BreadItem } = Breadcrumb;
 
 // import App from './routes/app'
 
@@ -55,8 +55,8 @@ export default function router({ history, app }) {
         </Header>
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <BreadcrumbItem>菜单管理</BreadcrumbItem>
-            <BreadcrumbItem>Menu</BreadcrumbItem>
+            <BreadItem>菜单管理</BreadItem>
+            <BreadItem>Menu</BreadItem>
           </Breadcrumb>
           <Alert message={<p>应该使用你自己的服务器做微信接口转发 <a><Icon type="question-circle-o" /></a></p>} type="warning" style={{ position: 'absolute', right: 50, top: 72, paddingRight: 8 }} />
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>

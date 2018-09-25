@@ -1,4 +1,5 @@
 import modelExtend from 'dva-model-extend'
+import { message } from 'antd';
 import { model } from './common'
 
 export default modelExtend(model, {
@@ -7,8 +8,7 @@ export default modelExtend(model, {
   state: {
     user: null,
 
-    permissions: {// 当前用户可访问的权限
-      // visit: [],
+    permissions: {
       edit: [],
     },
 
@@ -26,6 +26,8 @@ export default modelExtend(model, {
   },
 
   effects: {
-
+    *warn({ payload }) {
+      message.warn(payload);
+    },
   },
 })
