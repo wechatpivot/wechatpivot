@@ -7,3 +7,4 @@ wechat.appid={{wechatappid}}
 wechat.appsecret={{wechatappsecret}}
 logentries.token={{token}}
 egg.env=dev
+web.env=local

@@ -25,7 +25,7 @@
     "del": "3.0.0",
     "dva": "2.1.0",
     "dva-model-extend": "0.1.2",
-    "egg-web": "0.0.4",
+    "egg-web": "0.1.5",
     "extract-text-webpack-plugin": "2.1.2",
     "file-loader": "0.11.2",
     "gulp": "3.9.1",
@@ -41,7 +41,7 @@
     "react-router-redux": "4.0.8",
     "style-loader": "0.18.2",
     "url-loader": "0.5.9",
-    "vanilla.js": "0.1.4",
+    "vanilla.js": "0.1.6",
     "webpack": "2.7.0",
     "webpack-merge": "4.1.0",
     "wechatpivot": "0.0.1"

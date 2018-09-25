@@ -5,12 +5,8 @@
   <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
-  <link rel="stylesheet" href="/public/css/vendor/bootstrap-xs-e3fc08d519.css" />
-
-  {% if env === 'dev' %}
-  {% else %}
-  <link rel="stylesheet" href="/public/dist/oauth-stamp4hash.css" />
-  {% endif %}
+  {{ helper.rsrc("css", "vendor/bootstrap-xs-e3fc08d519.css") | safe | inline }}
+  {{ helper.rsrc("dist", "oauth-stamp4hash.css") | safe | inline }}
 </head>
 <body>
   <h3>Wechat-Pivot-Mockup</h3>
@@ -40,10 +36,6 @@
     </div>
   </div>
 
-  {% if env === 'dev' %}
-  <script src="http://127.0.0.1:3001/static/js/oauth-stamp4hash.js"></script>
-  {% else %}
-  <script src="/public/dist/oauth-stamp4hash.js"></script>
-  {% endif %}
+  {{ helper.rsrc("dist", "oauth-stamp4hash.js") | safe | inline }}
 </body>
 </html>

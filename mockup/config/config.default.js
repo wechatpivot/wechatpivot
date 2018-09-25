@@ -1,38 +1,35 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const envfile = fs.readFileSync(path.resolve(__dirname, './envfile'), 'utf-8').split('\n');
+const nunjucks = require('egg-web/config/nunjucks');
+const envfileParser = require('egg-web/config/envfile-parser');
+const envfile = fs.readFileSync(path.resolve(__dirname, './envfile'), 'utf-8');
 
 
-module.exports = appInfo => {
+module.exports = app => {
   const config = {};
 
-  config.keys = 'default-dev-key';
+  const props = envfileParser(envfile);
+  config.props = props;
+  config.webenv = props['web.env'];
+
+  config.keys = app.name + 'default-dev-key';
 
   config.security = {
     csrf: false,
   };
 
-  config.view = {
-    defaultViewEngine: 'nunjucks',
-    mapping: {
-      '.html': 'nunjucks',
+  config.onerror = {
+    accepts: function (ctx) {
+      if (ctx.req.url.indexOf('/api/') === 0) {
+        return 'json';
+      } else {
+        return 'html';
+      }
     },
   };
 
-  const props = {};
-  envfile.forEach(p => {
-    if (p) {
-      const idx = p.indexOf('=');
-      const k = p.substring(0, idx);
-      const v = p.substring(idx + 1);
-      if (k && v) {
-        props[k] = v;
-      }
-    }
-  });
-  config.props = props;
-
+  config.view = nunjucks;
 
   config.sequelize = {
     dialect: 'postgres',
