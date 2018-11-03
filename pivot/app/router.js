@@ -2,6 +2,7 @@
 
 module.exports = app => {
   app.get('/oauth', 'view.oauth');
+  app.get('/manager', 'view.manager');
 
   app.get('/api/message-in', 'api.messageInVerify');
   app.post('/api/message-in', 'api.messageIn');
