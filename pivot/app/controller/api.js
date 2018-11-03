@@ -1,6 +1,5 @@
 const wechatMessage = require('promise-wechat-message');
-const rnd = require('vanilla.js/random/dummy');
-
+const { Payment } = require('promise-wechat-pay');
 
 module.exports = app => {
   class ApiController extends app.Controller {
@@ -74,6 +73,25 @@ module.exports = app => {
       messenger.send('@@egg-mq/producer/wechatpivot.exchange.messageIn', action);
 
       ctx.body = 'success';
+      ctx.status = 200;
+    }
+
+    async pay() {
+      const { ctx } = this;
+      const { productCode, description, orderNo, price } = ctx.request.body;
+      ctx.logger.info(productCode, description, orderNo, price);
+      // TODO: validation
+      const priceFen = parseInt(price, 10);
+
+      const qrcode = await ctx.service.fastpay.qrcode(productCode, description, orderNo, priceFen);
+
+      ctx.body = { qrcode };
+      ctx.status = 201;
+    }
+
+    async payNotify() {
+      const { ctx } = this;
+      ctx.body = 'pay-notify';
       ctx.status = 200;
     }
   }
