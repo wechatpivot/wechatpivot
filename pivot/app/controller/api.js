@@ -91,8 +91,9 @@ module.exports = app => {
 
     async payNotify() {
       const { ctx } = this;
-      ctx.body = 'pay-notify';
-      ctx.status = 200;
+      ctx.logger.info(ctx.request.body);
+      ctx.body = '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+      ctx.status = 201;
     }
   }
 
