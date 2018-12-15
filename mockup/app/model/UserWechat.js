@@ -6,9 +6,9 @@ module.exports = app => {
       type: INTEGER,
       primaryKey: true,
     },
-    userId: {
-      type: INTEGER,
-      field: 'user_id',
+    username: {
+      type: STRING(63),
+      field: 'username',
     },
     openId: {
       type: STRING(127),

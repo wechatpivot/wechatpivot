@@ -1,8 +1,8 @@
-postgres.address={{address}}
-postgres.database={{database}}
-postgres.username={{username}}
-postgres.password={{password}}
-url.self={{url}}
+mysql.address={{address}}
+mysql.database={{database}}
+mysql.username={{username}}
+mysql.password={{password}}
+openurl.wechatpivot={{url}}
 wechat.appid={{wechatappid}}
 wechat.appsecret={{wechatappsecret}}
 logentries.token={{token}}

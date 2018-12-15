@@ -1,8 +1,8 @@
-'use strict';
 const fs = require('fs');
 const path = require('path');
 const nunjucks = require('egg-web/config/nunjucks');
-const envfileParser = require('egg-web/config/envfile-parser');
+const onerror = require('egg-web/config/onerror');
+const envfileParser = require('egg-web/config/envfileParser');
 const envfile = fs.readFileSync(path.resolve(__dirname, './envfile'), 'utf-8');
 
 
@@ -19,25 +19,17 @@ module.exports = app => {
     csrf: false,
   };
 
-  config.onerror = {
-    accepts: function (ctx) {
-      if (ctx.req.url.indexOf('/api/') === 0) {
-        return 'json';
-      } else {
-        return 'html';
-      }
-    },
-  };
+  config.onerror = onerror;
 
   config.view = nunjucks;
 
   config.sequelize = {
-    dialect: 'postgres',
-    database: props['postgres.database'],
-    host: process.env.POSTGRES_ADDRESS || props['postgres.address'],
-    port: '5432',
-    username: props['postgres.username'],
-    password: props['postgres.password'],
+    dialect: 'mysql',
+    database: props['mysql.database'],
+    host: props['mysql.address'],
+    port: '3306',
+    username: props['mysql.username'],
+    password: props['mysql.password'],
     define: {
       freezeTableName: true,
       underscored: true,
