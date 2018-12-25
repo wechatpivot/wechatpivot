@@ -1,7 +1,8 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const envfileParser = require('egg-web/config/envfile-parser');
+const onerror = require('egg-web/config/onerror');
+const envfileParser = require('egg-web/config/envfileParser');
 const envfile = fs.readFileSync(path.resolve(__dirname, './envfile'), 'utf-8');
 
 
@@ -18,15 +19,7 @@ module.exports = appInfo => {
     csrf: false,
   };
 
-  config.onerror = {
-    accepts: function (ctx) {
-      if (ctx.req.url.indexOf('/api/') === 0) {
-        return 'json';
-      } else {
-        return 'html';
-      }
-    },
-  };
+  config.onerror =onerror;
 
   config.bodyParser = {
     enableTypes: ['json', 'form', 'text'],

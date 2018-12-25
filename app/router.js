@@ -12,5 +12,5 @@ module.exports = app => {
 
   app.get('/private-api/jssdk/config', 'api.jsConfig');
 
-  app.post('/private-api/pay', 'api.pay');
+  app.post('/private-api/create-jsapi-order', 'api.createJsapiOrder');
 };

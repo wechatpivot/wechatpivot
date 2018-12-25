@@ -76,17 +76,17 @@ module.exports = app => {
       ctx.status = 200;
     }
 
-    async pay() {
+    async createJsapiOrder() {
       const { ctx } = this;
-      const { productCode, description, orderNo, price } = ctx.request.body;
+      const { productCode, description, orderNo, price, openId } = ctx.request.body;
       ctx.logger.info(productCode, description, orderNo, price);
       // TODO: validation
       const priceFen = parseInt(price, 10);
 
-      const qrcode = await ctx.service.fastpay.qrcode(productCode, description, orderNo, priceFen);
+      const command = await ctx.service.fastpay.createJsapiOrder(productCode, description, orderNo, priceFen, openId);
 
-      ctx.body = { qrcode };
       ctx.status = 201;
+      ctx.body = command;
     }
 
     async payNotify() {
