@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = app => {
+  app.get('/', 'view.index');
   app.get('/oauth', 'view.oauth');
 
   app.get('/api/message-in', 'api.messageInVerify');

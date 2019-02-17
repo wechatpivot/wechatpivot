@@ -1,0 +1,17 @@
+{
+  "producers": [
+    {
+        "exchange": "wechatpivot.exchange.messageIn",
+        "exchangeType": "topic"
+    }
+  ],
+  "consumers": [
+    {
+        "exchange": "wechatpivot.exchange.messageOut",
+        "exchangeType": "topic",
+        "queue": "wechatpivot.queue.messageOutText",
+        "topic": "text.*",
+        "consumer": "messageOut.text"
+    }
+  ]
+}

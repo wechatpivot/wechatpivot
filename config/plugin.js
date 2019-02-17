@@ -1,5 +1,11 @@
 'use strict';
 
+exports.sequelize = {
+  enable: true,
+  package: 'egg-sequelize'
+};
+
+
 exports.mq = {
   enable: true,
   package: 'egg-mq',

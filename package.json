@@ -1,23 +1,24 @@
 {
   "name": "wechatpivot",
-  "version": "0.0.4",
-  "description": "wechat pivot server",
+  "version": "0.1.0",
+  "description": "wechatpivot server",
   "dependencies": {
-    "egg": "2.2.1",
-    "egg-mq": "0.0.11",
-    "egg-web": "0.1.9",
+    "egg": "2.16.0",
+    "egg-mq": "0.1.0",
+    "egg-sequelize": "4.2.0",
+    "egg-web": "0.2.0",
     "le_node": "1.7.1",
     "lodash": "4.17.5",
+    "mysql2": "1.6.4",
     "node-forge": "0.7.6",
     "promise-wechat-api": "1.0.2",
     "promise-wechat-message": "0.0.4",
     "promise-wechat-oauth": "1.0.1",
     "promise-wechat-pay": "0.0.1",
-    "utility": "1.13.1",
-    "vanilla.js": "0.1.7"
+    "vanilla.js": "0.1.8"
   },
   "devDependencies": {
-    "egg-bin": "4.3.5"
+    "egg-bin": "4.9.0"
   },
   "engines": {
     "node": ">=8.9.0"
@@ -25,7 +26,7 @@
   "scripts": {
     "start": "egg-bin dev"
   },
-  "repository": "https://github.com:wechatpivot/wechatpivot",
+  "repository": "https://github.com/wechatpivot/wechatpivot",
   "author": "shuaizhexu@gmail.com",
   "license": "MIT"
 }
