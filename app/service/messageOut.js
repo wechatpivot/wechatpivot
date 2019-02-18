@@ -8,7 +8,8 @@ module.exports = app => {
       const appid = config.props['wechat.appid'];
       const appsecret = config.props['wechat.appsecret'];
 
-      const openId = topic.substring(5); // text.*
+      // const app = topic.substring(5); // text.
+      const openId = payload.ToUserName;
 
       try {
         const client = new WechatAPI(appid, appsecret);
