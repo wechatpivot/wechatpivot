@@ -1,28 +1,31 @@
+const Service = require('egg').Service;
 const OAuthClient = require('promise-wechat-oauth');
 
 
-module.exports = app => {
-  let memoryCache = {};
+let memoryCache = {};
 
-  return class OAuth extends app.Service {
-    get(key) {
-      const { ctx } = this;
-      const data = Object.assign({}, memoryCache[key]);
-      delete memoryCache[key];
+
+module.exports = class OAuth extends Service {
+  get(alias, code) {
+    const { ctx } = this;
+    const data = Object.assign({}, memoryCache[code]);
+    if (data.alias === alias) {
+      delete memoryCache[code];
       return data;
+    } else {
+      return {};
     }
+  }
 
-    async getAccessToken(code) {
-      const { ctx, config } = this;
-      const appid = config.props['wechat.appid'];
-      const appsecret = config.props['wechat.appsecret'];
-      try {
-        const client = new OAuthClient(appid, appsecret);
-        const { access_token: accessToken, openid: openId } = await client.getAccessToken(code);
-        memoryCache[code] = { accessToken, openId };
-      } catch (err) {
-        ctx.logger.error(err);
-      }
+  async getAccessToken(alias, code) {
+    const { ctx } = this;
+    const { appid, secret } = ctx.service.alias.conf(alias);
+    try {
+      const client = new OAuthClient(appid, secret);
+      const { access_token: accessToken, openid: openId } = await client.getAccessToken(code);
+      memoryCache[code] = { alias, accessToken, openId };
+    } catch (err) {
+      ctx.logger.error(err);
     }
-  };
-}
+  }
+};

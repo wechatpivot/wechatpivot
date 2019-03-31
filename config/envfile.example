@@ -1,7 +1,8 @@
-url.self=http:/www.example.com
-wechat.appid={appid}
-wechat.appsecret={appsecret}
-wechat.token={token}
+url.self=http://www.example.com/wechatpivot
+wechatpivot.{app}.appid={appid}
+wechatpivot.{app}.secret={secret}
+wechatpivot.{app}.token={token}
+wechatpivot.alias.{alias}={app}
 wechat.merchant.id={id}
 wechat.merchant.secret={secret}
 wechat.merchant.notify={url}

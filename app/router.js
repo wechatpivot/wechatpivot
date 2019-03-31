@@ -14,4 +14,9 @@ module.exports = app => {
   app.get('/private-api/jssdk/config', 'api.jsConfig');
 
   app.post('/private-api/create-jsapi-order', 'api.createJsapiOrder');
+
+  // v2
+  app.post('/wechatpivot/api/apps/:alias/oauth-snsapi-base-url', 'apiv2.base');
+  app.get('/wechatpivot/apps/:alias/oauth', 'viewv2.oauth');
+  app.get('/wechatpivot/api/apps/:alias/oauth-snsapi-base', 'apiv2.oauth');
 };
